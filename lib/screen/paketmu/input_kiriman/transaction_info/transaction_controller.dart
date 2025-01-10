@@ -59,11 +59,6 @@ class TransactionController extends BaseController {
 
     if (state.dimension) {
       if (state.selectedService?.serviceCode?.contains("JTR") == true) {
-        // if (state.selectedService?.serviceCode == "JTR23" ||
-        //     state.selectedService?.serviceCode == "JTR<130" ||
-        //     state.selectedService?.serviceCode == "JTR250" ||
-        //     state.selectedService?.serviceCode == "JTR>250") {
-
         state.berat = (p * l * t) / 5000;
       } else {
         state.berat = (p * l * t) / 6000;
@@ -78,7 +73,6 @@ class TransactionController extends BaseController {
       } else {
         state.weight.text = state.berat.truncate().toString();
       }
-      // state.state.beratKiriman.text = state.berat!.toStringAsFixed(2);
     }
     update();
     getOngkir();
@@ -157,9 +151,6 @@ class TransactionController extends BaseController {
 
           state.getCodFee = (goodsAmount + state.freightCharge) * state.codfee;
           state.getCodAmount = (goodsAmount + state.getCodFee + getVat);
-          // state.getCodAmount = goodsAmount + getVat + state.getCodFee;
-
-          // state.hargacod = (codfee * (goodsAmount) + (goodsAmount) + state.totalOngkir);
           state.codAmount = state.isCOD ? state.getCodAmount : 0;
           state.codAmountText.text = state.isCOD
               ? state.getCodAmountMinimum.toInt().toCurrency().toString()
@@ -230,7 +221,6 @@ class TransactionController extends BaseController {
   Future<void> getOngkir() async {
     state.isCalculate = state.isOnline ? true : false;
     update();
-    // print("state.freightCharge${state.freightCharge}");
     try {
       var value = await master.getServices(
         DataServiceModel(
@@ -239,12 +229,9 @@ class TransactionController extends BaseController {
           destinationCode: state.destination.destinationCode,
           weight:
               state.weight.text.isNotEmpty ? state.weight.text.toDouble() : 1,
-          // custNo: state.account.accountNumber,
-          // type: state.goodType.text == "PAKET" ? "PAKET" : "DOCUMENT"),
         ),
       );
 
-      // state.flatRate = value.data?.where((e)=> e == state.selectedService).first.price?.toInt() ?? 0;
       if (state.selectedService?.serviceDisplay?.substring(0, 3) == "JTR") {
         state.freightCharge = value.data?.resultJtr
                 ?.where(
@@ -312,7 +299,6 @@ class TransactionController extends BaseController {
     await storage.saveData(StorageCore.draftTransaction, state.draftData).then(
           (_) => update(),
         );
-    // initData();
 
     update();
   }
@@ -369,7 +355,6 @@ class TransactionController extends BaseController {
       state.woodPacking = state.data?.delivery?.woodPackaging == "Y";
       state.weight.text = state.data?.goods?.weight.toString() ?? '';
       state.berat = state.data?.goods?.weight?.toDouble() ?? 0;
-      // ServiceModel servicecode = state.serviceList.where((element) => element.serviceCode == state.dataEdit?.delivery?.serviceCode).first;
       ServiceModel? servicedisplay = state.serviceList
               .where((element) =>
                   element.serviceDisplay == state.data?.delivery?.serviceCode)
@@ -416,7 +401,6 @@ class TransactionController extends BaseController {
           state.tempData?.delivery?.woodPackaging == "Y" ? true : false;
       state.weight.text =
           state.tempData?.goods?.weight?.toString().split('.').first ?? '';
-      // state.selectedService = state.serviceList.where((e) => e.serviceCode == state.delivery?.serviceCode).first;
       update();
     }
   }
@@ -657,7 +641,6 @@ class TransactionController extends BaseController {
       account: state.account,
       origin: state.origin,
       destination: state.destination,
-      // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
       goods: Goods(
           type: state.goodType.text,
           desc: state.goodName.text,
@@ -800,32 +783,10 @@ class TransactionController extends BaseController {
             color: errorColor,
             size: 100,
           ),
-          // title: "Error".tr,
           subtitle:
               "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
           confirmButtonTitle: "OK",
           onConfirm: Get.back,
-          // content: Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     Text(
-          //       "Error".tr,
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.titleLarge,
-          //     ),
-          //     Text(
-          //       "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.bodyLarge,
-          //     ),
-          //     CustomFilledButton(
-          //       color: blueJNE,
-          //       width: Get.width / 3,
-          //       title: "OK".tr,
-          //       onPressed: () => Get.back(),
-          //     )
-          //   ],
-          // ),
         ),
       ));
     } else if ((state.codAmountText.text.digitOnly().toInt() > 10000000)) {
@@ -836,31 +797,9 @@ class TransactionController extends BaseController {
             color: errorColor,
             size: 100,
           ),
-          // title: "Error".tr,
           subtitle: "${'Harga COD tidak boleh Lebih dari'.tr} Rp.10.000.000",
           confirmButtonTitle: "OK",
           onConfirm: Get.back,
-          // content: Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     Text(
-          //       "Error".tr,
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.titleLarge,
-          //     ),
-          //     Text(
-          //       "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.bodyLarge,
-          //     ),
-          //     CustomFilledButton(
-          //       color: blueJNE,
-          //       width: Get.width / 3,
-          //       title: "OK".tr,
-          //       onPressed: () => Get.back(),
-          //     )
-          //   ],
-          // ),
         ),
       ));
     } else {

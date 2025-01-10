@@ -65,7 +65,6 @@ class PantauPaketmuDetailController extends BaseController {
         _pantauPaketmu = result.data!;
         _showContent = true;
         transactionData = DataTransactionModel(
-          // destination: _pantauPaketmu.destination,
           destination: Destination(
             destinationCode: _pantauPaketmu.destination ??
                 _pantauPaketmu.transaction?.destinationCode,
@@ -79,15 +78,12 @@ class PantauPaketmuDetailController extends BaseController {
           ),
           account: Account(
             accountNumber: _pantauPaketmu.custNo,
-            // accountService: _pantauPaketmu.transaction?.accountService,
             accountName: _pantauPaketmu.custName,
-            // accountType: _pantauPaketmu.transaction?.accountType,
           ),
           dataAccount: Account(
             accountNumber: _pantauPaketmu.custNo,
             accountService: _pantauPaketmu.transaction?.apiType,
             accountName: _pantauPaketmu.custName,
-            // accountType: _pantauPaketmu.transaction?.accountType,
           ),
           dataDestination: Destination(
             destinationCode: _pantauPaketmu.transaction?.destinationCode,
@@ -148,7 +144,6 @@ class PantauPaketmuDetailController extends BaseController {
             )),
           ),
           registrationId: _pantauPaketmu.registrationId,
-          // status: _pantauPaketmu.transaction?.statusAwb,
           createdDate: _pantauPaketmu.transaction?.createdDateSearch,
           awb: _pantauPaketmu.awbNo,
           type: _pantauPaketmu.transaction?.apiType ??
@@ -193,155 +188,4 @@ class PantauPaketmuDetailController extends BaseController {
     isLoading = false;
     update();
   }
-
-// Future<void> _getRequestPickupByAwb() async {
-//   isLoading = true;
-//   _showLoadingIndicator = true;
-//   update();
-//
-//   try {
-//     var response =
-//         await network.base.get('/transaction/tracks/count/details/$awbNo');
-//     var result = BaseResponse<PantauuPaketmuDetailModel>.fromJson(
-//       response.data,
-//       (json) =>
-//           PantauuPaketmuDetailModel.fromJson(json as Map<String, dynamic>),
-//     );
-//
-//     if (result.code == HttpStatus.ok && result.data != null) {
-//       _pantauuPaketmu = result.data!;
-//       _showContent = true;
-//       transactionData = DataTransactionModel(
-//         destination: Destination(
-//           destinationCode: _pantauuPaketmu.transaction?.destinationCode,
-//           zipCode: _pantauuPaketmu.cnoteReceiverZip,
-//           cityName: _pantauuPaketmu.transaction?.receiverCity,
-//           countryName: _pantauuPaketmu.transaction?.receiverCountry,
-//           districtName: _pantauuPaketmu.transaction?.receiverDistrict,
-//           provinceName: _pantauuPaketmu.transaction?.receiverRegion,
-//           subdistrictName: _pantauuPaketmu.transaction?.receiverSubdistrict,
-//         ),
-//         account: Account(
-//           accountNumber: _pantauuPaketmu.custNo,
-//           accountService: _pantauuPaketmu.transaction?.accountService,
-//           accountName: _pantauuPaketmu.custName,
-//           accountType: _pantauuPaketmu.transaction?.accountType,
-//         ),
-//         dataAccount: Account(
-//           accountNumber: _pantauuPaketmu.custNo,
-//           accountService: _pantauuPaketmu.transaction?.accountService,
-//           accountName: _pantauuPaketmu.custName,
-//           accountType: _pantauuPaketmu.transaction?.accountType,
-//         ),
-//         dataDestination: Destination(
-//           destinationCode: _pantauuPaketmu.transaction?.destinationCode,
-//           zipCode: _pantauuPaketmu.cnoteReceiverZip,
-//           cityName: _pantauuPaketmu.transaction?.receiverCity,
-//           countryName: _pantauuPaketmu.transaction?.receiverCountry,
-//           districtName: _pantauuPaketmu.transaction?.receiverDistrict,
-//           provinceName: _pantauuPaketmu.transaction?.receiverRegion,
-//           subdistrictName: _pantauuPaketmu.transaction?.receiverSubdistrict,
-//         ),
-//         receiver: ReceiverModel(
-//             name: _pantauuPaketmu.receiverName,
-//             zipCode: _pantauuPaketmu.cnoteReceiverZip,
-//             destinationCode: _pantauuPaketmu.transaction?.destinationCode,
-//             destinationDescription:
-//             _pantauuPaketmu.transaction?.destinationDesc,
-//             city: _pantauuPaketmu.transaction?.receiverCity,
-//             country: _pantauuPaketmu.transaction?.receiverCountry,
-//             contact: _pantauuPaketmu.cnoteReceiverContact,
-//             phone: _pantauuPaketmu.cnoteReceiverPhone,
-//             address:
-//                 '${_pantauuPaketmu.cnoteReceiverAddr1}${_pantauPaketmu.cnoteReceiverAddr2}${_pantauPaketmu.cnoteReceiverAddr3}',
-//             region: _pantauuPaketmu.transaction?.receiverRegion,
-//             district: _pantauuPaketmu.transaction?.receiverDistrict,
-//             subDistrict: _pantauuPaketmu.transaction?.receiverSubdistrict),
-//         shipper: ShipperModel(
-//           name: _pantauuPaketmu.cnoteShipperName,
-//           address:
-//               '${_pantauuPaketmu.cnoteShipperAddr1}${_pantauPaketmu.cnoteShipperAddr2}${_pantauPaketmu.cnoteShipperAddr3}',
-//           address1: _pantauuPaketmu.cnoteShipperAddr1,
-//           address2: _pantauuPaketmu.cnoteShipperAddr2,
-//           address3: _pantauuPaketmu.cnoteShipperAddr3,
-//           country: _pantauuPaketmu.transaction?.shipperCountry,
-//           region: RegionModel(
-//             name: _pantauuPaketmu.transaction?.shipperRegion,
-//           ),
-//           city: _pantauuPaketmu.originName,
-//           phone: _pantauuPaketmu.cnoteShipperPhone,
-//           contact: _pantauuPaketmu.cnoteShipperContact,
-//           zipCode: _pantauuPaketmu.cnoteShipperZip,
-//           origin: OriginModel(
-//             originCode: _pantauuPaketmu.transaction?.originCode,
-//             originName: _pantauuPaketmu.originName,
-//             branchCode: _pantauuPaketmu.branchId,
-//             branch: BranchModel(
-//                 region: RegionModel(
-//               name: _pantauuPaketmu.transaction?.shipperRegion,
-//             )),
-//           ),
-//         ),
-//         origin: OriginModel(
-//           originCode: _pantauuPaketmu.transaction?.originCode,
-//           originName: _pantauuPaketmu.originName,
-//           branchCode: _pantauuPaketmu.branchId,
-//           branch: BranchModel(
-//               region: RegionModel(
-//             name: _pantauuPaketmu.transaction?.shipperRegion,
-//           )),
-//         ),
-//         registrationId: _pantauuPaketmu.registrationId,
-//         status: _pantauuPaketmu.transaction?.statusAwb,
-//         createdDate: _pantauuPaketmu.transaction?.createdDateSearch,
-//         awb: _pantauuPaketmu.awbNo,
-//         type: _pantauuPaketmu.transaction?.apiType,
-//         awbType: _pantauuPaketmu.transaction?.apiType,
-//         createAt: _pantauuPaketmu.createDate,
-//         delivery: Delivery(
-//             serviceCode: _pantauuPaketmu.transaction?.serviceCode,
-//             insuranceFlag: _pantauuPaketmu.transaction?.insuranceFlag,
-//             codFlag: _pantauuPaketmu.codFlag,
-//             codFee: _pantauuPaketmu.codAmount,
-//             codOngkir: _pantauuPaketmu.repcssNetCodAmt.toString(),
-//             flatRate: _pantauuPaketmu.awbAmount,
-//             freightCharge: _pantauuPaketmu.awbAmount,
-//             specialInstruction: _pantauuPaketmu.awbSpecialIns,
-//             woodPackaging: _pantauuPaketmu.transaction?.packingkayuFlag,
-//             flatRateWithInsurance: _pantauuPaketmu.awbInsuranceValue,
-//             freightChargeWithInsurance: _pantauuPaketmu.awbInsuranceValue,
-//             insuranceFee: _pantauuPaketmu.awbInsuranceValue),
-//         goods: Goods(
-//           weight: _pantauuPaketmu.weightAwb,
-//           type: _pantauuPaketmu.transaction?.goodsType,
-//           amount: _pantauuPaketmu.awbGoodsValue,
-//           desc: _pantauuPaketmu.awbGoodsDescr,
-//           quantity: _pantauuPaketmu.qtyAwb,
-//         ),
-//         officerEntry: _pantauuPaketmu.transaction?.petugasEntry,
-//         orderId: _pantauuPaketmu.transaction?.orderId,
-//       );
-//     } else if (result.code == HttpStatus.notFound) {
-//       _showEmptyContainer = true;
-//     }
-//
-//     update();
-//   } on DioException catch (e) {
-//     var result = BaseResponse<PantauuPaketmuDetailModel>.fromJson(
-//       e.response?.data,
-//       (json) =>
-//           PantauuPaketmuDetailModel.fromJson(json as Map<String, dynamic>),
-//     );
-//     AppLogger.e('error fetching data: $e');
-//     AppSnackBar.error('error fetching data: ${result.message}');
-//     _showErrorContainer = true;
-//     update();
-//   }
-//
-//   _showLoadingIndicator = false;
-//
-//   await Future.delayed(const Duration(seconds: 2));
-//   isLoading = false;
-//   update();
-// }
 }

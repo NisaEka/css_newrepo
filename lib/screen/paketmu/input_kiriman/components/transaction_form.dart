@@ -93,7 +93,6 @@ class TransactionForm extends StatelessWidget {
                               controller: c.state.noReference,
                               hintText: 'No Referensi (opsional)'.tr,
                               width: Get.width / 2.4,
-                              // height: 46,
                               validator: (value) => value?.isNotEmpty ?? false
                                   ? value!.length < 8
                                       ? "Harus lebih dari 8 karakter".tr
@@ -153,7 +152,6 @@ class TransactionForm extends StatelessWidget {
                           inputType: TextInputType.number,
                           contentPadding: const EdgeInsets.only(
                               top: 0, bottom: 0, left: 40, right: 10),
-                          // width: Get.width / 2.4,
                           isRequired: c.state.insurance,
                           onChanged: (value) => c.getOngkir(),
                         ),
@@ -185,7 +183,6 @@ class TransactionForm extends StatelessWidget {
                               onChanged: (value) {
                                 c.state.insurance = value!;
                                 c.getOngkir();
-                                // value == false ? controller.hargaBarang.clear() : null;
                                 c.state.codKey.currentState?.validate();
                                 c.update();
                               },
@@ -246,10 +243,8 @@ class TransactionForm extends StatelessWidget {
                                   : Colors.lightBlueAccent,
                               onChanged: (bool? value) {
                                 c.state.woodPacking = value!;
-                                // var temp = c.state.specialInstruction.text;
                                 c.state.specialIns =
                                     c.state.specialInstruction.text;
-                                // c.state.specialInstruction.text = value == true ? "MOHON DIPACKING KAYU $temp" : temp.substring(21, temp.length);
                                 c.update();
                               },
                             ),
@@ -299,7 +294,6 @@ class TransactionForm extends StatelessWidget {
                                   CustomTextFormField(
                                     controller: c.state.goodLength,
                                     hintText: 'Panjang'.tr,
-                                    // hintText: 'Cm',
                                     width: Get.width / 3.7,
                                     inputType: TextInputType.number,
                                     suffixIcon: const SatuanFieldIcon(
@@ -318,7 +312,6 @@ class TransactionForm extends StatelessWidget {
                                   CustomTextFormField(
                                     controller: c.state.goodWidth,
                                     hintText: 'Lebar'.tr,
-                                    // hintText: 'Cm',
                                     width: Get.width / 3.7,
                                     inputType: TextInputType.number,
                                     suffixIcon: const SatuanFieldIcon(
@@ -337,7 +330,6 @@ class TransactionForm extends StatelessWidget {
                                   CustomTextFormField(
                                     controller: c.state.goodHeight,
                                     hintText: 'Tinggi'.tr,
-                                    // hintText: 'Cm',
                                     width: Get.width / 3.7,
                                     inputType: TextInputType.number,
                                     suffixIcon: const SatuanFieldIcon(
@@ -396,10 +388,6 @@ class TransactionForm extends StatelessWidget {
                                           validator: ValidationBuilder()
                                               .min(1000)
                                               .build(),
-                                          // validator: (value) =>
-                                          //     ((value?.digitOnly().toInt() ?? 0) < 1000 && c.state.account.state.accountService?.toUpperCase() == 'COD')
-                                          //         ? 'Harga COD Minimal 1000'.tr
-                                          //         : null,
                                           inputType: TextInputType.number,
                                           contentPadding: const EdgeInsets.only(
                                               top: 0,
@@ -654,19 +642,6 @@ class TransactionForm extends StatelessWidget {
                                 },
                               )
                             : const SizedBox(),
-                        // CustomFilledButton(
-                        //   color: whiteColor,
-                        //   borderColor: c.state.formValidate
-                        //       ? primaryColor(context)
-                        //       : greyColor,
-                        //   fontColor: c.state.formValidate
-                        //       ? primaryColor(context)
-                        //       : greyColor,
-                        //   title: 'Simpan ke Draft'.tr,
-                        //   onPressed: () {
-                        //     c.state.formValidate ? c.saveDraft() : null;
-                        //   },
-                        // ),
                       ],
                     ),
                   ),

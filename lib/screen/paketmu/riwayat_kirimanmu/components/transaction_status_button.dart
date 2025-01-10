@@ -76,7 +76,6 @@ class TransactionStatusButton extends StatelessWidget {
     required String label,
     required int count,
     required bool selected,
-    // VoidCallback? onTap,
     required bool isFirst,
     required bool isLast,
     String? value,

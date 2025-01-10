@@ -53,7 +53,6 @@ class ProfileScreen extends StatelessWidget {
               floatingActionButton: controller.state.menuModel.paketmuInput ==
                       "Y"
                   ? MenuIcon(
-                      // icon: IconsConstant.add,
                       icon: ImageConstant.paketmuIcon,
                       margin: const EdgeInsets.only(left: 38, bottom: 29),
                       radius: 100,
@@ -191,7 +190,6 @@ class ProfileScreen extends StatelessWidget {
                     )
                   ],
           ),
-          // : const SizedBox(),
         ],
       ),
     );

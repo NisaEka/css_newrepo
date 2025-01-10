@@ -25,7 +25,6 @@ class TransactionAccountCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Container(
-            // alignment: Alignment.topRight,
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: AppConst.isLightTheme(context) ? redJNE : warningColor,
@@ -51,11 +50,6 @@ class TransactionAccountCard extends StatelessWidget {
             child: CustomFormLabel(label: 'Services'.tr),
           ),
           const SizedBox(height: 10),
-          // controller.state.isServiceLoad
-          //     ? const Center(
-          //         child: Text('Loading services...'),
-          //       )
-          //     : const SizedBox(),
         ],
       ),
     );

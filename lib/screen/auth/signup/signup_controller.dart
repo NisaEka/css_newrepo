@@ -52,33 +52,6 @@ class SignUpController extends BaseController {
     update();
   }
 
-  // Future<void> mailValidation() async {
-  //   state.isLoading = true;
-  //   update();
-  //   try {
-  //     await auth
-  //         .getCheckMail(state.email.text)
-  //         .then((value) => value.data?.disposable == true || value.data?.publicDomain == false || value.data?.mx == false
-  //             ? Get.showSnackbar(
-  //                 GetSnackBar(
-  //                   icon: const Icon(
-  //                     Icons.warning,
-  //                     color: whiteColor,
-  //                   ),
-  //                   message: 'CSS tidak menerima pendaftaran menggunakan email temporary'.tr,
-  //                   isDismissible: true,
-  //                   duration: const Duration(seconds: 3),
-  //                   backgroundColor: errorColor,
-  //                 ),
-  //               )
-  //             : saveRegistration());
-  //   } catch (e) {
-  //     e.printError();
-  //   }
-  //   state.isLoading = false;
-  //   update();
-  // }
-
   Future<void> saveRegistration() async {
     state.isLoading = true;
     update();

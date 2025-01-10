@@ -30,8 +30,6 @@ class StickerMegahub1 extends StatelessWidget {
       child: Container(
         color: Colors.white,
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.center,
-          // mainAxisAlignment: ,
           children: [
             sticker1(),
             const SizedBox(height: 25),
@@ -100,7 +98,6 @@ class StickerMegahub1 extends StatelessWidget {
                   bottom: BorderSide()),
               children: <TableRow>[
                 TableRow(
-                  // decoration: BoxDecoration(border: Border.all()),
                   children: <Widget>[
                     Text(
                       data.delivery?.serviceCode ?? '-',
@@ -235,7 +232,6 @@ class StickerMegahub1 extends StatelessWidget {
 
   Future<Uint8List> generatePdf(PdfPageFormat format) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-    // final font = await PdfGoogleFonts.nunitoExtraLight();
     final img = await rootBundle.load(ImageConstant.logoJNE);
     final logoJNE = img.buffer.asUint8List();
 
@@ -245,7 +241,6 @@ class StickerMegahub1 extends StatelessWidget {
         build: (context) {
           return pw.Column(
             crossAxisAlignment: pw.CrossAxisAlignment.center,
-            // mainAxisAlignment: ,
             children: [
               pw.Container(
                 padding: const pw.EdgeInsets.all(15),
@@ -335,7 +330,6 @@ class StickerMegahub1 extends StatelessWidget {
                       width: Get.width / 3.6,
                       child: pw.Text(
                         '${data.shipper?.origin}-${data.destination?.facilityCode ?? data.destination?.cityZone ?? data.destination?.destinationCode?.substring(0, 3)} \n${data.receiver?.zipCode ?? ''}',
-                        // '${data.shipper?.origin} - ${data.receiver?.destinationCode}\n${data.receiver?.zipCode}',
                         textAlign: pw.TextAlign.center,
                         style: pw.TextStyle(fontWeight: pw.FontWeight.bold),
                       ),

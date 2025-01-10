@@ -19,12 +19,7 @@ class StickerMegahubHybrid3 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // RotatedBox(
-        //   quarterTurns: 1,
-        //   child: StickerMegahubHybrid2(data: data).sticker(),
-        // ),
         Transform.rotate(
-          // quarterTurns: 1,
           angle: 90 * 3.14 / 180,
           child: StickerMegahubHybrid2(
             data: data,

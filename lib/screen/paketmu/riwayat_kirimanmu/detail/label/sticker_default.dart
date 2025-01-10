@@ -53,7 +53,6 @@ class StickerDefault extends StatelessWidget {
                         BarcodeWidget(
                           barcode: Barcode.code128(
                             useCode128A: true,
-                            // escapes: true,
                           ),
                           color: greyDarkColor1,
                           data: data.orderId ?? '',
@@ -212,36 +211,15 @@ class StickerDefault extends StatelessWidget {
                                 ? const SizedBox(width: 10)
                                 : const SizedBox(width: 85),
                             Text(data.type == 'COD' ? data.type ?? '' : '',
-                                // data.account?.accountService == 'COD' ||
-                                //         data.account?.accountService == 'JLC'
-                                //     ? data.account?.accountService ?? ''
-                                //     : data.account?.accountService ==
-                                //             'COD ONGKIR'
-                                //         ? 'COD'
-                                //         : '',
                                 style:
                                     TextStyle(fontSize: 38, fontWeight: bold)),
                           ],
                         ),
                       ],
                     ),
-                    // CustomLabelText(
-                    //   title: "Packing Kayu:   ",
-                    //   value: data.delivery?.woodPackaging == "Y" ? "YES" : "NO",
-                    //   titleTextStyle: TextStyle(fontWeight: bold),
-                    //   valueTextStyle: const TextStyle(),
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     const SizedBox(width: 10),
-                    //     Text(data.account?.accountService ?? '',
-                    //         style: TextStyle(fontSize: 38, fontWeight: bold)),
-                    //   ],
-                    // ),
                   ],
                 ),
                 Row(
-                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomLabelText(
                       title: "Estimasi Ongkir: Rp",
@@ -278,7 +256,6 @@ class StickerDefault extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    // "${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.receiver?.destinationCode ?? ''}",
                     data.receiver?.destinationCode ?? '',
                     style: TextStyle(
                       fontWeight: bold,
@@ -301,13 +278,10 @@ class StickerDefault extends StatelessWidget {
                       BarcodeWidget(
                         barcode: Barcode.code128(
                           useCode128A: true,
-                          // escapes: true,
                         ),
                         data: data.awb ?? '',
                         drawText: true,
                         style: const TextStyle(fontSize: 20),
-                        // height: 80,
-                        // width: Get.width ,
                       )
                     ],
                   ),

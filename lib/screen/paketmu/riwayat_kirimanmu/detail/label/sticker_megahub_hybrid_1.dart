@@ -70,7 +70,6 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                   ),
                   decoration: const BoxDecoration(
                     border: Border(
-                      // right: BorderSide(),
                       bottom: BorderSide(),
                     ),
                   ),
@@ -93,18 +92,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  // width: (Get.width - 50) / 1.5,
-                  // decoration: const BoxDecoration(
-                  //   border: Border(
-                  //     right: BorderSide(),
-                  //   ),
-                  // ),
                   child: Column(
-                    // defaultVerticalAlignment: TableCellVerticalAlignment.top,
-                    // border: const TableBorder(
-                    //   verticalInside: BorderSide(),
-                    //   right: BorderSide(),
-                    // ),
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,12 +110,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                                   height: 20,
                                 ),
                                 const SizedBox(height: 5),
-                                // const SolidBorder(
-                                //   width: 55,
-                                //   height: 1,
-                                // ),
                                 Center(
-                                  // height: 20,
                                   child: Text(
                                     data.delivery?.serviceCode ?? '-',
                                     style: sublistTitleTextStyle,
@@ -146,7 +129,6 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                             width: Get.width / 3,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              // mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
                                   "Pengirim : ${data.shipper?.name ?? ''}",
@@ -198,10 +180,6 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                       style: labelTextStyle),
                   Text('Kota Tujuan: ${data.receiver?.city ?? ''}',
                       style: labelTextStyle),
-                  // stickerLabel == "Sticker Label Vertikal (Mega HUB 1)"
-                  //     ? Text('Order ID: ${data.orderId ?? '-'}',
-                  //     style: labelTextStyle)
-                  //     : const SizedBox(),
                   Text('Order ID: ${data.orderId ?? '-'}',
                       style: labelTextStyle),
                   Text(

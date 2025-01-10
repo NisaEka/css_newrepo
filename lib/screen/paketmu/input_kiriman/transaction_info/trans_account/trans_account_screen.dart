@@ -26,7 +26,6 @@ class AkunTransaksiScreen extends StatelessWidget {
     return AppBar(
       shadowColor: greyColor,
       elevation: 1,
-      // backgroundColor: whiteColor,
       leading: const CustomBackButton(),
       title: Text(
         'Pilih Akun Transaksi'.tr,

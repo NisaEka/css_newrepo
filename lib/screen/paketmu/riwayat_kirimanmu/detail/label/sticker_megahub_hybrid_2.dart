@@ -73,20 +73,15 @@ class StickerMegahubHybrid2 extends StatelessWidget {
               child: BarcodeWidget(
                 barcode: Barcode.code128(
                   useCode128A: true,
-                  // escapes: true,
                 ),
                 data: data.awb ?? '',
                 drawText: false,
                 style: const TextStyle(fontSize: 20),
                 height: 87,
-                // width: Get.width ,
               ),
             ),
-            // const Divider(height: 1),
             SolidBorder(height: 1, width: Get.width - 51),
             Row(
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
                   width: (Get.width - 51) / 1.5,
@@ -110,17 +105,14 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     data.type ?? '',
-                    // data.delivery?.codFlag == 'Y' ? 'COD' : 'NON COD',
                     style: TextStyle(fontWeight: bold),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                // const SolidBorder(width: 0, height: 50),
               ],
             ),
             SolidBorder(height: 1, width: Get.width - 51),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
@@ -130,8 +122,6 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                       style: labelTextStyle),
                 ),
                 const SolidBorder(width: 1, height: 50),
-                // const SolidBorder(width: 0, height: 50),
-                // const SolidBorder(width: 0, height: 50),
                 Container(
                   width: (Get.width - 51) / 3.2,
                   alignment: Alignment.center,
@@ -140,22 +130,14 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                   ),
                 ),
-                // const SolidBorder(width: 0, height: 50),
-                // const SolidBorder(width: 0, height: 50),
               ],
             ),
             SolidBorder(height: 1, width: Get.width - 51),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   width: (Get.width - 50) / 1.5,
-                  // decoration: const BoxDecoration(
-                  //   border: Border(
-                  //     right: BorderSide(),
-                  //   ),
-                  // ),
                   child: Table(
                     defaultVerticalAlignment: TableCellVerticalAlignment.middle,
                     border: const TableBorder(
@@ -179,11 +161,6 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                           ),
                           Container(
                             padding: const EdgeInsets.all(3),
-                            // decoration: const BoxDecoration(
-                            //   border: Border(
-                            //     left: BorderSide(),
-                            //   ),
-                            // ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -211,7 +188,6 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                                     ? Text('Order ID: ${data.orderId ?? '-'}',
                                         style: labelTextStyle)
                                     : const SizedBox(),
-                                // Text('Order ID: ${data.orderId}', style: labelTextStyle),
                               ],
                             ),
                           ),
@@ -220,18 +196,15 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                     ],
                   ),
                 ),
-                // const SolidBorder(width: 1, height: 94),
                 Container(
                   width: (Get.width - 51) / 3.2,
                   alignment: Alignment.center,
-                  // color: Colors.grey,
                   child: Text(
                     "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.destination?.facilityCode?.substring(0, 3) ?? data.destination?.cityZone ?? ''}\n${data.receiver?.zipCode}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                // const SolidBorder(width: 0, height: 94),
               ],
             )
           ],
@@ -239,12 +212,4 @@ class StickerMegahubHybrid2 extends StatelessWidget {
       ),
     );
   }
-
-// String _maskPhoneNumber(String phoneNumber) {
-//   if (phoneNumber.length > 6) {
-//     return phoneNumber.substring(0, phoneNumber.length - 6) + '*' * 6;
-//   } else {
-//     return phoneNumber;
-//   }
-// }
 }
