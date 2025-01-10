@@ -48,6 +48,7 @@ class _StatusFilterFieldState extends State<StatusFilterField> {
             }),
             child: Container(
               alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(horizontal: 2),
               decoration: BoxDecoration(
                 color: selectedStatusKiriman == widget.statuses[index]
                     ? primaryColor(context)
@@ -60,22 +61,23 @@ class _StatusFilterFieldState extends State<StatusFilterField> {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Text(
-                widget.statuses[index].tr,
+                widget.statuses[index].capitalize?.tr.toUpperCase() ?? '',
                 textAlign: TextAlign.center,
                 style: listTitleTextStyle.copyWith(
-                    color: selectedStatusKiriman == widget.statuses[index]
-                        ? whiteColor
-                        : primaryColor(context)),
+                  color: selectedStatusKiriman == widget.statuses[index]
+                      ? whiteColor
+                      : primaryColor(context),
+                ),
               ),
             ),
           ),
           childCount: widget.statuses.length,
         ),
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 140,
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 16,
-          childAspectRatio: 2,
+          maxCrossAxisExtent: 130,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
+          childAspectRatio: 1.5,
         ),
       ),
     );

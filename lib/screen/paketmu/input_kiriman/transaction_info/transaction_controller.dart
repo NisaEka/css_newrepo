@@ -614,7 +614,6 @@ class TransactionController extends BaseController {
     state.isLoading = true;
     update();
 
-    // muncul popup kalo coud amount text <= cod amount minimum
     var trans = DataTransactionModel(
       delivery: Delivery(
         serviceCode: state.selectedService?.serviceDisplay,
@@ -673,7 +672,6 @@ class TransactionController extends BaseController {
             : state.codOngkir
                 ? "YES"
                 : "NO",
-        // custId:
         deliveryPrice: state.freightCharge,
         deliveryPricePublish: state.freightCharge,
         destinationCode: trans.receiver?.destinationCode,
@@ -736,22 +734,17 @@ class TransactionController extends BaseController {
           deleteDraft(state.draftIndex!);
         }
         if (v.code == 400 || v.code == 500) {
-          AppSnackBar.custom(
-            message: v.message,
-            backgroundColor: Colors.red,
-            icon: const Icon(Icons.warning, color: warningColor),
-            snackStyle: SnackStyle.FLOATING,
-            margin: const EdgeInsets.only(bottom: 0),
-          );
+          AppSnackBar.error(v.error?.first ?? v.message);
         } else {
           Get.offAll(_successScreen(
-              data: v.data ?? TransactionModel(),
-              message: 'Transaksi Berhasil'.tr));
+            data: v.data ?? TransactionModel(),
+            message: 'Transaksi Berhasil'.tr,
+          ));
         }
       });
     } catch (e, i) {
       e.printError();
-      i.printError();
+      i.printError(info: "error post transaction");
       AppLogger.e("anda telah offline, transaksi akan disimpan ke draft");
       saveDraft();
     }
