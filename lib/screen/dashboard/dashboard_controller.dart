@@ -4,6 +4,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
@@ -22,7 +23,6 @@ import 'package:css_mobile/screen/dashboard/dashboard_state.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/shipper_info/shipper_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
@@ -805,25 +805,28 @@ class DashboardController extends BaseController {
     AppLogger.d("last date : $date");
     // if (date.isNotEmpty) {
     try {
-      final agg = await aggregation.getAggregationReport(QueryModel(
+      final agg = await aggregation.getAggregationTotal(QueryModel(
         limit: 0,
-        between: [
-          {
-            "mpayWdrGrpPayDatePaid": [
-              // "2024-12-16 00:00:00", "2024-12-16 23:59:59",
-              date
-                  .toDate(originFormat: "yyyy-MM-dd hh:mm:ss")
-                  ?.subtract(const Duration(hours: 24))
-                  .toIso8601String(),
-              date,
-            ]
-          }
-        ],
+        // between: [
+        //   {
+        //     "mpayWdrGrpPayDatePaid": [
+        //       // "2024-12-16 00:00:00", "2024-12-16 23:59:59",
+        //       date
+        //           .toDate(originFormat: "yyyy-MM-dd hh:mm:ss")
+        //           ?.subtract(const Duration(hours: 24))
+        //           .toIso8601String(),
+        //       date,
+        //     ]
+        //   }
+        // ],
         sort: [
           {"mpayWdrGrpPayDatePaid": "desc"}
         ],
       ));
-      state.aggregationModel = agg.data?.first;
+
+      // state.aggregationModel = agg.data?.first;
+      state.aggregationModel =
+          AggregationModel(mpayWdrGrpPayNetAmt: agg.data?.total);
     } catch (e, i) {
       AppLogger.e("error get aggregation dashboard : $e");
       AppLogger.e("error get aggregation dashboard : $i");
