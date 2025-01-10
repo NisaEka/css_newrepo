@@ -229,12 +229,15 @@ class TransactionForm extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: 5),
-                            Text(
-                              "Packing Kayu".tr,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium
-                                  ?.copyWith(fontWeight: regular),
+                            SizedBox(
+                              width: Get.width * 0.2,
+                              child: Text(
+                                "Packing Kayu".tr,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(fontWeight: regular),
+                              ),
                             ),
                             Switch(
                               value: c.state.woodPacking,

@@ -630,7 +630,6 @@ class TransactionController extends BaseController {
     state.isLoading = true;
     update();
 
-    // muncul popup kalo coud amount text <= cod amount minimum
     var trans = DataTransactionModel(
       delivery: Delivery(
         serviceCode: state.selectedService?.serviceDisplay,
@@ -657,7 +656,6 @@ class TransactionController extends BaseController {
       account: state.account,
       origin: state.origin,
       destination: state.destination,
-      // destination: Destination(code: state.destination.destinationCode, desc: state.destination.cityName),
       goods: Goods(
           type: state.goodType.text,
           desc: state.goodName.text,
@@ -690,7 +688,6 @@ class TransactionController extends BaseController {
             : state.codOngkir
                 ? "YES"
                 : "NO",
-        // custId:
         deliveryPrice: state.freightCharge,
         deliveryPricePublish: state.freightCharge,
         destinationCode: trans.receiver?.destinationCode,
@@ -753,22 +750,17 @@ class TransactionController extends BaseController {
           deleteDraft(state.draftIndex!);
         }
         if (v.code == 400 || v.code == 500) {
-          AppSnackBar.custom(
-            message: v.message,
-            backgroundColor: Colors.red,
-            icon: const Icon(Icons.warning, color: warningColor),
-            snackStyle: SnackStyle.FLOATING,
-            margin: const EdgeInsets.only(bottom: 0),
-          );
+          AppSnackBar.error(v.error?.first ?? v.message);
         } else {
           Get.offAll(_successScreen(
-              data: v.data ?? TransactionModel(),
-              message: 'Transaksi Berhasil'.tr));
+            data: v.data ?? TransactionModel(),
+            message: 'Transaksi Berhasil'.tr,
+          ));
         }
       });
     } catch (e, i) {
       e.printError();
-      i.printError();
+      i.printError(info: "error post transaction");
       AppLogger.e("anda telah offline, transaksi akan disimpan ke draft");
       saveDraft();
     }
@@ -800,32 +792,10 @@ class TransactionController extends BaseController {
             color: errorColor,
             size: 100,
           ),
-          // title: "Error".tr,
           subtitle:
               "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
           confirmButtonTitle: "OK",
           onConfirm: Get.back,
-          // content: Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     Text(
-          //       "Error".tr,
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.titleLarge,
-          //     ),
-          //     Text(
-          //       "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.bodyLarge,
-          //     ),
-          //     CustomFilledButton(
-          //       color: blueJNE,
-          //       width: Get.width / 3,
-          //       title: "OK".tr,
-          //       onPressed: () => Get.back(),
-          //     )
-          //   ],
-          // ),
         ),
       ));
     } else if ((state.codAmountText.text.digitOnly().toInt() > 10000000)) {
@@ -840,27 +810,6 @@ class TransactionController extends BaseController {
           subtitle: "${'Harga COD tidak boleh Lebih dari'.tr} Rp.10.000.000",
           confirmButtonTitle: "OK",
           onConfirm: Get.back,
-          // content: Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     Text(
-          //       "Error".tr,
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.titleLarge,
-          //     ),
-          //     Text(
-          //       "${'Harga COD tidak boleh kurang dari'.tr} Rp.${state.getCodAmountMinimum.toInt().toCurrency()}",
-          //       textAlign: TextAlign.center,
-          //       style: Theme.of(context).textTheme.bodyLarge,
-          //     ),
-          //     CustomFilledButton(
-          //       color: blueJNE,
-          //       width: Get.width / 3,
-          //       title: "OK".tr,
-          //       onPressed: () => Get.back(),
-          //     )
-          //   ],
-          // ),
         ),
       ));
     } else {
