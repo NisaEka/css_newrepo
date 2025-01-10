@@ -90,7 +90,9 @@ class FacilityFormBankScreen extends StatelessWidget {
         color: controller.buttonEnabled ? redJNE : greyColor,
         title: 'Ajukan'.tr,
         onPressed: () {
-          controller.submitData();
+          if (controller.formKey.currentState?.validate() == true) {
+            controller.submitData();
+          }
         },
       ),
     );

@@ -62,34 +62,38 @@ class FacilityFormExistingScreen extends StatelessWidget {
         SliverToBoxAdapter(
             child: Container(
                 padding: _defaultFormPadding(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTextFormField(
-                      controller: controller.name,
-                      hintText: 'Nama'.tr,
-                      helperText: 'Nama customer yang terdaftar'.tr,
-                      validator: ValidationBuilder()
-                          .minLength(3)
-                          .maxLength(32)
-                          .build(),
-                    ),
-                    CustomTextFormField(
-                      controller: controller.email,
-                      hintText: 'Alamat email'.tr,
-                      helperText: 'Alamat email terdaftar saat kerjasama'.tr,
-                      inputType: TextInputType.emailAddress,
-                      inputFormatters: const [],
-                      validator: ValidationBuilder().email().build(),
-                    ),
-                    CustomTextFormField(
-                      controller: controller.phone,
-                      hintText: 'Nomor Telepon'.tr,
-                      helperText: 'Nomor telepon yang terdaftar di akun JNE'.tr,
-                      inputType: TextInputType.phone,
-                      validator: ValidationBuilder().phone().build(),
-                    )
-                  ],
+                child: Form(
+                  key: controller.formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextFormField(
+                        controller: controller.name,
+                        hintText: 'Nama'.tr,
+                        helperText: 'Nama customer yang terdaftar'.tr,
+                        validator: ValidationBuilder()
+                            .minLength(3)
+                            .maxLength(32)
+                            .build(),
+                      ),
+                      CustomTextFormField(
+                        controller: controller.email,
+                        hintText: 'Alamat email'.tr,
+                        helperText: 'Alamat email terdaftar saat kerjasama'.tr,
+                        inputType: TextInputType.emailAddress,
+                        inputFormatters: const [],
+                        validator: ValidationBuilder().email().build(),
+                      ),
+                      CustomTextFormField(
+                        controller: controller.phone,
+                        hintText: 'Nomor Telepon'.tr,
+                        helperText:
+                            'Nomor telepon yang terdaftar di akun JNE'.tr,
+                        inputType: TextInputType.phone,
+                        validator: ValidationBuilder().phone().build(),
+                      )
+                    ],
+                  ),
                 )))
       ],
     );

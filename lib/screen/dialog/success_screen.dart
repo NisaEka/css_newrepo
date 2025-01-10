@@ -80,6 +80,11 @@ class SuccessScreen extends StatelessWidget {
                         ? SizedBox(
                             height: customInfo != null ? null : Get.width * 0.5,
                             width: Get.width,
+                            child: Text(
+                              message ?? '',
+                              style: Theme.of(context).textTheme.titleLarge,
+                              textAlign: TextAlign.center,
+                            ),
                           )
                         : const SizedBox(),
                     customInfo ?? const SizedBox()

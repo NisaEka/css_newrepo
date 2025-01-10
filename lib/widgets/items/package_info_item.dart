@@ -22,19 +22,16 @@ class PackageInfoItem extends StatelessWidget {
     return Container(
       width: Get.width,
       margin: const EdgeInsets.symmetric(horizontal: 30),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         // color: warningDarkColor.withOpacity(0.7),
         border: Border.all(
-          color: AppConst.isLightTheme(context)
-              ? blueJNE
-              : warningColor,
-          width: 2.0
-        )
+          color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+          width: 2.0,
+        ),
       ),
-      child:
-      Column(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -43,35 +40,29 @@ class PackageInfoItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomLabelText(
-                title: '',
-                value: message?.tr ?? '',
-                fontColor: AppConst.isLightTheme(context)
-                    ? blueJNE
-                    : warningColor,
+              CustomFormLabel(
+                label: message?.tr ?? '',
+                fontColor:
+                    AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                isBold: true,
               ),
             ],
           ),
           ListTile(
-            title:
-            CustomFormLabel(
+            title: CustomFormLabel(
               label: data.awb ?? '',
-              fontColor: AppConst.isLightTheme(context)
-                  ? blueJNE
-                  : warningColor,
+              fontColor:
+                  AppConst.isLightTheme(context) ? blueJNE : warningColor,
               isBold: true,
             ),
             leading: MenuIcon(
               radius: 100,
-              background: AppConst.isLightTheme(context)
-                  ? blueJNE
-                  : whiteColor,
+              background: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
               showContainer: false,
               menuIcon: Icon(
                 CupertinoIcons.cube_fill,
-                color: AppConst.isLightTheme(context)
-                    ? whiteColor
-                    : warningColor,
+                color:
+                    AppConst.isLightTheme(context) ? whiteColor : warningColor,
               ),
             ),
             contentPadding: EdgeInsets.zero,
@@ -87,9 +78,7 @@ class PackageInfoItem extends StatelessWidget {
           CustomLabelText(
             title: 'Nama Barang'.tr,
             value: data.goodsDesc ?? '',
-            fontColor: AppConst.isLightTheme(context)
-                ? blueJNE
-                : warningColor,
+            fontColor: AppConst.isLightTheme(context) ? blueJNE : warningColor,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,21 +87,20 @@ class PackageInfoItem extends StatelessWidget {
               CustomLabelText(
                 title: 'Berat Kiriman'.tr,
                 value: '${data.weight?.toInt()} Kg',
-                fontColor: AppConst.isLightTheme(context)
-                    ? blueJNE
-                    : warningColor,
+                fontColor:
+                    AppConst.isLightTheme(context) ? blueJNE : warningColor,
               ),
               Align(
                 alignment: Alignment.centerRight,
-                child:
-                data.deliveryPrice != null
+                child: data.deliveryPrice != null
                     ? CustomLabelText(
-                  title: 'Ongkos Kirim'.tr,
-                  value: "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
-                  fontColor: AppConst.isLightTheme(context)
-                      ? blueJNE
-                      : warningColor,
-                )
+                        title: 'Ongkos Kirim'.tr,
+                        value:
+                            "Rp. ${data.deliveryPrice?.toInt().toCurrency()}",
+                        fontColor: AppConst.isLightTheme(context)
+                            ? blueJNE
+                            : warningColor,
+                      )
                     : const SizedBox(),
               ),
             ],
@@ -125,14 +113,12 @@ class PackageInfoItem extends StatelessWidget {
               CustomLabelText(
                 title: 'Dari'.tr,
                 value: data.originDesc ?? '',
-                fontColor: AppConst.isLightTheme(context)
-                    ? blueJNE
-                    : warningColor,
+                fontColor:
+                    AppConst.isLightTheme(context) ? blueJNE : warningColor,
               ),
               Transform.flip(
                   flipX: false,
-                  child: Icon(
-                      Icons.arrow_circle_right_rounded,
+                  child: Icon(Icons.arrow_circle_right_rounded,
                       color: AppConst.isLightTheme(context)
                           ? blueJNE
                           : warningColor)),
@@ -141,9 +127,8 @@ class PackageInfoItem extends StatelessWidget {
                 child: CustomLabelText(
                   title: 'Menuju'.tr,
                   value: data.destinationDesc ?? '',
-                  fontColor: AppConst.isLightTheme(context)
-                      ? blueJNE
-                      : warningColor,
+                  fontColor:
+                      AppConst.isLightTheme(context) ? blueJNE : warningColor,
                 ),
               ),
             ],

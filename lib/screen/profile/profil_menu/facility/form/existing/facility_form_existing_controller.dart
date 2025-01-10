@@ -11,17 +11,21 @@ import 'package:get/get.dart';
 class FacilityFormExistingController extends BaseController {
   final String _facilityType = Get.arguments['facility_type'];
 
+  final formKey = GlobalKey<FormState>();
   final name = TextEditingController();
   final email = TextEditingController();
   final phone = TextEditingController();
 
   bool _showLoadingIndicator = false;
+
   bool get showLoadingIndicator => _showLoadingIndicator;
 
   bool _createDataSuccess = false;
+
   bool get createDataSuccess => _createDataSuccess;
 
   bool _showInvalidInputMessage = false;
+
   bool get showInvalidInputMessage => _showInvalidInputMessage;
 
   onSubmit() async {
@@ -65,7 +69,8 @@ class FacilityFormExistingController extends BaseController {
   bool _dataIsValid() {
     return name.text.length > 3 &&
         phone.text.isPhoneNumber &&
-        email.text.isEmail;
+        email.text.isEmail &&
+        (formKey.currentState?.validate() == true);
   }
 
   FacilityCreateExistingModel _composeData() {

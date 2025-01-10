@@ -51,15 +51,16 @@ class FacilityFormInfoScreen extends StatelessWidget {
           color: redJNE,
           title: 'Selanjutnya'.tr,
           onPressed: () async {
-            if (c.state.pickedImageUrl == null) {
-              c.pickImageFailed = true;
-              return;
+            if (c.state.formKey.currentState?.validate() == true) {
+              if (c.state.pickedImageUrl == null) {
+                c.pickImageFailed = true;
+                return;
+              }
+              Get.to(() => const FacilityFormReturnScreen(), arguments: {
+                'data': await c.submitData(),
+                'destination': c.state.selectedDestination,
+              });
             }
-
-            Get.to(() => const FacilityFormReturnScreen(), arguments: {
-              'data': await c.submitData(),
-              'destination': c.state.selectedDestination,
-            });
           },
         ));
   }
@@ -114,6 +115,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   ),
                   DestinationDropdown(
                     onChanged: (value) {
+                      c.state.formKey.currentState?.validate();
                       c.state.selectedDestination = value;
                       c.update();
                     },
@@ -125,31 +127,6 @@ class FacilityFormInfoScreen extends StatelessWidget {
                         ? "Loading..."
                         : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
                   ),
-                  // CustomSearchDropdownField<Destination>(
-                  //   asyncItems: (String filter) => c.getDestinationList(filter),
-                  //   itemBuilder: (context, e, b) {
-                  //     return GestureDetector(
-                  //       onTap: () => c.update(),
-                  //       child: Container(
-                  //         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                  //         child: Text(e.asFacilityFormFormat()),
-                  //       ),
-                  //     );
-                  //   },
-                  //   itemAsString: (Destination e) => e.asFacilityFormFormat(),
-                  //   onChanged: (value) {
-                  //     c.state.selectedDestination = value;
-                  //     c.update();
-                  //   },
-                  //   value: c.state.selectedDestination,
-                  //   isRequired: c.state.selectedDestination == null ? true : false,
-                  //   readOnly: false,
-                  //   hintText: c.state.isLoadDestination ? "Loading..." : "Kota / Kecamatan / Kelurahan / Kode Pos".tr,
-                  //   textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
-                  //         color: AppConst.isLightTheme(context) ? Colors.black : warningColor,
-                  //       ),
-                  // ),
-                  // textStyle: Theme.of(context).textTheme.titleSmall),
                   CustomTextFormField(
                     controller: c.state.phone,
                     hintText: 'No. Telepon'.tr,

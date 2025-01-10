@@ -52,8 +52,9 @@ class EclaimItems extends StatelessWidget {
                         (index) => const EclaimListItem(isLoading: true),
                       ),
                     ),
-                    noItemsFoundIndicatorBuilder: (context) =>
-                        const DataEmpty(),
+                    noItemsFoundIndicatorBuilder: (context) => const DataEmpty(
+                      height: 100,
+                    ),
                     noMoreItemsIndicatorBuilder: (context) => Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Center(
