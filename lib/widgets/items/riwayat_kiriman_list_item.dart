@@ -229,8 +229,6 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                         padding: const EdgeInsets.all(6),
                                         width: isLoading ? Get.width / 5 : null,
                                         decoration: BoxDecoration(
-                                          //DIBATALKAN OLEH KAMU
-                                          //DALAM PENINJAUAN error
                                           color: data
                                                           ?.statusAwb ==
                                                       "MASIH DI KAMU" ||
@@ -306,8 +304,10 @@ class RiwayatKirimanListItem extends StatelessWidget {
                                               BorderRadius.circular(5),
                                         ),
                                         child: Text(
-                                          data?.statusAwb?.tr ??
-                                              status?.tr ??
+                                          data?.statusAwb?.capitalize?.tr
+                                                  .toUpperCase() ??
+                                              status?.capitalize?.tr
+                                                  .toUpperCase() ??
                                               '',
                                           style: Theme.of(context)
                                               .textTheme
