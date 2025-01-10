@@ -56,7 +56,9 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 16),
                 TextRowWidget(
                   title: "Status Kiriman".tr,
-                  value: c.state.transactionModel?.statusAwb?.tr ?? '-',
+                  value: c.state.transactionModel?.statusAwb?.capitalize?.tr
+                          .toUpperCase() ??
+                      '-',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
                 TextRowWidget(
@@ -183,15 +185,15 @@ class TransactionDetail extends StatelessWidget {
                 const Divider(color: greyColor),
                 const SizedBox(height: 6),
                 c.state.transactionModel?.codOngkir == "NO" &&
-                    c.state.transactionModel?.codFlag == "YES"
-                ? TextRowWidget(
-                  title: "COD Amount".tr,
-                  value:
-                  'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
-                  isLoading: c.state.isLoading || c.state.data == null,
-                  titleStyle: Theme.of(context).textTheme.titleMedium,
-                  valueStyle: Theme.of(context).textTheme.titleMedium,
-                )
+                        c.state.transactionModel?.codFlag == "YES"
+                    ? TextRowWidget(
+                        title: "COD Amount".tr,
+                        value:
+                            'Rp. ${c.state.transactionModel?.codAmount?.toCurrency().toString() ?? '0'}',
+                        isLoading: c.state.isLoading || c.state.data == null,
+                        titleStyle: Theme.of(context).textTheme.titleMedium,
+                        valueStyle: Theme.of(context).textTheme.titleMedium,
+                      )
                     : const SizedBox(),
                 TextRowWidget(
                   title: "Total Ongkos Kirim".tr,

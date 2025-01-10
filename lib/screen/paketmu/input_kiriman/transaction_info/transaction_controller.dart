@@ -868,7 +868,7 @@ class TransactionController extends BaseController {
                         : const DetailTransactionScreen(),
                     arguments: {
                       'awb': data?.awb,
-                      'data': data,
+                      'data': data?.copyWith(statusAwb: 'MASIH DI KAMU'),
                       'fromMenu': false,
                     })?.then((_) => Get.offAll(() => const DashboardScreen()));
               }),
