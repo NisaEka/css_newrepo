@@ -13,7 +13,6 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
 
   final void Function(dynamic)? onChanged;
 
-  // final ValueChanged<T?>? onChanged;
   final List<T>? items;
   final String Function(T) itemAsString;
   final Widget Function(BuildContext, T, bool) itemBuilder;
@@ -90,7 +89,6 @@ class _CustomSearchDropdownFieldState<T>
                   color: AppConst.isLightTheme(context)
                       ? greyDarkColor1
                       : whiteColor,
-                  // fontWeight: FontWeight.w600,
                 ),
             decoration: InputDecoration(
               label: Text(widget.label ?? widget.hintText ?? ''),
@@ -117,14 +115,7 @@ class _CustomSearchDropdownFieldState<T>
               if (value == null ||
                   value == widget.hintText ||
                   value == widget.label) {
-                // return validator!(value as T);
-                // StorageCore().readString(StorageCore.localeApp).then((value) {
-                //   if (value == 'id') {
-                //     return "Masukan tidak boleh kosong";
-                //   } else {
                 return "Masukan tidak boleh kosong".tr;
-                //   }
-                // });
               }
             }
             return null;

@@ -117,7 +117,6 @@ class TransactionCard extends StatelessWidget {
                           ),
                     ],
                   ),
-                  // SizedBox(height: innerPadding ?? 13),
                   count.toString().length >= 5
                       ? SizedBox(height: innerPadding ?? 17)
                       : SizedBox(height: innerPadding ?? 13),
@@ -172,7 +171,6 @@ class TransactionCard extends StatelessWidget {
                   count.toString().length >= 5
                       ? SizedBox(height: innerPadding ?? 17)
                       : SizedBox(height: innerPadding ?? 13),
-                  // SizedBox(height: innerPadding ?? 13),
                   Text(
                     subtitle,
                     style: Theme.of(context)

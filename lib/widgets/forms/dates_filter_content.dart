@@ -55,13 +55,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
         children: [
           CustomFormLabel(label: widget.label ?? 'Tanggal Entry'.tr),
           const SizedBox(height: 10),
-          // Customradiobutton(
-          //   title: "Semua Tanggal".tr,
-          //   value: '0',
-          //   groupValue: dateFilter,
-          //   onChanged: (value) => setState(() => selectDateFilter(0)),
-          //   onTap: () => setState(() => selectDateFilter(0)),
-          // ),
           Customradiobutton(
             title: "Hari Ini".tr,
             value: '3',
@@ -121,7 +114,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
                     ));
                   });
                 }),
-                // hintText: 'Dari Tanggal',
               ),
               CustomTextFormField(
                 controller: endDateField,
@@ -144,8 +136,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
               ),
             ],
           ),
-          // CustomFormLabel(label: 'Status Kiriman'.tr),
-          // const SizedBox(height: 10),
         ],
       ),
     );
@@ -160,7 +150,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
       endDate = null;
       startDateField.clear();
       endDateField.clear();
-      // widget.onChanged([]);
     } else if (filter == 1) {
       startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)

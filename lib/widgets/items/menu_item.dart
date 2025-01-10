@@ -57,7 +57,6 @@ class MenuItem extends StatelessWidget {
                     isActive: isActive,
                   ),
                   SizedBox(
-                    // width: 65,
                     child: Text(
                       isLoading
                           ? ""

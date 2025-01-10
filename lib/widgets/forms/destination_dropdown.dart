@@ -71,10 +71,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
     return widget.showfromBottom
         ? CustomTextFormField(
             controller: widget.controller,
-            // items: [],
             hintText: widget.label ?? "Kota Tujuan".tr,
-            // label: '',
-            // textStyle: hintTextStyle,
             readOnly: true,
             isRequired: true,
             suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -90,16 +87,6 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.asFacilityFormFormat(),
-                  // '${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
-                  //         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-                  //         '${e.cityName == null ? '' : '${e.cityName}; '}'
-                  //         '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                  //         '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                  //         '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
-                  //     .splitMapJoin(
-                  //   ';',
-                  //   onMatch: (p0) => '; ',
-                  // ),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: textColor(context),
                       ),
@@ -109,13 +96,6 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             itemAsString: widget.itemAsString ??
                 (Destination e) => ''
                     '${e.asFacilityFormFormat()}',
-            // '${e.zipCode == null ? '' : '${e.zipCode}; '}'
-            // '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-            // '${e.cityName == null ? '' : '${e.cityName}; '}'
-            // '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-            // '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-            // '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
-            // '${e.countryName == null ? '' : '${e.countryName}'}',
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
@@ -159,8 +139,6 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
               CustomSearchField(
                 controller: searchTextfield,
                 hintText: 'Cari'.tr,
-                // onClear: () => setState(()=> searchTextfield.clear()),
-                // validate: state.searchCity.text.length < 3,
                 margin: EdgeInsets.zero,
                 autoFocus: true,
                 validationText: 'Masukan 3 atau lebih karakter'.tr,
@@ -172,12 +150,9 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                   setState(() {});
                 },
               ),
-              // const SizedBox(height: 10),
               Expanded(
                 child: FutureBuilder(
-                  // future: getOriginList(state.searchCity.text == '' ? 'jak' : state.searchCity.text),
                   future: getDestinationList(searchTextfield.text),
-                  // initialData: (title == "Kota Asal" || title == "Origin") ? state.originList : state.destinationList,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -211,7 +186,6 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {
-            // widget.onSelect(post);
             widget.value?.copyWith(
               id: post.id,
               countryName: post.countryName,

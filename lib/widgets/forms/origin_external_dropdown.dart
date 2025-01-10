@@ -181,10 +181,7 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
-                      // if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                       return buildPosts(snapshot.data, title);
-                      // } else {
-                      //   return const Center(child: DataEmpty());
                     }
                   },
                 ),

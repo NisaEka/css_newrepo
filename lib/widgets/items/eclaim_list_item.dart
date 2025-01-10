@@ -83,7 +83,6 @@ class EclaimListItem extends StatelessWidget {
                       size: 18,
                     ),
                     Text(
-                      // 'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!)) : '0'}',
                       'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!.replaceAll('.', ''))) : '0'}',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,

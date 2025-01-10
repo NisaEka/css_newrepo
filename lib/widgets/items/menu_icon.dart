@@ -67,38 +67,7 @@ class MenuIcon extends StatelessWidget {
                       : (isTransparent ? blueJNE : Colors.transparent))),
             ),
           ),
-          child: menuIcon ?? Image.asset(icon ?? '', height: size ?? 50)
-          // Stack(
-          //   children: [
-          //     Icon(
-          //       CupertinoIcons.cube,
-          //       size: size ?? 50,
-          //       color: iconColor ?? (AppConst.isLightTheme(context) ? (isTransparent ? blueJNE : whiteColor) : infoColor),
-          //     ),
-          //     Positioned(
-          //       bottom: 2,
-          //       right: -1,
-          //       child: Container(
-          //         width: size != null ? (size! / 2.3) : 20,
-          //         height: size != null ? (size! / 2.3) : 22,
-          //         color: background ??
-          //             (showContainer
-          //                 ? (isActive
-          //                     ? (AppConst.isLightTheme(context) ? (isTransparent ? whiteColor : blueJNE) : bgDarkColor)
-          //                     : AppConst.isLightTheme(context)
-          //                         ? (isTransparent ? whiteColor : blueJNEna)
-          //                         : greyColor)
-          //                 : background),
-          //         child: SvgPicture.asset(
-          //           icon ?? '_',
-          //           //   IconData( int.parse('0xE04F'), fontFamily: 'MaterialIcons'),
-          //           color: iconColor ?? (AppConst.isLightTheme(context) ? (isTransparent ? blueJNE : whiteColor) : infoColor),
-          //         ),
-          //       ),
-          //     )
-          //   ],
-          // ),
-          ),
+          child: menuIcon ?? Image.asset(icon ?? '', height: size ?? 50)),
     );
   }
 }

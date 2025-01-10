@@ -68,7 +68,6 @@ class AccountCard extends StatelessWidget {
                       color: secondaryColor(context))),
               Text(account.accountCategory ?? '',
                   style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
-              // Text("CCNC", style: subTitleTextStyle.copyWith(color: greyDarkColor2)),
             ],
           )
         ],

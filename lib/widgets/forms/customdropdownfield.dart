@@ -40,7 +40,6 @@ class CustomDropDownField<T> extends StatelessWidget {
       return const SizedBox();
     }
     return DropdownButtonFormField(
-      // autovalidateMode: AutovalidateMode.always,
       dropdownColor: dropDownColor(context),
       validator: validator,
       decoration: const InputDecoration(
@@ -66,15 +65,6 @@ class CustomDropDownField<T> extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // RichText(
-        //   text: TextSpan(
-        //     text: label,
-        //     // style: formLabelTextStyle,
-        //     children: <TextSpan>[
-        //       // TextSpan(text: isRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
-        //     ],
-        //   ),
-        // ),
         Text(label ?? '',
             style:
                 Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 14)),
@@ -90,7 +80,6 @@ class CustomDropDownField<T> extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontSize: 16,
                         color: Colors.black,
-                        // fontWeight: FontWeight.w600,
                       ),
                   decoration: const InputDecoration(
                     fillColor: whiteColor,

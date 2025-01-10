@@ -69,7 +69,6 @@ class CustomFilledButton extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // const SizedBox(width: 5),
                 prefixIcon != null
                     ? Container(
                         margin: const EdgeInsets.only(left: 5),

@@ -36,7 +36,6 @@ class NotificationListItem extends StatelessWidget {
           height: isLoading ? 100 : null,
           child: ListTile(
             dense: false,
-            // horizontalTitleGap: 3,
             trailing: isRead || data.isRead == true
                 ? const Icon(
                     Icons.circle,

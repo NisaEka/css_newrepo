@@ -100,7 +100,6 @@ class CustomLabelText extends StatelessWidget {
                     child: Text(
                       value.toUpperCase(),
                       // "This is a long text This is a long text This is a long text",
-                      // overflow: TextOverflow.ellipsis,
                       softWrap: true,
                       maxLines: valueMaxline ?? 1,
                       textAlign:
@@ -157,8 +156,6 @@ class CustomLabelText extends StatelessWidget {
                     child: Text(
                       value.toUpperCase(),
                       // "This is a long text This is a long text This is a long text",
-                      // overflow: TextOverflow.fade,
-                      // maxLines: 1,
                       softWrap: true,
                       textAlign:
                           alignment == 'end' ? TextAlign.right : TextAlign.left,

@@ -94,10 +94,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
     return widget.showfromBottom
         ? CustomTextFormField(
             controller: widget.controller,
-            // items: [],
             hintText: widget.label ?? "Kota Asal".tr,
-            // label: '',
-            // textStyle: hintTextStyle,
             readOnly: true,
             isRequired: true,
             suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -168,8 +165,6 @@ class _OriginDropdownState extends State<OriginDropdown> {
               CustomSearchField(
                 controller: searchTextfield,
                 hintText: 'Cari'.tr,
-                // onClear: () => setState(()=> searchTextfield.clear()),
-                // validate: state.searchCity.text.length < 3,
                 margin: EdgeInsets.zero,
                 autoFocus: true,
                 validationText: 'Masukan 3 atau lebih karakter'.tr,
@@ -181,12 +176,9 @@ class _OriginDropdownState extends State<OriginDropdown> {
                   setState(() {});
                 },
               ),
-              // const SizedBox(height: 10),
               Expanded(
                 child: FutureBuilder(
-                  // future: getOriginList(state.searchCity.text == '' ? 'jak' : state.searchCity.text),
                   future: getOriginList(searchTextfield.text),
-                  // initialData: (title == "Kota Asal" || title == "Origin") ? state.originList : state.destinationList,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -220,7 +212,6 @@ class _OriginDropdownState extends State<OriginDropdown> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {
-            // widget.onSelect(post);
             widget.value?.copyWith(
               branchCode: post.branchCode,
               originCode: post.originCode,

@@ -26,13 +26,11 @@ class CountCardItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: Container(
-          // padding: const EdgeInsets.all(10),
           width: Get.width / 2,
           margin: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             border: Border.all(color: greyColor),
-            // color: whiteColor,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
