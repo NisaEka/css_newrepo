@@ -125,23 +125,8 @@ class DetailTransactionController extends BaseController {
           officerEntry: data?.petugasEntry,
           orderId: data?.orderId,
         );
-
-        // state.transStatus.text = state.transactionModel?.statusAwb ?? '';
-        // state.pickupStatus.text = state.transactionModel?.state.pickupStatus ?? '';
         update();
       });
-      // await setting.getSettingLabel().then(
-      //   (value) async {
-      //     await storage.writeString(
-      //       StorageCore.transactionLabel,
-      //       value.data?.labels?.where((e) => e.enabled ?? false).first.name,
-      //     );
-      //     await storage.writeString(StorageCore.shippingCost,
-      //         value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
-      //
-      //     update();
-      //   },
-      // );
     } catch (e, i) {
       AppLogger.e('error initData detail riwayat kiriman $e, $i');
     }

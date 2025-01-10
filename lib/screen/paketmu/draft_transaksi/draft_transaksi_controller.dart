@@ -102,8 +102,6 @@ class DraftTransaksiController extends BaseController {
       try {
         await transaction
             .postTransaction(TransactionModel(
-          // orderId: upload.noReference.text.isNotEmpty ? upload.noReference.text : null,
-          // apiStatus: 0,
           apiType: upload.account?.accountService,
           custId: upload.account?.accountNumber,
           branch:
@@ -113,7 +111,6 @@ class DraftTransaksiController extends BaseController {
               : null,
           codFlag: upload.delivery?.codFlag,
           codOngkir: upload.delivery?.codOngkir,
-          // custId:
           deliveryPrice: upload.delivery?.freightCharge,
           deliveryPricePublish: upload.delivery?.freightCharge,
           destinationCode: upload.receiver?.destinationCode,

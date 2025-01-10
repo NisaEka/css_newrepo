@@ -109,7 +109,6 @@ class LabelController extends BaseController {
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
-        // pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.symmetric(vertical: 20),
         pageFormat: sizeLabel,
         build: (context) {

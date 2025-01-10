@@ -51,7 +51,6 @@ class DropshipperForm extends StatelessWidget {
                         c.update();
                       },
                       isOfficer: c.isOfficer,
-                      // branchCode: c.account.accountCategory == "LOKAL" ? c.account.accountBranch : null,
                       originCode: (c.account.accountCategory == "LOKAL")
                           ? c.userBasic?.origin?.originCode
                           : null,
@@ -82,7 +81,6 @@ class DropshipperForm extends StatelessWidget {
                             ? primaryColor(context)
                             : greyColor,
                         title: "Simpan Data Dropshipper".tr,
-                        // radius: 20,
                         onPressed: () =>
                             c.formKey.currentState?.validate() == true
                                 ? c.saveDropshipper()

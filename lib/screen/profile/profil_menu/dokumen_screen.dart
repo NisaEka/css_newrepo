@@ -8,10 +8,6 @@ import 'package:css_mobile/widgets/items/show_image_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-// import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:photo_view/photo_view.dart';
-// import 'package:photo_view/photo_view_gallery.dart';
-
 class DokumenScreen extends StatelessWidget {
   const DokumenScreen({super.key});
 
@@ -39,7 +35,6 @@ class DokumenScreen extends StatelessWidget {
             img: c.ccrfProfil?.document?.ccrfKtpattached ?? '',
             onTap: () => showImagePreview(
               context,
-              // 'Lampiran Dokumen KTP'.tr,
               c.ccrfProfil?.document?.ccrfKtpattached ?? '',
             ),
           ),
@@ -49,7 +44,6 @@ class DokumenScreen extends StatelessWidget {
             img: c.ccrfProfil?.document?.ccrfNpwpattached ?? '',
             onTap: () => showImagePreview(
               context,
-              // 'Lampiran Dokumen NPWP'.tr,
               c.ccrfProfil?.document?.ccrfNpwpattached ?? '',
             ),
           ),
@@ -59,7 +53,6 @@ class DokumenScreen extends StatelessWidget {
             img: c.ccrfProfil?.document?.ccrfAccountattached ?? '',
             onTap: () => showImagePreview(
               context,
-              // 'Lampiran Dokumen Rekening'.tr,
               c.ccrfProfil?.document?.ccrfAccountattached ?? '',
             ),
           ),
@@ -80,7 +73,6 @@ class DokumenScreen extends StatelessWidget {
               Get.bottomSheet(
                 enableDrag: true,
                 isDismissible: true,
-                // isScrollControlled: true,
                 StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(text: 'kerahasiaan_data'.tr);
@@ -101,44 +93,4 @@ class DokumenScreen extends StatelessWidget {
       ],
     );
   }
-
-// Function to show image preview
-// void _showImagePreview(BuildContext context, String title, String imageUrl) {
-//   if (imageUrl.isNotEmpty) {
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (_) => Scaffold(
-//           backgroundColor: Colors.black,
-//           appBar: AppBar(
-//             backgroundColor: Colors.black,
-//             elevation: 0,
-//             automaticallyImplyLeading: false,
-//             actions: [
-//               IconButton(
-//                 icon: const Icon(Icons.close, color: whiteColor),
-//                 onPressed: () => Navigator.of(context).pop(),
-//               ),
-//             ],
-//           ),
-//           body: Center(
-//             child: PhotoViewGallery.builder(
-//               itemCount: 1,
-//               builder: (context, index) {
-//                 return PhotoViewGalleryPageOptions(
-//                   imageProvider: CachedNetworkImageProvider(imageUrl),
-//                   minScale: PhotoViewComputedScale.contained,
-//                   maxScale: PhotoViewComputedScale.covered * 3.0,
-//                   initialScale: PhotoViewComputedScale.contained,
-//                 );
-//               },
-//               scrollPhysics: const BouncingScrollPhysics(),
-//               backgroundDecoration: const BoxDecoration(color: Colors.black),
-//               pageController: PageController(),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 }

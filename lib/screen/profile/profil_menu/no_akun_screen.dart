@@ -2,7 +2,6 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/screen/profile/profil_menu/no_akun_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -40,7 +39,6 @@ class NoAkunScreen extends StatelessWidget {
           Get.bottomSheet(
             enableDrag: true,
             isDismissible: true,
-            // isScrollControlled: true,
             StatefulBuilder(builder: (BuildContext c, StateSetter setState) {
               return _modalContent(c, setState, ctrl);
             }),

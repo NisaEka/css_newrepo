@@ -18,7 +18,6 @@ class LoginForm extends StatelessWidget {
         builder: (c) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            // mainAxisSize: MainAxisSize.max,
             children: [
               const LogoHeader(),
               Form(
@@ -42,9 +41,7 @@ class LoginForm extends StatelessWidget {
                         hintText: "Alamat email".tr,
                         prefixIcon: const Icon(Icons.person_2_rounded),
                         isRequired: true,
-                        // focusNode: controller.emailFocus,
                         onSubmit: (_) {},
-                        // validator: ValidationBuilder().email().minLength(10).maxLength(50).build(),
                         inputFormatters: [
                           TextInputFormatter.withFunction((oldValue, newValue) {
                             return newValue.copyWith(
@@ -55,14 +52,11 @@ class LoginForm extends StatelessWidget {
                       CustomTextFormField(
                         controller: c.state.passwordTextField,
                         hintText: "Kata Sandi".tr,
-                        // focusNode: controller.passwordField,
                         prefixIcon: const Icon(Icons.password_rounded),
                         isRequired: true,
-                        // validator: ValidationBuilder().password().build(),
                         isObscure: c.state.isObscurePasswordLogin,
                         multiLine: false,
                         inputFormatters: const [],
-                        // focusNode: controller.passFocus,
                         suffixIcon: IconButton(
                           icon: c.showIcon,
                           onPressed: () => c.showPassword(),
@@ -76,15 +70,6 @@ class LoginForm extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const SizedBox(),
-                          // CustomCheckbox(
-                          //   value: c.state.rememberMe,
-                          //   label: "Ingat saya",
-                          //   onChanged: (p0) {
-                          //     c.state.rememberMe = p0 ?? false;
-                          //     c.update();
-                          //   },
-                          //   width: Get.width / 3,
-                          // ),
                           TextButton(
                             onPressed: () => c.forgotPassword(),
                             child: Text(

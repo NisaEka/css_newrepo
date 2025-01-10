@@ -106,25 +106,9 @@ class FacilityFormBankScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // CustomDropDownFormField<BankModel>(
-                //   hintText: 'Pilih Nama Bank'.tr,
-                //   width: Get.width,
-                //   value: controller.selectedBank,
-                //   items: controller.banks.map((bank) {
-                //     return DropdownMenuItem(
-                //       value: bank,
-                //       child: Text(bank.bankName),
-                //     );
-                //   }).toList(),
-                //   onChanged: (value) {
-                //     controller.setSelectedBank(value!);
-                //   },
-                // ),
                 BankDropdown(
                   onChanged: (value) => controller.setSelectedBank(value),
                   value: controller.selectedBank,
-                  // selectedItem: c.state.kotaPengirim.text,
-                  // prefixIcon: const Icon(Icons.trip_origin_rounded),
                 ),
                 CustomTextFormField(
                   controller: controller.accountNumber,

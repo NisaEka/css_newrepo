@@ -104,7 +104,6 @@ class FacilityFormInfoController extends BaseController {
     update();
 
     return models ?? List.empty();
-    // return [];
   }
 
   Future<String> getJlcAccount() async {

@@ -83,18 +83,7 @@ class ListPenerimaScreen extends StatelessWidget {
                           height: 50,
                           size: 30,
                         ),
-                      )
-                      //  ListView(
-                      //   shrinkWrap: true,
-                      //   children: c.pagingController.itemList!.isNotEmpty
-                      //       ? c.pagingController.itemList!
-                      //           .mapIndexed(
-                      //             (i, e) => c.receiverItem(e, i, context),
-                      //           )
-                      //           .toList()
-                      //       : [const Center(child: DataEmpty())],
-                      // ),
-                      ))
+                      )))
         ],
       ),
     );

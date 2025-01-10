@@ -40,36 +40,6 @@ class LoginController extends BaseController {
     ValidationBuilder.setLocale(state.lang!);
   }
 
-  // bool onPop() {
-  //   DateTime now = DateTime.now();
-  //   if (state.currentBackPressTime == null ||
-  //       now.difference(state.currentBackPressTime!) >
-  //           const Duration(seconds: 2)) {
-  //     state.currentBackPressTime = now;
-  //     AppSnackBar.custom(
-  //       message: 'Double click back button to exit'.tr,
-  //       backgroundColor: greyColor.withOpacity(0.8),
-  //       icon: const Icon(
-  //         Icons.info,
-  //         color: whiteColor,
-  //       ),
-  //       durationInSeconds: 3,
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       snackStyle: SnackStyle.GROUNDED,
-  //       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
-  //       padding: const EdgeInsets.all(10),
-  //       messageText: null,
-  //     );
-  //     state.pop = false;
-  //     update();
-  //     return false;
-  //   }
-  //   state.pop = true;
-  //   update();
-  //   Get.off(() => const DashboardScreen(), arguments: {'isFirstLogin': true});
-  //   return true;
-  // }
-
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
   );
@@ -97,15 +67,6 @@ class LoginController extends BaseController {
                 value.data?.menu ?? MenuModel(),
                 value.data?.token?.refreshToken,
               )
-              // .then((_) async => auth
-              //     .postFcmToken(
-              //       await getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
-              //     )
-              //     .then((value) async => value.code == 201
-              //         ? await auth.updateDeviceInfo(
-              //             await getDeviceinfo(state.fcmToken ?? '') ?? DeviceModel(),
-              //           )
-              //         : null))
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(
                     () => const DashboardScreen(),
@@ -155,9 +116,7 @@ class LoginController extends BaseController {
 
   Future<DeviceModel?> getDeviceinfo(String token) async {
     var deviceInfo = DeviceInfoPlugin();
-    // var user = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     if (Platform.isIOS) {
-      // import 'dart:io'
       var iosDeviceInfo = await deviceInfo.iosInfo;
       var systemName = iosDeviceInfo.systemName;
       var version = iosDeviceInfo.systemVersion;
@@ -221,7 +180,6 @@ class LoginController extends BaseController {
   }
 
   forgotPassword() {
-    // Get.delete<LoginController>();
     state.emailTextField.clear();
     state.passwordTextField.clear();
     Get.to(

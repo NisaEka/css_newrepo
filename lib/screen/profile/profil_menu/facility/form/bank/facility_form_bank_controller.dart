@@ -79,21 +79,9 @@ class FacilityFormBankController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      // getBanks(),
-      getTermsAndConditions()
-    ]);
+    Future.wait([getTermsAndConditions()]);
     _checkConnectivity();
   }
-
-  // Future<void> getBanks() async {
-  //   bank.getBanks().then((response) {
-  //     if (response.statusCode == HttpStatus.ok && response.data!.isNotEmpty) {
-  //       _banks.addAll(response.data!);
-  //       update();
-  //     }
-  //   });
-  // }
 
   Future<void> getTermsAndConditions() async {
     facility
@@ -178,10 +166,6 @@ class FacilityFormBankController extends BaseController {
     AppLogger.i('_pickedImagePath $_pickedImagePath');
     AppLogger.i(
         'facilityCreateArgs.getBankInfoPath() ${facilityCreateArgs.getBankInfoPath()}');
-
-    // if (fileMap.values.any((element) => element.isEmpty)) {
-    //   return false;
-    // }
 
     return await storageRepository.postCcrfFile(fileMap).then((response) {
       if (response.code == HttpStatus.created) {

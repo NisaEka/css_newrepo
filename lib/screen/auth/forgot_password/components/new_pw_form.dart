@@ -78,7 +78,6 @@ class NewPasswordForm extends StatelessWidget {
                             ? primaryColor(context)
                             : greyColor,
                         title: 'Selanjutnya'.tr,
-                        // radius: 50,
                         onPressed: () =>
                             c.formKey.currentState?.validate() == true
                                 ? c.changePassword()

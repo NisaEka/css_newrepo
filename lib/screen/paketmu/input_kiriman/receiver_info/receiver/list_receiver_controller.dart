@@ -78,21 +78,6 @@ class ListPenerimaController extends BaseController {
       );
       pagingController.itemList = receiver.data ?? [];
     }
-    //   receiverList.addAll(value.data ?? []);
-    //   await storage.saveData(StorageCore.receiver, value);
-    // } catch (e) {
-    //   AppLogger.e('error getReceiver $e');
-    //   var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
-    //     await storage.readData(StorageCore.receiver),
-    //     (json) => json is List<dynamic>
-    //         ? json
-    //             .map<ReceiverModel>(
-    //                 (i) => ReceiverModel.fromJson(i as Map<String, dynamic>))
-    //             .toList()
-    //         : List.empty(),
-    //   );
-    //   receiverList.addAll(receiver.data ?? []);
-    // }
     isLoading = false;
     update();
   }
@@ -106,36 +91,6 @@ class ListPenerimaController extends BaseController {
     pagingController.dispose();
     super.dispose();
   }
-
-  // Future<void> initData() async {
-  //   isLoading = true;
-  //   receiverList = [];
-  //   connection.isOnline().then((value) => isOnline = value);
-
-  //   update();
-  //   try {
-  //     await master
-  //         .getReceivers(QueryParamModel(search: search.text))
-  //         .then((value) async {
-  //       receiverList.addAll(value.data ?? []);
-  //       await storage.saveData(StorageCore.receiver, value);
-  //     });
-  //   } catch (e) {
-  //     AppLogger.e('error getReceiver $e');
-  //     var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
-  //         await storage.readData(StorageCore.receiver),
-  //         (json) => json is List<dynamic>
-  //             ? json
-  //                 .map<ReceiverModel>(
-  //                   (i) => ReceiverModel.fromJson(i as Map<String, dynamic>),
-  //                 )
-  //                 .toList()
-  //             : List.empty());
-  //     receiverList.addAll(receiver.data ?? []);
-  //   }
-  //   isLoading = false;
-  //   update();
-  // }
 
   void delete(ReceiverModel data) async {
     try {
@@ -162,13 +117,6 @@ class ListPenerimaController extends BaseController {
       groupValue: selectedReceiver,
       isSelected: e == selectedReceiver ? true : false,
       onTap: () => Get.back(result: e),
-      // onChanged: (value) {
-      //   selectedReceiver = value as ReceiverModel?;
-      //   update();
-      //   Get.back(
-      //     result: selectedReceiver,
-      //   );
-      // },
       onDelete: (value) => showDialog(
         context: context,
         builder: (context) => DeleteAlertDialog(
