@@ -100,7 +100,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           children: [
             Container(
               alignment: Alignment.center,
-              width: screenWidth < 400 ? 90 : 160,
+              width: screenWidth < 400 ? 90 : 145,
               padding: EdgeInsets.symmetric(
                   vertical: 5, horizontal: horizontalPadding),
               decoration: BoxDecoration(
@@ -161,7 +161,14 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           ),
           Text(
             requestPickup?.shipperCity ?? '',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: screenWidth < 400
+                ? (requestPickup?.shipperCity.length ?? 0) > 15
+                    ? Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontSize: 10)
+                    : Theme.of(context).textTheme.titleMedium
+                : Theme.of(context).textTheme.titleMedium,
           ),
         ]),
       ],

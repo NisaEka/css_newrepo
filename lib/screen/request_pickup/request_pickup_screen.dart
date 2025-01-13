@@ -205,6 +205,7 @@ class RequestPickupScreen extends StatelessWidget {
                   () => controller.state.pagingController.refresh(),
                 ),
                 child: PagedListView.separated(
+                  shrinkWrap: true,
                   pagingController: controller.state.pagingController,
                   builderDelegate:
                       PagedChildBuilderDelegate<RequestPickupModel>(

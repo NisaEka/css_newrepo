@@ -12,7 +12,9 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
+      height: screenWidth < 400 ? Get.height : Get.height / 2.2,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         shape: BoxShape.rectangle,
