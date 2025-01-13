@@ -22,12 +22,15 @@ class PackageInfoItem extends StatelessWidget {
     return Container(
       width: Get.width,
       margin: const EdgeInsets.symmetric(horizontal: 30),
-      padding: const EdgeInsets.all(15),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(
-              color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
-              width: 2.0)),
+        borderRadius: BorderRadius.circular(8),
+        // color: warningDarkColor.withOpacity(0.7),
+        border: Border.all(
+          color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
+          width: 2.0,
+        ),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,11 +40,11 @@ class PackageInfoItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CustomLabelText(
-                title: '',
-                value: message?.tr ?? '',
+              CustomFormLabel(
+                label: message?.tr ?? '',
                 fontColor:
                     AppConst.isLightTheme(context) ? blueJNE : warningColor,
+                isBold: true,
               ),
             ],
           ),

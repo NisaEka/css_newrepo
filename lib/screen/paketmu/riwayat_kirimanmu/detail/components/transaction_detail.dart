@@ -55,7 +55,9 @@ class TransactionDetail extends StatelessWidget {
                 const SizedBox(height: 16),
                 TextRowWidget(
                   title: "Status Kiriman".tr,
-                  value: c.state.transactionModel?.statusAwb?.tr ?? '-',
+                  value: c.state.transactionModel?.statusAwb?.capitalize?.tr
+                          .toUpperCase() ??
+                      '-',
                   isLoading: c.state.isLoading || c.state.data == null,
                 ),
                 TextRowWidget(

@@ -14,6 +14,7 @@ class DateFilterField extends StatefulHookWidget {
   final String? selectedDateFilter;
   final DateTime? startDate;
   final DateTime? endDate;
+  final bool isShowAllDate;
 
   const DateFilterField({
     super.key,
@@ -22,6 +23,7 @@ class DateFilterField extends StatefulHookWidget {
     this.selectedDateFilter = '3',
     this.startDate,
     this.endDate,
+    this.isShowAllDate = false,
   });
 
   @override
@@ -55,6 +57,15 @@ class _DatesFilterContentState extends State<DateFilterField> {
         children: [
           CustomFormLabel(label: widget.label ?? 'Tanggal Entry'.tr),
           const SizedBox(height: 10),
+          widget.isShowAllDate
+              ? Customradiobutton(
+                  title: "Semua Tanggal".tr,
+                  value: '0',
+                  groupValue: dateFilter,
+                  onChanged: (value) => setState(() => selectDateFilter(0)),
+                  onTap: () => setState(() => selectDateFilter(0)),
+                )
+              : const SizedBox(),
           Customradiobutton(
             title: "Hari Ini".tr,
             value: '3',
@@ -114,6 +125,7 @@ class _DatesFilterContentState extends State<DateFilterField> {
                     ));
                   });
                 }),
+                // hintText: 'Dari Tanggal',
               ),
               CustomTextFormField(
                 controller: endDateField,
@@ -136,6 +148,8 @@ class _DatesFilterContentState extends State<DateFilterField> {
               ),
             ],
           ),
+          // CustomFormLabel(label: 'Status Kiriman'.tr),
+          // const SizedBox(height: 10),
         ],
       ),
     );
@@ -150,6 +164,7 @@ class _DatesFilterContentState extends State<DateFilterField> {
       endDate = null;
       startDateField.clear();
       endDateField.clear();
+      // widget.onChanged([]);
     } else if (filter == 1) {
       startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)
@@ -183,8 +198,8 @@ class _DatesFilterContentState extends State<DateFilterField> {
     setState(() {
       widget.onChanged(DateFilter(
         dateFilter: dateFilter ?? '3',
-        startDate: startDate!,
-        endDate: endDate!,
+        startDate: startDate,
+        endDate: endDate,
       ));
     });
   }
@@ -233,12 +248,12 @@ class _DatesFilterContentState extends State<DateFilterField> {
 
 class DateFilter {
   final String dateFilter;
-  final DateTime startDate;
-  final DateTime endDate;
+  final DateTime? startDate;
+  final DateTime? endDate;
 
   const DateFilter({
     required this.dateFilter,
-    required this.startDate,
-    required this.endDate,
+    this.startDate,
+    this.endDate,
   });
 }

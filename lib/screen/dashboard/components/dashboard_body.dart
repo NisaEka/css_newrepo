@@ -51,7 +51,14 @@ class DashboardBody extends StatelessWidget {
                       const DashboardMenu2(),
                       // CustomFilledButton(
                       //   color: Colors.blue,
-                      //   onPressed: () => Get.to(const Ob1Screen()),
+                      //   onPressed: () => Get.to(
+                      //     () => SuccessScreen(
+                      //       message: 'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'.tr,
+                      //       thirdButtonTitle: 'Tutup'.tr,
+                      //       iconMargin: 100,
+                      //       onThirdAction: () async {Get.back();},
+                      //     ),
+                      //   ),
                       // ),
                       c.state.isLogin &&
                               (c.state.allow.monitoringAgg == "Y" ||

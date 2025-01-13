@@ -39,6 +39,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.miniStartDocked,
+              resizeToAvoidBottomInset: false,
               floatingActionButton: (controller.state.allow.paketmuInput ==
                               "Y" &&
                           MediaQuery.of(context).viewInsets.bottom == 0) ||

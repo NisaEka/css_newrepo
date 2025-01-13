@@ -51,15 +51,16 @@ class FacilityFormInfoScreen extends StatelessWidget {
           color: redJNE,
           title: 'Selanjutnya'.tr,
           onPressed: () async {
-            if (c.state.pickedImageUrl == null) {
-              c.pickImageFailed = true;
-              return;
+            if (c.state.formKey.currentState?.validate() == true) {
+              if (c.state.pickedImageUrl == null) {
+                c.pickImageFailed = true;
+                return;
+              }
+              Get.to(() => const FacilityFormReturnScreen(), arguments: {
+                'data': await c.submitData(),
+                'destination': c.state.selectedDestination,
+              });
             }
-
-            Get.to(() => const FacilityFormReturnScreen(), arguments: {
-              'data': await c.submitData(),
-              'destination': c.state.selectedDestination,
-            });
           },
         ));
   }
@@ -114,6 +115,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                   ),
                   DestinationDropdown(
                     onChanged: (value) {
+                      c.state.formKey.currentState?.validate();
                       c.state.selectedDestination = value;
                       c.update();
                     },

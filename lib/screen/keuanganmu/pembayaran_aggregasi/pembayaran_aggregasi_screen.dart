@@ -184,6 +184,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             selectedDateFilter: c.dateFilter,
             startDate: c.startDate,
             endDate: c.endDate,
+            isShowAllDate: true,
             onChanged: (value) {
               c.startDate = value.startDate;
               c.endDate = value.endDate;

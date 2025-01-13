@@ -49,7 +49,7 @@ class PembayaranAggergasiController extends BaseController {
 
     try {
       List<Map<String, dynamic>> isIn = [];
-      List<Map<String, dynamic>> between = [];
+      List<Map<String, dynamic>>? between = [];
 
       if (selectedAccount.isNotEmpty) {
         isIn.add({
@@ -67,7 +67,7 @@ class PembayaranAggergasiController extends BaseController {
         limit: pageSize,
         search: searchField.text,
         inValues: isIn,
-        between: between,
+        between: dateFilter == '0' ? [] : between,
       ));
 
       final isLastPage = agg.meta!.currentPage == agg.meta!.lastPage;
@@ -159,10 +159,12 @@ class PembayaranAggergasiController extends BaseController {
               .toIso8601String()
         ];
       }
-      update();
-      pagingController.refresh();
-      fetchAggregationTotal();
+    } else {
+      transDate = [];
     }
+    update();
+    pagingController.refresh();
+    fetchAggregationTotal();
   }
 
   void resetFilter() {

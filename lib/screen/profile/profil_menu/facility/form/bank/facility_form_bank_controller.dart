@@ -26,6 +26,7 @@ class FacilityFormBankController extends BaseController {
     'Data Rekening'.tr
   ];
 
+  final formKey = GlobalKey<FormState>();
   final accountNumber = TextEditingController();
   final accountName = TextEditingController();
 
@@ -214,6 +215,7 @@ class FacilityFormBankController extends BaseController {
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,
               thirdButtonTitle: 'Tutup'.tr,
+              iconMargin: 100,
               onThirdAction: () async {
                 await Get.delete<DashboardController>();
                 await Get.delete<FacilityFormInfoController>();

@@ -20,6 +20,7 @@ class FacilityFormReturnController extends BaseController {
     'Data Rekening'.tr
   ];
 
+  final formKey = GlobalKey<FormState>();
   final returnAddress = TextEditingController();
   final returnPhone = TextEditingController();
   final returnWhatsAppNumber = TextEditingController();
@@ -58,6 +59,7 @@ class FacilityFormReturnController extends BaseController {
   bool get isOnline => _isOnline;
 
   bool _npwpNumberFailed = false;
+
   bool get npwpNumberFailed => _npwpNumberFailed;
 
   set npwpNumberFailed(bool value) {
@@ -112,6 +114,7 @@ class FacilityFormReturnController extends BaseController {
       returnWhatsAppNumber.clear();
       _addressSectionReadOnly = false;
     }
+    formKey.currentState?.validate();
 
     update();
   }
