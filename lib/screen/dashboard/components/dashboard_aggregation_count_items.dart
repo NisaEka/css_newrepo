@@ -2,8 +2,8 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
-import 'package:css_mobile/screen/keuanganmu/minus/detail/doc/aggregation_minus_doc_screen.dart';
-import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/by_doc/agg_by_doc_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
+import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_screen.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -30,7 +30,8 @@ class DashboardAggregationCountItem extends StatelessWidget {
       isLoading: isLoading,
       child: (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null ||
                   aggregationPembayaran?.mpayWdrGrpPayNetAmt == 0) &&
-              (aggregationMinus?.aggMinDoc.isEmpty ?? false)
+              (aggregationMinus?.netAmt == null ||
+                  aggregationMinus?.netAmt == 0)
           ? const SizedBox()
           : Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -98,18 +99,18 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                       value2fontSize: 14,
                                       isSuccess: true,
                                       onTap: () => Get.to(
-                                        const AggByDocScreen(),
-                                        arguments: {
-                                          "aggregationID": aggregationPembayaran
-                                              ?.mpayWdrGrpPayNo,
-                                        },
+                                        const PembayaranAggergasiScreen(),
+                                        // arguments: {
+                                        //   "aggregationID": aggregationPembayaran?.mpayWdrGrpPayNo,
+                                        // },
                                       ),
                                     ),
                                   ],
                                 ),
                               )
                             : const SizedBox(),
-                        aggregationMinus?.aggMinDoc.isNotEmpty ?? false
+                        aggregationMinus?.netAmt != null ||
+                                aggregationMinus?.netAmt != 0
                             ? SizedBox(
                                 width: screenWidth < 400
                                     ? Get.width / 2.3
@@ -139,10 +140,10 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                       value1fontSize: 12,
                                       value2fontSize: 14,
                                       onTap: () => Get.to(
-                                        const AggregationMinusDocScreen(),
-                                        arguments: {
-                                          "doc": aggregationMinus?.aggMinDoc,
-                                        },
+                                        const AggregationMinusScreen(),
+                                        // arguments: {
+                                        //   "doc": aggregationMinus?.aggMinDoc,
+                                        // },
                                       ),
                                     ),
                                   ],
