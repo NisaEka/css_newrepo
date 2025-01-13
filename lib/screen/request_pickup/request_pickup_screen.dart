@@ -146,18 +146,6 @@ class RequestPickupScreen extends StatelessWidget {
     return Stack(
       children: [
         _mainContent(context, controller),
-        if (controller.state.createDataLoading) const LoadingDialog(),
-        // TODO: hapus stack dan yang sekiranya jadi alert
-        // if (controller.state.createDataFailed || controller.state.createDataSuccess)
-        //   DefaultAlertDialog(
-        //     title: "Success: ${controller.state.data?.successCount}. Error: ${controller.state.data?.errorCount}\n".tr,
-        //     subtitle: 'Error Details:\n'
-        //         '${controller.state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
-        //     backButtonTitle: "Kembali",
-        //     confirmButtonTitle: "Ok",
-        //     onBack: Get.back,
-        //     onConfirm: () => controller.refreshState(),
-        //   ),
       ],
     );
   }

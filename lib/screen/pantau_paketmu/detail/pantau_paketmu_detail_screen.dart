@@ -77,7 +77,8 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          statusawb != "DIBATALKAN OLEH KAMU"
+                          statusawb != "DIBATALKAN OLEH KAMU" &&
+                                  statusawb != "MASIH DI KAMU"
                               ? CustomFilledButton(
                                   color: warningColor,
                                   isTransparent: true,

@@ -511,6 +511,7 @@ class LanguageEN {
       "Total Kiriman": "Total Shipment",
       "Sudah Dijemput": "Already Picked Up",
       "Sudah Di Gudang Jne": "Already at JNE Warehouse",
+      "Sudah Di Gudang JNE": "Already at JNE Warehouse",
       "Sudah Di Kota Tujuan": "Already in Destination City",
       "Butuh Dicek": "Needs Review",
       "Proses Pengembalian Ke Kamu": "Return Process to You",
@@ -633,7 +634,22 @@ class LanguageEN {
       "Simpan Alamat": "Save Address",
       "Tambah Alamat Penjemputan": "Add Pickup Address",
       "Apakah kamu sudah yakin untuk melakukan penjemputan di jam ":
-          "Are you sure to schedule the pickup at "
+          "Are you sure to schedule the pickup at ",
+      "REVISI ALAMAT": "Address Revision",
+      "ISI KIRIMAN KURANG KOLI": "Shipment Contents Less Than The Package",
+      "ISI KIRIMAN TIDAK SESUAI": "Shipment Contents Do Not Match",
+      "PENERIMA MERASA BELUM MENERIMA KIRIMAN":
+          "Receiver Not Receive The Shipment",
+      "KIRIMAN BELUM SAMPAI": "Shipment Not Arrived",
+      "PERMINTAAN KIRIM ULANG": "Request for Reshipment",
+      "PERMINTAAN RETUR": "Return Request",
+      "INSTRUKSI KHUSUS": "Special Instructions",
+      "KLAIM YES GAGAL": "YES Claim Failed",
+      "KLAIM BARANG RUSAK": "Claim Damaged Goods",
+      "KLAIM BARANG HILANG": "Claim Lost Goods",
+      "KLAIM KIRIMAN DITERIMA KURANG": "Claim Incomplete Shipment Received",
+      "Data diperbaharui setiap jam 06.45 WIB":
+          "Data is updated every day at 06:45 AM WIB"
     };
   }
 }

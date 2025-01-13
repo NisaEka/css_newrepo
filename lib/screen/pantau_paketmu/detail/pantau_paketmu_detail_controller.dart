@@ -17,7 +17,7 @@ import 'package:get/get.dart';
 
 class PantauPaketmuDetailController extends BaseController {
   final network = Get.find<NetworkCore>();
-  String awbNo = Get.arguments["awbNo"];
+  String awbNo = Get.arguments?["awbNo"];
 
   bool isLoading = false;
 
