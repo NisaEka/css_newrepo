@@ -104,9 +104,10 @@ class PantauPaketmuListModel {
     _petugasEntry = json['petugasEntry'];
     _orderId = json['orderId'];
     _awbType = json['awbType'];
-    _statusawb = json['statusawb'];
+    _statusawb = json['statusAwb'] ?? json['statusawb'];
     _type = json['type'];
   }
+
   String? _awbNo;
   String? _awbDate;
   String? _awbRefno;
@@ -141,6 +142,7 @@ class PantauPaketmuListModel {
   String? _awbType;
   String? _statusawb;
   String? _type;
+
   PantauPaketmuListModel copyWith({
     String? awbNo,
     String? awbDate,
@@ -214,39 +216,73 @@ class PantauPaketmuListModel {
         statusawb: statusawb ?? _statusawb,
         type: type ?? _type,
       );
+
   String? get awbNo => _awbNo;
+
   String? get awbDate => _awbDate;
+
   String? get awbRefno => _awbRefno;
+
   String? get custNo => _custNo;
+
   String? get custName => _custName;
+
   String? get cnoteReceiverPhone => _cnoteReceiverPhone;
+
   dynamic get hoCourierDate => _hoCourierDate;
+
   dynamic get puLastAttempStatusDate => _puLastAttempStatusDate;
+
   String? get cnoteShipperName => _cnoteShipperName;
+
   String? get receiverName => _receiverName;
+
   String? get cnoteReceiverAddr1 => _cnoteReceiverAddr1;
+
   dynamic get cnoteReceiverAddr2 => _cnoteReceiverAddr2;
+
   dynamic get cnoteReceiverAddr3 => _cnoteReceiverAddr3;
+
   String? get destinationName => _destinationName;
+
   String? get service => _service;
+
   num? get weightAwb => _weightAwb;
+
   String? get awbGoodsDescr => _awbGoodsDescr;
+
   String? get awbSpecialIns => _awbSpecialIns;
+
   num? get awbAmount => _awbAmount;
+
   num? get awbInsuranceValue => _awbInsuranceValue;
+
   num? get codAmount => _codAmount;
+
   dynamic get statusPod => _statusPod;
+
   dynamic get tglReceived => _tglReceived;
+
   dynamic get codingPod => _codingPod;
+
   dynamic get receivedReason => _receivedReason;
+
   dynamic get repcssPaymentDate => _repcssPaymentDate;
+
   dynamic get repcssPaymentReffid => _repcssPaymentReffid;
+
   dynamic get podlEpodUrlPic => _podlEpodUrlPic;
+
   dynamic get podlEpodUrl => _podlEpodUrl;
+
   String? get petugasEntry => _petugasEntry;
+
   String? get orderId => _orderId;
+
   String? get awbType => _awbType;
+
   String? get statusawb => _statusawb;
+
   String? get type => _type;
 
   Map<String, dynamic> toJson() {
@@ -283,6 +319,7 @@ class PantauPaketmuListModel {
     map['petugasEntry'] = _petugasEntry;
     map['orderId'] = _orderId;
     map['awbType'] = _awbType;
+    map['statusAwb'] = _statusawb;
     map['statusawb'] = _statusawb;
     map['type'] = _type;
     return map;

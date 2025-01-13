@@ -28,7 +28,8 @@ class DashboardAggregationCountItem extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Shimmer(
       isLoading: isLoading,
-      child: (aggregationPembayaran?.mpayWdrGrpPayNo?.isEmpty ?? false) &&
+      child: (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null ||
+                  aggregationPembayaran?.mpayWdrGrpPayNetAmt == 0) &&
               (aggregationMinus?.aggMinDoc.isEmpty ?? false)
           ? const SizedBox()
           : Container(
@@ -59,13 +60,14 @@ class DashboardAggregationCountItem extends StatelessWidget {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment:
-                          aggregationPembayaran?.mpayWdrGrpPayNo?.isEmpty ??
-                                  false
-                              ? MainAxisAlignment.spaceBetween
-                              : MainAxisAlignment.start,
+                          (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null ||
+                                  aggregationPembayaran?.mpayWdrGrpPayNetAmt ==
+                                      0)
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.spaceBetween,
+                      // MainAxisAlignment.start,
                       children: [
-                        aggregationPembayaran?.mpayWdrGrpPayNo?.isNotEmpty ??
-                                false
+                        aggregationPembayaran?.mpayWdrGrpPayNetAmt != null
                             ? SizedBox(
                                 width: Get.width / 2.5,
                                 child: Column(
@@ -83,13 +85,13 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                     TypeTransactionCard(
                                       value1: aggregationPembayaran
                                               ?.mpayWdrGrpPayNo ??
-                                          '-',
+                                          '',
                                       value2:
-                                          'Rp. ${aggregationPembayaran?.mpayWdrGrpPayCodAmt?.toCurrency().toString() ?? '0'}',
+                                          'Rp. ${aggregationPembayaran?.mpayWdrGrpPayNetAmt?.toCurrency().toString() ?? '0'}',
                                       description: aggregationPembayaran
                                               ?.createddtm
                                               ?.toLongDateTimeFormat() ??
-                                          '-',
+                                          '',
                                       lineColor: successColor,
                                       value1fontSize:
                                           screenWidth < 400 ? 10 : 12,

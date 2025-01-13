@@ -102,7 +102,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       );
       GetAggregationTotalModel resp =
           GetAggregationTotalModel.fromJson(response.data);
-
       return resp;
     } on DioException catch (e) {
       return GetAggregationTotalModel.fromJson(e.response?.data);

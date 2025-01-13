@@ -16,7 +16,6 @@ import 'package:css_mobile/util/input_formatter/custom_formatter.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
@@ -148,19 +147,17 @@ class RequestPickupScreen extends StatelessWidget {
       children: [
         _mainContent(context, controller),
         if (controller.state.createDataLoading) const LoadingDialog(),
-        if (controller.state.createDataFailed ||
-            controller.state.createDataSuccess)
-          DefaultAlertDialog(
-            title:
-                "Success: ${controller.state.data?.successCount}. Error: ${controller.state.data?.errorCount}\n"
-                    .tr,
-            subtitle: 'Error Details:\n'
-                '${controller.state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
-            backButtonTitle: "Kembali",
-            confirmButtonTitle: "Ok",
-            onBack: Get.back,
-            onConfirm: () => controller.refreshState(),
-          ),
+        // TODO: hapus stack dan yang sekiranya jadi alert
+        // if (controller.state.createDataFailed || controller.state.createDataSuccess)
+        //   DefaultAlertDialog(
+        //     title: "Success: ${controller.state.data?.successCount}. Error: ${controller.state.data?.errorCount}\n".tr,
+        //     subtitle: 'Error Details:\n'
+        //         '${controller.state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
+        //     backButtonTitle: "Kembali",
+        //     confirmButtonTitle: "Ok",
+        //     onBack: Get.back,
+        //     onConfirm: () => controller.refreshState(),
+        //   ),
       ],
     );
   }
@@ -195,10 +192,7 @@ class RequestPickupScreen extends StatelessWidget {
             ),
             const RequestPickupStatusButton(),
             _checkAllItemBox(context, controller),
-            if (!controller.state.checkMode)
-              const SizedBox(
-                height: 20,
-              ),
+            if (!controller.state.checkMode) const SizedBox(height: 20),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () => Future.sync(
