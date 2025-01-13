@@ -148,6 +148,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                     hintText: 'Email'.tr,
                     inputType: TextInputType.emailAddress,
                     isRequired: true,
+                    readOnly: true,
                     inputFormatters: const [],
                     validator:
                         ValidationBuilder().maxLength(64).email().build(),
