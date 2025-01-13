@@ -663,12 +663,18 @@ class LanguageEN {
       "Pengubahan ccrf disetujui oleh": "CCRF modification approved by",
       "Berhasil Menambahkan formulir Flat Rate":
           "Successfully added Flat Rate form",
-      "Berhasil mangajukkan formulir pendaftaran akun untuk fitur fasilitasku.":
+      "Berhasil mengajukkan formulir pendaftaran akun untuk fitur fasilitasku.":
           "Successfully submitted the account registration form for the My Facility feature",
       "Formulir disetujui oleh": "Form is approved by",
       "Penonaktifan akun transaksi CSS": "Deactivation CSS transaction account",
       "Pengaktifan akun transaksi CSS": "Activation CSS transaction account",
       "Berhasil menambahkan kode referral ": "Successfully added referral code",
+      "PENGAJUAN": "REQUEST",
+      "VERIFIKASI SALES": "SALES VERIFICATION",
+      "VERIFIKASI NCD": "NCD VERIFICATION",
+      "UBAH PROFILE": "CHANGE PROFILE",
+      "UBAH DATA PROFILE": "CHANGE PROFILE DATA",
+      "REGISTRASI FLAT RATE": "FLAT RATE REGISTRATION"
     };
   }
 }
