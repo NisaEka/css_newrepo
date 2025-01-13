@@ -12,6 +12,7 @@ class SecretDataDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
+      height: Get.height / 3,
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

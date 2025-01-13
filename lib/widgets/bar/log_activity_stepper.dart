@@ -69,13 +69,13 @@ class LogActivityStepper extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data?.activityCreateDate.toString().toDateTimeFormat() ?? '',
+              data?.activityCreateDate.toString().toLongDateTimeFormat() ?? '',
               style: sublistTitleTextStyle,
             ),
             SizedBox(
               width: Get.width / 1.5,
               child: Text(
-                data?.activityDescription ?? '',
+                (data?.activityDescription)?.tr ?? '',
                 style: sublistTitleTextStyle,
               ),
             ),

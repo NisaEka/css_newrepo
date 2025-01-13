@@ -649,7 +649,26 @@ class LanguageEN {
       "KLAIM BARANG HILANG": "Claim Lost Goods",
       "KLAIM KIRIMAN DITERIMA KURANG": "Claim Incomplete Shipment Received",
       "Data diperbaharui setiap jam 06.45 WIB":
-          "Data is updated every day at 06:45 AM WIB"
+          "Data is updated every day at 06:45 AM WIB",
+      "Hubungi sales cabang kota anda":
+          "Contact the sales of your city branch.",
+      "Transaksi": "Transaction",
+      "Berhasil menambahkan kode referral": "Successfully added referral code",
+      "Ubah Profile": "Change profile",
+      "Pengajuan pengubahan data CCRF": "Request for modification CCRF data",
+      "Formulir belum disetujui oleh": "The form has not been approved by",
+      "Berhasil melakukan sinkronisasi data": "Successfully synchronize data",
+      "Berhasil Mengubah formulir Flat Rate":
+          "Successfully change Flat Rate form",
+      "Pengubahan ccrf disetujui oleh": "CCRF modification approved by",
+      "Berhasil Menambahkan formulir Flat Rate":
+          "Successfully added Flat Rate form",
+      "Berhasil mangajukkan formulir pendaftaran akun untuk fitur fasilitasku.":
+          "Successfully submitted the account registration form for the My Facility feature",
+      "Formulir disetujui oleh": "Form is approved by",
+      "Penonaktifan akun transaksi CSS": "Deactivation CSS transaction account",
+      "Pengaktifan akun transaksi CSS": "Activation CSS transaction account",
+      "Berhasil menambahkan kode referral ": "Successfully added referral code",
     };
   }
 }
