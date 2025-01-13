@@ -240,7 +240,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   color: controller.isLoading ? greyColor : Colors.transparent,
                   borderRadius: BorderRadius.circular(5)),
               child: Text(
-                "Informasi Tagihan",
+                "Informasi Tagihan".tr,
                 style: listTitleTextStyle.copyWith(
                   color: primaryColor(context),
                 ),

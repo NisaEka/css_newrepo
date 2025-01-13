@@ -36,7 +36,7 @@ class EclaimItems extends StatelessWidget {
                   builderDelegate: PagedChildBuilderDelegate<EclaimModel>(
                     transitionDuration: const Duration(milliseconds: 500),
                     itemBuilder: (context, item, index) => EclaimListItem(
-                      claimType: item.kategori ?? '',
+                      claimType: (item.kategori)?.tr ?? '',
                       awb: item.awb ?? '',
                       date: item.createDate ?? '',
                       amount: item.valueclaim ?? '',

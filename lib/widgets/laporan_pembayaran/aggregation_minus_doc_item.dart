@@ -97,7 +97,8 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
                               width: widget.isLoading ? Get.width / 3 : null,
                               height: widget.isLoading ? 10 : null,
                               child: Text(
-                                widget.data?.dDocDate?.toDateTimeFormat() ?? '',
+                                widget.data?.dDocDate?.toLongDateTimeFormat() ??
+                                    '',
                                 style: Theme.of(context).textTheme.titleSmall,
                               ),
                             ),
