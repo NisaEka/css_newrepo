@@ -4,6 +4,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/image_const.dart';
+import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
@@ -838,6 +839,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> getAggregationMinus() async {
+    int totalAggMinus = 0;
     try {
       final aggregations = await aggregation.getAggregationMinus(QueryModel(
         limit: 0,
@@ -845,8 +847,10 @@ class DashboardController extends BaseController {
           {"createddtm": "desc"}
         ],
       ));
-
-      state.aggregationMinus = aggregations.data?.first;
+      aggregations.data?.forEach((e) {
+        totalAggMinus += e.netAmt;
+      });
+      state.aggregationMinus = AggregationMinusModel(netAmt: totalAggMinus);
     } catch (e) {
       AppLogger.e("error get aggregation minus : $e");
     }
