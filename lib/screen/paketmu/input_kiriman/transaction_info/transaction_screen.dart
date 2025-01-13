@@ -59,6 +59,8 @@ class TransactionScreen extends StatelessWidget {
   }
 
   Widget _warningDialog(BuildContext context, TransactionController c) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double fontSize = screenWidth < 400 ? 12 : 14;
     return Container(
       height: Get.height,
       width: Get.width,
@@ -85,8 +87,9 @@ class TransactionScreen extends StatelessWidget {
                 size: Get.width / 4,
               ),
               Text(
-                "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000".tr,
-                style: subTitleTextStyle.copyWith(color: greyDarkColor1),
+                "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
+                style: subTitleTextStyle.copyWith(
+                    color: greyDarkColor1, fontSize: fontSize),
                 textAlign: TextAlign.center,
               ),
               CustomFilledButton(

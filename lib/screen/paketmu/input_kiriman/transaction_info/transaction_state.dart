@@ -43,13 +43,7 @@ class TransactionState {
   final noReference = TextEditingController();
   final specialInstruction = TextEditingController();
   final goodAmount = TextEditingController();
-
-  // final ongkir = TextEditingController();
-  // final insuranceAmount = TextEditingController();
   final codAmountText = TextEditingController();
-
-  // final codFee = TextEditingController();
-  // final codAmount = TextEditingController();
 
   String specialIns = '';
   bool insurance = false;

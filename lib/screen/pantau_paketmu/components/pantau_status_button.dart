@@ -34,7 +34,6 @@ class PantauStatusButton extends StatelessWidget {
                     c.state.transType = '';
                     c.state.selectedTipeKiriman = 'cod';
                     c.update();
-                    // c.state.pagingController.refresh();
                   }
                 },
                 isFirst: true,
@@ -52,7 +51,6 @@ class PantauStatusButton extends StatelessWidget {
                     c.state.transType = 'cod ongkir';
                     c.state.selectedTipeKiriman = 'cod ongkir';
                     c.update();
-                    // c.state.pagingController.refresh();
                   }
                 },
                 isFirst: false,
@@ -70,7 +68,6 @@ class PantauStatusButton extends StatelessWidget {
                     c.state.transType = 'NON COD';
                     c.state.selectedTipeKiriman = 'non cod';
                     c.update();
-                    // c.state.pagingController.refresh();
                   }
                 },
                 isFirst: false,

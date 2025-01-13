@@ -21,12 +21,8 @@ class StickerMegahub2 extends StatelessWidget {
     return Container(
       color: Colors.white,
       child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: ,
         children: [
-          // StickerMegahub1(data: data).sticker1(),
           Transform.rotate(
-            // quarterTurns: 1,
             angle: 90 * 3.14 / 180,
             child: StickerMegahub1(
               data: data,

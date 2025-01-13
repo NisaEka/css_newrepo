@@ -127,7 +127,6 @@ class TransactionEditButton extends StatelessWidget {
                             Get.bottomSheet(
                               enableDrag: true,
                               isDismissible: true,
-                              // isScrollControlled: true,
                               StatefulBuilder(builder:
                                   (BuildContext context, StateSetter setState) {
                                 return HubungiAkuDialog(

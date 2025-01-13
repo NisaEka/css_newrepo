@@ -68,20 +68,9 @@ class AlamatReturnScreen extends StatelessWidget {
                       ", ${c.ccrfProfil?.returnAddress?.city ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.province ?? '-'}"
                       ", ${c.ccrfProfil?.returnAddress?.zipCode ?? '-'}",
-                  // subtitle: controller.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home_work_rounded,
                   tooltip: 'Alamat Lengkap'.tr,
                 ),
-                // DataUmumListItem(
-                //   title: controller.ccrfProfil?.returnAddress?.district ?? '-',
-                //   subtitle: controller.ccrfProfil?.returnAddress?.subDistrict ?? '-',
-                //   icon: Icons.location_city_rounded,
-                // ),
-                // DataUmumListItem(
-                //   title: controller.ccrfProfil?.returnAddress?.city ?? '-',
-                //   subtitle: controller.ccrfProfil?.returnAddress?.province ?? '-',
-                //   icon: Icons.location_city_rounded,
-                // )
               ],
       ),
     );
@@ -98,7 +87,6 @@ class AlamatReturnScreen extends StatelessWidget {
               Get.bottomSheet(
                 enableDrag: true,
                 isDismissible: true,
-                // isScrollControlled: true,
                 StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(

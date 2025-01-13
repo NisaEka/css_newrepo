@@ -27,7 +27,6 @@ class PantauCardController extends BaseController {
   }
 
   Future<void> initData() async {
-    // if (state.isLoading) return;
     state.listStatusKiriman = [];
     state.isLoading = true;
     update();
@@ -97,7 +96,6 @@ class PantauCardController extends BaseController {
       state.filteredCountList = List.from(state.countList);
       update();
     }
-    // await Future.delayed(const Duration(seconds: 2));
     state.isLoading = false;
     update();
   }
@@ -128,9 +126,7 @@ class PantauCardController extends BaseController {
   Future<void> resetFilter({bool? isDetail = false}) async {
     state.countList.clear();
     if (state.basic?.userType != "PEMILIK") {
-      // final petugasEntry = state.listOfficerEntry.firstWhere((element) => element.id == state.basic?.id);
       state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
-      // state.listOfficerEntry.add(PetugasModel(name: state.basic?.name ?? ''));
     } else {
       state.selectedPetugasEntry = null;
     }
@@ -150,7 +146,6 @@ class PantauCardController extends BaseController {
 
   void setSelectedStatus(PantauPaketmuCountModel item) {
     state.selectedStatusKiriman = item.status;
-    // applyFilter(isDetail: true);
     update();
   }
 }

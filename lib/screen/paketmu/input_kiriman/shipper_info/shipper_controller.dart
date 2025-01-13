@@ -61,7 +61,6 @@ class ShipperController extends BaseController {
     AppLogger.i("selected dropshipper ${state.selectedOrigin?.toJson()}");
 
     update();
-    // return state.dropshipper;
   }
 
   bool isSaveDropshipper() {
@@ -98,7 +97,6 @@ class ShipperController extends BaseController {
         ShipperModel.fromJson(await storage.readData(StorageCore.shipper));
     state.userBasic =
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-    // state.userCcrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
     state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
     update();
@@ -199,7 +197,6 @@ class ShipperController extends BaseController {
     } catch (e) {
       AppLogger.e('error getAccounts $e');
       AppLogger.w("shipper get from local");
-      // state.userCcrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
 
       state.accountList.clear();
       var accounts = BaseResponse<List<Account>>.fromJson(
@@ -214,7 +211,6 @@ class ShipperController extends BaseController {
       );
       AppLogger.i('accounts : ${accounts.toJson()}');
       state.accountList.addAll(accounts.data ?? []);
-      // state.accountList.addAll(GetAccountNumberModel.fromJson(await storage.readData(StorageCore.accounts)) );
       state.shipperName.text = state.userBasic?.brand ?? '';
       state.shipperPhone.text = state.shipper?.phone ?? '';
       state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';
@@ -228,7 +224,6 @@ class ShipperController extends BaseController {
     }
 
     state.isLoading = false;
-    // state.isOnline = false;
     update();
     if (state.data != null) {
       state.shipper = state.data?.shipper;
@@ -298,18 +293,15 @@ class ShipperController extends BaseController {
       AppLogger.i('shipper info : ${state.userCcrf?.toJson()}');
       AppLogger.i('shipper info : ${state.isLoading}');
       if (state.isLoading == false) {
-        // if (((state.userCcrf?.generalInfo?.zipCode == null) || (state.userCcrf?.generalInfo?.address == null)) && ) {
         if (state.shipperZipCode.text.isEmpty ||
             state.shipperAddress.text.isEmpty) {
           await Get.dialog(
             DefaultAlertDialog(
-              // title: 'Informasi'.tr,
               subtitle:
-                  'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
+                  'Profil belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
                       .tr,
-              confirmButtonTitle: 'Lengkapi profil'.tr,
+              confirmButtonTitle: 'Lengkapi Profil'.tr,
               onConfirm: () {
-                // Get.close(2);
                 Get.off(const EditProfilScreen())?.then((_) => initData());
               },
             ),
@@ -344,7 +336,6 @@ class ShipperController extends BaseController {
       region: state.isDropshipper
           ? state.selectedOrigin?.branch?.regional
           : (state.shipper?.region ?? state.data?.shipper?.region),
-      // region: state.selectedOrigin?.branch?.regional,
       //province
       country: "ID",
       contact: state.shipperName.text.toUpperCase(),
@@ -377,7 +368,6 @@ class ShipperController extends BaseController {
     state.isLoadOrigin = false;
     update();
     return response?.data?.toList() ?? [];
-    // return [];
   }
 
   Future<void> nextStep() async {
@@ -405,7 +395,6 @@ class ShipperController extends BaseController {
       region: state.isDropshipper
           ? state.selectedOrigin?.branch?.regional
           : (state.shipper?.region ?? state.data?.shipper?.region),
-      // region: state.selectedOrigin?.branch?.regional,
       //province
       country: "ID",
       contact: state.shipperName.text.toUpperCase(),

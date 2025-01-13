@@ -47,6 +47,7 @@ class DefaultAlertDialog extends StatelessWidget {
                 .textTheme
                 .titleLarge
                 ?.copyWith(fontWeight: regular, fontSize: 16),
+            textAlign: TextAlign.center,
           ),
           icon ?? const SizedBox(),
         ],

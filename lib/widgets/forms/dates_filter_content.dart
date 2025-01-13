@@ -125,7 +125,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
                     ));
                   });
                 }),
-                // hintText: 'Dari Tanggal',
               ),
               CustomTextFormField(
                 controller: endDateField,
@@ -148,8 +147,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
               ),
             ],
           ),
-          // CustomFormLabel(label: 'Status Kiriman'.tr),
-          // const SizedBox(height: 10),
         ],
       ),
     );
@@ -164,7 +161,6 @@ class _DatesFilterContentState extends State<DateFilterField> {
       endDate = null;
       startDateField.clear();
       endDateField.clear();
-      // widget.onChanged([]);
     } else if (filter == 1) {
       startDate = DateTime.now()
           .copyWith(hour: 0, minute: 0)

@@ -36,7 +36,6 @@ class PetugasListItem extends StatelessWidget {
           isLoading: isLoading,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 3),

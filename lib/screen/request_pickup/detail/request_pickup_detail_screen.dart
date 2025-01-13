@@ -91,7 +91,9 @@ class RequestPickupDetailScreen extends StatelessWidget {
             Shimmer(
               isLoading: c.isLoading,
               child: Container(
-                color: c.isLoading ? greyColor : Colors.transparent,
+                decoration: BoxDecoration(
+                    color: c.isLoading ? greyColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(5)),
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(right: 20),
                 child: Text(
@@ -108,30 +110,30 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 10),
             _textRow(
                 context,
-                "Tanggal dan Jam",
+                "Tanggal dan Jam".tr,
                 requestPickup.createdDateSearch.toLongDateTimeFormat(),
                 c.isLoading),
             const SizedBox(height: 6),
             _textRow(
-                context, "Nama PIC", requestPickup.pickupName, c.isLoading),
+                context, "Nama PIC".tr, requestPickup.pickupName, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(
-                context, "Telepon", requestPickup.pickupPicPhone, c.isLoading),
-            const SizedBox(height: 6),
-            _textRow(context, "Kota Penjemputan", requestPickup.pickupCity,
+            _textRow(context, "Telepon".tr, requestPickup.pickupPicPhone,
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kecamatan Penjemputan",
+            _textRow(context, "Kota Penjemputan".tr, requestPickup.pickupCity,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Kecamatan Penjemputan".tr,
                 requestPickup.pickupDistrict, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Alamat Penjemputan", requestPickup.pickupAddress,
+            _textRow(context, "Alamat Penjemputan".tr,
+                requestPickup.pickupAddress, c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Layanan Pickup".tr, requestPickup.pickupService,
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Layanan Pickup", requestPickup.pickupService,
-                c.isLoading),
-            const SizedBox(height: 6),
-            _textRow(context, "Kendaraan Pickup", requestPickup.pickupVehicle,
-                c.isLoading),
+            _textRow(context, "Kendaraan Pickup".tr,
+                requestPickup.pickupVehicle, c.isLoading),
             const Divider(
               color: greyLightColor3,
             ),
@@ -139,7 +141,9 @@ class RequestPickupDetailScreen extends StatelessWidget {
             Shimmer(
               isLoading: c.isLoading,
               child: Container(
-                color: c.isLoading ? greyColor : Colors.transparent,
+                decoration: BoxDecoration(
+                    color: c.isLoading ? greyColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(5)),
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(right: 20),
                 child: Text(
@@ -154,14 +158,14 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _textRow(
                 context,
-                "Tanggal Pickup",
+                "Tanggal Pickup".tr,
                 '${requestPickup.pickupDate?.toDate(originFormat: 'dd-MM-yyyy').toString().toLongDateFormat()} ${requestPickup.pickupTime ?? ''}',
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Status Pickup",
+            _textRow(context, "Status Pickup".tr,
                 requestPickup.pickupStatus ?? '-', c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kendaraan Pickup",
+            _textRow(context, "Kendaraan Pickup".tr,
                 requestPickup.statusDesc ?? "-", c.isLoading),
             const SizedBox(height: 16),
             const Divider(
@@ -171,7 +175,9 @@ class RequestPickupDetailScreen extends StatelessWidget {
             Shimmer(
               isLoading: c.isLoading,
               child: Container(
-                color: c.isLoading ? greyColor : Colors.transparent,
+                decoration: BoxDecoration(
+                    color: c.isLoading ? greyColor : Colors.transparent,
+                    borderRadius: BorderRadius.circular(5)),
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(right: 20),
                 child: Text(
@@ -184,29 +190,29 @@ class RequestPickupDetailScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            _textRow(context, "Account", requestPickup.custId, c.isLoading),
+            _textRow(context, "Account".tr, requestPickup.custId, c.isLoading),
             const SizedBox(height: 6),
             _textRow(
-                context, "Pengirim", requestPickup.shipperName, c.isLoading),
+                context, "Pengirim".tr, requestPickup.shipperName, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Petugas Entry", requestPickup.petugasEntry,
+            _textRow(context, "Petugas Entry".tr, requestPickup.petugasEntry,
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kota Pengiriman", requestPickup.shipperCity,
+            _textRow(context, "Kota Pengiriman".tr, requestPickup.shipperCity,
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(
-                context, "Penerima", requestPickup.receiverName, c.isLoading),
-            const SizedBox(height: 6),
-            _textRow(context, "Kota Penerima", requestPickup.receiverCity,
+            _textRow(context, "Penerima".tr, requestPickup.receiverName,
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Deskripsi Kiriman",
+            _textRow(context, "Kota Penerima".tr, requestPickup.receiverCity,
+                c.isLoading),
+            const SizedBox(height: 6),
+            _textRow(context, "Deskripsi Kiriman".tr,
                 requestPickup.goodDesc ?? "-", c.isLoading),
             const SizedBox(height: 6),
             _textRow(
                 context,
-                "Berat Kiriman",
+                "Berat Kiriman".tr,
                 requestPickup.weight != null
                     ? '${requestPickup.weight?.toDouble().toString()} KG'
                     : "- KG",

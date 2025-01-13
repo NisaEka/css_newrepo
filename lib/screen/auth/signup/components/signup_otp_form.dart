@@ -84,7 +84,6 @@ class SignupOtpForm extends StatelessWidget {
                   CustomFilledButton(
                     color: primaryColor(context),
                     title: 'Selanjutnya'.tr,
-                    // radius: 50,
                     onPressed: () => c.pinConfirmation(),
                   ),
                 ],

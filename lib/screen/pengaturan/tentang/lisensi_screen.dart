@@ -13,7 +13,7 @@ class LisensiScreen extends StatelessWidget {
         leading: CustomBackButton(
           onPressed: () => Get.back(),
         ),
-        title: "Lisensi",
+        title: "Lisensi".tr,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

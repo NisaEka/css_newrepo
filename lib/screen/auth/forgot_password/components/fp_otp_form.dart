@@ -87,7 +87,6 @@ class ForgotPasswordOTPForm extends StatelessWidget {
                         ? primaryColor(context)
                         : greyColor,
                     title: 'Selanjutnya'.tr,
-                    // radius: 50,
                     onPressed: () =>
                         c.otpPin.text.isNotEmpty && c.otpPin.length >= 6
                             ? c.pinConfirmation()

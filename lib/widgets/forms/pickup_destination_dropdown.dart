@@ -69,10 +69,7 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
     return widget.showfromBottom
         ? CustomTextFormField(
             controller: widget.controller,
-            // items: [],
             hintText: widget.label ?? "Kota Tujuan".tr,
-            // label: '',
-            // textStyle: hintTextStyle,
             readOnly: true,
             isRequired: true,
             suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -92,28 +89,10 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
                         color: textColor(context),
                       ),
                 ),
-                // child: Text('${e.zipCode == null || e.zipCode == '00000' ? '' : '${e.zipCode}; '}'
-                //         '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-                //         '${e.cityName == null ? '' : '${e.cityName}; '}'
-                //         '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-                //         '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-                //         '${e.destinationCode == null ? '' : '${e.destinationCode}'}'
-                //     .splitMapJoin(
-                //   ';',
-                //   onMatch: (p0) => '; ',
-                // )),
               );
             },
             itemAsString:
                 widget.itemAsString ?? (OriginModel e) => '${e.originName}',
-            // (OriginModel e) => ''
-            //     '${e.zipCode == null ? '' : '${e.zipCode}; '}'
-            //     '${e.provinceName == null ? '' : '${e.provinceName}; '}'
-            //     '${e.cityName == null ? '' : '${e.cityName}; '}'
-            //     '${e.districtName == null || e.districtName == '-' ? '' : '${e.districtName}; '}'
-            //     '${e.subdistrictName == null || e.subdistrictName == '-' ? '' : '${e.subdistrictName}; '}'
-            //     '${e.destinationCode == null ? '' : '${e.destinationCode}; '}',
-            // '${e.countryName == null ? '' : '${e.countryName}'}',
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
@@ -155,8 +134,6 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
               CustomSearchField(
                 controller: searchTextfield,
                 hintText: 'Cari'.tr,
-                // onClear: () => setState(()=> searchTextfield.clear()),
-                // validate: state.searchCity.text.length < 3,
                 margin: EdgeInsets.zero,
                 autoFocus: true,
                 validationText: 'Masukan 3 atau lebih karakter'.tr,
@@ -168,12 +145,9 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
                   setState(() {});
                 },
               ),
-              // const SizedBox(height: 10),
               Expanded(
                 child: FutureBuilder(
-                  // future: getOriginList(state.searchCity.text == '' ? 'jak' : state.searchCity.text),
                   future: getPickupDestinationList(searchTextfield.text),
-                  // initialData: (title == "Kota Asal" || title == "Origin") ? state.originList : state.destinationList,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return const Center(child: CircularProgressIndicator());
@@ -207,20 +181,8 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {
-            // widget.onSelect(post);
             widget.value?.copyWith(
               originName: post.originName,
-              // id: post.id,
-              // countryName: post.countryName,
-              // provinceName: post.provinceName,
-              // cityName: post.cityName,
-              // districtName: post.districtName,
-              // subdistrictName: post.subdistrictName,
-              // zipCode: post.zipCode,
-              // destinationCode: post.destinationCode,
-              // status: post.status,
-              // facilityCode: post.facilityCode,
-              // cityZone: post.cityZone,
             );
             widget.controller?.text = post.originName ?? '';
             Get.back();

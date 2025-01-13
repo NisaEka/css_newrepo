@@ -56,7 +56,6 @@ class LacakKirimanScreen extends StatelessWidget {
                     ),
                   );
                 }
-                // c.cekResi(result);
               }),
               child: Icon(
                 Icons.qr_code_rounded,
@@ -64,7 +63,6 @@ class LacakKirimanScreen extends StatelessWidget {
                 size: 25,
               ),
             ),
-            // onSubmit: (value) => c.cekResi(value),
             onSubmit: (value) {
               if (value.isEmpty) {
                 Get.showSnackbar(
@@ -79,7 +77,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     backgroundColor: errorColor,
                   ),
                 );
-              } else if (value.length > 16) {
+              } else if (value.length < 16) {
                 Get.showSnackbar(
                   GetSnackBar(
                     icon: const Icon(

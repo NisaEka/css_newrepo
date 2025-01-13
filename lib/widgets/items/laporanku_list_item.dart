@@ -48,7 +48,6 @@ class LaporankuListItem extends StatelessWidget {
                 elevation: 0,
                 child: Column(
                   children: [
-                    // const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -67,7 +66,6 @@ class LaporankuListItem extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            // data?.status ?? '',
                             data?.status == "Closed" ||
                                     data?.milesStatus == "CLOSED"
                                 ? "Selesai".tr

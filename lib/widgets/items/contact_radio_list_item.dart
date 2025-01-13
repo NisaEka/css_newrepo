@@ -40,7 +40,6 @@ class ContactRadioListItem extends StatelessWidget {
       key: ValueKey(index),
       startActionPane: ActionPane(
         dragDismissible: false,
-        // dismissible: DismissiblePane(onDismissed: onDelete ?? () {}),
         motion: const DrawerMotion(),
         children: [
           SlidableAction(
@@ -74,7 +73,6 @@ class ContactRadioListItem extends StatelessWidget {
                     ? primaryColor(context)
                     : secondaryColor(context),
               ),
-              // shape: Border.all(color: isSelected ? redJNE : greyColor),
               selectedTileColor: primaryColor(context),
               title: Text(name ?? '',
                   style: Theme.of(context).textTheme.titleMedium),

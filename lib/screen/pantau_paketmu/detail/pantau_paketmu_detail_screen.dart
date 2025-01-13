@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:intl/intl.dart';
-// import 'package:photo_view/photo_view.dart';
 
 class PantauPaketmuDetailScreen extends StatelessWidget {
   const PantauPaketmuDetailScreen({super.key});
@@ -88,7 +87,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                               Get.bottomSheet(
                                 enableDrag: true,
                                 isDismissible: true,
-                                // isScrollControlled: true,
                                 StatefulBuilder(builder: (BuildContext context,
                                     StateSetter setState) {
                                   return HubungiAkuDialog(
@@ -186,21 +184,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                             ?.toString()
                             .toLongDateTimeFormat() ??
                         "-",
-                    // controller.pantauPaketmu.hoCourierDate != null
-                    //     ? (controller.pantauPaketmu.hoCourierDate is String
-                    //         ? DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
-                    //             controller.pantauPaketmu.hoCourierDate ?? '-'))
-                    //         : DateFormat('dd MMMM yyyy HH:mmzzz').format(
-                    //             controller.pantauPaketmu.hoCourierDate!))
-                    //     : (controller.pantauPaketmu.puLastAttempStatusDate != null
-                    //         ? (controller.pantauPaketmu.puLastAttempStatusDate
-                    //                 is String
-                    //             ? DateFormat('dd MMMM yyyy HH:mmzzz').format(
-                    //                 DateTime.parse(controller
-                    //                     .pantauPaketmu.puLastAttempStatusDate!))
-                    //             : DateFormat('dd MMMM yyyy HH:mmzzz').format(
-                    //                 controller.pantauPaketmu.puLastAttempStatusDate!))
-                    //         : "-"),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 16),
@@ -297,7 +280,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       context,
                       "Nominal COD",
                       'Rp. ${NumberFormat('#,##0.00', 'id').format(controller.pantauPaketmu.codAmount ?? 0)}',
-                      // 'Rp. ${controller.pantauPaketmu.codAmount?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
                           color: AppConst.isLightTheme(context)
@@ -355,8 +337,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     controller.pantauPaketmu.tglReceived
                         .toString()
                         .toLongDateTimeFormat(),
-                    // DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
-                    //     controller.pantauPaketmu.tglReceived ?? '')),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -435,8 +415,6 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       controller.pantauPaketmu.repcssPaymentDate
                           .toString()
                           .toLongDateTimeFormat(),
-                      // DateFormat('dd MMMM yyyy HH:mmzzz').format(DateTime.parse(
-                      //     controller.pantauPaketmu.repcssPaymentDate ?? '-')),
                       controller.isLoading,
                     ),
                   ],
@@ -558,38 +536,4 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
       ],
     );
   }
-
-  // void _showImagePreview(BuildContext context, String imageUrl) {
-  //   if (imageUrl.isNotEmpty) {
-  //     Navigator.of(context).push(
-  //       MaterialPageRoute(
-  //         builder: (_) => Scaffold(
-  //           backgroundColor: Colors.black,
-  //           appBar: AppBar(
-  //             backgroundColor: Colors.black,
-  //             elevation: 0,
-  //             automaticallyImplyLeading: false,
-  //             actions: [
-  //               IconButton(
-  //                 icon: const Icon(Icons.close, color: whiteColor),
-  //                 onPressed: () => Navigator.of(context).pop(),
-  //               ),
-  //             ],
-  //           ),
-  //           body: Center(
-  //             child: PhotoView(
-  //               imageProvider: CachedNetworkImageProvider(imageUrl),
-  //               backgroundDecoration: const BoxDecoration(
-  //                 color: Colors.black,
-  //               ),
-  //               minScale: PhotoViewComputedScale.contained,
-  //               maxScale: PhotoViewComputedScale.covered * 3.0,
-  //               initialScale: PhotoViewComputedScale.contained,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  // }
 }

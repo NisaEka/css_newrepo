@@ -43,7 +43,6 @@ class ListDropshipperScreen extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
-          // !controller.isOnline ? const OfflineBar() : const SizedBox(),
           CustomSearchField(
             controller: c.search,
             hintText: 'Cari Data Dropshipper'.tr,
@@ -64,7 +63,6 @@ class ListDropshipperScreen extends StatelessWidget {
               c.initData();
             },
           ),
-          // const SizedBox(height: 20),
           c.isLoading
               ? Expanded(
                   child: ListView.builder(

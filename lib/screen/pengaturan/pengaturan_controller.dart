@@ -41,7 +41,6 @@ class PengaturanController extends BaseController {
   }
 
   void changeLanguage(String language) async {
-    // if (value.code == 200) {
     if (language == "ID") {
       Get.updateLocale(const Locale("id", "ID"));
       await storage.writeString(StorageCore.localeApp, "id");
@@ -51,8 +50,6 @@ class PengaturanController extends BaseController {
       await storage.writeString(StorageCore.localeApp, "en");
       lang = "en";
     }
-    // }
-
     if (isLogin) {
       await profil.putProfileBasic(
         UserModel(
@@ -78,14 +75,12 @@ class PengaturanController extends BaseController {
 
   void changeTheme(String theme) async {
     if (theme == "dark") {
-      // Get.updateLocale(const Locale("id", "ID"));
       await storage.writeString(StorageCore.themeMode, "dark");
       ThemeMode.dark;
       Get.changeTheme(CustomTheme.dark);
 
       mode = "dark";
     } else {
-      // Get.updateLocale(const Locale("en", "US"));
       await storage.writeString(StorageCore.themeMode, "light");
       ThemeMode.light;
       Get.changeTheme(CustomTheme.light);

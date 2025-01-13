@@ -14,6 +14,7 @@ class RequestPickupAddressUpsertController extends BaseController {
   final name = TextEditingController();
   final phone = TextEditingController();
   final address = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   bool isLoadDestination = false;
 

@@ -65,7 +65,7 @@ class FacilityScreen extends StatelessWidget {
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  sliver: facilityGrid(controller.codFacilities),
+                  sliver: facilityGrid(controller.codFacilities, context),
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.only(top: 32),
@@ -75,7 +75,7 @@ class FacilityScreen extends StatelessWidget {
                 ),
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 8),
-                  sliver: facilityGrid(controller.nonCodFacilities),
+                  sliver: facilityGrid(controller.nonCodFacilities, context),
                 )
               ],
             ),
@@ -102,7 +102,9 @@ class FacilityScreen extends StatelessWidget {
     );
   }
 
-  Widget facilityGrid(List<FacilityModel> facilities) {
+  Widget facilityGrid(List<FacilityModel> facilities, BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double childAspectRatio = screenWidth < 400 ? 0.55 : 0.65;
     return SliverGrid(
       delegate: SliverChildBuilderDelegate(
         (context, index) => FacilityItem(
@@ -114,11 +116,11 @@ class FacilityScreen extends StatelessWidget {
         ),
         childCount: facilities.length,
       ),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
         mainAxisSpacing: 4,
         crossAxisSpacing: 4,
-        childAspectRatio: 0.65,
+        childAspectRatio: childAspectRatio,
       ),
     );
   }

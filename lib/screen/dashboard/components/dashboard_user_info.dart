@@ -88,7 +88,7 @@ class DashboardUserInfo extends StatelessWidget {
                                     backgroundColor: errorColor,
                                   ),
                                 );
-                              } else if (value.length > 16) {
+                              } else if (value.length < 16) {
                                 Get.showSnackbar(
                                   GetSnackBar(
                                     icon: const Icon(

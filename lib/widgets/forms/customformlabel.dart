@@ -52,8 +52,7 @@ class CustomFormLabel extends StatelessWidget {
                 children: <TextSpan>[
                   TextSpan(
                       text: showRequired ? "*" : "",
-                      style: const TextStyle(color: Colors.red)),
-                  // TextSpan(text: value),
+                      style: const TextStyle(color: redJNE)),
                 ],
               ),
             ),

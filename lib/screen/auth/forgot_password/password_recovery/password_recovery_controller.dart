@@ -15,8 +15,6 @@ class PasswordRecoveryController extends BaseController {
   int? recovery;
   bool isLoading = false;
 
-  // String? email;
-
   String getMail() {
     var nameUser = email?.split("@");
     var emailCharacter = email?.replaceRange(

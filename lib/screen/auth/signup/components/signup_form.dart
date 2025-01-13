@@ -26,7 +26,6 @@ class SignupForm extends StatelessWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                // const LogoHeader(),
                 Form(
                   key: c.state.formKey,
                   onChanged: () async {

@@ -63,13 +63,10 @@ class StickerA6 extends StatelessWidget {
               child: BarcodeWidget(
                 barcode: Barcode.code128(
                   useCode128A: true,
-                  // escapes: true,
                 ),
                 data: data.awb ?? '',
                 drawText: false,
                 style: const TextStyle(fontSize: 20),
-                // height: 80,
-                // width: Get.width ,
               ),
             ),
             Table(
@@ -199,14 +196,6 @@ class StickerA6 extends StatelessWidget {
                                 text: data.shipper?.region?.name ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
                               ),
-                              // TextSpan(
-                              //   text: 'City \t\t\t\t\t\t\t\t\t: ',
-                              //   style: sublistTitleTextStyle.copyWith(fontWeight: bold, color: Colors.white),
-                              // ),
-                              // TextSpan(
-                              //   text: data.shipper?.region ?? '',
-                              //   style: sublistTitleTextStyle.copyWith(),
-                              // ),
                               TextSpan(
                                 text: ' Phone : ',
                                 style: sublistTitleTextStyle.copyWith(
@@ -239,7 +228,6 @@ class StickerA6 extends StatelessWidget {
                           style: TextStyle(fontSize: 30, fontWeight: bold)),
                       Text(data.type == 'COD' ? data.type ?? '' : '',
                           style: TextStyle(fontSize: 30, fontWeight: bold)),
-                      // Text(data.type ?? '-', style: TextStyle(fontSize: 20, fontWeight: bold)),
                     ],
                   )
                 ],
@@ -288,10 +276,6 @@ class StickerA6 extends StatelessWidget {
                                 style: sublistTitleTextStyle.copyWith(
                                     fontWeight: bold),
                               ),
-                              // TextSpan(
-                              //   text: 'City \t\t\t\t\t\t\t\t\t: ',
-                              //   style: sublistTitleTextStyle.copyWith(fontWeight: bold, color: Colors.white),
-                              // ),
                               TextSpan(
                                 text: data.receiver?.region ?? '',
                                 style: sublistTitleTextStyle.copyWith(),
@@ -341,25 +325,13 @@ class StickerA6 extends StatelessWidget {
                             ],
                           ),
                         ),
-
-                        // CustomLabelText(
-                        //   title: 'Contact\nPerson ',
-                        //   value: "\t: ${data.receiver?.contact ?? data.receiver?.name}",
-                        //   titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
-                        //   valueTextStyle: sublistTitleTextStyle.copyWith(),
-                        //   isHorizontal: true,
-                        //   valueMaxline: 5,
-                        //   alignment: 'center',
-                        // ),
                       ],
                     ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                          // "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.receiver?.destinationCode ?? ''}",
-                          data.receiver?.destinationCode ?? '',
+                      Text(data.receiver?.destinationCode ?? '',
                           style: TextStyle(fontSize: 15, fontWeight: bold)),
                       Text(data.account?.accountType ?? '',
                           style: TextStyle(fontSize: 12.5, fontWeight: bold)),
@@ -376,13 +348,11 @@ class StickerA6 extends StatelessWidget {
               child: BarcodeWidget(
                 barcode: Barcode.code128(
                   useCode128A: true,
-                  // escapes: true,
                 ),
                 data: data.orderId ?? '',
                 drawText: true,
                 style: const TextStyle(fontSize: 20),
                 height: 80,
-                // width: Get.width ,
               ),
             ),
             const Divider(
@@ -432,7 +402,6 @@ class StickerA6 extends StatelessWidget {
               isHorizontal: true,
               margin: const EdgeInsets.all(5),
               valueMaxline: 5,
-              // width: 50,,
             ),
             Table(
               border: const TableBorder(

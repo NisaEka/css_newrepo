@@ -18,8 +18,7 @@ class RequestPickupConfirmationDialog extends StatelessWidget {
     return DefaultAlertDialog(
       title: "Konfirmasi".tr,
       subtitle:
-          "Apakah kamu sudah yakin untuk melakukan penjemputan di jam $pickupTime"
-              .tr,
+          "${'Apakah kamu sudah yakin untuk melakukan penjemputan di jam '.tr} $pickupTime",
       backButtonTitle: "Batal".tr,
       confirmButtonTitle: "Ya".tr,
       onBack: Get.back,

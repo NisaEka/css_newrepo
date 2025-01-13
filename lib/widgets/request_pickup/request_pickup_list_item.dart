@@ -88,6 +88,9 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
   }
 
   Widget _requestPickupContent(RequestPickupModel? requestPickup) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double horizontalPadding = screenWidth < 400 ? 1 : 10;
+    double fontSize = screenWidth < 400 ? 7 : 10;
     return Expanded(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,18 +100,20 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
           children: [
             Container(
               alignment: Alignment.center,
-              width: 160,
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              width: screenWidth < 400 ? 90 : 160,
+              padding: EdgeInsets.symmetric(
+                  vertical: 5, horizontal: horizontalPadding),
               decoration: BoxDecoration(
                 color: _chipColor(requestPickup),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(
-                requestPickup?.status ?? '',
+                requestPickup?.status.tr ?? '',
                 style: sublistTitleTextStyle.copyWith(
                   color: whiteColor,
-                  fontSize: 10,
+                  fontSize: fontSize,
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
             Text(
@@ -141,7 +146,12 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
                 ' ${"Koli".tr.toUpperCase()} / ',
                 style: Theme.of(context).textTheme.titleSmall,
               ),
-              Text((requestPickup?.weight ?? 0).toString(),
+              Text(
+                  requestPickup?.weight == null
+                      ? "0"
+                      : (requestPickup!.weight % 1 == 0
+                          ? requestPickup.weight.toInt().toString()
+                          : requestPickup.weight.toStringAsFixed(2)),
                   style: Theme.of(context).textTheme.titleSmall),
               Text(
                 " KG",
@@ -150,7 +160,7 @@ class _RequestPickupItemState extends State<RequestPickupItem> {
             ],
           ),
           Text(
-            requestPickup?.shipperCity ?? "",
+            requestPickup?.shipperCity ?? '',
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ]),

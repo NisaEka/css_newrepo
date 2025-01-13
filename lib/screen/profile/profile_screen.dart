@@ -30,6 +30,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double leftPadding = screenWidth < 400 ? 30 : 38;
     return GetBuilder<ProfileController>(
         init: ProfileController(),
         builder: (controller) {
@@ -53,9 +55,8 @@ class ProfileScreen extends StatelessWidget {
               floatingActionButton: controller.state.menuModel.paketmuInput ==
                       "Y"
                   ? MenuIcon(
-                      // icon: IconsConstant.add,
                       icon: ImageConstant.paketmuIcon,
-                      margin: const EdgeInsets.only(left: 38, bottom: 29),
+                      margin: EdgeInsets.only(left: leftPadding, bottom: 29),
                       radius: 100,
                       background: (AppConst.isLightTheme(context)
                           ? (controller.state.isLogin
@@ -191,7 +192,6 @@ class ProfileScreen extends StatelessWidget {
                     )
                   ],
           ),
-          // : const SizedBox(),
         ],
       ),
     );

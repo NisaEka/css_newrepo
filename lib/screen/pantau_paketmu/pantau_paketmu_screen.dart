@@ -25,7 +25,6 @@ class PantauPaketmuScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Find the controller (initialization is handled here)
-    // PantauPaketmuController controller = Get.find<PantauPaketmuController>();
 
     return GetBuilder<PantauPaketmuController>(
       init:
@@ -102,9 +101,6 @@ class PantauPaketmuScreen extends StatelessWidget {
                     isSelected: c.state.selectedTransaction
                         .where((e) => e == item)
                         .isNotEmpty,
-                    onLongPress: () {
-                      // c.select(item);
-                    },
                     onTap: () {
                       Get.to(
                         const PantauPaketmuDetailScreen(),

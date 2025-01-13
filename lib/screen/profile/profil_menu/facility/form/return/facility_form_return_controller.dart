@@ -86,7 +86,6 @@ class FacilityFormReturnController extends BaseController {
     update();
 
     return models ?? List.empty();
-    // return [];
   }
 
   void _checkConnectivity() {

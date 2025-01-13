@@ -20,7 +20,6 @@ class AkunBankScreen extends StatelessWidget {
           body: Stack(
             children: [
               _bodyContent(controller, context),
-              // controller.isLoading ? const LoadingDialog() : Container(),
             ],
           ),
         );
@@ -74,7 +73,6 @@ class AkunBankScreen extends StatelessWidget {
               Get.bottomSheet(
                 enableDrag: true,
                 isDismissible: true,
-                // isScrollControlled: true,
                 StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(

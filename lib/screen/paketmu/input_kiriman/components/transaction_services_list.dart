@@ -15,9 +15,7 @@ class TransactionServicesList extends StatelessWidget {
         builder: (c) {
           return SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            sliver: c.state.serviceList.isEmpty &&
-                    //c.state.isOnline &&
-                    !c.state.isServiceLoad
+            sliver: c.state.serviceList.isEmpty && !c.state.isServiceLoad
                 ? SliverToBoxAdapter(
                     child: GestureDetector(
                       onTap: () => c.initData(),
@@ -43,7 +41,6 @@ class TransactionServicesList extends StatelessWidget {
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
                       childAspectRatio: 4.0,
-                      // mainAxisExtent: 10
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {

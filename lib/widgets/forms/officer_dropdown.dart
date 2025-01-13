@@ -69,10 +69,7 @@ class _OriginDropdownState extends State<OfficerDropdown> {
     return widget.showfromBottom
         ? CustomTextFormField(
             controller: widget.controller,
-            // items: [],
             hintText: widget.label ?? "Petugas".tr,
-            // label: '',
-            // textStyle: hintTextStyle,
             readOnly: true,
             isRequired: true,
             suffixIcon: const Icon(Icons.keyboard_arrow_down),
@@ -140,8 +137,6 @@ class _OriginDropdownState extends State<OfficerDropdown> {
               CustomSearchField(
                 controller: searchTextfield,
                 hintText: 'Cari'.tr,
-                // onClear: () => setState(()=> searchTextfield.clear()),
-                // validate: state.searchCity.text.length < 3,
                 margin: EdgeInsets.zero,
                 autoFocus: true,
                 validationText: 'Masukan 3 atau lebih karakter'.tr,
@@ -189,12 +184,6 @@ class _OriginDropdownState extends State<OfficerDropdown> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {
-            // widget.value?.copyWith(
-            //   branchCode: post.branchCode,
-            //   originCode: post.originCode,
-            //   originName: post.originName,
-            //   originStatus: post.originStatus,
-            // );
             widget.controller?.text = post.name ?? '';
             Get.back();
           },

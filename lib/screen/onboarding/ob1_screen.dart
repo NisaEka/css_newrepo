@@ -186,7 +186,7 @@ class _Ob1ScreenState extends State<Ob1Screen> {
             ? 24
             : 20;
     double descFontSize = screenWidth < 400
-        ? 14
+        ? 12
         : screenWidth >= 400 && screenWidth < 500
             ? 16
             : 14;
@@ -202,20 +202,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
                   : index == 2
                       ? const Vec2()
                       : const Vec3(),
-              // Align(
-              //   alignment: Alignment.topCenter,
-              //   child: index == 1
-              //       ? const Vec1()
-              //       : index == 2
-              //           ? const Vec2()
-              //           : const Vec3(),
-              // child: Image.asset(
-              //   ImageConstant.sliceU,
-              //   height: Get.height / 2,
-              //   fit: BoxFit.cover,
-              //   alignment: alignment,
-              // ),
-              // ),
               Align(
                 alignment:
                     index == 2 ? Alignment.bottomCenter : Alignment.center,
@@ -229,7 +215,6 @@ class _Ob1ScreenState extends State<Ob1Screen> {
           ),
         ),
         _buildIndicator(),
-        // const SizedBox(height: 40),
         screenWidth < 400
             ? const SizedBox(height: 10)
             : screenWidth >= 400 && screenWidth < 500

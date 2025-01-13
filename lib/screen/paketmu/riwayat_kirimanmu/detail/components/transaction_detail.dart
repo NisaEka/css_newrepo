@@ -25,7 +25,6 @@ class TransactionDetail extends StatelessWidget {
                 BarcodeWidget(
                   barcode: Barcode.code128(
                     useCode128A: true,
-                    // escapes: true,
                   ),
                   color: CustomTheme().textColor(context) ?? greyColor,
                   data: c.state.awb,

@@ -25,7 +25,6 @@ class ForgotPasswordOTPController extends BaseController {
         width: 56,
         height: 3,
         decoration: BoxDecoration(
-          // color: blueJNE,
           borderRadius: BorderRadius.circular(8),
         ),
       ),
@@ -39,7 +38,6 @@ class ForgotPasswordOTPController extends BaseController {
         width: 56,
         height: 3,
         decoration: BoxDecoration(
-          // color: blueJNE,
           borderRadius: BorderRadius.circular(8),
         ),
       ),

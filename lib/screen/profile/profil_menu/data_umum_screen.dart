@@ -78,7 +78,6 @@ class DataUmumScreen extends StatelessWidget {
                           "${(c.basicProfil?.zipCode) == null ? '' : ''
                               ', ${c.basicProfil?.zipCode}'}" : ""
                           ", ${c.ccrfProfil?.generalInfo?.zipCode ?? '-'}"}",
-                  // subtitle: c.ccrfProfil?.generalInfo?.zipCode ?? '-',
                   icon: Icons.home_work_rounded,
                   tooltip: 'Alamat Lengkap'.tr,
                 ),
@@ -98,7 +97,6 @@ class DataUmumScreen extends StatelessWidget {
               Get.bottomSheet(
                 enableDrag: true,
                 isDismissible: true,
-                // isScrollControlled: true,
                 StatefulBuilder(
                     builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(text: 'kerahasiaan_data'.tr);

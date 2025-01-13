@@ -155,11 +155,9 @@ class TambahPetugasController extends BaseController {
           );
           update();
         });
-        // selectedOrigin = dataPetugas.origins ?? [];
 
         dataPetugas.origins?.forEach((origin) {
           originCodes.add(origin.originCode ?? '');
-          // selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).first);
           update();
         });
 

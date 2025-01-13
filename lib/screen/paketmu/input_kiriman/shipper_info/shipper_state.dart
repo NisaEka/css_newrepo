@@ -33,7 +33,6 @@ class ShipperState {
   List<Account> accountList = [];
   Account? selectedAccount;
 
-  // GetOriginModel? originModel;
   OriginModel? selectedOrigin;
   ShipperModel? shipper;
   UserModel? userBasic;

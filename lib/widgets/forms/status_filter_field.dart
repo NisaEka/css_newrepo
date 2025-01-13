@@ -78,7 +78,6 @@ class _StatusFilterFieldState extends State<StatusFilterField> {
           mainAxisSpacing: 8,
           crossAxisSpacing: 8,
           childAspectRatio: 1.5,
-          // mainAxisExtent: 100
         ),
       ),
     );

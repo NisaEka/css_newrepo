@@ -133,7 +133,7 @@ class AddEclaimController extends BaseController {
                   children: [
                     ListTile(
                       title: Text(
-                        manualCategories[index],
+                        manualCategories[index].tr,
                         style: const TextStyle(color: Colors.black),
                       ),
                       onTap: () {

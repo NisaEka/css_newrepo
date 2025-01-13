@@ -72,7 +72,7 @@ class LanguageEN {
       "Hingga": "To",
       "Petugas Entry": "Entry Officer",
       "Masih Di Kamu": "Not Received",
-      "Sudah Di Jemput": "Alrady Picked Up",
+      "Sudah Di Jemput": "Already Picked Up",
       "Dalam Peninjauan": "Under Review",
       "Dalam Proses": "On Process",
       "Dalam Perjalanan": "On Delivery",
@@ -85,7 +85,7 @@ class LanguageEN {
       "Belum Terkumpul dari pembeli": "Not Yet Collected from customer",
       "Terkumpul dari pembeli": "Collected from customer",
       "Butuh Di Cek": "Needs Review",
-      "Sudah JNE": "Already at JNE Warehouse",
+      "Sudah Jne": "Already at JNE Warehouse",
       "Penerima": "Receiver",
       "No Resi": "Receipt Number",
       "Cari Transaksimu": "Search Your Transaction",
@@ -307,8 +307,8 @@ class LanguageEN {
       "Kirim ulang kode": "Resend code",
       "Gunakan cara lain": "Use another method",
       "Peringatan": "Alert",
-      "Total Ongkos Kirim tidak bisa lebih dari Rp.1000.000":
-          "Total shipping costs cannot exceed Rp. 1000,000",
+      "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000":
+          "Total shipping costs cannot exceed Rp. 1.000,000",
       "Tidak dapat menyimpan data": "Cannot save data",
       "Draft Kosong": "Draft Empty",
       "Mode offline": "Offline Mode",
@@ -456,7 +456,7 @@ class LanguageEN {
       "Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB":
           "Check back the ID card image file. Image files must not be empty or more than 2MB",
       "Periksa kembali file gambar NPWP. File gambar tidak boleh kosong atau lebih dari 2MB":
-          "Check back the NPWP image file. Image files must not be empty or more than 2MB",
+          "Check back the TaxID image file. Image files must not be empty or more than 2MB",
       "Periksa kembali file gambar rekening. File gambar tidak boleh kosong atau lebih dari 2MB":
           "Check back the account image file. Image files must not be empty or more than 2MB",
       "Upgrade akunmu untuk menggunakan fasilitas lebih banyak":
@@ -596,7 +596,44 @@ class LanguageEN {
       "check_connection": "Connection Failed",
       "Service tidak tersedia": "Service not available",
       "Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.":
-          "Make sure you only install CSS Mobile app from the Play Store."
+          "Make sure you only install CSS Mobile app from the Play Store.",
+      "Ketuk dua kali untuk keluar": "Double click back button to exit",
+      "Lisensi": "License",
+      "Hak Akses": "Authority",
+      "Pribadi": "Individual",
+      "Badan Usaha": "Business Entity",
+      "Format nomor NPWP tidak sesuai": "TaxID number format is incorrect",
+      "Periksa kembali format nomor NPWP yang diinputkan":
+          "Please check the TaxID number format you have entered",
+      "Total Nilai COD": "Total COD Amount",
+      "Ringkasan Transaksi": "Summary Transaction",
+      "Harga COD tidak boleh lebih dari": "COD Price must not be greater than",
+      "Nomor telepon tidak boleh lebih dari 13 karakter":
+          "The phone number cannot be more than 13 characters",
+      "Claim Gagal YES": "Claim Failed YES",
+      "Claim Kiriman Hilang": "Claim Shipment is Missing",
+      "Claim Kiriman Rusak": "Claim Shipment is Damaged",
+      "Total kiriman dipilih": "Total selected shipment",
+      "Pilih kiriman terlebih dahulu": "Please select a shipment",
+      "Nama PIC": "PIC Name",
+      "Telepon": "Phone",
+      "Kota Penjemputan": "Pickup City",
+      "Kecamatan Penjemputan": "Pickup District",
+      "Alamat Penjemputan": "Pickup Address",
+      "Layanan Pickup": "Pickup Service",
+      "Pilih Alamat Penjemputan": "Choose Pickup Address",
+      "Tambah alamat penjemputan": "Add Pickup Address",
+      "Jam Pickup": "Pickup Time",
+      "Jemput": "Pickup",
+      "Jemput Sekarang": "Pickup Now",
+      "Nama Kamu": "Name",
+      "Masukkan nama anda": "Enter your name",
+      "Masukan no handphone": "Enter phone number",
+      "Masukkan alamat penjemputan": "Enter pickup address",
+      "Simpan Alamat": "Save Address",
+      "Tambah Alamat Penjemputan": "Add Pickup Address",
+      "Apakah kamu sudah yakin untuk melakukan penjemputan di jam ":
+          "Are you sure to schedule the pickup at "
     };
   }
 }

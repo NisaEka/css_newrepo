@@ -91,9 +91,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                 text: TextSpan(
                   text: widget.label,
                   style: formLabelTextStyle,
-                  children: const <TextSpan>[
-                    // TextSpan(text: isRequired ? "*" : "", style: const TextStyle(color: Colors.red)),
-                  ],
+                  children: const <TextSpan>[],
                 ),
               )
             : const SizedBox(),
@@ -157,7 +155,6 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                     color: AppConst.isLightTheme(context)
                         ? Colors.black
                         : whiteColor,
-                    // fontWeight: FontWeight.w600,
                   ),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(

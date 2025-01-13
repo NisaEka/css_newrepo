@@ -38,15 +38,5 @@ class CustomCheckbox extends StatelessWidget {
         trailing: trailing,
       ),
     );
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //   children: [
-    //     Checkbox(
-    //       value: value,
-    //       onChanged: onChange,
-    //     ),
-    //     CustomFormLabel(label: label),
-    //   ],
-    // );
   }
 }

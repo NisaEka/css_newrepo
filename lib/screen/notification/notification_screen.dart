@@ -40,31 +40,6 @@ class NotificationScreen extends StatelessWidget {
                   (e) => e,
                 )
                 .toList()),
-        // SliverList.list(
-        //   children: c.unreadNotifList
-        //       .mapIndexed(
-        //         (i, e) => e.id == null
-        //             ? const SizedBox()
-        //             : NotificationListItem(
-        //                 data: e,
-        //                 isRead: true,
-        //                 onTap: () => c.readMessage(e),
-        //               ),
-        //       )
-        //       .toList(),
-        // ),
-        // SliverList.list(
-        //   children: c.readNotifList.reversed.toList()
-        //       .mapIndexed(
-        //         (i, e) => e.id == null
-        //             ? const SizedBox()
-        //             : NotificationListItem(
-        //                 data: e,
-        //                 isRead: false,
-        //               ),
-        //       )
-        //       .toList(),
-        // ),
       ],
     );
   }

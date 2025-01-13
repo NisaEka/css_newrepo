@@ -22,11 +22,9 @@ class NewPasswordController extends BaseController {
   bool isLoading = false;
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
-    // color: greyDarkColor1,
   );
   Widget showConfirmIcon = const Icon(
     Icons.remove_red_eye,
-    // color: greyDarkColor1,
   );
 
   Future<void> changePassword() async {
@@ -64,11 +62,9 @@ class NewPasswordController extends BaseController {
     isObscurePassword != false
         ? showIcon = const Icon(
             Icons.visibility,
-            // color: greyDarkColor1,
           )
         : showIcon = const Icon(
             Icons.visibility_off,
-            // color: Colors.black,
           );
     update();
   }
@@ -80,11 +76,9 @@ class NewPasswordController extends BaseController {
     isObscurePasswordConfirm != false
         ? showConfirmIcon = const Icon(
             Icons.visibility,
-            // color: greyDarkColor1,
           )
         : showConfirmIcon = const Icon(
             Icons.visibility_off,
-            // color: Colors.black,
           );
     update();
   }

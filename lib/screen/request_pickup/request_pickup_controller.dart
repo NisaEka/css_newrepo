@@ -57,23 +57,8 @@ class RequestPickupController extends BaseController {
       state.queryParam.setBetween([]);
     }
 
-    // state.pagingController.refresh();
     update();
-    // if (state.dateFilter == '0') {
-    //   resetFilter(true);
-    // }
-
-    // if (state.dateFilter == '0') {
-    //   resetFilter(true);
-    // } else {
-    //   // update();
     refreshPickups();
-    //   // state.pagingController.refresh();
-    //   // transactionCount();
-    // }
-    // } else {
-    //   resetFilter();
-    // }
   }
 
   void resetQueryParam() {
@@ -86,9 +71,7 @@ class RequestPickupController extends BaseController {
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
-    // state.selectedPetugasEntry = null;
     state.selectedOrigin = null;
-    // state.isFiltered = false;
     state.searchField.clear();
     state.dateFilter = '3';
     state.filterStatus = Constant.allStatus;
@@ -99,7 +82,6 @@ class RequestPickupController extends BaseController {
     if (forceRefresh) {
       refreshPickups();
     }
-    // state.pagingController.refresh();
   }
 
   void setSelectedDeliveryTypeTwo(String? deliveryType) {
@@ -115,9 +97,6 @@ class RequestPickupController extends BaseController {
       }
       state.queryParam.setWhere(where);
       state.queryParam.setPage(1);
-      // refreshPickups();
-      // state.filterDeliveryTypeText = deliveryType;
-      // update();
     }
   }
 
@@ -127,54 +106,24 @@ class RequestPickupController extends BaseController {
       where.removeWhere((element) => element["originCode"] != null);
       where.add({"originCode": origin.originCode});
       state.queryParam.setWhere(where);
-      // update();
     }
-    // refreshPickups();
-    // state.filterDeliveryCityText = city['label'];
   }
 
   Future<void> getRequestPickupCount() async {
-    // state.showLoadingIndicator = true;
-
     try {
-      // AppLogger.i("pageKey: $pageKey");
-      // state.queryParam.setPage(pageKey);
-      // state.queryParam.setSearch(state.searchField.text);
-      // setSelectedDeliveryTypeTwo(state.selectedDeliveryType);
-      // AppLogger.i("selectedorigin: ${state.selectedOrigin}");
-      // setSelectedFilterCityTwo(state.selectedOrigin);
       final response =
           await requestPickupRepository.getRequestPickupCount(QueryModel(
         where: state.queryParam.where,
         between: state.queryParam.between,
         search: state.queryParam.search,
       ));
-      // setSelectedDeliveryType(state.filterDeliveryTypeText);
 
       AppLogger.d("getRequestPickupCount response: ${response.data}");
 
       state.requestPickupCount = response.data ?? List.empty();
-
-      // final payload = response.data ?? List.empty();
-      // final isLastPage = payload.length <= pageSize;
-      // final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
-
-      // if (isLastPage) {
-      //   state.pagingController.appendLastPage(payload);
-      // } else {
-      //   final nextPageKey = pageKey + 1;
-      //   state.pagingController.appendPage(payload, nextPageKey);
-      // }
-
-      // state.showMainContent = true;
-      // update();
     } catch (e) {
       AppLogger.e("getRequestPickupCount error: $e");
-      // state.showErrorContent = true;
-      // update();
     }
-
-    // state.showLoadingIndicator = false;
     update();
   }
 
@@ -198,12 +147,10 @@ class RequestPickupController extends BaseController {
             search: state.queryParam.search,
           ),
           state.filterStatus);
-      // setSelectedDeliveryType(state.filterDeliveryTypeText);
 
       AppLogger.d("getRequestPickups response: ${response.data}");
 
       final payload = response.data ?? List.empty();
-      // final isLastPage = payload.length <= pageSize;
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
 
       if (isLastPage) {
@@ -227,13 +174,10 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses(int page) async {
     try {
-      final response =
-          await requestPickupRepository.getRequestPickupAddresses(QueryModel(
-              // limit: 0,
-              page: page,
-              sort: [
-            {"createdDate": "desc"}
-          ]));
+      final response = await requestPickupRepository
+          .getRequestPickupAddresses(QueryModel(page: page, sort: [
+        {"createdDate": "desc"}
+      ]));
       AppLogger.i("addresses: ${response.data}");
       final payload = response.data ?? List.empty();
       state.addresses.clear();
@@ -301,23 +245,13 @@ class RequestPickupController extends BaseController {
     return state.selectedAwbs.contains(awb);
   }
 
-  void onCheckAll() {
-    // selectedAwbs.addAll(iterable);
-  }
-
   void onCancel() {
     state.selectedAwbs.clear();
-  }
-
-  void onUpdateAddresses() {
-    // pagingControllerPickupDataAddress.refresh();
-    // getAddresses(1);
   }
 
   void refreshPickups() {
     state.pagingController.refresh();
     getRequestPickupCount();
-    // pagingControllerPickupDataAddress.refresh();
   }
 
   void refreshState() {
