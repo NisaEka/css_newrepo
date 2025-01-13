@@ -52,6 +52,8 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
 
   Widget _mainContent(
       BuildContext context, PantauPaketmuDetailController controller) {
+    final Map<String, dynamic> arguments = Get.arguments ?? {};
+    final String statusawb = arguments["status"] ?? "";
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
       child: SingleChildScrollView(
@@ -75,28 +77,33 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          CustomFilledButton(
-                            color: warningColor,
-                            isTransparent: true,
-                            prefixIcon: Icons.phone,
-                            width: 40,
-                            height: 40,
-                            fontSize: 19,
-                            isLoading: false,
-                            onPressed: () async {
-                              Get.bottomSheet(
-                                enableDrag: true,
-                                isDismissible: true,
-                                StatefulBuilder(builder: (BuildContext context,
-                                    StateSetter setState) {
-                                  return HubungiAkuDialog(
-                                    awb: controller.pantauPaketmu.awbNo ?? '',
-                                    allow: controller.allow ?? MenuModel(),
-                                  );
-                                }),
-                              );
-                            },
-                          ),
+                          statusawb != "DIBATALKAN OLEH KAMU"
+                              ? CustomFilledButton(
+                                  color: warningColor,
+                                  isTransparent: true,
+                                  prefixIcon: Icons.phone,
+                                  width: 40,
+                                  height: 40,
+                                  fontSize: 19,
+                                  isLoading: false,
+                                  onPressed: () async {
+                                    Get.bottomSheet(
+                                      enableDrag: true,
+                                      isDismissible: true,
+                                      StatefulBuilder(builder:
+                                          (BuildContext context,
+                                              StateSetter setState) {
+                                        return HubungiAkuDialog(
+                                          awb: controller.pantauPaketmu.awbNo ??
+                                              '',
+                                          allow:
+                                              controller.allow ?? MenuModel(),
+                                        );
+                                      }),
+                                    );
+                                  },
+                                )
+                              : const SizedBox(),
                           const SizedBox(width: 10),
                           CustomFilledButton(
                             color: errorColor,
