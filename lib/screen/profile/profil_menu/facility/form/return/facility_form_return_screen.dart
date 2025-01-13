@@ -45,9 +45,9 @@ class FacilityFormReturnScreen extends StatelessWidget {
                 : Container(),
             controller.npwpNumberFailed
                 ? DefaultAlertDialog(
-                    title: 'Format nomor NPWP tidak sesuai.'.tr,
+                    title: 'Format nomor NPWP tidak sesuai'.tr,
                     subtitle:
-                        'Periksa kembali format nomor NPWP yang diinputkan.'.tr,
+                        'Periksa kembali format nomor NPWP yang diinputkan'.tr,
                     confirmButtonTitle: 'OK'.tr,
                     onConfirm: () => controller.onRefreshNpwpNumberState(),
                   )

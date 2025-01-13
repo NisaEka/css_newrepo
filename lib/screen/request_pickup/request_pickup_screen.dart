@@ -200,85 +200,89 @@ class RequestPickupScreen extends StatelessWidget {
                 height: 20,
               ),
             Expanded(
-                child: RefreshIndicator(
-              onRefresh: () => Future.sync(
-                  () => controller.state.pagingController.refresh()),
-              child: PagedListView.separated(
-                pagingController: controller.state.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<RequestPickupModel>(
-                  transitionDuration: const Duration(milliseconds: 500),
-                  itemBuilder: (context, item, index) {
-                    return RequestPickupItem(
-                      data: item,
-                      onTap: (String awb) {
-                        if (controller.state.checkMode) {
-                          if (item.status !=
-                              Constant.statusAlreadyRequestPickedUp) {
-                            controller.selectItem(awb);
+              child: RefreshIndicator(
+                onRefresh: () => Future.sync(
+                  () => controller.state.pagingController.refresh(),
+                ),
+                child: PagedListView.separated(
+                  pagingController: controller.state.pagingController,
+                  builderDelegate:
+                      PagedChildBuilderDelegate<RequestPickupModel>(
+                    transitionDuration: const Duration(milliseconds: 500),
+                    itemBuilder: (context, item, index) {
+                      return RequestPickupItem(
+                        data: item,
+                        onTap: (String awb) {
+                          if (controller.state.checkMode) {
+                            if (item.status !=
+                                Constant.statusAlreadyRequestPickedUp) {
+                              controller.selectItem(awb);
+                            }
+                          } else {
+                            Get.to(
+                              () => const RequestPickupDetailScreen(),
+                              arguments: {"awb": item.awb},
+                            );
                           }
-                        } else {
-                          Get.to(
-                            () => const RequestPickupDetailScreen(),
-                            arguments: {"awb": item.awb},
-                          );
-                        }
-                      },
-                      onLongTap: () {
-                        item.status != Constant.statusAlreadyRequestPickedUp
-                            ? controller.setCheckMode(true)
-                            : const SizedBox();
-                      },
-                      checkMode: controller.state.checkMode,
-                      checked: controller.isItemChecked(item.awb),
-                    );
-                  },
-                  firstPageProgressIndicatorBuilder: (context) => Column(
-                    children: List.generate(
-                      10,
-                      (index) => RequestPickupItem(
-                        isLoading: true,
-                        checked: false,
-                        data: null,
-                        onLongTap: () {},
-                        checkMode: false,
-                        onTap: (awb) => {},
+                        },
+                        onLongTap: () {
+                          item.status != Constant.statusAlreadyRequestPickedUp
+                              ? controller.setCheckMode(true)
+                              : const SizedBox();
+                        },
+                        checkMode: controller.state.checkMode,
+                        checked: controller.isItemChecked(item.awb),
+                      );
+                    },
+                    firstPageProgressIndicatorBuilder: (context) => Column(
+                      children: List.generate(
+                        10,
+                        (index) => RequestPickupItem(
+                          isLoading: true,
+                          checked: false,
+                          data: null,
+                          onLongTap: () {},
+                          checkMode: false,
+                          onTap: (awb) => {},
+                        ),
                       ),
                     ),
-                  ),
-                  noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
-                  firstPageErrorIndicatorBuilder: (context) {
-                    return Center(
-                        child: Column(
-                      children: [
-                        Text("Terjadi kesalahan ketika mengambil data".tr),
-                        const Padding(padding: EdgeInsets.only(top: 16)),
-                        FilledButton(
-                          onPressed: () => controller.requireRetry(),
-                          child: const Text("Muat ulang"),
-                        )
-                      ],
-                    ));
-                  },
-                  noMoreItemsIndicatorBuilder: (context) => Center(
-                    child: Divider(
-                      indent: 100,
-                      endIndent: 100,
-                      thickness: 2,
-                      color: primaryColor(context),
+                    noItemsFoundIndicatorBuilder: (context) =>
+                        const DataEmpty(),
+                    firstPageErrorIndicatorBuilder: (context) {
+                      return Center(
+                          child: Column(
+                        children: [
+                          Text("Terjadi kesalahan ketika mengambil data".tr),
+                          const Padding(padding: EdgeInsets.only(top: 16)),
+                          FilledButton(
+                            onPressed: () => controller.requireRetry(),
+                            child: const Text("Muat ulang"),
+                          )
+                        ],
+                      ));
+                    },
+                    noMoreItemsIndicatorBuilder: (context) => Center(
+                      child: Divider(
+                        indent: 100,
+                        endIndent: 100,
+                        thickness: 2,
+                        color: primaryColor(context),
+                      ),
+                    ),
+                    newPageProgressIndicatorBuilder: (context) =>
+                        const LoadingDialog(
+                      background: Colors.transparent,
+                      height: 50,
+                      size: 30,
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) =>
-                      const LoadingDialog(
-                    background: Colors.transparent,
-                    height: 50,
-                    size: 30,
-                  ),
+                  separatorBuilder: (context, index) {
+                    return const Divider(color: greyLightColor3);
+                  },
                 ),
-                separatorBuilder: (context, index) {
-                  return const Divider(color: greyLightColor3);
-                },
               ),
-            ))
+            )
           ],
         ));
   }

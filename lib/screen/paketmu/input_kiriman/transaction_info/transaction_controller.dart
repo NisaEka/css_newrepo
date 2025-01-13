@@ -831,7 +831,6 @@ class TransactionController extends BaseController {
         data: data ?? TransactionModel(),
         message: message ?? "Transaksi Berhasil".tr,
       ),
-      // message: message ?? "Transaksi Berhasil".tr,
       iconHeight: iconHeight ?? Get.width * 0.3,
       customAction: Row(
         mainAxisAlignment: MainAxisAlignment.center,
