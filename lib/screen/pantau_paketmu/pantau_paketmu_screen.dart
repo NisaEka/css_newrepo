@@ -104,7 +104,9 @@ class PantauPaketmuScreen extends StatelessWidget {
                     onTap: () {
                       Get.to(
                         const PantauPaketmuDetailScreen(),
-                        arguments: {"awbNo": item.awbNo},
+                        arguments: {
+                          "awbNo": item.awbNo,
+                        },
                       );
                     },
                   ),

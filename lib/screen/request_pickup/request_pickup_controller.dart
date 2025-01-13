@@ -281,6 +281,7 @@ class RequestPickupController extends BaseController {
       if (response.code == HttpStatus.created &&
           response.data!.errorDetails.isEmpty) {
         state.createDataSuccess = true;
+        // todo : kalo berhasil dialog nya taro sini pakke Get.dialog
         refreshPickups();
         refreshState();
       } else {
