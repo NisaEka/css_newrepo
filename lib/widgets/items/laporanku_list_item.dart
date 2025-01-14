@@ -98,7 +98,7 @@ class LaporankuListItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          data?.category?.categoryDescription ?? '-',
+                          (data?.category?.categoryDescription)?.tr ?? '-',
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ],
@@ -108,7 +108,7 @@ class LaporankuListItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Terakhir Update: ${data?.updatedDate?.toLongDateTimeFormat() ?? '-'}',
+                          '${'Terakhir Update'.tr}: ${data?.updatedDate?.toLongDateTimeFormat() ?? '-'}',
                           style: Theme.of(context)
                               .textTheme
                               .titleSmall

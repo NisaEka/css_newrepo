@@ -28,7 +28,9 @@ class CustomCodeLabel extends StatelessWidget {
         Shimmer(
           isLoading: isLoading,
           child: Container(
-            color: isLoading ? greyLightColor2 : Colors.transparent,
+            decoration: BoxDecoration(
+                color: isLoading ? greyLightColor2 : Colors.transparent,
+                borderRadius: BorderRadius.circular(5)),
             width: isLoading ? Get.width / 2 : null,
             child: Text(
               label,

@@ -35,7 +35,7 @@ class FileDownloaderHelper {
             color: successColor, // Set your desired background color here
             child: Center(
               child: Text(
-                'File Berhasil Disimpan: ${res.path}'.tr,
+                '${'File Berhasil Disimpan'.tr}: ${res.path}'.tr,
                 style: listTitleTextStyle.copyWith(color: whiteColor),
               ),
             ),

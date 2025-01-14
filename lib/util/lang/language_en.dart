@@ -675,7 +675,26 @@ class LanguageEN {
       "UBAH PROFILE": "CHANGE PROFILE",
       "UBAH DATA PROFILE": "CHANGE PROFILE DATA",
       "REGISTRASI FLAT RATE": "FLAT RATE REGISTRATION",
-      "PEMILIK": "OWNER"
+      "PEMILIK": "OWNER",
+      "Revisi Alamat": "Address Revision",
+      "Isi Kiriman Kurang Koli": "Shipment Contents Less Than The Package",
+      "Isi Kiriman Tidak Sesuai": "Shipment Contents Do Not Match",
+      "Penerima Merasa Belum Menerima Kiriman":
+          "Receiver Not Receive The Shipment",
+      "Kiriman Belum Sampai": "Shipment Not Arrived",
+      "Permintaan Kirim Ulang": "Request for Reshipment",
+      "Permintaan Retur": "Return Request",
+      "Instruksi Khusus": "Special Instructions",
+      "Klaim YES Gagal": "YES Claim Failed",
+      "Klaim Barang Rusak": "Claim Damaged Goods",
+      "Klaim Barang Hilang": "Claim Lost Goods",
+      "Klaim Kiriman Diterima Kurang": "Claim Incomplete Shipment Received",
+      "Terakhir Update": "Latest Update",
+      "Cari berdasarkan no resi": "Search by no awb",
+      "Buat Transaksi": "Create Transaction",
+      "Edit Transaksi": "Edit Transaction",
+      "File Berhasil Disimpan": "File Successfully Saved",
+      "Masukkan no handphone": "Enter phone number"
     };
   }
 }

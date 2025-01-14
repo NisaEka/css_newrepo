@@ -118,9 +118,9 @@ class _ReportListItemState extends State<ReportListItem> {
                             height: widget.isLoading ? 10 : null,
                             child: Text(
                               widget.data?.mpayWdrGrpPayDate
-                                      ?.toDateTimeFormat() ??
+                                      ?.toLongDateTimeFormat() ??
                                   widget.det?.dpayDetWdrCnotedate
-                                      ?.toDateTimeFormat() ??
+                                      ?.toLongDateTimeFormat() ??
                                   '',
                               style: Theme.of(context).textTheme.labelMedium,
                             ),

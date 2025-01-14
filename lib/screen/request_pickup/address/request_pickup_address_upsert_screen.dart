@@ -75,7 +75,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 text: "Kota Penjemputan".tr,
-                style: formLabelTextStyle,
+                style: formLabelTextStyle.copyWith(color: textColor(context)),
               ),
             ),
           ),

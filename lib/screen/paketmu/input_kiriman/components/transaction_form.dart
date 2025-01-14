@@ -437,12 +437,17 @@ class TransactionForm extends StatelessWidget {
                                                     isLoading:
                                                         c.state.isCalculate,
                                                     child: Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5),
+                                                        color: greyLightColor3,
+                                                      ),
                                                       width: Get.width,
                                                       height: 15,
                                                       margin: const EdgeInsets
                                                           .symmetric(
                                                           vertical: 5),
-                                                      color: greyLightColor3,
                                                     ),
                                                   ),
                                                 ),

@@ -33,7 +33,9 @@ class TextRowWidget extends StatelessWidget {
               child: Shimmer(
                 isLoading: isLoading,
                 child: Container(
-                  color: isLoading ? Colors.grey : Colors.transparent,
+                  decoration: BoxDecoration(
+                      color: isLoading ? Colors.grey : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     title,
                     style: titleStyle ??
@@ -50,7 +52,9 @@ class TextRowWidget extends StatelessWidget {
               child: Shimmer(
                 isLoading: isLoading,
                 child: Container(
-                  color: isLoading ? Colors.grey : Colors.transparent,
+                  decoration: BoxDecoration(
+                      color: isLoading ? Colors.grey : Colors.transparent,
+                      borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     value!,
                     style: valueStyle ??
