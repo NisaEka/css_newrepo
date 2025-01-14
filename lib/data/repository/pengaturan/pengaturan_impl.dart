@@ -49,7 +49,6 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<PostTransactionModel> deleteOfficer(String id) async {
-    //todo : implement delete officer
     try {
       Response response = await network.base.delete(
         "/officer/$id",

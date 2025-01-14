@@ -15,7 +15,6 @@ class StorageImpl extends StorageRepository {
 
   @override
   Future<DefaultResponseModel<StorageModel?>> postStorage(File file) async {
-    // todo : implement post storage
     try {
       var formData = FormData.fromMap({});
       formData.files
@@ -37,7 +36,6 @@ class StorageImpl extends StorageRepository {
   @override
   Future<BaseResponse<List<FileModel>?>> postCcrfFile(
       Map<String, String> files) async {
-    // todo : implement post ccrf file
     try {
       var formData = FormData.fromMap({});
 

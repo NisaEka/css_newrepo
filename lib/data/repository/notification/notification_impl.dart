@@ -11,7 +11,6 @@ class NotificationRepositoryImpl extends NotificationRepository {
 
   @override
   Future<GetNotificationModel> getNotificationsList() async {
-    //todo: implement get list notification
     try {
       Response response = await network.base.get(
         "/apps-notification",
