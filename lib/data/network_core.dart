@@ -14,9 +14,6 @@ import 'package:get/get.dart' hide Response;
 import 'storage_core.dart';
 
 class NetworkCore {
-  // Dio city = Dio();
-  // Dio jne = Dio();
-  // Dio myJNE = Dio();
   Dio local = Dio();
   Dio base = Dio();
   Dio refreshDio = Dio();
@@ -130,38 +127,10 @@ class NetworkCore {
       },
     );
 
-    // city.options = BaseOptions(
-    //   baseUrl: AppConst.cityUrl,
-    //   headers: {
-    //     // 'Accept': 'application/json',
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //   },
-    // );
-    //
-    // jne.options = BaseOptions(
-    //   baseUrl: AppConst.jneUrl,
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //   },
-    // );
-    //
-    // myJNE.options = BaseOptions(
-    //   baseUrl: AppConst.myJneUrl,
-    //   headers: {
-    //     // 'Accept': 'application/json',
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //   },
-    // );
-
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
       base.interceptors
           .add(LogInterceptor(responseBody: true, requestBody: true));
-      // city.interceptors
-      //     .add(LogInterceptor(responseBody: true, requestBody: true));
-      // jne.interceptors
-      //     .add(LogInterceptor(responseBody: true, requestBody: true));
       refreshDio.interceptors
           .add(LogInterceptor(responseBody: true, requestBody: true));
     }

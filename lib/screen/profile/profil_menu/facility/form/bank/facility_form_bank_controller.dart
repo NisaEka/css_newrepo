@@ -120,6 +120,7 @@ class FacilityFormBankController extends BaseController {
         _pickedImagePath = image.path;
       } else {
         _pickImageFailed = true;
+        // TODO : dialog pick image failed
       }
 
       update();

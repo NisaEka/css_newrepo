@@ -35,7 +35,7 @@ extension StringExt on String {
       {String targetFormat = "dd MMMM yyyy HH:mmzzz",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
+      DateTime dateTimeOrigin = DateTime.parse(this);
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
