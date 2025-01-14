@@ -12,7 +12,6 @@ class BankImpl extends BankRepository {
 
   @override
   Future<BaseResponse<List<BankModel>>> getBanks(QueryModel param) async {
-    // todo : implement get bank
     try {
       var response = await network.base.get(
         '/master/cms-bank-vas',
