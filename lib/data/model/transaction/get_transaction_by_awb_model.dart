@@ -14,7 +14,6 @@ class GetTransactionByAwbModel {
   GetTransactionByAwbModel.fromJson(dynamic json) {
     _code = json['code'];
     _message = json['message'];
-    // _payload = json['payload'] != null ? TransactionModel.fromJson(json['payload']) : null;
     _payload = json['payload'] != null
         ? DataTransactionModel.fromJson(json['payload'])
         : null;

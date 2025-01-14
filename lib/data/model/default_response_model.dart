@@ -16,7 +16,6 @@ class DefaultResponseModel<T> {
 
   DefaultResponseModel.fromJson(dynamic json, T? data) {
     this._statusCode = json["statusCode"];
-    // this._message = json["message"];
     this._data = data;
   }
 }

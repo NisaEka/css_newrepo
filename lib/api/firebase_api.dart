@@ -125,7 +125,6 @@ class FirebaseApi {
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
-      // notificationCategories: darwinNotificationCategories,
     );
 
     InitializationSettings initializationSettings = InitializationSettings(

@@ -63,10 +63,8 @@ class BaseResponse<T> {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    // if (_message != null) {
     map['message'] = _message;
     map['messages'] = _message;
-    // }
     if (_error != null) {
       map['error'] = _error;
       map['errors'] = _error;

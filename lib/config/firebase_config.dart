@@ -19,8 +19,6 @@ class CssFirebaseConfig {
       }
     });
 
-    // if (kDebugMode) {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-    // }
   }
 }

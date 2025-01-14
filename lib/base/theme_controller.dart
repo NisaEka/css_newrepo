@@ -20,7 +20,6 @@ class CustomTheme {
     dialogBackgroundColor: Colors.white,
     useMaterial3: true,
     fontFamily: 'Ubuntu',
-    // backgroundColor: baseColor,
     appBarTheme: AppBarTheme(
       backgroundColor: whiteColor,
       shadowColor: greyColor,
@@ -53,17 +52,14 @@ class CustomTheme {
         bodyLarge: const TextStyle(
           fontSize: 16,
           color: greyDarkColor1,
-          // fontWeight: FontWeight.w600,
         ),
         labelSmall: const TextStyle(
           fontSize: 10,
           color: greyDarkColor1,
-          // fontWeight: FontWeight.w600,
         ),
         labelMedium: const TextStyle(
           fontSize: 12,
           color: greyDarkColor1,
-          // fontWeight: FontWeight.w600,
         ),
         headlineLarge: const TextStyle(
           fontSize: 24,
@@ -86,18 +82,15 @@ class CustomTheme {
       ),
     ),
     switchTheme: SwitchThemeData(
-      // trackColor: WidgetStateColor.resolveWith((states) => greyColor),
       thumbColor: WidgetStateColor.resolveWith((states) => blueJNE),
     ),
     radioTheme: RadioThemeData(
       fillColor: WidgetStateColor.resolveWith((states) => blueJNE),
     ),
     checkboxTheme: CheckboxThemeData(
-      // fillColor: WidgetStateColor.resolveWith((states) => greyColo),
       side: const BorderSide(color: blueJNE),
       checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
     ),
-
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: whiteColor,
@@ -143,8 +136,6 @@ class CustomTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(100, 40),
-          // side: const BorderSide(color: infoColor),
-          // foregroundColor: infoColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           textStyle:
               const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),
@@ -213,17 +204,14 @@ class CustomTheme {
         bodyLarge: const TextStyle(
           fontSize: 16,
           color: greyLightColor1,
-          // fontWeight: FontWeight.w600,
         ),
         labelSmall: const TextStyle(
           fontSize: 10,
           color: greyLightColor1,
-          // fontWeight: FontWeight.w600,
         ),
         labelMedium: const TextStyle(
           fontSize: 12,
           color: greyLightColor1,
-          // fontWeight: FontWeight.w600,
         ),
         headlineLarge: const TextStyle(
           fontSize: 24,
@@ -246,7 +234,6 @@ class CustomTheme {
       ),
     ),
     checkboxTheme: CheckboxThemeData(
-      // fillColor: WidgetStateColor.resolveWith((states) => greyColor),
       side: const BorderSide(color: whiteColor),
       checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
     ),
@@ -262,9 +249,7 @@ class CustomTheme {
       ),
     ),
     fontFamily: 'Ubuntu',
-    // backgroundColor: greyColor,
     appBarTheme: AppBarTheme(
-      // backgroundColor: const Color(0xff171717),
       elevation: 0,
       titleTextStyle: appTitleTextStyle.copyWith(color: whiteColor),
       iconTheme: const IconThemeData(color: whiteColor),
@@ -273,8 +258,6 @@ class CustomTheme {
       thumbColor: WidgetStateColor.resolveWith((states) => warningColor),
     ),
     inputDecorationTheme: InputDecorationTheme(
-      // filled: true,
-      // fillColor: Colors.transparent,
       labelStyle: hintTextStyle.copyWith(color: greyLightColor1),
       hintStyle: hintTextStyle.copyWith(color: whiteColor),
       counterStyle: hintTextStyle.copyWith(color: whiteColor),
@@ -287,7 +270,6 @@ class CustomTheme {
         borderSide: const BorderSide(
           color: whiteColor,
           width: 1,
-          // style: BorderStyle.solid,
         ),
       ),
       activeIndicatorBorder: const BorderSide(color: warningColor),
@@ -296,7 +278,6 @@ class CustomTheme {
         borderSide: const BorderSide(
           color: whiteColor,
           width: 1,
-          // style: BorderStyle.solid,
         ),
       ),
       enabledBorder: OutlineInputBorder(
@@ -328,8 +309,6 @@ class CustomTheme {
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
           minimumSize: const Size(100, 40),
-          // side: const BorderSide(color: infoColor),
-          // foregroundColor: infoColor,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           textStyle:
               const TextStyle(fontWeight: FontWeight.w700, fontSize: 16)),

@@ -8,7 +8,6 @@ import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_detail_model.dart';
-import 'package:css_mobile/data/model/pantau/pantauu_paketmu_detail_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -36,10 +35,6 @@ class PantauPaketmuDetailController extends BaseController {
   bool _showErrorContainer = false;
 
   bool get showErrorContainer => _showErrorContainer;
-
-  late PantauuPaketmuDetailModel _pantauuPaketmu;
-
-  PantauuPaketmuDetailModel get pantauuPaketmu => _pantauuPaketmu;
 
   late PantauPaketmuDetailModel _pantauPaketmu;
 
