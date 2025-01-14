@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 
 class FacilityFormInfoScreen extends StatelessWidget {
   const FacilityFormInfoScreen({super.key});
@@ -28,16 +27,6 @@ class FacilityFormInfoScreen extends StatelessWidget {
               body: _bodyContent(controller, context),
               bottomNavigationBar: _nextButton(controller),
             ),
-            controller.pickImageFailed
-                ? DefaultAlertDialog(
-                    title: 'Gagal mengambil gambar.'.tr,
-                    subtitle:
-                        'Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB'
-                            .tr,
-                    confirmButtonTitle: 'OK'.tr,
-                    onConfirm: () => controller.onRefreshUploadState(),
-                  )
-                : Container(),
           ],
         );
       },

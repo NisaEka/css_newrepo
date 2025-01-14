@@ -4,7 +4,6 @@ import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facil
 import 'package:css_mobile/util/input_formatter/npwp_separator_input_formater.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -33,25 +32,6 @@ class FacilityFormReturnScreen extends StatelessWidget {
               body: _bodyContent(controller, context),
               bottomNavigationBar: _nextButton(controller),
             ),
-            controller.pickImageFailed
-                ? DefaultAlertDialog(
-                    title: 'Gagal mengambil gambar.'.tr,
-                    subtitle:
-                        'Periksa kembali file gambar NPWP. File gambar tidak boleh kosong atau lebih dari 2MB'
-                            .tr,
-                    confirmButtonTitle: 'OK'.tr,
-                    onConfirm: () => controller.onRefreshPickImageState(),
-                  )
-                : Container(),
-            controller.npwpNumberFailed
-                ? DefaultAlertDialog(
-                    title: 'Format nomor NPWP tidak sesuai'.tr,
-                    subtitle:
-                        'Periksa kembali format nomor NPWP yang diinputkan'.tr,
-                    confirmButtonTitle: 'OK'.tr,
-                    onConfirm: () => controller.onRefreshNpwpNumberState(),
-                  )
-                : Container()
           ],
         );
       },

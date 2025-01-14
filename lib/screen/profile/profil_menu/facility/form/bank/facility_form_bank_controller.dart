@@ -12,6 +12,7 @@ import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facilit
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide FormData, MultipartFile;
@@ -119,7 +120,14 @@ class FacilityFormBankController extends BaseController {
       if (imageSizeApproved) {
         _pickedImagePath = image.path;
       } else {
-        _pickImageFailed = true;
+        Get.dialog(DefaultAlertDialog(
+          title: 'Gagal mengambil gambar'.tr,
+          subtitle:
+              'Periksa kembali file gambar rekening. File gambar tidak boleh kosong atau lebih dari 2MB'
+                  .tr,
+          confirmButtonTitle: 'OK'.tr,
+          onConfirm: () => onRefreshPickImageState(),
+        ));
       }
 
       update();
@@ -226,17 +234,32 @@ class FacilityFormBankController extends BaseController {
             ),
           );
         } else {
-          _postDataFailed = true;
+          Get.dialog(DefaultAlertDialog(
+            title: "Gagal menyimpan data".tr,
+            subtitle: postDataErrors ?? "Pastikan input data sudah benar".tr,
+            confirmButtonTitle: "OK".tr,
+            onConfirm: () => onRefreshPostDataState(),
+          ));
           _postDataErrors = response.error ?? "";
           update();
         }
       }).onError((error, stackTrace) {
-        _postDataFailed = true;
+        Get.dialog(DefaultAlertDialog(
+          title: "Gagal menyimpan data".tr,
+          subtitle: postDataErrors ?? "Pastikan input data sudah benar".tr,
+          confirmButtonTitle: "OK".tr,
+          onConfirm: () => onRefreshPostDataState(),
+        ));
         _postDataErrors = error.toString();
         update();
       });
     } else {
-      _postFileFailed = true;
+      Get.dialog(DefaultAlertDialog(
+        title: "Gagal menyimpan data".tr,
+        subtitle: postDataErrors ?? "Pastikan input data sudah benar".tr,
+        confirmButtonTitle: "OK".tr,
+        onConfirm: () => onRefreshPostDataState(),
+      ));
       update();
     }
 

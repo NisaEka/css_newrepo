@@ -115,7 +115,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                             fontSize: 19,
                             isLoading: false,
                             onPressed: () {
-                              Get.to(const LabelScreen(), arguments: {
+                              Get.to(() => const LabelScreen(), arguments: {
                                 'data': controller.transactionData,
                               });
                             },

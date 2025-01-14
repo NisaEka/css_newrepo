@@ -1,7 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/existing/facility_form_existing_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
@@ -26,14 +25,6 @@ class FacilityFormExistingScreen extends StatelessWidget {
               controller.showLoadingIndicator
                   ? const LoadingDialog()
                   : Container(),
-              controller.showInvalidInputMessage
-                  ? DefaultAlertDialog(
-                      title: 'Terdapat input yang tidak valid'.tr,
-                      subtitle:
-                          'Periksa kembali data yang telah anda masukkan.'.tr,
-                      confirmButtonTitle: 'OK'.tr,
-                      onConfirm: () => controller.onRestartValidationState())
-                  : Container()
             ],
           );
         });

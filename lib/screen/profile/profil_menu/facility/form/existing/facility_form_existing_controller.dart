@@ -5,6 +5,7 @@ import 'package:css_mobile/data/model/facility/facility_create_existing_model.da
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -53,7 +54,11 @@ class FacilityFormExistingController extends BaseController {
         }
       });
     } else {
-      _showInvalidInputMessage = true;
+      Get.dialog(DefaultAlertDialog(
+          title: 'Terdapat input yang tidak valid'.tr,
+          subtitle: 'Periksa kembali data yang telah anda masukkan.'.tr,
+          confirmButtonTitle: 'OK'.tr,
+          onConfirm: () => onRestartValidationState()));
       update();
     }
 
