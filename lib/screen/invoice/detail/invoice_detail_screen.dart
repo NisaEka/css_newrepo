@@ -5,6 +5,7 @@ import 'package:css_mobile/screen/invoice/cnote/invoice_cnote_screen.dart';
 import 'package:css_mobile/screen/invoice/components/invoice.dart';
 import 'package:css_mobile/screen/invoice/detail/invoice_detail_controller.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
@@ -201,7 +202,10 @@ class InvoiceDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Invoice Date".tr,
-                      controller.invoiceDetailModel!.invoiceDate,
+                      controller.invoiceDetailModel!.invoiceDate
+                          ?.toDate(originFormat: 'dd MMM yyyy')
+                          .toString()
+                          .toLongDateFormat(),
                       controller.isLoading,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -217,7 +221,10 @@ class InvoiceDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Due Date".tr,
-                      controller.invoiceDetailModel!.dueDate,
+                      controller.invoiceDetailModel!.dueDate
+                          ?.toDate(originFormat: 'dd MMM yyyy')
+                          .toString()
+                          .toLongDateFormat(),
                       controller.isLoading,
                       style: Theme.of(context).textTheme.titleMedium!,
                     ),
