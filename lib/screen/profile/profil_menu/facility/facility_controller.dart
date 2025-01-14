@@ -16,6 +16,7 @@ class FacilityController extends BaseController {
   List<FacilityModel> nonCodFacilities = [];
 
   String _bannerStatus = Constant.bannerStatusHide;
+
   String get bannerStatus => _bannerStatus;
 
   @override
