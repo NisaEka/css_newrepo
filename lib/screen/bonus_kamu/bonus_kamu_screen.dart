@@ -133,7 +133,13 @@ class BonusKamuScreen extends StatelessWidget {
                             ? c.totalTransaksiList
                                 .map(
                                   (e) => PointListItem(
-                                    dateTime: e.tglTransaksi ?? '',
+                                    dateTime: e.tglTransaksi
+                                            ?.toDate(
+                                                originFormat:
+                                                    'yyyy-MM-dd HH:mmzzz')
+                                            .toString()
+                                            .toLongDateTimeFormat() ??
+                                        '',
                                     point: e.point == '0'
                                         ? 0
                                         : e.point?.toDouble(),

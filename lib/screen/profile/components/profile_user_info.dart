@@ -1,7 +1,9 @@
+// import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/widgets/items/user_photo_profile.dart';
 import 'package:css_mobile/widgets/profile/alt_user_info_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileUserInfo extends StatelessWidget {
   final UserModel? basicProfile;
@@ -18,7 +20,7 @@ class ProfileUserInfo extends StatelessWidget {
           name: basicProfile?.name ?? '-',
           brand: basicProfile?.brand ?? '-',
           mail: basicProfile?.email ?? '-',
-          type: basicProfile?.userType ?? '-',
+          type: (basicProfile?.userType)?.tr ?? '-',
         ),
         const UserPhotoProfile()
       ],
