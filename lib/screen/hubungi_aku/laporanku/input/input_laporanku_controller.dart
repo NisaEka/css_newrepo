@@ -115,7 +115,9 @@ class InputLaporankuController extends BaseController {
                                 ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
-                                    e.categoryDescription?.toUpperCase() ?? '',
+                                    (e.categoryDescription?.toUpperCase())
+                                            ?.tr ??
+                                        '',
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
@@ -123,7 +125,8 @@ class InputLaporankuController extends BaseController {
                                   onTap: () {
                                     selectedCategory = e;
                                     category.text =
-                                        e.categoryDescription?.toUpperCase() ??
+                                        (e.categoryDescription?.toUpperCase())
+                                                ?.tr ??
                                             '';
                                     update();
                                     Get.back();
@@ -141,7 +144,9 @@ class InputLaporankuController extends BaseController {
                                 ListTile(
                                   contentPadding: EdgeInsets.zero,
                                   title: Text(
-                                    e.categoryDescription?.toUpperCase() ?? '',
+                                    (e.categoryDescription?.toUpperCase())
+                                            ?.tr ??
+                                        '',
                                     style:
                                         Theme.of(context).textTheme.titleMedium,
                                   ),
@@ -149,7 +154,8 @@ class InputLaporankuController extends BaseController {
                                   onTap: () {
                                     selectedCategory = e;
                                     category.text =
-                                        e.categoryDescription?.toUpperCase() ??
+                                        (e.categoryDescription?.toUpperCase())
+                                                ?.tr ??
                                             '';
                                     update();
                                     Get.back();

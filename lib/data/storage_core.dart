@@ -87,7 +87,6 @@ class StorageCore {
     await storage.delete(key: ccrfProfile);
     await storage.delete(key: unreadMessage);
     await storage.delete(key: readMessage);
-    // await storage.delete(key: isFirst);
     deleteString(StorageCore.favoriteMenu);
   }
 }

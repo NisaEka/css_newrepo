@@ -31,6 +31,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       decoration: BoxDecoration(
@@ -67,9 +68,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TransactionCard(
-                            // title: "Jumlah Transaksi".tr,
-                            // height: 140,
-                            height: screenWidth < 400 ? Get.height * 0.24 : 140,
+                            height: screenHeight < 800 ? 150 : 140,
                             customTitle: DashboardMiniCount(
                               width: screenWidth < 400
                                   ? Get.width * 0.16
@@ -106,7 +105,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             ),
                           ),
                           TransactionCard(
-                            height: screenWidth < 400 ? Get.height * 0.24 : 140,
+                            height: screenHeight < 800 ? 150 : 140,
                             customTitle: DashboardMiniCount(
                               width: Get.width * 0.19,
                               margin: EdgeInsets.zero,
@@ -155,8 +154,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TransactionCard(
-                                height:
-                                    screenWidth < 400 ? Get.height * 0.24 : 140,
+                                height: screenHeight < 800 ? 150 : 140,
                                 customTitle: Column(
                                   children: [
                                     DashboardMiniCount(

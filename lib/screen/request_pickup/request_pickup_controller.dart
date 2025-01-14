@@ -8,7 +8,9 @@ import 'package:css_mobile/screen/request_pickup/request_pickup_state.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RequestPickupController extends BaseController {
   final state = RequestPickupState();
@@ -281,7 +283,21 @@ class RequestPickupController extends BaseController {
       if (response.code == HttpStatus.created &&
           response.data!.errorDetails.isEmpty) {
         state.createDataSuccess = true;
-        // todo : kalo berhasil dialog nya taro sini pakke Get.dialog
+        if (state.createDataFailed || state.createDataSuccess) {
+          Get.dialog(
+            DefaultAlertDialog(
+              title:
+                  "Success: ${state.data?.successCount}. Error: ${state.data?.errorCount}\n"
+                      .tr,
+              subtitle: 'Error Details:\n'
+                  '${state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
+              backButtonTitle: "Kembali",
+              confirmButtonTitle: "Ok",
+              onBack: Get.back,
+              onConfirm: () => refreshState(),
+            ),
+          );
+        }
         refreshPickups();
         refreshState();
       } else {

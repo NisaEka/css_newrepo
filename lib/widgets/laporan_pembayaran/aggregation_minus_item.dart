@@ -101,7 +101,8 @@ class _AggregationMinusItemState extends State<AggregationMinusItem> {
                             width: widget.isLoading ? Get.width / 3 : null,
                             height: widget.isLoading ? 10 : null,
                             child: Text(
-                              widget.data?.createddtm.toDateTimeFormat() ?? '',
+                              widget.data?.createddtm.toLongDateTimeFormat() ??
+                                  '',
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                           ),

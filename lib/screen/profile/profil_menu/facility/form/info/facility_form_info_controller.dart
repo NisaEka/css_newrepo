@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_form_bank_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pinput/pinput.dart';
@@ -80,7 +81,14 @@ class FacilityFormInfoController extends BaseController {
       if (imageSizeApproved) {
         state.pickedImageUrl = image.path;
       } else {
-        _pickImageFailed = true;
+        Get.dialog(DefaultAlertDialog(
+          title: 'Gagal mengambil gambar.'.tr,
+          subtitle:
+              'Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB'
+                  .tr,
+          confirmButtonTitle: 'OK'.tr,
+          onConfirm: () => onRefreshUploadState(),
+        ));
       }
 
       update();

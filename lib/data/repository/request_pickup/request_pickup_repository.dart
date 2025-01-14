@@ -2,14 +2,12 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-// import 'package:css_mobile/data/model/default_page_filter_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_count_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_response_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_detail_model.dart';
-// import 'package:css_mobile/data/model/request_pickup/request_pickup_filter_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 
 abstract class RequestPickupRepository {

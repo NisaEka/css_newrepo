@@ -3,7 +3,6 @@ import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facilit
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facility_terms_and_conditions_screen.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/bank_dropdown.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -33,33 +32,6 @@ class FacilityFormBankScreen extends StatelessWidget {
             ),
             controller.showLoadingIndicator
                 ? const LoadingDialog()
-                : Container(),
-            controller.pickImageFailed
-                ? DefaultAlertDialog(
-                    title: 'Gagal mengambil gambar'.tr,
-                    subtitle:
-                        'Periksa kembali file gambar rekening. File gambar tidak boleh kosong atau lebih dari 2MB'
-                            .tr,
-                    confirmButtonTitle: 'OK'.tr,
-                    onConfirm: () => controller.onRefreshPickImageState(),
-                  )
-                : Container(),
-            controller.postDataFailed
-                ? DefaultAlertDialog(
-                    title: "Gagal menyimpan data".tr,
-                    subtitle: controller.postDataErrors ??
-                        "Pastikan input data sudah benar".tr,
-                    confirmButtonTitle: "OK".tr,
-                    onConfirm: () => controller.onRefreshPostDataState(),
-                  )
-                : Container(),
-            controller.postFileFailed
-                ? DefaultAlertDialog(
-                    title: "Gagal menyimpan file".tr,
-                    subtitle: "Pastikan file yang diupload sudah benar".tr,
-                    confirmButtonTitle: "OK".tr,
-                    onConfirm: () => controller.onRefreshPostDataState(),
-                  )
                 : Container(),
           ],
         );

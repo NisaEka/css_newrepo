@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/facility/facility_create_tax_info_model.da
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/constant.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -130,7 +131,14 @@ class FacilityFormReturnController extends BaseController {
       if (imageSizeApproved) {
         pickedImageUrl = image.path;
       } else {
-        _pickImageFailed = true;
+        Get.dialog(DefaultAlertDialog(
+          title: 'Gagal mengambil gambar.'.tr,
+          subtitle:
+              'Periksa kembali file gambar NPWP. File gambar tidak boleh kosong atau lebih dari 2MB'
+                  .tr,
+          confirmButtonTitle: 'OK'.tr,
+          onConfirm: () => onRefreshPickImageState(),
+        ));
       }
 
       update();

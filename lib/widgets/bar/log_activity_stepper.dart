@@ -69,13 +69,13 @@ class LogActivityStepper extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              data?.activityCreateDate.toString().toDateTimeFormat() ?? '',
+              data?.activityCreateDate.toString().toLongDateTimeFormat() ?? '',
               style: sublistTitleTextStyle,
             ),
             SizedBox(
               width: Get.width / 1.5,
               child: Text(
-                data?.activityDescription ?? '',
+                (data?.activityDescription)?.tr ?? '',
                 style: sublistTitleTextStyle,
               ),
             ),
@@ -93,13 +93,15 @@ class LogActivityStepper extends StatelessWidget {
               color: successLightColor2,
               padding: EdgeInsets.zero,
               margin: const EdgeInsets.only(top: 10),
-              title: data?.activityStatus ?? '',
+              title: (data?.activityStatus)?.tr ?? '',
               fontSize: 10,
-              width: calcTextSize(TextSpan(text: data?.activityStatus ?? ''))
-                  .width,
-              height: calcTextSize(TextSpan(text: data?.activityStatus ?? ''))
-                      .height +
-                  5,
+              width:
+                  calcTextSize(TextSpan(text: (data?.activityStatus)?.tr ?? ''))
+                      .width,
+              height:
+                  calcTextSize(TextSpan(text: (data?.activityStatus)?.tr ?? ''))
+                          .height +
+                      5,
             )
           ],
         ),

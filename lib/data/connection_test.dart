@@ -33,8 +33,6 @@ class ConnectionTest {
   }
 
   Future<void> updateConnectionStatus(ConnectivityResult result) async {
-    // setState(() {
     connectionStatus = result;
-    // });
   }
 }

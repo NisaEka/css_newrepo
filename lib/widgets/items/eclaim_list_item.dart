@@ -25,6 +25,7 @@ class EclaimListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Shimmer(
       isLoading: isLoading,
       child: Container(
@@ -54,7 +55,11 @@ class EclaimListItem extends StatelessWidget {
                   ),
                   child: Text(
                     claimType ?? '',
-                    style: const TextStyle(color: whiteColor, fontSize: 12),
+                    style: screenWidth < 400
+                        ? (claimType?.length ?? 0) > 10
+                            ? const TextStyle(color: whiteColor, fontSize: 10)
+                            : const TextStyle(color: whiteColor, fontSize: 12)
+                        : const TextStyle(color: whiteColor, fontSize: 12),
                   ),
                 ),
                 const Spacer(),

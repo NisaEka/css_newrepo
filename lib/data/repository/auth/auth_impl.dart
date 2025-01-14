@@ -107,18 +107,6 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  // @override
-  // Future<GetAgentModel> getAgent(String branchCode) async {
-  //   try {
-  //     Response response = await network.dio.get(
-  //       '/agent?branch_code=$branchCode',
-  //     );
-  //     return GetAgentModel.fromJson(response.data);
-  //   } on DioException catch (e) {
-  //     return GetAgentModel.fromJson(e.response?.data);
-  //   }
-  // }
-
   @override
   Future<GetReferalModel> getReferal(String keyword) async {
     try {

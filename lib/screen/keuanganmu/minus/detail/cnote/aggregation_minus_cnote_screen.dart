@@ -85,7 +85,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Tanggal Aggregasi".tr,
-                  data.dAggDate?.toShortDateFormat() ?? '-',
+                  data.dAggDate?.toLongDateTimeFormat() ?? '-',
                   false,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
@@ -117,7 +117,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Tanggal Cnote".tr,
-                  data.dCnoteDate?.toDateTimeFormat(),
+                  data.dCnoteDate?.toLongDateTimeFormat(),
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: regular,
@@ -145,7 +145,7 @@ class AggregationMinusCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Tanggal POD".tr,
-                  data.dPodDateSys?.toDateTimeFormat(),
+                  data.dPodDateSys?.toLongDateTimeFormat(),
                   false,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: regular,

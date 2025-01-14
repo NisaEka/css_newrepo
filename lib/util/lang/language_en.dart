@@ -511,6 +511,7 @@ class LanguageEN {
       "Total Kiriman": "Total Shipment",
       "Sudah Dijemput": "Already Picked Up",
       "Sudah Di Gudang Jne": "Already at JNE Warehouse",
+      "Sudah Di Gudang JNE": "Already at JNE Warehouse",
       "Sudah Di Kota Tujuan": "Already in Destination City",
       "Butuh Dicek": "Needs Review",
       "Proses Pengembalian Ke Kamu": "Return Process to You",
@@ -633,7 +634,48 @@ class LanguageEN {
       "Simpan Alamat": "Save Address",
       "Tambah Alamat Penjemputan": "Add Pickup Address",
       "Apakah kamu sudah yakin untuk melakukan penjemputan di jam ":
-          "Are you sure to schedule the pickup at "
+          "Are you sure to schedule the pickup at ",
+      "REVISI ALAMAT": "Address Revision",
+      "ISI KIRIMAN KURANG KOLI": "Shipment Contents Less Than The Package",
+      "ISI KIRIMAN TIDAK SESUAI": "Shipment Contents Do Not Match",
+      "PENERIMA MERASA BELUM MENERIMA KIRIMAN":
+          "Receiver Not Receive The Shipment",
+      "KIRIMAN BELUM SAMPAI": "Shipment Not Arrived",
+      "PERMINTAAN KIRIM ULANG": "Request for Reshipment",
+      "PERMINTAAN RETUR": "Return Request",
+      "INSTRUKSI KHUSUS": "Special Instructions",
+      "KLAIM YES GAGAL": "YES Claim Failed",
+      "KLAIM BARANG RUSAK": "Claim Damaged Goods",
+      "KLAIM BARANG HILANG": "Claim Lost Goods",
+      "KLAIM KIRIMAN DITERIMA KURANG": "Claim Incomplete Shipment Received",
+      "Data diperbaharui setiap jam 06.45 WIB":
+          "Data is updated every day at 06:45 AM WIB",
+      "Hubungi sales cabang kota anda":
+          "Contact the sales of your city branch.",
+      "Transaksi": "Transaction",
+      "Berhasil menambahkan kode referral": "Successfully added referral code",
+      "Ubah Profile": "Change profile",
+      "Pengajuan pengubahan data CCRF": "Request for modification CCRF data",
+      "Formulir belum disetujui oleh": "The form has not been approved by",
+      "Berhasil melakukan sinkronisasi data": "Successfully synchronize data",
+      "Berhasil Mengubah formulir Flat Rate":
+          "Successfully change Flat Rate form",
+      "Pengubahan ccrf disetujui oleh": "CCRF modification approved by",
+      "Berhasil Menambahkan formulir Flat Rate":
+          "Successfully added Flat Rate form",
+      "Berhasil mengajukkan formulir pendaftaran akun untuk fitur fasilitasku.":
+          "Successfully submitted the account registration form for the My Facility feature",
+      "Formulir disetujui oleh": "Form is approved by",
+      "Penonaktifan akun transaksi CSS": "Deactivation CSS transaction account",
+      "Pengaktifan akun transaksi CSS": "Activation CSS transaction account",
+      "Berhasil menambahkan kode referral ": "Successfully added referral code",
+      "PENGAJUAN": "REQUEST",
+      "VERIFIKASI SALES": "SALES VERIFICATION",
+      "VERIFIKASI NCD": "NCD VERIFICATION",
+      "UBAH PROFILE": "CHANGE PROFILE",
+      "UBAH DATA PROFILE": "CHANGE PROFILE DATA",
+      "REGISTRASI FLAT RATE": "FLAT RATE REGISTRATION",
+      "PEMILIK": "OWNER"
     };
   }
 }
