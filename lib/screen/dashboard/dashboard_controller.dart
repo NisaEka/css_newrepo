@@ -68,6 +68,7 @@ class DashboardController extends BaseController {
       await master
           .getAppsInfo(QueryModel(
         table: true,
+        limit: 0,
         where: [
           {"infoStatus": "on"},
           {"infoCategory": "INFORMASI COMMERCIAL - CSS CUSTOMER MOBILE"}
