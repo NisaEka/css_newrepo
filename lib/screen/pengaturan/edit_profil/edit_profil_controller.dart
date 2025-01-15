@@ -156,17 +156,18 @@ class EditProfileController extends BaseController {
           );
 
           await storage.saveData(
-              StorageCore.shipper,
-              ShipperModel(
-                name: value.data?.user?.brand,
-                phone: value.data?.user?.phone,
-                address: value.data?.user?.address,
-                zipCode: value.data?.user?.zipCode,
-                city: value.data?.user?.origin?.originName,
-                origin: value.data?.user?.origin,
-                country: value.data?.user?.language,
-                region: value.data?.user?.origin?.branch?.region,
-              ));
+            StorageCore.shipper,
+            ShipperModel(
+              name: value.data?.user?.brand,
+              phone: value.data?.user?.phone,
+              address: value.data?.user?.address,
+              zipCode: value.data?.user?.zipCode,
+              city: value.data?.user?.origin?.originName,
+              origin: value.data?.user?.origin,
+              country: value.data?.user?.language,
+              region: value.data?.user?.origin?.branch?.region,
+            ),
+          );
         });
       }).then(
         (value) => Get.offAndToNamed("/profileGeneral"),

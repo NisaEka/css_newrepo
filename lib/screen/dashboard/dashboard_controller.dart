@@ -616,45 +616,55 @@ class DashboardController extends BaseController {
 
     try {
       if (basic) {
-        await profil.getBasicProfil().then((value) async {
-          await storage.saveData(StorageCore.basicProfile, value.data?.user);
-          state.basic = UserModel.fromJson(
-              await storage.readData(StorageCore.basicProfile));
-          state.allow = value.data?.menu ?? MenuModel();
-          storage.saveData(StorageCore.userMenu, value.data?.menu);
-          saveFCMToken();
-
-          await storage.saveData(
-              StorageCore.shipper,
-              ShipperModel(
-                name: value.data?.user?.brand,
-                phone: value.data?.user?.phone,
-                address: value.data?.user?.address,
-                zipCode: value.data?.user?.zipCode,
-                city: value.data?.user?.origin?.originName,
-                origin: value.data?.user?.origin,
-                country: value.data?.user?.language,
-                region: value.data?.user?.origin?.branch?.region,
-              ));
-
-          if (state.basic?.userType != "PEMILIK" && officer) {
-            await setting.getOfficerByID(state.basic?.id ?? '').then(
-              (value) async {
-                await storage.saveData(StorageCore.officerProfile, value.data);
-              },
+        try {
+          await profil.getBasicProfil().then((value) async {
+            AppLogger.i("get basic : ${value.data?.toJson()}");
+            await storage.saveData(
+              StorageCore.basicProfile,
+              value.data?.user,
             );
-          }
+            state.basic = UserModel.fromJson(
+                await storage.readData(StorageCore.basicProfile));
+            state.allow = value.data?.menu ?? MenuModel();
+            storage.saveData(StorageCore.userMenu, value.data?.menu);
+            saveFCMToken();
 
-          if (state.basic?.language == "INDONESIA") {
-            await storage.writeString(StorageCore.localeApp, "id");
-            Get.updateLocale(const Locale("id", "ID"));
-            update();
-          } else if (state.basic?.language == "ENGLISH") {
-            await storage.writeString(StorageCore.localeApp, "en");
-            Get.updateLocale(const Locale("en", "ES"));
-            update();
-          }
-        });
+            await storage.saveData(
+                StorageCore.shipper,
+                ShipperModel(
+                  name: value.data?.user?.brand,
+                  phone: value.data?.user?.phone,
+                  address: value.data?.user?.address,
+                  zipCode: value.data?.user?.zipCode,
+                  city: value.data?.user?.origin?.originName,
+                  origin: value.data?.user?.origin,
+                  country: value.data?.user?.language,
+                  region: value.data?.user?.origin?.branch?.region,
+                ));
+
+            if (state.basic?.userType != "PEMILIK" && officer) {
+              await setting.getOfficerByID(state.basic?.id ?? '').then(
+                (value) async {
+                  await storage.saveData(
+                      StorageCore.officerProfile, value.data);
+                },
+              );
+            }
+
+            if (state.basic?.language == "INDONESIA") {
+              await storage.writeString(StorageCore.localeApp, "id");
+              Get.updateLocale(const Locale("id", "ID"));
+              update();
+            } else if (state.basic?.language == "ENGLISH") {
+              await storage.writeString(StorageCore.localeApp, "en");
+              Get.updateLocale(const Locale("en", "ES"));
+              update();
+            }
+          });
+        } catch (e, i) {
+          AppLogger.e('error get basic $e');
+          AppLogger.e('error get basic $i');
+        }
       } else {
         update();
         if (state.basic?.language == "INDONESIA") {
@@ -726,8 +736,8 @@ class DashboardController extends BaseController {
         update();
       }
     } catch (e, i) {
-      e.printError();
-      i.printError();
+      AppLogger.e("error dashboard init : $e");
+      AppLogger.e("error dashboard init : $i");
     }
     UserModel shipper =
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));

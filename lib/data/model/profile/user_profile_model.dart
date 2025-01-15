@@ -187,10 +187,18 @@ class UserModel {
       map['origin'] = _origin?.toJson();
     }
     if (_branch != null) {
-      map['branch'] = _branch?.toJson();
+      // if (map['branch'] is String) {
+      map['branch'] = _branch;
+      // } else {
+      //   map['branch'] = _branch?.toJson();
+      // }
     }
     if (_region != null) {
-      map['region'] = _region?.toJson();
+      // if (map['region'] is String) {
+      map['region'] = _region;
+      // } else {
+      //   map['region'] = _region?.toJson();
+      // }
     }
     map['zipCode'] = _zipCode;
     map['name'] = _name;
