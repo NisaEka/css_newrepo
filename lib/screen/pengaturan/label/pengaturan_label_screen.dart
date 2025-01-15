@@ -1,4 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/screen/pengaturan/label/components/copy_label_field.dart';
 import 'package:css_mobile/screen/pengaturan/label/components/label_type_field.dart';
 import 'package:css_mobile/screen/pengaturan/label/components/hidden_phone_shipper_dropdown.dart';
 import 'package:css_mobile/screen/pengaturan/label/components/shipping_cost_dropdown.dart';
@@ -26,6 +27,7 @@ class PengaturanLabelScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: ListView(
                     children: [
+                      const CopyLabelField(),
                       const ShippingCostDropdown(),
                       const HiddenShipperPhoneDropdown(),
                       LabelTypeField(c.selectedSticker),

@@ -33,7 +33,11 @@ class StickerMegahub1 extends StatelessWidget {
           children: [
             sticker1(),
             const SizedBox(height: 25),
-            StickerMegahubHybrid1(data: data).sticker2(context),
+            StickerMegahubHybrid1(
+              data: data,
+              shippingCost: shippingCost,
+              hiddenPhoneShipper: hiddenPhoneShipper,
+            ).sticker2(context),
             Center(
               child: Text(
                 'Untuk informasi dan pengecekan status kiriman silahkan mengunjungi www.jne.co.id',
@@ -509,8 +513,10 @@ class StickerMegahub1 extends StatelessWidget {
                         pw.Text(
                             'Jumlah Kiriman: ${data.receiver?.registrationId}',
                             style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text('Biaya Kirim: ${data.receiver?.registrationId}',
-                            style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text(
+                          'Biaya Kirim: Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
+                          style: const pw.TextStyle(fontSize: 8),
+                        ),
                         pw.Text('Kota Tujuan: ${data.receiver?.city}',
                             style: const pw.TextStyle(fontSize: 8)),
                         pw.Text('Asuransi: ${data.receiver?.registrationId} ',
