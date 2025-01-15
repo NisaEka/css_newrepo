@@ -66,7 +66,7 @@ class LabelController extends BaseController {
       var copyLabel = await storage.readString(StorageCore.isCopyLabel);
       shippingCost = shipcost == "HIDE";
       hiddenPhoneShipper = hiddenPhone == "HIDE";
-      isCopyLabel = copyLabel == '0';
+      isCopyLabel = copyLabel == '1';
       if (stickerLabel == "Default") {
         sizeLabel = const PdfPageFormat(
           8.5 * PdfPageFormat.cm,
