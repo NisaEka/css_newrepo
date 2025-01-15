@@ -313,7 +313,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 suffixVal2: "Kiriman".tr,
                                 value2:
                                     kirimanKamu.totalCod.toInt().toCurrency(),
-                                description: "Butuh di Cek".tr,
+                                description: "Butuh Di Cek".tr,
                                 lineColor: infoColor,
                                 isLoading: isLoadingKiriman,
                                 onTap: () => Get.to(

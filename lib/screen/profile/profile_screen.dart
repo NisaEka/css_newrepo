@@ -31,7 +31,11 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double leftPadding = screenWidth < 400 ? 30 : 38;
+    double leftPadding = screenWidth < 400
+        ? 30
+        : screenWidth >= 400 && screenWidth < 500
+            ? 38
+            : 50;
     return GetBuilder<ProfileController>(
         init: ProfileController(),
         builder: (controller) {

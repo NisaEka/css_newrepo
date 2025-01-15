@@ -99,7 +99,7 @@ class AggByCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Tanggal Aggregasi".tr,
-                  controller.data.mpayWdrDate?.toShortDateFormat() ?? '-',
+                  controller.data.mpayWdrDate?.toLongDateTimeFormat() ?? '-',
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!,
                 ),
@@ -141,7 +141,7 @@ class AggByCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Tanggal Cnote".tr,
-                  controller.data.dpayDetWdrCnotedate?.toDateTimeFormat(),
+                  controller.data.dpayDetWdrCnotedate?.toLongDateTimeFormat(),
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: regular,
@@ -171,7 +171,7 @@ class AggByCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Tanggal POD".tr,
-                  controller.data.dpayDUpdPodDate?.toDateTimeFormat(),
+                  controller.data.dpayDUpdPodDate?.toLongDateTimeFormat(),
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         fontWeight: regular,
@@ -205,7 +205,8 @@ class AggByCnoteScreen extends StatelessWidget {
                 _textRow(
                   context,
                   "Paid Date".tr,
-                  controller.data.mpayWdrGrpPayDatePaid?.toDateTimeFormat() ??
+                  controller.data.mpayWdrGrpPayDatePaid
+                          ?.toLongDateTimeFormat() ??
                       '-',
                   controller.isLoading,
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(

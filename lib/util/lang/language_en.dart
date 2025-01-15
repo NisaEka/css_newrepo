@@ -694,7 +694,9 @@ class LanguageEN {
       "Buat Transaksi": "Create Transaction",
       "Edit Transaksi": "Edit Transaction",
       "File Berhasil Disimpan": "File Successfully Saved",
-      "Masukkan no handphone": "Enter phone number"
+      "Masukkan no handphone": "Enter phone number",
+      "Informasi Pembayaran": "Payment Information",
+      "Document/Paket": "Document/Package",
     };
   }
 }

@@ -2,6 +2,7 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class OngkirListItem extends StatelessWidget {
   final String serviceTitle;
@@ -32,7 +33,7 @@ class OngkirListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
                 Text(
-                  serviceSubtitle,
+                  serviceSubtitle.tr,
                   style: sublistTitleTextStyle.copyWith(
                       color: AppConst.isLightTheme(context)
                           ? greyColor
