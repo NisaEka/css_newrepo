@@ -28,8 +28,6 @@ Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
 }
 
 Future<void> saveUnreadMessage(RemoteMessage data) async {
-  // final DashboardController controller = Get.find<DashboardController>();
-  // final NotificationController notification = Get.find<NotificationController>();
   final DashboardController controller = Get.put(DashboardController());
   final NotificationController notification = Get.put(NotificationController());
 
