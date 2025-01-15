@@ -156,7 +156,7 @@ class StickerA6 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: (Get.width / 1.5) - 35,
+                    width: Get.width * 0.55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -224,10 +224,14 @@ class StickerA6 extends StatelessWidget {
                   ),
                   Column(
                     children: [
-                      Text(data.delivery?.serviceCode ?? '-',
-                          style: TextStyle(fontSize: 30, fontWeight: bold)),
-                      Text(data.type == 'COD' ? data.type ?? '' : '',
-                          style: TextStyle(fontSize: 30, fontWeight: bold)),
+                      Text(
+                        data.delivery?.serviceCode ?? '-',
+                        style: TextStyle(fontSize: 30, fontWeight: bold),
+                      ),
+                      Text(
+                        data.type == 'COD' ? data.type ?? '' : '',
+                        style: TextStyle(fontSize: 30, fontWeight: bold),
+                      ),
                     ],
                   )
                 ],
@@ -241,9 +245,7 @@ class StickerA6 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: screenWidth < 400
-                        ? (Get.width / 1.5) - 50
-                        : (Get.width / 1.5) - 35,
+                    width: screenWidth < 400 ? Get.width * 0.6 : Get.width * 55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

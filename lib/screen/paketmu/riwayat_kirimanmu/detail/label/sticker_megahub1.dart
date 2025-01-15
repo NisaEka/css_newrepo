@@ -110,7 +110,7 @@ class StickerMegahub1 extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     Text(
-                      'Rp ${shippingCost ? 1 : data.type == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
+                      'Rp ${data.type == "COD" ? data.delivery?.codFee?.toInt().toCurrency() : shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       style: itemTextStyle.copyWith(fontWeight: bold),
                       textAlign: TextAlign.center,
                     ),

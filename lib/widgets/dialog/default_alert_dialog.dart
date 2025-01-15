@@ -17,7 +17,7 @@ class DefaultAlertDialog extends StatelessWidget {
 
   const DefaultAlertDialog({
     super.key,
-    required this.onConfirm,
+    this.onConfirm,
     this.onBack,
     this.title,
     this.subtitle,
@@ -74,13 +74,15 @@ class DefaultAlertDialog extends StatelessWidget {
                     onPressed: onBack ?? () => Get.back(),
                   )
                 : const SizedBox(),
-            CustomFilledButton(
-              radius: 50,
-              color: primaryColor(context),
-              isTransparent: false,
-              title: confirmButtonTitle ?? '',
-              onPressed: onConfirm,
-            ),
+            onConfirm != null
+                ? CustomFilledButton(
+                    radius: 50,
+                    color: primaryColor(context),
+                    isTransparent: false,
+                    title: confirmButtonTitle ?? '',
+                    onPressed: onConfirm,
+                  )
+                : const SizedBox(),
           ],
         ),
       ],

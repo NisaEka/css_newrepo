@@ -1,5 +1,6 @@
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/widgets/items/promo_item.dart';
+import 'package:css_mobile/widgets/items/title_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,19 +16,9 @@ class DashboardPromo extends StatelessWidget {
             margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Promo Terkini'.tr,
-                        style: Theme.of(context).textTheme.titleLarge),
-                    // const DateDropdownFilterButton(),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 10),
+                c.state.promoList.isEmpty
+                    ? const SizedBox()
+                    : TitleTextItem(title: 'Promo Terkini'.tr),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

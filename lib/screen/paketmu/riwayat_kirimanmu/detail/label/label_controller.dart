@@ -31,6 +31,7 @@ class LabelController extends BaseController {
   String? stickerLabel;
   bool shippingCost = false;
   bool hiddenPhoneShipper = false;
+  bool isCopyLabel = false;
   PdfPageFormat? sizeLabel;
 
   BoxConstraints? boxConstraints;
@@ -51,6 +52,8 @@ class LabelController extends BaseController {
               value.data?.priceLabel != '0' ? "PUBLISH" : "HIDE");
           await storage.writeString(StorageCore.hiddenPhoneShipper,
               value.data?.hideShipperphoneLabel != 'Y' ? "PUBLISH" : "HIDE");
+          await storage.writeString(
+              StorageCore.isCopyLabel, value.data?.copyLabel.toString());
         },
       );
 
@@ -60,8 +63,10 @@ class LabelController extends BaseController {
       var shipcost = await storage.readString(StorageCore.shippingCost);
       var hiddenPhone =
           await storage.readString(StorageCore.hiddenPhoneShipper);
+      var copyLabel = await storage.readString(StorageCore.isCopyLabel);
       shippingCost = shipcost == "HIDE";
       hiddenPhoneShipper = hiddenPhone == "HIDE";
+      isCopyLabel = copyLabel == '0';
       if (stickerLabel == "Default") {
         sizeLabel = const PdfPageFormat(
           8.5 * PdfPageFormat.cm,
@@ -105,7 +110,7 @@ class LabelController extends BaseController {
     }
   }
 
-  Future getPdf(Uint8List screenShot) async {
+  Future getPdf(Uint8List screenShot, bool isCopyLabel) async {
     final pdf = pw.Document();
     pdf.addPage(
       pw.Page(
@@ -116,6 +121,17 @@ class LabelController extends BaseController {
         },
       ),
     );
+    if (isCopyLabel) {
+      pdf.addPage(
+        pw.Page(
+          margin: const pw.EdgeInsets.symmetric(vertical: 20),
+          pageFormat: sizeLabel,
+          build: (context) {
+            return pw.Image(pw.MemoryImage(screenShot), fit: pw.BoxFit.fill);
+          },
+        ),
+      );
+    }
     String tempPath = (await getDownloadsDirectory())!.path;
     final timestamp = DateTime.now().millisecondsSinceEpoch.toString();
     String fileName = "${data.awb ?? ''}_$timestamp";
@@ -134,11 +150,11 @@ class LabelController extends BaseController {
             context: context,
             constraints: boxConstraints,
           )
-          .then((capturedImage) async => getPdf(capturedImage));
+          .then((capturedImage) async => getPdf(capturedImage, isCopyLabel));
     } else {
       screenshotController
           .capture()
-          .then((capturedImage) async => getPdf(capturedImage!));
+          .then((capturedImage) async => getPdf(capturedImage!, isCopyLabel));
     }
   }
 
