@@ -16,9 +16,10 @@ class DashboardNews extends StatelessWidget {
             margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Column(
               children: [
-                c.state.newsList.first.thumbnail == null
-                    ? const SizedBox()
-                    : TitleTextItem(title: 'Jnews'.tr),
+                c.state.newsList.isNotEmpty &&
+                        c.state.newsList.first.thumbnail != null
+                    ? TitleTextItem(title: 'Jnews'.tr)
+                    : const SizedBox(),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

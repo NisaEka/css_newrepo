@@ -183,11 +183,8 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                                     style: labelTextStyle),
                                 Text('Pembayaran: ${data.type ?? '-'}',
                                     style: labelTextStyle),
-                                stickerLabel ==
-                                        "Sticker Label Vertikal (Mega HUB 1)"
-                                    ? Text('Order ID: ${data.orderId ?? '-'}',
-                                        style: labelTextStyle)
-                                    : const SizedBox(),
+                                Text('Order ID: ${data.orderId ?? '-'}',
+                                    style: labelTextStyle)
                               ],
                             ),
                           ),

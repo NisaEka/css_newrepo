@@ -239,7 +239,7 @@ class StickerDefault extends StatelessWidget {
                   ],
                 ),
                 CustomLabelText(
-                  title: "Goods Amount  :   ",
+                  title: "Goods Value  :   ",
                   value:
                       'Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}',
                   titleTextStyle: TextStyle(fontWeight: bold),

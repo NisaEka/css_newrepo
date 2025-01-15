@@ -28,7 +28,11 @@ class StickerMegahubHybrid3 extends StatelessWidget {
           ).sticker(context),
         ),
         const SizedBox(height: 20),
-        StickerMegahubHybrid1(data: data).sticker2(context),
+        StickerMegahubHybrid1(
+          data: data,
+          shippingCost: shippingCost,
+          hiddenPhoneShipper: hiddenPhoneShipper,
+        ).sticker2(context),
         Center(
           child: Text(
             textAlign: TextAlign.center,
