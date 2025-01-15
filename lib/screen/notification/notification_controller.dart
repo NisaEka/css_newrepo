@@ -31,9 +31,8 @@ class NotificationController extends BaseController {
       // unread meesage
       var unread = GetNotificationModel.fromJson(
           await storage.readData(StorageCore.unreadMessage));
-      unreadNotifList
-        ..clear()
-        ..addAll(unread.payload ?? []);
+      unreadNotifList.clear();
+      unreadNotifList.addAll(unread.payload ?? []);
       unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
 
       // add item to notificationList
