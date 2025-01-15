@@ -1,5 +1,6 @@
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/widgets/items/news_item.dart';
+import 'package:css_mobile/widgets/items/title_text_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,20 +16,9 @@ class DashboardNews extends StatelessWidget {
             margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Jnews'.tr,
-                        style: Theme.of(context).textTheme.titleLarge),
-                    // const DateDropdownFilterButton(),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Divider(
-                  color: Colors.grey,
-                ),
-                const SizedBox(height: 10),
+                c.state.newsList.first.thumbnail == null
+                    ? const SizedBox()
+                    : TitleTextItem(title: 'Jnews'.tr),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

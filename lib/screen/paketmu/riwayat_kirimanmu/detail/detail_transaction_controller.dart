@@ -95,7 +95,7 @@ class DetailTransactionController extends BaseController {
           ),
           registrationId: data?.registrationId,
           status: data?.statusAwb,
-          createdDate: data?.createdDateSearch,
+          createdDate: data?.createdDate ?? data?.createdDateSearch,
           awb: data?.awb,
           type: data?.codOngkir == "YES" || data?.codFlag == "YES"
               ? "COD"

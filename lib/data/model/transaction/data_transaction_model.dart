@@ -60,10 +60,10 @@ class DataTransactionModel {
 
   DataTransactionModel.fromJson(dynamic json) {
     _awb = json['awb'];
-    _awbType = json['awb_type'];
+    _awbType = json['awb_type'] ?? json['awbType'];
     _registrationId = json['registration_id'];
     _type = json['api_type'] ?? json['type'];
-    _createdDate = json['created_date'];
+    _createdDate = json['created_date'] ?? json['createdDate'];
     _status = json['status'];
     _orderId = json['order_id'];
     _officerEntry = json['officer_entry'];
@@ -217,6 +217,7 @@ class DataTransactionModel {
     map['type'] = _type;
     map['api_type'] = _type;
     map['created_date'] = _createdDate;
+    map['createdDate'] = _createdDate;
     map['order_id'] = _orderId;
     map['officer_entry'] = _officerEntry;
     map['pickup_status'] = _pickupStatus;
