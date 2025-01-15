@@ -634,7 +634,7 @@ class DashboardController extends BaseController {
                 city: value.data?.user?.origin?.originName,
                 origin: value.data?.user?.origin,
                 country: value.data?.user?.language,
-                region: value.data?.user?.origin?.branch?.regional,
+                region: value.data?.user?.origin?.branch?.region,
               ));
 
           if (state.basic?.userType != "PEMILIK" && officer) {

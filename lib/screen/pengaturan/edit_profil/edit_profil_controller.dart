@@ -149,6 +149,7 @@ class EditProfileController extends BaseController {
       )
           .then((_) async {
         await profil.getBasicProfil().then((value) async {
+          AppLogger.i("get basic : ${value.data?.user?.toJson()}");
           await storage.saveData(
             StorageCore.basicProfile,
             value.data?.user,
@@ -164,7 +165,7 @@ class EditProfileController extends BaseController {
                 city: value.data?.user?.origin?.originName,
                 origin: value.data?.user?.origin,
                 country: value.data?.user?.language,
-                region: value.data?.user?.origin?.branch?.regional,
+                region: value.data?.user?.origin?.branch?.region,
               ));
         });
       }).then(

@@ -161,7 +161,7 @@ class DraftTransaksiController extends BaseController {
           shipperZip: upload.shipper?.zipCode,
           shipperContact: upload.shipper?.contact,
           shipperRegion: upload.shipper?.region?.name ??
-              upload.origin?.branch?.regional?.name,
+              upload.origin?.branch?.region?.name,
           shipperCountry: upload.shipper?.country,
           shipperAddr1: upload.shipper?.address1,
           shipperAddr2: upload.shipper?.address2,

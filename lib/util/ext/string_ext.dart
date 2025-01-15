@@ -38,8 +38,9 @@ extension StringExt on String {
       DateTime dateTimeOrigin = DateTime.parse(this);
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
-    } catch (e) {
+    } catch (e, i) {
       AppLogger.e("ERROR toLongDateFormat $e");
+      AppLogger.e("ERROR toLongDateFormat $i");
       return "-";
     }
   }

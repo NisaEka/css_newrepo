@@ -653,82 +653,84 @@ class TransactionController extends BaseController {
     );
     try {
       await transaction
-          .postTransaction(TransactionModel(
-        orderId:
-            state.noReference.text.isNotEmpty ? state.noReference.text : null,
-        apiType: trans.account?.accountService,
-        custId: state.account.accountNumber,
-        branch: trans.origin?.branchCode ?? trans.origin?.branch?.branchCode,
-        codAmount: state.isCOD || state.codOngkir
-            ? state.codAmountText.text.digitOnly().toInt()
-            : null,
-        codFlag: state.account.accountService == "COD"
-            ? "YES"
-            : state.codOngkir
-                ? "YES"
-                : "NO",
-        codOngkir: state.selectedService?.serviceDisplay == 'INTL'
-            ? 'NO'
-            : state.codOngkir
-                ? "YES"
-                : "NO",
-        deliveryPrice: state.freightCharge,
-        deliveryPricePublish: state.freightCharge,
-        destinationCode: trans.receiver?.destinationCode,
-        goodsAmount: state.goodAmount.text.isNotEmpty
-            ? state.goodAmount.text.digitOnly().toInt()
-            : null,
-        goodsDesc: state.goodName.text,
-        goodsType:
-            state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
-        qty: state.goodQty.text.toDouble(),
-        insuranceAmount: state.insurance ? state.isr : 0,
-        insuranceFlag: state.insurance ? "Y" : "N",
-        originCode: trans.origin?.originCode,
-        originDesc: trans.origin?.originName,
-        packingkayuFlag: state.woodPacking ? "Y" : "N",
-        receiverAddr: trans.receiver?.address,
-        receiverCity: trans.receiver?.city,
-        receiverCountry: trans.receiver?.country,
-        receiverDistrict: trans.receiver?.district,
-        receiverSubdistrict: trans.receiver?.subDistrict,
-        receiverRegion: trans.receiver?.region,
-        receiverZip: trans.receiver?.zipCode,
-        receiverAddr1: trans.receiver?.address?.substring(
-            0,
-            (trans.receiver?.address?.length ?? 0) > 30
-                ? 29
-                : (trans.receiver?.address?.length ?? 0)),
-        receiverAddr2: (trans.receiver?.address?.length ?? 0) > 30
-            ? trans.receiver?.address?.substring(
-                30,
-                (trans.receiver?.address?.length ?? 0) > 60
-                    ? 59
-                    : (trans.receiver?.address?.length ?? 0))
-            : '',
-        receiverAddr3: (trans.receiver?.address?.length ?? 0) >= 60
-            ? trans.receiver?.address
-                ?.substring(60, (trans.receiver?.address?.length ?? 0))
-            : '',
-        receiverName: trans.receiver?.name,
-        receiverPhone: trans.receiver?.phone,
-        receiverContact: trans.receiver?.contact,
-        serviceCode: state.selectedService?.serviceDisplay,
-        shipperName: trans.shipper?.name,
-        shipperPhone: trans.shipper?.phone,
-        shipperAddr: trans.shipper?.address,
-        shipperCity: trans.shipper?.city,
-        shipperZip: trans.shipper?.zipCode,
-        shipperContact: trans.shipper?.contact,
-        shipperRegion:
-            trans.shipper?.region?.name ?? trans.origin?.branch?.regional?.name,
-        shipperCountry: trans.shipper?.country,
-        shipperAddr1: trans.shipper?.address1,
-        shipperAddr2: trans.shipper?.address2,
-        shipperAddr3: trans.shipper?.address3,
-        specialIns: state.specialIns,
-        weight: state.berat,
-      ))
+          .postTransaction(
+        TransactionModel(
+          orderId:
+              state.noReference.text.isNotEmpty ? state.noReference.text : null,
+          apiType: trans.account?.accountService,
+          custId: state.account.accountNumber,
+          branch: trans.origin?.branchCode ?? trans.origin?.branch?.branchCode,
+          codAmount: state.isCOD || state.codOngkir
+              ? state.codAmountText.text.digitOnly().toInt()
+              : null,
+          codFlag: state.account.accountService == "COD"
+              ? "YES"
+              : state.codOngkir
+                  ? "YES"
+                  : "NO",
+          codOngkir: state.selectedService?.serviceDisplay == 'INTL'
+              ? 'NO'
+              : state.codOngkir
+                  ? "YES"
+                  : "NO",
+          deliveryPrice: state.freightCharge,
+          deliveryPricePublish: state.freightCharge,
+          destinationCode: trans.receiver?.destinationCode,
+          goodsAmount: state.goodAmount.text.isNotEmpty
+              ? state.goodAmount.text.digitOnly().toInt()
+              : null,
+          goodsDesc: state.goodName.text,
+          goodsType:
+              state.goodType.text.isNotEmpty ? state.goodType.text : "PAKET",
+          qty: state.goodQty.text.toDouble(),
+          insuranceAmount: state.insurance ? state.isr : 0,
+          insuranceFlag: state.insurance ? "Y" : "N",
+          originCode: trans.origin?.originCode,
+          originDesc: trans.origin?.originName,
+          packingkayuFlag: state.woodPacking ? "Y" : "N",
+          receiverAddr: trans.receiver?.address,
+          receiverCity: trans.receiver?.city,
+          receiverCountry: trans.receiver?.country,
+          receiverDistrict: trans.receiver?.district,
+          receiverSubdistrict: trans.receiver?.subDistrict,
+          receiverRegion: trans.receiver?.region,
+          receiverZip: trans.receiver?.zipCode,
+          receiverAddr1: trans.receiver?.address?.substring(
+              0,
+              (trans.receiver?.address?.length ?? 0) > 30
+                  ? 29
+                  : (trans.receiver?.address?.length ?? 0)),
+          receiverAddr2: (trans.receiver?.address?.length ?? 0) > 30
+              ? trans.receiver?.address?.substring(
+                  30,
+                  (trans.receiver?.address?.length ?? 0) > 60
+                      ? 59
+                      : (trans.receiver?.address?.length ?? 0))
+              : '',
+          receiverAddr3: (trans.receiver?.address?.length ?? 0) >= 60
+              ? trans.receiver?.address
+                  ?.substring(60, (trans.receiver?.address?.length ?? 0))
+              : '',
+          receiverName: trans.receiver?.name,
+          receiverPhone: trans.receiver?.phone,
+          receiverContact: trans.receiver?.contact,
+          serviceCode: state.selectedService?.serviceDisplay,
+          shipperName: trans.shipper?.name,
+          shipperPhone: trans.shipper?.phone,
+          shipperAddr: trans.shipper?.address,
+          shipperCity: trans.shipper?.city,
+          shipperZip: trans.shipper?.zipCode,
+          shipperContact: trans.shipper?.contact,
+          shipperRegion:
+              trans.shipper?.region?.name ?? trans.origin?.branch?.region?.name,
+          shipperCountry: trans.shipper?.country,
+          shipperAddr1: trans.shipper?.address1,
+          shipperAddr2: trans.shipper?.address2,
+          shipperAddr3: trans.shipper?.address3,
+          specialIns: state.specialIns,
+          weight: state.berat,
+        ),
+      )
           .then((v) {
         if (state.goods != null) {
           deleteDraft(state.draftIndex!);

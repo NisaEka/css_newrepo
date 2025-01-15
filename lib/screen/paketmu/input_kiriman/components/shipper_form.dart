@@ -38,23 +38,6 @@ class ShipperForm extends StatelessWidget {
                           c.connection
                               .isOnline()
                               .then((value) => c.state.isOnline = value);
-                          // if (c.state.shipperZipCode.text.isEmpty ||
-                          //     c.state.shipperAddress.text.isEmpty) {
-                          //   showDialog(
-                          //     context: context,
-                          //     builder: (context) => DefaultAlertDialog(
-                          //       title: 'Informasi'.tr,
-                          //       subtitle:
-                          //           'Profile belum lengkap, silahkan lengkapi profil anda terlebih dahulu'
-                          //               .tr,
-                          //       confirmButtonTitle: 'Lengkapi profil'.tr,
-                          //       onConfirm: () {
-                          //         Get.close(2);
-                          //         Get.off(const EditProfilScreen());
-                          //       },
-                          //     ),
-                          //   );
-                          // }
                           c.update();
                         },
                         child: Column(

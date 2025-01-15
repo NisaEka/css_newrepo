@@ -46,6 +46,7 @@ class ReceiverForm extends StatelessWidget {
                                   c.state.receiver = result;
                                   c.update();
                                   c.getSelectedReceiver();
+                                  c.isSaveReceiver();
                                 },
                               ),
                               child: Container(
