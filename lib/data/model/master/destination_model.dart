@@ -124,6 +124,5 @@ class Destination {
             '${subdistrictName == null || subdistrictName == '-' ? '' : '$subdistrictName; '}'
             '${destinationCode == null ? '' : '$destinationCode'}'
         .splitMapJoin(';', onMatch: (p0) => '; ');
-    // return "$zipCode; $provinceName; $cityName; $districtName; $subdistrictName; $destinationCode";
   }
 }

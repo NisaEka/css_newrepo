@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_paketmu_controller.dart';
 import 'package:css_mobile/widgets/bar/filter_button.dart';
 import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
@@ -60,9 +59,7 @@ class PantauPaketmuListFilter extends HookWidget {
                                         e.toUpperCase().tr,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                                color: formTextColor(context)),
+                                            .bodyMedium,
                                       ),
                                     ),
                                   )

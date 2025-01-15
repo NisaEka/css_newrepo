@@ -77,7 +77,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     backgroundColor: errorColor,
                   ),
                 );
-              } else if (value.length < 16) {
+              } else if (value.length > 16) {
                 Get.showSnackbar(
                   GetSnackBar(
                     icon: const Icon(
@@ -293,7 +293,7 @@ class LacakKirimanScreen extends StatelessWidget {
                   : [
                       Center(
                         child: DataEmpty(
-                            text: c.trackModel?.error ?? 'Data Kosong'),
+                            text: c.trackModel?.error ?? 'Data Kosong'.tr),
                       )
                     ],
             ),

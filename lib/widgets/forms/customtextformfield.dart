@@ -90,7 +90,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ? RichText(
                 text: TextSpan(
                   text: widget.label,
-                  style: formLabelTextStyle,
+                  style: formLabelTextStyle.copyWith(color: textColor(context)),
                   children: const <TextSpan>[],
                 ),
               )

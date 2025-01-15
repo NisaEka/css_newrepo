@@ -20,8 +20,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double leftPadding =
-        screenWidth < 400 ? Get.width * 0.08 : Get.width * 0.09;
+    double leftPadding = screenWidth < 400
+        ? Get.width * 0.08
+        : screenWidth >= 400 && screenWidth < 500
+            ? Get.width * 0.09
+            : Get.width * 0.1;
     return GetBuilder<DashboardController>(
       init: DashboardController(),
       builder: (controller) {

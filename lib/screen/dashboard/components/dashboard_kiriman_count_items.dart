@@ -71,7 +71,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                             subtitle: screenWidth < 400 ||
                                     screenWidth >= 400 && screenWidth < 500
                                 ? '${"7 Hari Terakhir".tr}\n'
-                                : '7 Hari Terakhir".tr',
+                                : "7 Hari Terakhir".tr,
                             color: primaryColor(context),
                             icon: Icons.show_chart,
                             statusColor: whiteColor,

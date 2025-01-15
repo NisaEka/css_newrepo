@@ -189,9 +189,9 @@ class InvoiceDetailScreen extends StatelessWidget {
                                   text: controller
                                           .invoiceDetailModel?.invoiceNumber ??
                                       '')),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.copy_rounded,
-                                color: blueJNE,
+                                color: primaryColor(context),
                               ),
                             ),
                           ],

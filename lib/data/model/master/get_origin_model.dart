@@ -66,7 +66,6 @@ class OriginModel {
     if (_branch != null) {
       map['branch'] = _branch?.toJson();
     }
-    // map['branch'] = _branchCode;
 
     return map;
   }
