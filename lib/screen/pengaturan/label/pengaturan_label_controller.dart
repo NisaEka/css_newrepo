@@ -6,12 +6,12 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:get/get.dart';
 
 class PengaturanLabelController extends BaseController {
-  bool copyLabel = false;
   bool isLoading = false;
 
   SettingLabelsModel? selectedSticker;
   String shipcost = "";
   String hiddenPhone = "";
+  String copyLabel = "0";
 
   List<SettingLabelsModel> labelList = [];
 
@@ -29,6 +29,7 @@ class PengaturanLabelController extends BaseController {
         shipcost = (value.data?.priceLabel != '0') ? "PUBLISH" : "HIDE";
         hiddenPhone =
             (value.data?.hideShipperphoneLabel != 'Y') ? "PUBLISH" : "HIDE";
+        copyLabel = value.data?.copyLabel?.toString() ?? '0';
       });
     } catch (e) {
       AppLogger.e('error initData pengaturan label', e);
@@ -36,6 +37,7 @@ class PengaturanLabelController extends BaseController {
           await storage.readData(StorageCore.transactionLabel));
       shipcost = await storage.readString(StorageCore.shippingCost);
       hiddenPhone = await storage.readString(StorageCore.hiddenPhoneShipper);
+      copyLabel = await storage.readString(StorageCore.isCopyLabel);
     }
 
     update();
@@ -50,15 +52,19 @@ class PengaturanLabelController extends BaseController {
         selectedSticker?.id?.toString() ?? '',
         shipcost == "PUBLISH" ? 1 : 0,
         hiddenPhone == "PUBLISH" ? 'N' : 'Y',
+        copyLabel,
       )
           .then((value) async {
         if (value.code == 200) {
           await storage.writeString(StorageCore.shippingCost, shipcost);
           await storage.writeString(
               StorageCore.hiddenPhoneShipper, hiddenPhone);
+          await storage.writeString(StorageCore.isCopyLabel, copyLabel);
           await storage
               .writeString(StorageCore.transactionLabel, selectedSticker?.name)
-              .then((value) => AppSnackBar.success('Label di update'.tr));
+              .then(
+                (value) => AppSnackBar.success('Label di update'.tr),
+              );
         } else {
           AppSnackBar.error(value.error[0]);
         }

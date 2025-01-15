@@ -121,7 +121,11 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse> updateSettingLabel(
-      String label, int price, String hiddenPhone) async {
+    String label,
+    int price,
+    String hiddenPhone,
+    String copyLabel,
+  ) async {
     try {
       Response response = await network.base.patch(
         "/settings/label",
@@ -129,6 +133,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
           "labelPrinter": label.toInt(),
           "priceLabel": price,
           "hideShipperphoneLabel": hiddenPhone,
+          "copyLabel": copyLabel.toInt(),
         },
       );
       return BaseResponse.fromJson(response.data, (json) => null);
