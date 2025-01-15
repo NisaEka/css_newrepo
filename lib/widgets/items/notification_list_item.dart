@@ -68,7 +68,7 @@ class NotificationListItem extends StatelessWidget {
                 Expanded(
                   flex: 2,
                   child: Text(
-                    data.createDate?.toLongDateTimeFormat().toString() ?? '',
+                    data.createDate?.toShortDateTimeFormat().toString() ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.right,
