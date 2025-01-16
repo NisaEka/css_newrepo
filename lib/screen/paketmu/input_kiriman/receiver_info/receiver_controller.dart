@@ -153,7 +153,6 @@ class ReceiverController extends BaseController {
     if ((receiver?.isEmpty ?? false) ||
         (state.formKey.currentState?.validate() == true) && state.isOnline) {
       state.isSaveReceiver = true;
-      update();
       return true;
     }
 

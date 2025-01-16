@@ -52,8 +52,8 @@ extension StringExt on String {
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e, i) {
-      AppLogger.e("ERROR toLongDateFormat $e");
-      AppLogger.e("ERROR toLongDateFormat $i");
+      AppLogger.e("ERROR toLongDateLabelFormat $e");
+      AppLogger.e("ERROR toLongDateLabelFormat $i");
       return "-";
     }
   }
