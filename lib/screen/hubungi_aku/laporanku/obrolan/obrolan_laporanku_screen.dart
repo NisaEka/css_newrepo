@@ -183,7 +183,8 @@ class ObrolanLaporankuScreen extends StatelessWidget {
             onFieldSubmitted: (value) => c.sendMessage(),
           ),
           trailing: GestureDetector(
-            onTap: () => c.sendMessage(),
+            onTap: () =>
+                c.messageInsert.text.isNotEmpty ? c.sendMessage() : null,
             child: Container(
               height: 45,
               width: 45,
