@@ -87,6 +87,7 @@ class ReceiverController extends BaseController {
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
+    state.selectedDestination = null;
     AppLogger.i("receiver ${jsonEncode(state.receiver)}");
     state.receiverName.text = state.receiver?.name?.toUpperCase() ?? '';
     state.receiverPhone.text = state.receiver?.phone ?? '';
@@ -148,10 +149,9 @@ class ReceiverController extends BaseController {
     ));
 
     var receiver = receivers.data;
-    AppLogger.i("receiver : $receiver");
-    if ((receiver?.isEmpty ?? false) &&
-        (state.formKey.currentState?.validate() == true) &&
-        state.isOnline) {
+    AppLogger.i("receiver : ${receiver?.isEmpty}");
+    if ((receiver?.isEmpty ?? false) ||
+        (state.formKey.currentState?.validate() == true) && state.isOnline) {
       state.isSaveReceiver = true;
       update();
       return true;

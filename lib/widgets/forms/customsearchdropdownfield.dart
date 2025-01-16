@@ -87,7 +87,7 @@ class _CustomSearchDropdownFieldState<T>
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
                   color: AppConst.isLightTheme(context)
-                      ? greyDarkColor1
+                      ? Colors.black
                       : whiteColor,
                 ),
             decoration: InputDecoration(
