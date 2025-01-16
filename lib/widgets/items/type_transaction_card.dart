@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class TypeTransactionCard extends StatelessWidget {
   final String value1;
   final String? value2;
-  final String description;
+  final String? description;
   final Color lineColor;
   final bool? isSuccess;
   final bool isLoading;
@@ -23,7 +23,7 @@ class TypeTransactionCard extends StatelessWidget {
     Key? key,
     required this.value1,
     this.value2,
-    required this.description,
+    this.description,
     required this.lineColor,
     this.isLoading = false,
     this.prefixVal1,
@@ -96,7 +96,7 @@ class TypeTransactionCard extends StatelessWidget {
                                     : errorLightColor3,
                           )),
                   Text(
-                    description,
+                    description ?? '',
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge

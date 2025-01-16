@@ -1,5 +1,7 @@
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/data/model/master/get_branch_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/get_region_model.dart';
 
 class BasicProfileModel {
   BasicProfileModel({
@@ -47,6 +49,8 @@ class UserModel {
   UserModel({
     String? id,
     OriginModel? origin,
+    dynamic branch,
+    dynamic region,
     String? zipCode,
     String? name,
     String? brand,
@@ -60,6 +64,8 @@ class UserModel {
   }) {
     _id = id;
     _origin = origin;
+    _branch = branch;
+    _region = region;
     _zipCode = zipCode;
     _name = name;
     _brand = brand;
@@ -76,6 +82,16 @@ class UserModel {
     _id = json['id'];
     _origin =
         json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
+    _branch = json['branch'] is String
+        ? json['branch']
+        : json['branch'] != null
+            ? BranchModel.fromJson(json['branch'])
+            : null;
+    _region = json['region'] is String
+        ? json['region']
+        : json['region'] != null
+            ? RegionModel.fromJson(json['region'])
+            : null;
     _zipCode = json['zipCode'];
     _name = json['name'];
     _brand = json['brand'];
@@ -90,6 +106,8 @@ class UserModel {
 
   String? _id;
   OriginModel? _origin;
+  dynamic _branch;
+  dynamic _region;
   String? _zipCode;
   String? _name;
   String? _brand;
@@ -104,6 +122,8 @@ class UserModel {
   UserModel copyWith({
     String? id,
     OriginModel? origin,
+    dynamic branch,
+    dynamic region,
     String? zipCode,
     String? name,
     String? brand,
@@ -118,6 +138,8 @@ class UserModel {
       UserModel(
         id: id ?? _id,
         origin: origin ?? _origin,
+        branch: branch ?? _branch,
+        region: region ?? _region,
         zipCode: zipCode ?? _zipCode,
         name: name ?? _name,
         brand: brand ?? _brand,
@@ -133,6 +155,10 @@ class UserModel {
   String? get id => _id;
 
   OriginModel? get origin => _origin;
+
+  dynamic get branch => _branch;
+
+  dynamic get region => _region;
 
   String? get zipCode => _zipCode;
 
@@ -159,6 +185,20 @@ class UserModel {
     map['id'] = _id;
     if (_origin != null) {
       map['origin'] = _origin?.toJson();
+    }
+    if (_branch != null) {
+      // if (map['branch'] is String) {
+      map['branch'] = _branch;
+      // } else {
+      //   map['branch'] = _branch?.toJson();
+      // }
+    }
+    if (_region != null) {
+      // if (map['region'] is String) {
+      map['region'] = _region;
+      // } else {
+      //   map['region'] = _region?.toJson();
+      // }
     }
     map['zipCode'] = _zipCode;
     map['name'] = _name;

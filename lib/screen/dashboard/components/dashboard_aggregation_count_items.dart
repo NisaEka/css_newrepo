@@ -5,7 +5,6 @@ import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dar
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_screen.dart';
 import 'package:css_mobile/util/ext/num_ext.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/type_transaction_card.dart';
 import 'package:flutter/material.dart';
@@ -89,10 +88,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                           '',
                                       value2:
                                           'Rp. ${aggregationPembayaran?.mpayWdrGrpPayNetAmt?.toCurrency().toString() ?? '0'}',
-                                      description: aggregationPembayaran
-                                              ?.createddtm
-                                              ?.toLongDateTimeFormat() ??
-                                          '',
+                                      // description: aggregationPembayaran?.createddtm?.toLongDateTimeFormat() ?? '',
                                       lineColor: successColor,
                                       value1fontSize:
                                           screenWidth < 400 ? 10 : 12,
@@ -133,9 +129,9 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                           aggregationMinus?.aggMinDoc ?? '-',
                                       value2:
                                           'Rp. ${aggregationMinus?.netAmt.toCurrency().toString() ?? '0'}',
-                                      description: aggregationMinus?.createddtm
-                                              .toLongDateTimeFormat() ??
-                                          '-',
+                                      // description: aggregationMinus?.createddtm.isNotEmpty ?? false
+                                      //     ? aggregationMinus?.createddtm.toLongDateTimeFormat() ?? ''
+                                      //     : '-',
                                       lineColor: errorLightColor3,
                                       value1fontSize: 12,
                                       value2fontSize: 14,

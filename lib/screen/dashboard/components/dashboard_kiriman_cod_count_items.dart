@@ -75,8 +75,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                   : Get.width * 0.18,
                               margin: EdgeInsets.zero,
                               label: 'Jumlah Transaksi COD'.tr,
-                              value: (transSummary?.totalKirimanCod?.totalCod)
-                                  .toString(),
+                              value: transSummary?.totalKirimanCod?.totalCod
+                                      ?.toString() ??
+                                  '0',
                               labelBgColor: blueJNE,
                               valueBgColor: warningColor,
                               fontSize: 5,
@@ -99,7 +100,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             onTap: () => Get.to(
                               const RiwayatKirimanScreen(),
                               arguments: {
-                                // "status": "Total Kiriman",
+                                "status": "SEMUA",
                                 "tipe": "ALL",
                               },
                             ),

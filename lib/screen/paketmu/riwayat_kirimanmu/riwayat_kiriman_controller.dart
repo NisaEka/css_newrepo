@@ -23,9 +23,14 @@ class RiwayatKirimanController extends BaseController {
 
     Future.wait([initData()]);
     if (state.statusFilter != null) {
-      state.selectedStatusKiriman = state.statusFilter;
-      state.startDate = state.startDateFilter;
-      state.endDate = state.endDateFilter;
+      if (state.statusFilter != "SEMUA") {
+        state.selectedStatusKiriman = state.statusFilter;
+      }
+      state.startDate = state.startDateFilter ??
+          DateTime.now()
+              .subtract(const Duration(days: 7))
+              .copyWith(hour: 0, minute: 0);
+      state.endDate = state.endDateFilter ?? DateTime.now();
       state.dateFilter = state.dateF ?? '2';
       if (state.tipeFilter == 'COD ONGKIR') {
         state.selectedKiriman = 3;

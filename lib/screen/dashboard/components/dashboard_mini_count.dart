@@ -93,7 +93,7 @@ class DashboardMiniCount extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Text(
-                  '$value',
+                  value ?? '',
                   style: TextStyle(
                     color: AppConst.isLightTheme(context)
                         ? whiteColor

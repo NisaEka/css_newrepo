@@ -28,8 +28,9 @@ Future<void> firebaseMessagingOpenAppHandler(RemoteMessage message) async {
 }
 
 Future<void> saveUnreadMessage(RemoteMessage data) async {
-  final DashboardController controller = Get.find();
-  final NotificationController notification = Get.find();
+  final DashboardController controller = Get.put(DashboardController());
+  final NotificationController notification = Get.put(NotificationController());
+
   List<Messages> listUnread = [];
   List<NotificationModel> listUnreadMessage = [];
   var u = GetNotificationModel.fromJson(
@@ -66,7 +67,7 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       isRead: false,
     ),
   );
-
+  AppLogger.i("message masuk : ${data.notification?.title}");
   try {
     await StorageCore().saveData(
       StorageCore.unreadMessage,
@@ -164,6 +165,8 @@ class FirebaseApi {
       if (message.notification != null) {
         saveUnreadMessage(message);
         AppLogger.i("Received message at ${message.sentTime}");
+        AppLogger.i(
+            "Received message android ${message.notification?.android}");
 
         AndroidNotification? android = message.notification?.android;
         if (android != null) {

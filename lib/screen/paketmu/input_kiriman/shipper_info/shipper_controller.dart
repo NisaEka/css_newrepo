@@ -99,6 +99,11 @@ class ShipperController extends BaseController {
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     state.tempData = DataTransactionModel.fromJson(
         await storage.readData(StorageCore.transactionTemp));
+    var ccrf = await storage.readData(StorageCore.ccrfProfile);
+    if (ccrf == '{}') {
+      state.userCcrf = CcrfProfileModel.fromJson(ccrf);
+    }
+
     update();
     try {
       await master
@@ -108,10 +113,11 @@ class ShipperController extends BaseController {
           .then((value) => state.accountList.addAll(value.data ?? []));
       update();
 
-      var user = CcrfProfileModel.fromJson(
-          await storage.readData(StorageCore.ccrfProfile));
+      // var user = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
       var resp = await profil.getShipper();
-      ShipperModel shipper = resp.data?.first ?? ShipperModel();
+      ShipperModel shipper = resp.data?.isNotEmpty ?? false
+          ? resp.data?.first ?? ShipperModel()
+          : ShipperModel();
       AppLogger.i("shipper region : ${shipper.origin?.toJson()}");
 
       await profil.getCcrfProfil().then((ccrf) async {
@@ -119,15 +125,15 @@ class ShipperController extends BaseController {
           state.userCcrf = ccrf.data;
           state.shipper = ShipperModel(
             name: ccrf.data?.generalInfo?.brand,
-            region: shipper.origin?.branch?.regional,
+            region: shipper.origin?.branch?.region,
             origin: shipper.origin,
             zipCode: ccrf.data?.generalInfo?.zipCode,
             address: ccrf.data?.generalInfo?.address,
             phone: ccrf.data?.generalInfo?.phone,
-            city: user.generalInfo?.city,
-            country: user.generalInfo?.country,
+            city: ccrf.data?.generalInfo?.city,
+            country: ccrf.data?.generalInfo?.country,
             dropship: state.isDropshipper,
-            contact: user.generalInfo?.name,
+            contact: ccrf.data?.generalInfo?.name,
             address1: ccrf.data?.generalInfo?.address?.substring(
                 0,
                 (ccrf.data?.generalInfo?.address?.length ?? 0) > 30
@@ -160,7 +166,7 @@ class ShipperController extends BaseController {
               address: basic.data?.user?.address,
               zipCode: basic.data?.user?.zipCode,
               origin: basic.data?.user?.origin,
-              region: basic.data?.user?.origin?.branch?.regional,
+              region: basic.data?.user?.origin?.branch?.region,
               contact: basic.data?.user?.name,
               city: basic.data?.user?.origin?.originName,
               country: 'INDONESIA',
@@ -194,9 +200,11 @@ class ShipperController extends BaseController {
         }
       });
       update();
-    } catch (e) {
-      AppLogger.e('error getAccounts $e');
+    } catch (e, i) {
+      AppLogger.e('error get shipper data $e');
+      AppLogger.e('error get shipper data $i');
       AppLogger.w("shipper get from local");
+      AppLogger.i("shipper basic local : ${state.userBasic?.toJson()}");
 
       state.accountList.clear();
       var accounts = BaseResponse<List<Account>>.fromJson(
@@ -213,14 +221,20 @@ class ShipperController extends BaseController {
       state.accountList.addAll(accounts.data ?? []);
       state.shipperName.text = state.userBasic?.brand ?? '';
       state.shipperPhone.text = state.shipper?.phone ?? '';
-      state.shipperOrigin.text = state.shipper?.origin?.originName ?? '';
+      state.shipperOrigin.text = state.userBasic?.origin?.originName ?? '';
       state.shipperZipCode.text = state.shipper?.zipCode ?? '';
       state.shipperAddress.text = state.shipper?.address ?? '';
       state.selectedOrigin = OriginModel(
-          originCode: state.shipper?.origin?.originCode,
-          branchCode: state.shipper?.origin?.branchCode,
-          originName: state.shipper?.origin?.originName,
-          branch: state.shipper?.origin?.branch);
+        originCode: state.userBasic?.origin?.originCode,
+        branchCode: state.shipper?.origin?.branchCode,
+        originName: state.shipper?.origin?.originName,
+        branch: state.shipper?.origin?.branch?.branchCode?.isNotEmpty ?? false
+            ? state.shipper?.origin?.branch
+            : state.userBasic?.origin?.branch?.branchCode?.isNotEmpty ?? false
+                ? state.userBasic?.origin?.branch
+                : state.userBasic?.branch
+                    ?.copyWith(region: state.userBasic?.region),
+      );
     }
 
     state.isLoading = false;
@@ -334,7 +348,7 @@ class ShipperController extends BaseController {
       city: state.shipperOrigin.text.toUpperCase(),
       zipCode: state.shipperZipCode.text,
       region: state.isDropshipper
-          ? state.selectedOrigin?.branch?.regional
+          ? state.selectedOrigin?.branch?.region
           : (state.shipper?.region ?? state.data?.shipper?.region),
       //province
       country: "ID",
@@ -393,7 +407,7 @@ class ShipperController extends BaseController {
       city: state.shipperOrigin.text.toUpperCase(),
       zipCode: state.shipperZipCode.text,
       region: state.isDropshipper
-          ? state.selectedOrigin?.branch?.regional
+          ? state.selectedOrigin?.branch?.region
           : (state.shipper?.region ?? state.data?.shipper?.region),
       //province
       country: "ID",
