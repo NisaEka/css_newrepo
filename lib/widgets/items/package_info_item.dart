@@ -108,9 +108,10 @@ class PackageInfoItem extends StatelessWidget {
           const Divider(color: greyLightColor3),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomLabelText(
+                width: Get.width / 3,
                 title: 'Dari'.tr,
                 value: data.originDesc ?? '',
                 fontColor:
