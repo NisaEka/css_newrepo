@@ -43,9 +43,9 @@ class DataUmumScreen extends StatelessWidget {
                 ),
                 DataUmumListItem(
                   title: c.ccrfProfil?.generalInfo?.email ?? '-',
-                  subtitle: c.ccrfProfil?.generalInfo?.email ?? '-',
+                  // subtitle: c.ccrfProfil?.generalInfo?.email ?? '-',
                   icon: Icons.alternate_email_rounded,
-                  tooltip: '${'Nama Brand / Bisnis'.tr}\n${'Alamat email'.tr}',
+                  tooltip: 'Alamat email'.tr,
                 ),
                 DataUmumListItem(
                   title: c.ccrfProfil?.generalInfo?.name ?? '-',
