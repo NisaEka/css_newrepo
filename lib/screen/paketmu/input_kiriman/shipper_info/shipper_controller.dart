@@ -166,7 +166,11 @@ class ShipperController extends BaseController {
               address: basic.data?.user?.address,
               zipCode: basic.data?.user?.zipCode,
               origin: basic.data?.user?.origin,
-              region: basic.data?.user?.origin?.branch?.region,
+              region: basic.data?.user?.region?.name != null
+                  ? basic.data?.user?.region
+                  : basic.data?.user?.branch?.region?.name != null
+                      ? basic.data?.user?.branch?.region
+                      : basic.data?.user?.origin?.branch?.region,
               contact: basic.data?.user?.name,
               city: basic.data?.user?.origin?.originName,
               country: 'INDONESIA',
@@ -195,7 +199,9 @@ class ShipperController extends BaseController {
                 basic.data?.user?.origin?.originName ?? '';
             state.shipperZipCode.text = basic.data?.user?.zipCode ?? '';
             state.shipperAddress.text = basic.data?.user?.address ?? '';
-            state.selectedOrigin = basic.data?.user?.origin;
+            state.selectedOrigin = basic.data?.user?.origin?.copyWith(
+              branch: basic.data?.user?.branch,
+            );
           });
         }
       });
