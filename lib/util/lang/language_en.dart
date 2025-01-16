@@ -611,6 +611,8 @@ class LanguageEN {
       "Harga COD tidak boleh lebih dari": "COD Price must not be greater than",
       "Nomor telepon tidak boleh lebih dari 13 karakter":
           "The phone number cannot be more than 13 characters",
+      "Nomor telepon tidak boleh kurang dari 9 karakter":
+          "The phone number cannot be less than 9 characters",
       "Claim Gagal YES": "Claim Failed YES",
       "Claim Kiriman Hilang": "Claim Shipment is Missing",
       "Claim Kiriman Rusak": "Claim Shipment is Damaged",

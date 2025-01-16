@@ -135,7 +135,7 @@ class SignupForm extends StatelessWidget {
                               )
                             : const SizedBox(),
                         CustomFilledButton(
-                          color: c.isValidate()
+                          color: c.isValidate() || c.state.isValidate
                               ? primaryColor(context)
                               : greyColor,
                           title: 'Daftar'.tr,
