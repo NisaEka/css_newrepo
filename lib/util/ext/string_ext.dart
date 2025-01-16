@@ -22,7 +22,7 @@ extension StringExt on String {
       {String targetFormat = "dd-MM-yyyy",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
@@ -35,7 +35,20 @@ extension StringExt on String {
       {String targetFormat = "dd MMMM yyyy HH:mmzzz",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
+      DateFormat dateFormat = DateFormat(targetFormat);
+      return dateFormat.format(dateTimeOrigin);
+    } catch (e) {
+      AppLogger.e("ERROR toLongDateFormat $e");
+      return "-";
+    }
+  }
+
+  String toLongDateTimeLabelFormat(
+      {String targetFormat = "dd MMMM yyyy HH:mmzzz",
+      String originFormat = "dd/MM/yyyy"}) {
+    try {
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e, i) {
@@ -49,7 +62,7 @@ extension StringExt on String {
       {String targetFormat = "dd MMM yyyy HH:mmzzz",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
@@ -61,7 +74,7 @@ extension StringExt on String {
   String toTimeFormat(
       {String targetFormat = "HH:mm", String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
@@ -74,7 +87,7 @@ extension StringExt on String {
       {String targetFormat = "dd MMMM yyyy",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
@@ -87,7 +100,7 @@ extension StringExt on String {
       {String targetFormat = "dd MMM yyyy",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
@@ -100,7 +113,7 @@ extension StringExt on String {
       {String targetFormat = "dd-MM-yyyy HH:mmzzz",
       String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTimeOrigin = DateTime.parse(this);
+      DateTime dateTimeOrigin = DateTime.parse(this).toLocal();
       DateFormat dateFormat = DateFormat(targetFormat);
       return dateFormat.format(dateTimeOrigin);
     } catch (e) {
@@ -111,7 +124,7 @@ extension StringExt on String {
 
   DateTime? toDate({String originFormat = "dd/MM/yyyy"}) {
     try {
-      DateTime dateTime = DateFormat(originFormat).parse(this);
+      DateTime dateTime = DateFormat(originFormat).parse(this).toLocal();
 
       return dateTime;
     } on FormatException catch (e) {

@@ -245,7 +245,8 @@ class StickerA6 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: screenWidth < 400 ? Get.width * 0.6 : Get.width * 55,
+                    width:
+                        screenWidth < 400 ? Get.width * 0.6 : Get.width * 0.55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
