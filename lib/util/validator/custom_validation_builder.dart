@@ -22,7 +22,9 @@ extension CustomValidationBuilder on ValidationBuilder {
   phoneNumber() => add((value) {
         if (value?.isEmpty ?? false) {
           return 'Masukan tidak boleh kosong'.tr;
-        } else if (value!.length > 13) {
+        } else if (value!.length < 9) {
+          return "Nomor telepon tidak boleh kurang dari 9 karakter".tr;
+        } else if (value.length > 13) {
           return "Nomor telepon tidak boleh lebih dari 13 karakter".tr;
         }
         return null;

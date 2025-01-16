@@ -41,12 +41,16 @@ class SignUpController extends BaseController {
     ];
     state.isLoadAgent = true;
     update();
-    await master
-        .getAgents(state.selectedOrigin?.branchCode ?? '')
-        .then((value) {
-      state.agentList.addAll(value.data ?? []);
-      update();
-    });
+    try {
+      await master
+          .getAgents(state.selectedOrigin?.branchCode ?? '')
+          .then((value) {
+        state.agentList.addAll(value.data ?? []);
+        update();
+      });
+    } catch (e) {
+      AppLogger.e("error get agent : $e");
+    }
 
     state.isLoadAgent = false;
     update();
@@ -84,7 +88,9 @@ class SignUpController extends BaseController {
       } else if (value.code == 409 || value.message == "Conflict") {
         AppSnackBar.error('email atau nomor telepon sudah terdaftar'.tr);
       } else {
-        AppSnackBar.error(value.message.toString().tr);
+        AppSnackBar.error(value.error != null
+            ? value.error?.first
+            : value.message.toString().tr);
       }
     }).catchError((error) {
       AppLogger.e('error signup $error');
