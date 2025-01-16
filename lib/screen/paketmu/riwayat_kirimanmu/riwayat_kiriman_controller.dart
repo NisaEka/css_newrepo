@@ -28,7 +28,7 @@ class RiwayatKirimanController extends BaseController {
       }
       state.startDate = state.startDateFilter ??
           DateTime.now()
-              .subtract(const Duration(days: 7))
+              .subtract(const Duration(days: 6))
               .copyWith(hour: 0, minute: 0);
       state.endDate = state.endDateFilter ?? DateTime.now();
       state.dateFilter = state.dateF ?? '2';
@@ -49,10 +49,7 @@ class RiwayatKirimanController extends BaseController {
     }
     state.transDate = [
       {
-        "createdDateSearch": [
-          state.startDate.toString(),
-          state.endDate.toString()
-        ]
+        "createdDate": [state.startDate, state.endDate]
       }
     ];
     state.pagingController.addPageRequestListener((pageKey) {
@@ -234,7 +231,7 @@ class RiwayatKirimanController extends BaseController {
     if (state.startDate != null && state.endDate != null) {
       state.transDate = [
         {
-          "createdDateSearch": ["${state.startDate}", "${state.endDate}"]
+          "createdDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
     }

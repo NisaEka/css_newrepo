@@ -87,7 +87,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
           : null,
       // where: '[$registID $type $petugasEntry]',
       sort: [
-        {"createdDateSearch": "desc"}
+        {"createdDate": "desc"}
       ],
     );
     AppLogger.d("transaction data : ${params.toJson()}");
@@ -149,30 +149,20 @@ class TransactionRepositoryImpl extends TransactionRepository {
     String officer,
   ) async {
     AppLogger.w('transDate : $transDate');
-    // UserModel user = UserModel.fromJson(
-    //   await StorageCore().readData(StorageCore.basicProfile),
-    // );
+
     QueryModel params = QueryModel(
       table: true,
       search: keyword,
       between: transDate,
       type: transType.isNotEmpty ? transType : null,
       status: transStatus.isNotEmpty ? transStatus : null,
-      // where: '[$registID $type $petugasEntry]',
-      // where: officer.isNotEmpty && user.userType == 'PEMILIK'
-      //     ? jsonEncode([
-      //         {"petugasEntry": officer}
-      //       ])
-      //     : jsonEncode([
-      //         {"petugasEntry": user.name}
-      //       ]),
       where: officer.isNotEmpty
           ? [
               {"petugasEntry": officer}
             ]
           : null,
       sort: [
-        {"createdDateSearch": "desc"}
+        {"createdDate": "desc"}
       ],
     );
 

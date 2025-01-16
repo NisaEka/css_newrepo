@@ -100,7 +100,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             onTap: () => Get.to(
                               const RiwayatKirimanScreen(),
                               arguments: {
-                                "status": "SEMUA",
+                                "status": "Sudah JNE",
                                 "tipe": "ALL",
                               },
                             ),
