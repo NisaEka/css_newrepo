@@ -24,10 +24,10 @@ class CekOngkirState {
   String weightExpress = '';
   String weightJtr = '';
 
-  List<City> cityList = [];
+  List<CityModel> cityList = [];
   List<OriginExternal> originList = [];
   List<DestinationExternal> destinationList = [];
-  List<Ongkir> ongkirList = [];
+  List<OngkirModel> ongkirList = [];
 
   DestinationExternal? selectedDestination;
   OriginExternal? selectedOrigin;

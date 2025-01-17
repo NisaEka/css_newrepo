@@ -28,13 +28,15 @@ class EclaimController extends BaseController {
         search: state.searchField.text,
         between: state.transDate,
       ))
-          .then((value) {
-        state.countModel = value.data;
-        state.total = value.data?.totalCount?.toInt() ?? 0;
-        state.diterima = value.data?.acceptedCount?.toInt() ?? 0;
-        state.ditolak = value.data?.rejectedCount?.toInt() ?? 0;
-        update();
-      });
+          .then(
+        (value) {
+          state.countModel = value.data;
+          state.total = value.data?.totalCount?.toInt() ?? 0;
+          state.diterima = value.data?.acceptedCount?.toInt() ?? 0;
+          state.ditolak = value.data?.rejectedCount?.toInt() ?? 0;
+          update();
+        },
+      );
     } catch (e, i) {
       AppLogger.e('error transactionCount $e, $i');
     }
