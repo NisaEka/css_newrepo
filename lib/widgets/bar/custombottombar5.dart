@@ -72,7 +72,6 @@ class BottomBar5 extends StatelessWidget {
                     allow?.pantauPaketmu == "Y" || (!controller.state.isLogin)
                         ? BottomMenuItem2(
                             icon: MenuIcon(
-                              // icon: IconsConstant.pantau,
                               icon: ImageConstant.pantauPaketmuIcon,
                               size: 30,
                               showContainer: false,

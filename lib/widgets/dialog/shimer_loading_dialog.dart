@@ -107,9 +107,6 @@ const _shimmerGradient = LinearGradient(
     greyLightColor3,
     greyLightColor2,
     greyLightColor1,
-    // Color(0xFFAFAFB1),
-    // Color(0xFFF4F4F4),
-    // Color(0xFFEBEBF4),
   ],
   stops: [
     0.1,

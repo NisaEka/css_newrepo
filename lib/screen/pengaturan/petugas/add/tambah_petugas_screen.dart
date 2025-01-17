@@ -82,7 +82,7 @@ class TambahPetugasScreen extends StatelessWidget {
                 ),
                 c.isEdit
                     ? CustomFilledButton(
-                        color: warningColor,
+                        color: primaryColor(context),
                         title: "Ubah Kata Sandi".tr,
                         onPressed: () {
                           c.isEditPassword = c.isEditPassword ? false : true;
@@ -307,15 +307,15 @@ class TambahPetugasScreen extends StatelessWidget {
                                                     .textTheme
                                                     .bodyLarge!
                                                     .copyWith(
-                                                        color: formTextColor(
-                                                            context)),
+                                                        color:
+                                                            textColor(context)),
                                               ),
                                               itemsTextStyle: Theme.of(context)
                                                   .textTheme
                                                   .bodyLarge!
                                                   .copyWith(
-                                                      color: formTextColor(
-                                                          context)),
+                                                      color:
+                                                          textColor(context)),
                                               dialogWidth: Get.width,
                                               initialValue:
                                                   c.selectedAccountList,
@@ -382,8 +382,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                                     .textTheme
                                                     .bodyLarge!
                                                     .copyWith(
-                                                        color: formTextColor(
-                                                            context)),
+                                                        color:
+                                                            textColor(context)),
                                               ),
                                               initialValue:
                                                   c.selectedBranchList,
@@ -450,9 +450,8 @@ class TambahPetugasScreen extends StatelessWidget {
                                                             .textTheme
                                                             .bodyLarge!
                                                             .copyWith(
-                                                                color:
-                                                                    formTextColor(
-                                                                        context)),
+                                                                color: textColor(
+                                                                    context)),
                                                       ),
                                                 initialValue: c.selectedOrigin,
                                                 items: c.originList

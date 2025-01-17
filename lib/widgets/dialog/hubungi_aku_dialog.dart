@@ -50,10 +50,8 @@ class HubungiAkuDialog extends StatelessWidget {
           allow.hubungiLaporan == "Y" || allow.laporan == "Y"
               ? ListTile(
                   leading: const MenuIcon(
-                    // icon: IconsConstant.ticket,
                     icon: ImageConstant.hubungiAkuIcon,
                     padding: EdgeInsets.all(1),
-                    // isTransparent: true,
                     isActive: false,
                   ),
                   title: Text(

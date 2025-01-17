@@ -58,7 +58,6 @@ class CustomDropDownFormField<T> extends StatelessWidget {
             value.isEmpty ||
             value == hintText ||
             value == label) {
-          // return validator!(value as T);
           return "This field is required";
         }
         return null;
