@@ -98,8 +98,10 @@ class ForgotPasswordOTPController extends BaseController {
     update();
     try {
       await auth
-          .postPasswordPinConfirm(
-              InputPinconfirmModel(email: email, pin: otpPin.text))
+          .postPasswordPinConfirm(InputPinconfirmModel(
+        email: email,
+        pin: otpPin.text,
+      ))
           .then((value) {
         if (value.code == 201) {
           Get.to(

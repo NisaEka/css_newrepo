@@ -1,39 +1,3 @@
-class PostJlcPointReedemModel {
-  PostJlcPointReedemModel({
-    List<JlcPointReedem>? data,
-  }) {
-    _data = data;
-  }
-
-  PostJlcPointReedemModel.fromJson(dynamic json) {
-    if (json['data'] != null) {
-      _data = [];
-      json['data'].forEach((v) {
-        _data?.add(JlcPointReedem.fromJson(v));
-      });
-    }
-  }
-
-  List<JlcPointReedem>? _data;
-
-  PostJlcPointReedemModel copyWith({
-    List<JlcPointReedem>? data,
-  }) =>
-      PostJlcPointReedemModel(
-        data: data ?? _data,
-      );
-
-  List<JlcPointReedem>? get data => _data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 class JlcPointReedem {
   JlcPointReedem({
     String? noPenukaran,

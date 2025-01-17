@@ -23,15 +23,15 @@ abstract class AuthRepository {
 
   Future<BaseResponse> postPasswordChage(InputNewPasswordModel data);
 
-  Future<BaseResponse> postFcmToken(DeviceModel data);
+  Future<BaseResponse> postFcmToken(DeviceInfoModel data);
 
-  Future<BaseResponse> postFcmTokenNonAuth(DeviceModel data);
+  Future<BaseResponse> postFcmTokenNonAuth(DeviceInfoModel data);
 
-  Future<BaseResponse<List<DeviceModel>>> getFcmToken();
+  Future<BaseResponse<List<DeviceInfoModel>>> getFcmToken();
 
   Future<BaseResponse> logout(String refreshToken);
 
-  Future<BaseResponse> updateDeviceInfo(DeviceModel data);
+  Future<BaseResponse> updateDeviceInfo(DeviceInfoModel data);
 
   Future<BaseResponse<PostLoginModel>> updateToken();
 }

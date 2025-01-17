@@ -1,38 +1,38 @@
 class BankModel {
   BankModel({
-    String? bankId,
-    String? bankName,
+    String? id,
+    String? name,
   }) {
-    _bankId = bankId;
-    _bankName = bankName;
+    _id = id;
+    _name = name;
   }
 
   BankModel.fromJson(dynamic json) {
-    _bankId = json['bankId'];
-    _bankName = json['bankName'];
+    _id = json['bankId'];
+    _name = json['bankName'];
   }
 
-  String? _bankId;
-  String? _bankName;
+  String? _id;
+  String? _name;
 
   BankModel copyWith({
-    String? bankId,
-    String? bankName,
+    String? id,
+    String? name,
   }) =>
       BankModel(
-        bankId: bankId ?? _bankId,
-        bankName: bankName ?? _bankName,
+        id: id ?? _id,
+        name: name ?? _name,
       );
 
-  String? get bankId => _bankId;
+  String? get id => _id;
 
-  String? get bankName => _bankName;
+  String? get name => _name;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
 
-    map['bankId'] = _bankId;
-    map['bankName'] = _bankName;
+    map['bankId'] = _id;
+    map['bankName'] = _name;
 
     return map;
   }

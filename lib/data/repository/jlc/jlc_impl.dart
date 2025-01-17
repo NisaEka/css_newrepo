@@ -18,35 +18,89 @@ class JLCRepositoryImpl extends JLCRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<PostTotalPointModel> postTotalPoint() async {
+  Future<BaseResponse<List<JLCTotalPointModel>>> postTotalPoint() async {
     try {
       Response response = await network.base.get('/accounts/jlc/total');
-      return PostTotalPointModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+          response.data,
+          (json) => json is List<dynamic>
+              ? json
+                  .map<JLCTotalPointModel>(
+                    (i) =>
+                        JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+              : List.empty());
     } on DioException catch (e) {
       AppLogger.e('error: ${e.message}');
-      return PostTotalPointModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+          e.response?.data,
+          (json) => json is List<dynamic>
+              ? json
+                  .map<JLCTotalPointModel>(
+                    (i) =>
+                        JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
+                  )
+                  .toList()
+              : List.empty());
     }
   }
 
   @override
-  Future<PostJlcTransactionsModel> postTransPoint() async {
+  Future<BaseResponse<List<JLCTransactions>>> postTransPoint() async {
     try {
       Response response = await network.base.get('/accounts/jlc/trans');
-      return PostJlcTransactionsModel.fromJson(response.data);
+      return BaseResponse<List<JLCTransactions>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<JLCTransactions>(
+                  (i) => JLCTransactions.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
       AppLogger.e('error: ${e.message}');
-      return PostJlcTransactionsModel.fromJson(e.response?.data);
+      return BaseResponse<List<JLCTransactions>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<JLCTransactions>(
+                  (i) => JLCTransactions.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 
   @override
-  Future<PostJlcPointReedemModel> postTukarPoint() async {
+  Future<BaseResponse<List<JlcPointReedem>>> postTukarPoint() async {
     try {
       Response response = await network.base.get('/accounts/jlc/tukar');
-      return PostJlcPointReedemModel.fromJson(response.data);
+      return BaseResponse.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<JlcPointReedem>(
+                  (i) => JlcPointReedem.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     } on DioException catch (e) {
       AppLogger.e('error: ${e.message}');
-      return PostJlcPointReedemModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<JlcPointReedem>(
+                  (i) => JlcPointReedem.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
     }
   }
 

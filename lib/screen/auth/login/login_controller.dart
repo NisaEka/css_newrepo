@@ -114,14 +114,14 @@ class LoginController extends BaseController {
     update();
   }
 
-  Future<DeviceModel?> getDeviceinfo(String token) async {
+  Future<DeviceInfoModel?> getDeviceinfo(String token) async {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       var iosDeviceInfo = await deviceInfo.iosInfo;
       var systemName = iosDeviceInfo.systemName;
       var version = iosDeviceInfo.systemVersion;
 
-      return DeviceModel(
+      return DeviceInfoModel(
         fcmToken: token,
         deviceId: iosDeviceInfo.identifierForVendor,
         versionOs: '$systemName $version',
@@ -129,7 +129,7 @@ class LoginController extends BaseController {
     } else if (Platform.isAndroid) {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       var release = androidDeviceInfo.version.release;
-      return DeviceModel(
+      return DeviceInfoModel(
         fcmToken: token,
         deviceId: androidDeviceInfo.id,
         versionOs: 'Android $release',
