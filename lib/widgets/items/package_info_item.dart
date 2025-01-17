@@ -25,7 +25,6 @@ class PackageInfoItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        // color: warningDarkColor.withOpacity(0.7),
         border: Border.all(
           color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
           width: 2.0,

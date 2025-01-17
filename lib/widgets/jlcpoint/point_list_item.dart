@@ -60,7 +60,10 @@ class PointListItem extends StatelessWidget {
                     Container(
                       height: isLoading ? 20 : null,
                       width: isLoading ? Get.width / 4 : null,
-                      color: isLoading ? greyColor : null,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: isLoading ? greyColor : null,
+                      ),
                       child: Text(
                           style: Theme.of(context).textTheme.titleSmall,
                           dateTime ?? ''),
@@ -98,7 +101,10 @@ class PointListItem extends StatelessWidget {
                         Container(
                           height: isLoading ? 20 : null,
                           width: isLoading ? Get.width / 4 : null,
-                          color: isLoading ? greyColor : null,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: isLoading ? greyColor : null,
+                          ),
                           child: Row(
                             children: [
                               Text(
@@ -121,7 +127,10 @@ class PointListItem extends StatelessWidget {
                         Container(
                           height: isLoading ? 20 : null,
                           width: isLoading ? Get.width / 4 : null,
-                          color: isLoading ? greyColor : null,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            color: isLoading ? greyColor : null,
+                          ),
                           child: Text(
                             amount?.toInt().toCurrency() ?? '',
                             style: listTitleTextStyle.copyWith(
@@ -147,7 +156,10 @@ class PointListItem extends StatelessWidget {
                             ? Container(
                                 height: isLoading ? 20 : null,
                                 width: isLoading ? Get.width / 4 : null,
-                                color: isLoading ? greyColor : null,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: isLoading ? greyColor : null,
+                                ),
                                 margin: isLoading
                                     ? const EdgeInsets.only(top: 2)
                                     : null,

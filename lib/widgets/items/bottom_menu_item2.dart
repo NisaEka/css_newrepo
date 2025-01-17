@@ -31,11 +31,7 @@ class BottomMenuItem2 extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Icon(
             icon,
-            // size: 30,
-            // color: isSelected ? color : whiteColor,
-            // ),
             (title?.isNotEmpty ?? false) && isSelected
                 ? Container(
                     padding: const EdgeInsets.symmetric(
