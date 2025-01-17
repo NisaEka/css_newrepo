@@ -23,7 +23,6 @@ class StickerA6 extends StatelessWidget {
 
   @override
   Widget build(context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     return DefaultTextStyle(
       style: const TextStyle(color: greyDarkColor1),
       child: Container(
@@ -245,8 +244,7 @@ class StickerA6 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width:
-                        screenWidth < 400 ? Get.width * 0.6 : Get.width * 0.55,
+                    width: Get.width * 0.55,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
