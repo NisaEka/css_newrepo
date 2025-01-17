@@ -1,11 +1,9 @@
-import 'package:css_mobile/data/model/aggregasi/aggregation_chart_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_doc_model.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_detail_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_total_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/transaction_summary_model.dart';
@@ -93,18 +91,27 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<GetAggregationTotalModel> getAggregationTotal(QueryModel param) async {
+  Future<BaseResponse<AggTotal>> getAggregationTotal(QueryModel param) async {
     AppLogger.i("param toJson total ${param.toJson()}");
     try {
       Response response = await network.base.get(
         "/aggregations/total",
         queryParameters: param.toJson(),
       );
-      GetAggregationTotalModel resp =
-          GetAggregationTotalModel.fromJson(response.data);
+      BaseResponse<AggTotal> resp = BaseResponse.fromJson(
+        response.data,
+        (json) {
+          return AggTotal.fromJson(json as Map<String, dynamic>);
+        },
+      );
       return resp;
     } on DioException catch (e) {
-      return GetAggregationTotalModel.fromJson(e.response?.data);
+      return BaseResponse.fromJson(
+        e.response?.data,
+        (json) {
+          return AggTotal.fromJson(json as Map<String, dynamic>);
+        },
+      );
     }
   }
 
@@ -153,7 +160,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
       final test = ResponseModel<TransactionSummaryModel>.fromJson(
         response.data,
         (json) {
-          // Deserialize the PropertySummary
           return TransactionSummaryModel.fromJson(json as Map<String, dynamic>);
         },
       );
@@ -164,53 +170,6 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
         e.response?.data,
         (json) =>
             TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
-      );
-    }
-  }
-
-  @override
-  Future<ResponseModel<List<AggregationChartModel>>> getAggChart() async {
-    var now = DateTime.now().toLocal();
-    var startDate = DateTime(now.year, now.month, now.day)
-        .subtract(const Duration(days: 6))
-        .toIso8601String();
-    var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
-        .toIso8601String();
-
-    try {
-      Response response = await network.base.get(
-        "/aggregations/chart",
-        queryParameters: QueryModel(
-          between: [
-            {
-              "mpayWdrGrpPayDatePaid": [startDate, endDate]
-            }
-          ],
-        ).toJson(),
-      );
-
-      return ResponseModel<List<AggregationChartModel>>.fromJson(
-        response.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<AggregationChartModel>(
-                  (i) =>
-                      AggregationChartModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
-      );
-    } on DioException catch (e) {
-      return ResponseModel<List<AggregationChartModel>>.fromJson(
-        e.response?.data,
-        (json) => json is List<dynamic>
-            ? json
-                .map<AggregationChartModel>(
-                  (i) =>
-                      AggregationChartModel.fromJson(i as Map<String, dynamic>),
-                )
-                .toList()
-            : List.empty(),
       );
     }
   }

@@ -108,7 +108,7 @@ class NoAkunScreen extends StatelessWidget {
     return c.isLoading
         ? ListView.builder(
             itemBuilder: (context, index) => AccountCard(
-              account: Account(),
+              account: TransAccountModel(),
               isLoading: c.isLoading,
             ),
             itemCount: 5,

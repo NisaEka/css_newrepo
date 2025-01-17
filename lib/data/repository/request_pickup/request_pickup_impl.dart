@@ -156,24 +156,24 @@ class RequestPickupImpl extends RequestPickupRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getRequestPickupDestinations(
+  Future<BaseResponse<List<DestinationModel>>> getRequestPickupDestinations(
       QueryModel param) async {
     try {
       var response = await network.base.get('/transaction/pickups/destination',
           queryParameters: param.toJson());
       AppLogger.d("getRequestPickupDestinations response: ${response.data}");
-      return BaseResponse<List<Destination>>.fromJson(
+      return BaseResponse<List<DestinationModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Destination>(
-                  (i) => Destination.fromJson(i as Map<String, dynamic>),
+                .map<DestinationModel>(
+                  (i) => DestinationModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
-      return BaseResponse<List<Destination>>.fromJson(
+      return BaseResponse<List<DestinationModel>>.fromJson(
           e.response?.data, (json) => List.empty());
     }
   }

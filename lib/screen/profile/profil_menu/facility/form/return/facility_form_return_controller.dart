@@ -13,7 +13,7 @@ import 'package:image_picker/image_picker.dart';
 
 class FacilityFormReturnController extends BaseController {
   FacilityCreateModel facilityCreateArgs = Get.arguments['data'];
-  Destination shipperDestination = Get.arguments['destination'];
+  DestinationModel shipperDestination = Get.arguments['destination'];
 
   List<String> steps = [
     'Data Pemohon'.tr,
@@ -39,8 +39,8 @@ class FacilityFormReturnController extends BaseController {
   bool isLoading = false;
   bool isLoadDestination = false;
 
-  List<Destination> destinationList = [];
-  Destination? selectedDestination;
+  List<DestinationModel> destinationList = [];
+  DestinationModel? selectedDestination;
 
   bool _pickImageFailed = false;
 
@@ -75,7 +75,7 @@ class FacilityFormReturnController extends BaseController {
     super.onInit();
   }
 
-  Future<List<Destination>> getDestinationList(String keyword) async {
+  Future<List<DestinationModel>> getDestinationList(String keyword) async {
     isLoading = true;
     destinationList.clear();
 

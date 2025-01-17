@@ -60,7 +60,7 @@ class PantauPaketmuDetailController extends BaseController {
         _pantauPaketmu = result.data!;
         _showContent = true;
         transactionData = DataTransactionModel(
-          destination: Destination(
+          destination: DestinationModel(
             destinationCode: _pantauPaketmu.destination ??
                 _pantauPaketmu.transaction?.destinationCode,
             cityZone: _pantauPaketmu.destination?.split('-').last,
@@ -71,16 +71,16 @@ class PantauPaketmuDetailController extends BaseController {
             provinceName: _pantauPaketmu.transaction?.receiverRegion,
             subdistrictName: _pantauPaketmu.transaction?.receiverSubdistrict,
           ),
-          account: Account(
+          account: TransAccountModel(
             accountNumber: _pantauPaketmu.custNo,
             accountName: _pantauPaketmu.custName,
           ),
-          dataAccount: Account(
+          dataAccount: TransAccountModel(
             accountNumber: _pantauPaketmu.custNo,
             accountService: _pantauPaketmu.transaction?.apiType,
             accountName: _pantauPaketmu.custName,
           ),
-          dataDestination: Destination(
+          dataDestination: DestinationModel(
             destinationCode: _pantauPaketmu.transaction?.destinationCode,
             zipCode: _pantauPaketmu.cnoteReceiverZip,
             cityName: _pantauPaketmu.transaction?.receiverCity,

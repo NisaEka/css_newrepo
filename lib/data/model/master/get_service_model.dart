@@ -1,5 +1,5 @@
-class GetServiceModel {
-  GetServiceModel({
+class TransServiceModel {
+  TransServiceModel({
     String? originName,
     String? destinationName,
     String? originCode,
@@ -23,7 +23,7 @@ class GetServiceModel {
     _resultJtr = resultJtr;
   }
 
-  GetServiceModel.fromJson(dynamic json) {
+  TransServiceModel.fromJson(dynamic json) {
     _originName = json['originName'];
     _destinationName = json['destinationName'];
     _originCode = json['originCode'];
@@ -57,7 +57,7 @@ class GetServiceModel {
   List<ServiceModel>? _resultExpress;
   List<ServiceModel>? _resultJtr;
 
-  GetServiceModel copyWith({
+  TransServiceModel copyWith({
     String? originName,
     String? destinationName,
     String? originCode,
@@ -69,7 +69,7 @@ class GetServiceModel {
     List<ServiceModel>? resultExpress,
     List<ServiceModel>? resultJtr,
   }) =>
-      GetServiceModel(
+      TransServiceModel(
         originName: originName ?? _originName,
         destinationName: destinationName ?? _destinationName,
         originCode: originCode ?? _originCode,

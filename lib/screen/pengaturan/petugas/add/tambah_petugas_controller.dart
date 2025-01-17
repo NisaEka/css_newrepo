@@ -78,8 +78,8 @@ class TambahPetugasController extends BaseController {
   bool summaryOrigin = false;
   bool summaryDestination = false;
 
-  List<Account> accountList = [];
-  List<Account> selectedAccountList = [];
+  List<TransAccountModel> accountList = [];
+  List<TransAccountModel> selectedAccountList = [];
   RxList<OriginModel> originList = <OriginModel>[].obs;
   RxList<OriginModel> selectedOrigin = <OriginModel>[].obs;
   List<String> originCodes = [];
@@ -140,7 +140,7 @@ class TambahPetugasController extends BaseController {
               ? (accountList
                   .where((e) => e.accountId == account.accountId)
                   .first)
-              : Account()));
+              : TransAccountModel()));
         });
         getCountSelectedAccountNA();
         dataPetugas.branches?.forEach((branch) {

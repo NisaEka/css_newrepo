@@ -213,12 +213,12 @@ class ShipperController extends BaseController {
       AppLogger.i("shipper basic local : ${state.userBasic?.toJson()}");
 
       state.accountList.clear();
-      var accounts = BaseResponse<List<Account>>.fromJson(
+      var accounts = BaseResponse<List<TransAccountModel>>.fromJson(
         await storage.readData(StorageCore.accounts),
         (json) => json is List<dynamic>
             ? json
-                .map<Account>(
-                  (i) => Account.fromJson(i as Map<String, dynamic>),
+                .map<TransAccountModel>(
+                  (i) => TransAccountModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -479,7 +479,7 @@ class ShipperController extends BaseController {
     update();
   }
 
-  selectAccount(Account e) {
+  selectAccount(TransAccountModel e) {
     if (state.selectedAccount == e && state.selectedAccount != null) {
       state.selectedAccount = null;
       update();

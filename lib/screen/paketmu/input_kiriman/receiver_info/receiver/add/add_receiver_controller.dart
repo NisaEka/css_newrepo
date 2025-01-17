@@ -17,9 +17,9 @@ class AddReceiverController extends BaseController {
   bool isLoading = false;
   bool isLoadDestination = false;
 
-  List<Destination> destinationList = [];
+  List<DestinationModel> destinationList = [];
 
-  Destination? selectedDestination;
+  DestinationModel? selectedDestination;
 
   Future<bool> isSaveReceiver() async {
     var receivers = await master.getReceivers(QueryModel(

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class AccountCard extends StatelessWidget {
-  final Account account;
+  final TransAccountModel account;
   final bool isLoading;
 
   const AccountCard({

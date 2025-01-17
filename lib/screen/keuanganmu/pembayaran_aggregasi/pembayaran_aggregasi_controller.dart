@@ -24,8 +24,8 @@ class PembayaranAggergasiController extends BaseController {
   String dateFilter = '3';
   int? aggTotal;
 
-  List<Account> accountList = [];
-  List<Account> selectedAccount = [];
+  List<TransAccountModel> accountList = [];
+  List<TransAccountModel> selectedAccount = [];
 
   @override
   void onInit() {
@@ -188,7 +188,7 @@ class PembayaranAggergasiController extends BaseController {
     fetchAggregationTotal();
   }
 
-  void onSelectAccount(Account e) {
+  void onSelectAccount(TransAccountModel e) {
     if (selectedAccount.where((accounts) => accounts == e).isNotEmpty) {
       selectedAccount.removeWhere((accounts) => accounts == e);
     } else {

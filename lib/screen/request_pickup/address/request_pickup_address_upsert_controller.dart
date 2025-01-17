@@ -18,8 +18,8 @@ class RequestPickupAddressUpsertController extends BaseController {
 
   bool isLoadDestination = false;
 
-  List<Destination> destinationList = [];
-  Destination? selectedDestination;
+  List<DestinationModel> destinationList = [];
+  DestinationModel? selectedDestination;
 
   bool createDataLoading = false;
   bool createDataFailed = false;
@@ -63,12 +63,12 @@ class RequestPickupAddressUpsertController extends BaseController {
         .onError((error, stackTrace) => null);
   }
 
-  _setSelectedDestination(Destination? destination) {
+  _setSelectedDestination(DestinationModel? destination) {
     selectedDestination = destination;
     update();
   }
 
-  Future<List<Destination>> getDestinationList(String keyword) async {
+  Future<List<DestinationModel>> getDestinationList(String keyword) async {
     isLoadDestination = true;
     destinationList.clear();
 

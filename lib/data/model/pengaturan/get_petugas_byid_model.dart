@@ -18,7 +18,7 @@ class PetugasModel {
     String? brand,
     String? username,
     MenuModel? menu,
-    List<Account>? accounts,
+    List<TransAccountModel>? accounts,
     List<OriginModel>? origins,
     List<BranchModel>? branches,
   }) {
@@ -53,7 +53,7 @@ class PetugasModel {
     if (json['accounts'] != null) {
       _accounts = [];
       json['accounts'].forEach((v) {
-        _accounts?.add(Account.fromJson(v));
+        _accounts?.add(TransAccountModel.fromJson(v));
       });
     }
     if (json['origins'] != null) {
@@ -81,7 +81,7 @@ class PetugasModel {
 
   String? _status;
   MenuModel? _menu;
-  List<Account>? _accounts;
+  List<TransAccountModel>? _accounts;
   List<OriginModel>? _origins;
   List<BranchModel>? _branches;
 
@@ -96,7 +96,7 @@ class PetugasModel {
     String? origin,
     String? status,
     MenuModel? menu,
-    List<Account>? accounts,
+    List<TransAccountModel>? accounts,
     List<OriginModel>? origins,
     List<BranchModel>? branches,
   }) =>
@@ -136,7 +136,7 @@ class PetugasModel {
 
   MenuModel? get menu => _menu;
 
-  List<Account>? get accounts => _accounts;
+  List<TransAccountModel>? get accounts => _accounts;
 
   List<OriginModel>? get origins => _origins;
 

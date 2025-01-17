@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import '../../../../const/app_const.dart';
 
 class TransactionAccountCard extends StatelessWidget {
-  final Account account;
+  final TransAccountModel account;
   final VoidCallback onTap;
 
   const TransactionAccountCard({

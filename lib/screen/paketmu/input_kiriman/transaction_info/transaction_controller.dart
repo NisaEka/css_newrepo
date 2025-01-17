@@ -754,7 +754,7 @@ class TransactionController extends BaseController {
     update();
   }
 
-  onChangeAccount(Account result) {
+  onChangeAccount(TransAccountModel result) {
     state.account = result;
     state.selectedService = null;
     update();

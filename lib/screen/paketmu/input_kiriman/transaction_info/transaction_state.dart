@@ -19,9 +19,9 @@ class TransactionState {
   bool dropship = Get.arguments['dropship'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   OriginModel origin = Get.arguments['origin'];
-  Account account = Get.arguments['account'];
+  TransAccountModel account = Get.arguments['account'];
   ReceiverModel receiver = Get.arguments['receiver'];
-  Destination destination = Get.arguments['destination'];
+  DestinationModel destination = Get.arguments['destination'];
   Delivery? delivery = Get.arguments['delivery'];
   Goods? goods = Get.arguments['goods'];
   int? draftIndex = Get.arguments['index'];

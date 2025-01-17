@@ -334,13 +334,15 @@ class TambahPetugasScreen extends StatelessWidget {
                                                       ? whiteColor
                                                       : greyColor,
                                               onConfirm: (values) {
-                                                c.selectedAccountList =
-                                                    List<Account>.from(values);
+                                                c.selectedAccountList = List<
+                                                        TransAccountModel>.from(
+                                                    values);
                                                 c.getCountSelectedAccountNA();
                                               },
                                               onSelectionChanged: (values) {
-                                                c.selectedAccountList =
-                                                    List<Account>.from(values);
+                                                c.selectedAccountList = List<
+                                                        TransAccountModel>.from(
+                                                    values);
                                                 c.getCountSelectedAccountNA();
                                                 c.update();
                                               },
