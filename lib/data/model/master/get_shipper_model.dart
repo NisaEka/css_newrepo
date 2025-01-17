@@ -1,6 +1,5 @@
 import 'package:css_mobile/data/model/master/get_region_model.dart';
 import 'get_origin_model.dart';
-
 import 'dart:convert';
 
 ShipperModel payloadFromJson(String str) =>
@@ -92,17 +91,29 @@ class ShipperModel {
 
   /// Getters
   String? get getName => name;
+
   String? get getAddress => address;
+
   String? get getAddress1 => address1;
+
   String? get getAddress2 => address2;
+
   String? get getAddress3 => address3;
+
   String? get getCity => city;
+
   String? get getZipCode => zipCode;
+
   RegionModel? get getRegion => region;
+
   String? get getCountry => country;
+
   String? get getContact => contact;
+
   String? get getPhone => phone;
+
   bool get isDropship => dropship;
+
   OriginModel? get getOrigin => origin;
 
   /// toJson method

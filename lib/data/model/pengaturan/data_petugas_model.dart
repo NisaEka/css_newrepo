@@ -13,7 +13,7 @@ class DataPetugasModel {
     String? status,
     MenuModel? menu,
     Transaction? transaction,
-    List<Account>? accounts,
+    List<TransAccountModel>? accounts,
     List<String>? origins,
   }) {
     _id = id;
@@ -46,7 +46,7 @@ class DataPetugasModel {
     if (json['accounts'] != null) {
       _accounts = [];
       json['accounts'].forEach((v) {
-        _accounts?.add(Account.fromJson(v));
+        _accounts?.add(TransAccountModel.fromJson(v));
       });
     }
     _origins = json['origins'] != null ? json['origins'].cast<String>() : [];
@@ -62,7 +62,7 @@ class DataPetugasModel {
   String? _status;
   MenuModel? _menu;
   Transaction? _transaction;
-  List<Account>? _accounts;
+  List<TransAccountModel>? _accounts;
   List<String>? _origins;
 
   DataPetugasModel copyWith({
@@ -76,7 +76,7 @@ class DataPetugasModel {
     String? status,
     MenuModel? menu,
     Transaction? transaction,
-    List<Account>? accounts,
+    List<TransAccountModel>? accounts,
     List<String>? origins,
   }) =>
       DataPetugasModel(
@@ -114,7 +114,7 @@ class DataPetugasModel {
 
   Transaction? get transaction => _transaction;
 
-  List<Account>? get accounts => _accounts;
+  List<TransAccountModel>? get accounts => _accounts;
 
   List<String>? get origins => _origins;
 

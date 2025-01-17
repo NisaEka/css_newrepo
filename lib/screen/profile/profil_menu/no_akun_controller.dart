@@ -10,7 +10,7 @@ class NoAkunController extends BaseController {
   bool isLogin = false;
   bool isLoading = false;
 
-  List<Account> accountList = [];
+  List<TransAccountModel> accountList = [];
   List<CcrfActivityModel> logActivityList = [];
 
   @override
@@ -34,12 +34,12 @@ class NoAkunController extends BaseController {
     } catch (e, i) {
       AppLogger.e('error initData no akun $e, $i');
       accountList = [];
-      var accounts = BaseResponse<List<Account>>.fromJson(
+      var accounts = BaseResponse<List<TransAccountModel>>.fromJson(
         await storage.readData(StorageCore.accounts),
         (json) => json is List<dynamic>
             ? json
-                .map<Account>(
-                  (i) => Account.fromJson(i as Map<String, dynamic>),
+                .map<TransAccountModel>(
+                  (i) => TransAccountModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),

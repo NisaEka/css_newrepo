@@ -100,7 +100,7 @@ class FacilityFormInfoController extends BaseController {
     update();
   }
 
-  Future<List<Destination>> getDestinationList(String keyword) async {
+  Future<List<DestinationModel>> getDestinationList(String keyword) async {
     state.isLoading = true;
     state.destinationList.clear();
 

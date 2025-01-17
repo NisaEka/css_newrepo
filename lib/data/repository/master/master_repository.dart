@@ -15,7 +15,8 @@ import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 abstract class MasterRepository {
   Future<BaseResponse<List<OriginModel>>> getOrigins(QueryModel param);
 
-  Future<BaseResponse<List<Destination>>> getDestinations(QueryModel param);
+  Future<BaseResponse<List<DestinationModel>>> getDestinations(
+      QueryModel param);
 
   Future<BaseResponse<List<BranchModel>>> getBranches(QueryModel param);
 
@@ -36,11 +37,11 @@ abstract class MasterRepository {
 
   Future<BaseResponse> postReceiver(ReceiverModel data);
 
-  Future<BaseResponse<List<Account>>> getAccounts(QueryModel param);
+  Future<BaseResponse<List<TransAccountModel>>> getAccounts(QueryModel param);
 
   Future<BaseResponse<int>> getAccountCount(QueryModel countQuery);
 
-  Future<BaseResponse<GetServiceModel>> getServices(DataServiceModel param);
+  Future<BaseResponse<TransServiceModel>> getServices(DataServiceModel param);
 
   Future<BaseResponse<List<AppsInfoModel>>> getAppsInfo(QueryModel param);
 }

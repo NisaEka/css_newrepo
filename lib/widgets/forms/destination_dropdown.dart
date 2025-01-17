@@ -16,7 +16,7 @@ class DestinationDropdown<T> extends StatefulHookWidget {
   final String? label;
   final bool isRequired;
   final bool readOnly;
-  final Destination? value;
+  final DestinationModel? value;
   final String? selectedItem;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -51,7 +51,7 @@ class DestinationDropdown<T> extends StatefulHookWidget {
 class _DestinationDropdownState extends State<DestinationDropdown> {
   final searchTextfield = TextEditingController();
 
-  Future<List<Destination>> getDestinationList(String keyword) async {
+  Future<List<DestinationModel>> getDestinationList(String keyword) async {
     final master = Get.find<MasterRepository>();
     var response = await master.getDestinations(QueryModel(
       table: true,
@@ -78,7 +78,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             onChanged: widget.onChanged,
             onTap: () => showCityList('Kota Tujuan'.tr),
           )
-        : CustomSearchDropdownField<Destination>(
+        : CustomSearchDropdownField<DestinationModel>(
             controller: widget.controller,
             asyncItems: (String filter) => getDestinationList(filter),
             itemBuilder: (context, e, b) {
@@ -94,7 +94,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
               );
             },
             itemAsString: widget.itemAsString ??
-                (Destination e) => ''
+                (DestinationModel e) => ''
                     '${e.asFacilityFormFormat()}',
             onChanged: widget.onChanged,
             value: widget.value,
@@ -175,7 +175,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
     );
   }
 
-  Widget buildPosts(List<Destination> data, String title) {
+  Widget buildPosts(List<DestinationModel> data, String title) {
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) {

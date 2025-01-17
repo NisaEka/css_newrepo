@@ -26,7 +26,7 @@ class EditProfileController extends BaseController {
   bool isCcrf = false;
   bool isLoadOrigin = false;
 
-  Destination? selectedCity;
+  DestinationModel? selectedCity;
   OriginModel? selectedOrigin;
   UserModel? basicProfil;
   CcrfProfileModel? ccrfProfil;
@@ -85,7 +85,7 @@ class EditProfileController extends BaseController {
         '${ccrfProfil?.generalInfo?.district}; '
         '${ccrfProfil?.generalInfo?.subDistrict}; '
         '${ccrfProfil?.generalInfo?.zipCode}';
-    selectedCity = Destination(
+    selectedCity = DestinationModel(
       cityName: ccrfProfil?.generalInfo?.city,
       countryName: ccrfProfil?.generalInfo?.country,
       districtName: ccrfProfil?.generalInfo?.district,
@@ -102,7 +102,7 @@ class EditProfileController extends BaseController {
     update();
   }
 
-  Future<List<Destination>> getDestinationList(String keyword) async {
+  Future<List<DestinationModel>> getDestinationList(String keyword) async {
     isLoading = true;
     try {} catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');

@@ -1,5 +1,5 @@
-class Destination {
-  Destination({
+class DestinationModel {
+  DestinationModel({
     dynamic id,
     String? countryName,
     String? provinceName,
@@ -25,7 +25,7 @@ class Destination {
     _cityZone = cityZone;
   }
 
-  Destination.fromJson(dynamic json) {
+  DestinationModel.fromJson(dynamic json) {
     _id = json['id'];
     _countryName = json['countryName'];
     _provinceName = json['provinceName'];
@@ -51,7 +51,7 @@ class Destination {
   String? _facilityCode;
   String? _cityZone;
 
-  Destination copyWith({
+  DestinationModel copyWith({
     dynamic id,
     String? countryName,
     String? provinceName,
@@ -64,7 +64,7 @@ class Destination {
     String? facilityCode,
     String? cityZone,
   }) =>
-      Destination(
+      DestinationModel(
         id: id ?? _id,
         countryName: countryName ?? _countryName,
         provinceName: provinceName ?? _provinceName,

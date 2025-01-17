@@ -17,7 +17,7 @@ class ReceiverState {
   DropshipperModel? dropshipper = Get.arguments['dropshipper'];
   bool codOngkir = Get.arguments['cod_ongkir'];
   OriginModel origin = Get.arguments['origin'];
-  Account account = Get.arguments['account'];
+  TransAccountModel account = Get.arguments['account'];
 
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
   final formKey = GlobalKey<FormState>();
@@ -32,7 +32,7 @@ class ReceiverState {
   bool isValidate = false;
   bool isSaveReceiver = true;
 
-  Destination? selectedDestination;
+  DestinationModel? selectedDestination;
   ReceiverModel? receiver;
   DataTransactionModel? tempData;
 }

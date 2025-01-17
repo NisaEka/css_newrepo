@@ -59,7 +59,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Destination>>> getDestinations(
+  Future<BaseResponse<List<DestinationModel>>> getDestinations(
       QueryModel param) async {
     try {
       Response response = await network.base.get(
@@ -67,12 +67,12 @@ class MasterRepositoryImpl extends MasterRepository {
         queryParameters: param.toJson(),
         options: Options(extra: {'skipAuth': true}),
       );
-      return BaseResponse<List<Destination>>.fromJson(
+      return BaseResponse<List<DestinationModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Destination>(
-                  (i) => Destination.fromJson(i as Map<String, dynamic>),
+                .map<DestinationModel>(
+                  (i) => DestinationModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -309,18 +309,19 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<Account>>> getAccounts(QueryModel param) async {
+  Future<BaseResponse<List<TransAccountModel>>> getAccounts(
+      QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/accounts',
         queryParameters: param.toJson(),
       );
-      return BaseResponse<List<Account>>.fromJson(
+      return BaseResponse<List<TransAccountModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<Account>(
-                  (i) => Account.fromJson(i as Map<String, dynamic>),
+                .map<TransAccountModel>(
+                  (i) => TransAccountModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -349,7 +350,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<GetServiceModel>> getServices(
+  Future<BaseResponse<TransServiceModel>> getServices(
       DataServiceModel param) async {
     try {
       Response response = await network.base.get(
@@ -357,17 +358,17 @@ class MasterRepositoryImpl extends MasterRepository {
         queryParameters: param.toJson(),
       );
 
-      return BaseResponse<GetServiceModel>.fromJson(
+      return BaseResponse<TransServiceModel>.fromJson(
         response.data,
-        (json) => GetServiceModel.fromJson(
+        (json) => TransServiceModel.fromJson(
           json as Map<String, dynamic>,
         ),
       );
     } on DioException catch (e) {
       AppLogger.e("Error get service : ${e.response?.data}");
-      return BaseResponse<GetServiceModel>.fromJson(
+      return BaseResponse<TransServiceModel>.fromJson(
         e.response?.data,
-        (json) => GetServiceModel.fromJson(
+        (json) => TransServiceModel.fromJson(
           json as Map<String, dynamic>,
         ),
       );

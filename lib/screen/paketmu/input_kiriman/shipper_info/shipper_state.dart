@@ -30,8 +30,8 @@ class ShipperState {
   bool isOnline = true;
   bool isLoadSave = false;
 
-  List<Account> accountList = [];
-  Account? selectedAccount;
+  List<TransAccountModel> accountList = [];
+  TransAccountModel? selectedAccount;
 
   OriginModel? selectedOrigin;
   ShipperModel? shipper;

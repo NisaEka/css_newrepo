@@ -5,9 +5,9 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:get/get.dart';
 
 class AkunTranasksiController extends BaseController {
-  Account? currentAccount = Get.arguments['account'];
-  List<Account> accountList = [];
-  Account? selectedAccount;
+  TransAccountModel? currentAccount = Get.arguments['account'];
+  List<TransAccountModel> accountList = [];
+  TransAccountModel? selectedAccount;
 
   @override
   void onInit() {
@@ -17,12 +17,12 @@ class AkunTranasksiController extends BaseController {
 
   Future<void> initData() async {
     accountList = [];
-    var accounts = BaseResponse<List<Account>>.fromJson(
+    var accounts = BaseResponse<List<TransAccountModel>>.fromJson(
       await storage.readData(StorageCore.accounts),
       (json) => json is List<dynamic>
           ? json
-              .map<Account>(
-                (i) => Account.fromJson(i as Map<String, dynamic>),
+              .map<TransAccountModel>(
+                (i) => TransAccountModel.fromJson(i as Map<String, dynamic>),
               )
               .toList()
           : List.empty(),

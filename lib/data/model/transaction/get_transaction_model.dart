@@ -103,9 +103,9 @@ class TransactionModel {
     String? accountType,
     String? statusAwb,
     String? pickupStatus,
-    Account? account,
+    TransAccountModel? account,
     PantauPaketmuDetailModel? transactionDetail,
-    Destination? destination,
+    DestinationModel? destination,
   }) {
     _awb = awb;
     _taxValue = taxValue;
@@ -311,13 +311,14 @@ class TransactionModel {
     _accountType = json['accountType'];
     _statusAwb = json['statusAwb'];
     _pickupStatus = json['pickupStatus'];
-    _account =
-        json['account'] != null ? Account.fromJson(json['account']) : null;
+    _account = json['account'] != null
+        ? TransAccountModel.fromJson(json['account'])
+        : null;
     _transactionDetail != null
         ? PantauPaketmuDetailModel.fromJson(json['transactionDetail'])
         : null;
     _destination = json['destination'] != null
-        ? Destination.fromJson(json['destination'])
+        ? DestinationModel.fromJson(json['destination'])
         : null;
   }
 
@@ -420,9 +421,9 @@ class TransactionModel {
   String? _accountType;
   String? _statusAwb;
   String? _pickupStatus;
-  Account? _account;
+  TransAccountModel? _account;
   PantauPaketmuDetailModel? _transactionDetail;
-  Destination? _destination;
+  DestinationModel? _destination;
 
   TransactionModel copyWith({
     String? awb,
@@ -524,9 +525,9 @@ class TransactionModel {
     String? accountType,
     String? statusAwb,
     String? pickupStatus,
-    Account? account,
+    TransAccountModel? account,
     PantauPaketmuDetailModel? transactionDetail,
-    Destination? destination,
+    DestinationModel? destination,
   }) =>
       TransactionModel(
         awb: awb ?? _awb,
@@ -831,11 +832,11 @@ class TransactionModel {
 
   String? get pickupStatus => _pickupStatus;
 
-  Account? get account => _account;
+  TransAccountModel? get account => _account;
 
   PantauPaketmuDetailModel? get transactionDetail => _transactionDetail;
 
-  Destination? get destination => _destination;
+  DestinationModel? get destination => _destination;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

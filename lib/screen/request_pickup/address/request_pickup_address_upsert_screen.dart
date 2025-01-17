@@ -78,7 +78,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
               ),
             ),
           ),
-          CustomSearchDropdownField<Destination>(
+          CustomSearchDropdownField<DestinationModel>(
             asyncItems: (String filter) =>
                 controller.getDestinationList(filter),
             itemBuilder: (context, e, b) {
@@ -90,7 +90,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
                     child: Text(e.asFacilityFormFormat()),
                   ));
             },
-            itemAsString: (Destination e) => e.asFacilityFormFormat(),
+            itemAsString: (DestinationModel e) => e.asFacilityFormFormat(),
             onChanged: (value) {
               controller.selectedDestination = value;
               controller.update();

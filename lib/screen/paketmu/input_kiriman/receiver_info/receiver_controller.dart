@@ -124,7 +124,7 @@ class ReceiverController extends BaseController {
       });
     } catch (e) {
       AppLogger.e("error get selected receiver $e");
-      state.selectedDestination = Destination(
+      state.selectedDestination = DestinationModel(
         destinationCode: state.receiver?.destinationCode,
         zipCode: state.receiver?.zipCode,
         cityName: state.receiver?.city,
@@ -161,14 +161,14 @@ class ReceiverController extends BaseController {
     return false;
   }
 
-  Future<List<Destination>> getDestinationList(QueryModel param) async {
+  Future<List<DestinationModel>> getDestinationList(QueryModel param) async {
     state.isLoading = true;
-    BaseResponse<List<Destination>>? response;
+    BaseResponse<List<DestinationModel>>? response;
     try {
       response = await master.getDestinations(param);
     } catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');
-      state.selectedDestination = Destination(
+      state.selectedDestination = DestinationModel(
         destinationCode: state.receiver?.destinationCode?.toUpperCase(),
         zipCode: state.receiver?.zipCode,
         cityName: state.receiver?.city?.toUpperCase(),

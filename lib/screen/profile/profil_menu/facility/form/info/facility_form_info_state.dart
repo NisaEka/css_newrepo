@@ -28,6 +28,6 @@ class FacilityFormInfoState {
   bool isLoading = false;
   bool isLoadDestination = false;
 
-  List<Destination> destinationList = [];
-  Destination? selectedDestination;
+  List<DestinationModel> destinationList = [];
+  DestinationModel? selectedDestination;
 }

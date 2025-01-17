@@ -14,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ListDropshipperController extends BaseController {
-  Account account = Get.arguments['account'];
+  TransAccountModel account = Get.arguments['account'];
   bool isOfficer = Get.arguments['isOfficer'];
   UserModel? userBasic = Get.arguments['userBasic'];
 

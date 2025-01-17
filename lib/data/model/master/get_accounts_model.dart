@@ -1,5 +1,5 @@
-class Account {
-  Account({
+class TransAccountModel {
+  TransAccountModel({
     String? accountId,
     String? accountBranch,
     String? accountMain,
@@ -95,7 +95,7 @@ class Account {
     _accountOrigin = accountOrigin;
   }
 
-  Account.fromJson(dynamic json) {
+  TransAccountModel.fromJson(dynamic json) {
     _accountId = json['accountId'];
     _accountBranch = json['accountBranch'];
     _accountMain = json['accountMain'];
@@ -191,7 +191,7 @@ class Account {
   String? _accountParentId;
   String? _accountOrigin;
 
-  Account copyWith({
+  TransAccountModel copyWith({
     String? accountId,
     String? accountBranch,
     String? accountMain,
@@ -239,7 +239,7 @@ class Account {
     String? accountParentId,
     String? accountOrigin,
   }) =>
-      Account(
+      TransAccountModel(
         accountId: accountId ?? _accountId,
         accountBranch: accountBranch ?? _accountBranch,
         accountMain: accountMain ?? _accountMain,

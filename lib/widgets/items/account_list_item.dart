@@ -18,7 +18,7 @@ class AccountListItem extends StatefulWidget {
   final int? index;
   final double? width;
   final bool isLoading;
-  final Account? data;
+  final TransAccountModel? data;
 
   AccountListItem({
     super.key,
