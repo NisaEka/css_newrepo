@@ -1,51 +1,51 @@
-class GetTicketSummaryModel {
-  GetTicketSummaryModel({
-    num? statusCode,
-    String? message,
-    TicketSummary? data,
-  }) {
-    _statusCode = statusCode;
-    _message = message;
-    _data = data;
-  }
-
-  GetTicketSummaryModel.fromJson(dynamic json) {
-    _statusCode = json['statusCode'];
-    _message = json['message'];
-    _data = json['data'] != null ? TicketSummary.fromJson(json['data']) : null;
-  }
-
-  num? _statusCode;
-  String? _message;
-  TicketSummary? _data;
-
-  GetTicketSummaryModel copyWith({
-    num? statusCode,
-    String? message,
-    TicketSummary? data,
-  }) =>
-      GetTicketSummaryModel(
-        statusCode: statusCode ?? _statusCode,
-        message: message ?? _message,
-        data: data ?? _data,
-      );
-
-  num? get statusCode => _statusCode;
-
-  String? get message => _message;
-
-  TicketSummary? get data => _data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['statusCode'] = _statusCode;
-    map['message'] = _message;
-    if (_data != null) {
-      map['data'] = _data?.toJson();
-    }
-    return map;
-  }
-}
+// class GetTicketSummaryModel {
+//   GetTicketSummaryModel({
+//     num? statusCode,
+//     String? message,
+//     TicketSummary? data,
+//   }) {
+//     _statusCode = statusCode;
+//     _message = message;
+//     _data = data;
+//   }
+//
+//   GetTicketSummaryModel.fromJson(dynamic json) {
+//     _statusCode = json['statusCode'];
+//     _message = json['message'];
+//     _data = json['data'] != null ? TicketSummary.fromJson(json['data']) : null;
+//   }
+//
+//   num? _statusCode;
+//   String? _message;
+//   TicketSummary? _data;
+//
+//   GetTicketSummaryModel copyWith({
+//     num? statusCode,
+//     String? message,
+//     TicketSummary? data,
+//   }) =>
+//       GetTicketSummaryModel(
+//         statusCode: statusCode ?? _statusCode,
+//         message: message ?? _message,
+//         data: data ?? _data,
+//       );
+//
+//   num? get statusCode => _statusCode;
+//
+//   String? get message => _message;
+//
+//   TicketSummary? get data => _data;
+//
+//   Map<String, dynamic> toJson() {
+//     final map = <String, dynamic>{};
+//     map['statusCode'] = _statusCode;
+//     map['message'] = _message;
+//     if (_data != null) {
+//       map['data'] = _data?.toJson();
+//     }
+//     return map;
+//   }
+// }
 
 class TicketSummary {
   TicketSummary({

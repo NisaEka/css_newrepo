@@ -23,12 +23,14 @@ class EclaimCountModel {
     _rejectedCount = json['rejectedCount'];
     _rejectedAmount = json['rejectedAmount'];
   }
+
   num? _totalCount;
   num? _totalAmount;
   num? _acceptedCount;
   num? _acceptedAmount;
   num? _rejectedCount;
   num? _rejectedAmount;
+
   EclaimCountModel copyWith({
     num? totalCount,
     num? totalAmount,
@@ -45,11 +47,17 @@ class EclaimCountModel {
         rejectedCount: rejectedCount ?? _rejectedCount,
         rejectedAmount: rejectedAmount ?? _rejectedAmount,
       );
+
   num? get totalCount => _totalCount;
+
   num? get totalAmount => _totalAmount;
+
   num? get acceptedCount => _acceptedCount;
+
   num? get acceptedAmount => _acceptedAmount;
+
   num? get rejectedCount => _rejectedCount;
+
   num? get rejectedAmount => _rejectedAmount;
 
   Map<String, dynamic> toJson() {
