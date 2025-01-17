@@ -15,6 +15,7 @@ class ObrolanLaporankuController extends BaseController {
   String id = Get.arguments['id'];
   TicketModel ticket = Get.arguments['ticket'];
   final messageInsert = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   List<TicketMessageModel> messages = [];
   late String markMsg;

@@ -77,64 +77,67 @@ class FacilityFormBankScreen extends StatelessWidget {
         SliverToBoxAdapter(
           child: Container(
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                BankDropdown(
-                  onChanged: (value) => controller.setSelectedBank(value),
-                  value: controller.selectedBank,
-                ),
-                CustomTextFormField(
-                  controller: controller.accountNumber,
-                  hintText: 'Nomor Rekening'.tr,
-                  inputType: TextInputType.number,
-                  validator: ValidationBuilder().maxLength(15).build(),
-                ),
-                CustomTextFormField(
-                  controller: controller.accountName,
-                  hintText: 'Atas Nama'.tr,
-                  validator: ValidationBuilder().maxLength(32).build(),
-                ),
-                ImagePickerContainer(
-                  containerTitle: 'Pilih Gambar Buku Rekening'.tr,
-                  pickedImagePath: controller.pickedImagePath,
-                  onPickImage: () => controller.pickImage(),
-                ),
-                ListTile(
-                  onTap: () => Get.to(
-                    () => FacilityTermsAndConditionsScreen(
-                      contentText: controller.termsAndConditions,
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  BankDropdown(
+                    onChanged: (value) => controller.setSelectedBank(value),
+                    value: controller.selectedBank,
+                  ),
+                  CustomTextFormField(
+                    controller: controller.accountNumber,
+                    hintText: 'Nomor Rekening'.tr,
+                    inputType: TextInputType.number,
+                    validator: ValidationBuilder().maxLength(15).build(),
+                  ),
+                  CustomTextFormField(
+                    controller: controller.accountName,
+                    hintText: 'Atas Nama'.tr,
+                    validator: ValidationBuilder().maxLength(32).build(),
+                  ),
+                  ImagePickerContainer(
+                    containerTitle: 'Pilih Gambar Buku Rekening'.tr,
+                    pickedImagePath: controller.pickedImagePath,
+                    onPickImage: () => controller.pickImage(),
+                  ),
+                  ListTile(
+                    onTap: () => Get.to(
+                      () => FacilityTermsAndConditionsScreen(
+                        contentText: controller.termsAndConditions,
+                      ),
                     ),
-                  ),
-                  title: RichText(
-                    text: TextSpan(
-                      text: 'Saya Setuju dengan '.tr,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                      children: [
-                        TextSpan(
-                          text: 'Syarat & Ketentuan'.tr,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyMedium
-                              ?.copyWith(color: redJNE),
-                        ),
-                        TextSpan(
-                          text: ' Pengiriman JNE'.tr,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                      ],
+                    title: RichText(
+                      text: TextSpan(
+                        text: 'Saya Setuju dengan '.tr,
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        children: [
+                          TextSpan(
+                            text: 'Syarat & Ketentuan'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: redJNE),
+                          ),
+                          TextSpan(
+                            text: ' Pengiriman JNE'.tr,
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  leading: Checkbox(
-                    checkColor: whiteColor,
-                    activeColor: redJNE,
-                    value: controller.termsAndConditionsCheck,
-                    onChanged: (value) {
-                      controller.onTermsAndConditionsCheck();
-                    },
-                  ),
-                )
-              ],
+                    leading: Checkbox(
+                      checkColor: whiteColor,
+                      activeColor: redJNE,
+                      value: controller.termsAndConditionsCheck,
+                      onChanged: (value) {
+                        controller.onTermsAndConditionsCheck();
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         )
