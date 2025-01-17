@@ -57,13 +57,13 @@ class CekOngkirController extends BaseController {
               ' (${response.data['data']['length']} CM x ${response.data['data']['width']} CM x ${response.data['data']['height']} CM)';
         }
 
-        List<Ongkir> resultExpressList =
+        List<OngkirModel> resultExpressList =
             (response.data['data']['resultExpress'] as List)
-                .map((item) => Ongkir.fromJson(item))
+                .map((item) => OngkirModel.fromJson(item))
                 .toList();
-        List<Ongkir> resultJtrList =
+        List<OngkirModel> resultJtrList =
             (response.data['data']['resultJtr'] as List)
-                .map((item) => Ongkir.fromJson(item))
+                .map((item) => OngkirModel.fromJson(item))
                 .toList();
 
         state.ongkirList.addAll(resultExpressList);

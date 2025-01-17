@@ -1,50 +1,5 @@
-class PostCekongkirCityModel {
-  PostCekongkirCityModel({
-    List<City>? detail,
-  }) {
-    _detail = detail;
-  }
-
-  PostCekongkirCityModel.fromJson(dynamic json) {
-    if (json['detail'] != null) {
-      _detail = [];
-      json['detail'].forEach((v) {
-        _detail?.add(City.fromJson(v));
-      });
-    }
-    if (json['payload'] != null) {
-      _detail = [];
-      json['payload'].forEach((v) {
-        _detail?.add(City.fromJson(v));
-      });
-    }
-  }
-
-  List<City>? _detail;
-
-  PostCekongkirCityModel copyWith({
-    List<City>? detail,
-  }) =>
-      PostCekongkirCityModel(
-        detail: detail ?? _detail,
-      );
-
-  List<City>? get detail => _detail;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (_detail != null) {
-      map['detail'] = _detail?.map((v) => v.toJson()).toList();
-    }
-    if (_detail != null) {
-      map['payload'] = _detail?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
-class City {
-  City({
+class CityModel {
+  CityModel({
     String? code,
     String? label,
   }) {
@@ -52,7 +7,7 @@ class City {
     _label = label;
   }
 
-  City.fromJson(dynamic json) {
+  CityModel.fromJson(dynamic json) {
     _code = json['code'];
     _label = json['label'];
   }
@@ -60,11 +15,11 @@ class City {
   String? _code;
   String? _label;
 
-  City copyWith({
+  CityModel copyWith({
     String? code,
     String? label,
   }) =>
-      City(
+      CityModel(
         code: code ?? _code,
         label: label ?? _label,
       );

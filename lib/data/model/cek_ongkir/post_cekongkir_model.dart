@@ -1,41 +1,5 @@
-class PostCekongkirModel {
-  PostCekongkirModel({
-    List<Ongkir>? ongkir,
-  }) {
-    _ongkir = ongkir;
-  }
-
-  PostCekongkirModel.fromJson(dynamic json) {
-    if (json['data'] != null) {
-      _ongkir = [];
-      json['data'].forEach((v) {
-        _ongkir?.add(Ongkir.fromJson(v));
-      });
-    }
-  }
-
-  List<Ongkir>? _ongkir;
-
-  PostCekongkirModel copyWith({
-    List<Ongkir>? ongkir,
-  }) =>
-      PostCekongkirModel(
-        ongkir: ongkir ?? _ongkir,
-      );
-
-  List<Ongkir>? get ongkir => _ongkir;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (_ongkir != null) {
-      map['price'] = _ongkir?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
-class Ongkir {
-  Ongkir({
+class OngkirModel {
+  OngkirModel({
     String? originName,
     String? destinationName,
     String? serviceDisplay,
@@ -61,7 +25,7 @@ class Ongkir {
     _insuranceAmount = insuranceAmount;
   }
 
-  Ongkir.fromJson(dynamic json) {
+  OngkirModel.fromJson(dynamic json) {
     _originName = json['originName'];
     _destinationName = json['destinationName'];
     _serviceDisplay = json['serviceDisplay'];
@@ -87,7 +51,7 @@ class Ongkir {
   String? _times;
   int? _insuranceAmount;
 
-  Ongkir copyWith({
+  OngkirModel copyWith({
     String? originName,
     String? destinationName,
     String? serviceDisplay,
@@ -100,7 +64,7 @@ class Ongkir {
     String? times,
     int? insuranceAmount,
   }) =>
-      Ongkir(
+      OngkirModel(
         originName: originName ?? _originName,
         destinationName: destinationName ?? _destinationName,
         serviceDisplay: serviceDisplay ?? _serviceDisplay,

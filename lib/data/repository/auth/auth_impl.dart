@@ -1,6 +1,4 @@
-import 'package:css_mobile/data/model/auth/get_check_mail_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
-import 'package:css_mobile/data/model/auth/get_referal_model.dart';
 import 'package:css_mobile/data/model/auth/input_login_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
@@ -108,19 +106,6 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<GetReferalModel> getReferal(String keyword) async {
-    try {
-      Response response = await network.base.get(
-        '/master/group-owners?search=$keyword',
-        options: Options(extra: {'skipAuth': true}),
-      );
-      return GetReferalModel.fromJson(response.data);
-    } on DioException catch (e) {
-      return GetReferalModel.fromJson(e.response?.data);
-    }
-  }
-
-  @override
   Future<BaseResponse> postEmailForgotPassword(String email) async {
     try {
       Response response = await network.base.post(
@@ -170,26 +155,26 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  @override
-  Future<BaseResponse<MailCheckModel>> getCheckMail(String email) async {
-    try {
-      Response response = await network.base.get(
-        '/authentications/email-check/$email',
-        options: Options(extra: {'skipAuth': true}),
-      );
-      return BaseResponse<MailCheckModel>.fromJson(
-        response.data,
-        (json) => MailCheckModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
-      );
-    } on DioException catch (e) {
-      return BaseResponse<MailCheckModel>.fromJson(
-        e.response?.data,
-        (json) => MailCheckModel(),
-      );
-    }
-  }
+  // @override
+  // Future<BaseResponse<MailCheckModel>> getCheckMail(String email) async {
+  //   try {
+  //     Response response = await network.base.get(
+  //       '/authentications/email-check/$email',
+  //       options: Options(extra: {'skipAuth': true}),
+  //     );
+  //     return BaseResponse<MailCheckModel>.fromJson(
+  //       response.data,
+  //       (json) => MailCheckModel.fromJson(
+  //         json as Map<String, dynamic>,
+  //       ),
+  //     );
+  //   } on DioException catch (e) {
+  //     return BaseResponse<MailCheckModel>.fromJson(
+  //       e.response?.data,
+  //       (json) => MailCheckModel(),
+  //     );
+  //   }
+  // }
 
   @override
   Future<BaseResponse> postFcmToken(DeviceModel data) async {
