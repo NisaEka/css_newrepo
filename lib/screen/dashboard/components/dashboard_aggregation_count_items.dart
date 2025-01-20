@@ -95,7 +95,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                       value2fontSize: 14,
                                       isSuccess: true,
                                       onTap: () => Get.to(
-                                        const PembayaranAggergasiScreen(),
+                                        () => const PembayaranAggergasiScreen(),
                                         // arguments: {
                                         //   "aggregationID": aggregationPembayaran?.mpayWdrGrpPayNo,
                                         // },
@@ -136,7 +136,7 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                       value1fontSize: 12,
                                       value2fontSize: 14,
                                       onTap: () => Get.to(
-                                        const AggregationMinusScreen(),
+                                        () => const AggregationMinusScreen(),
                                         // arguments: {
                                         //   "doc": aggregationMinus?.aggMinDoc,
                                         // },

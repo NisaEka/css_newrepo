@@ -159,7 +159,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
             _textRow(
                 context,
                 "Tanggal Pickup".tr,
-                '${requestPickup.pickupDate?.toDate(originFormat: 'dd-MM-yyyy').toString().toLongDateFormat()} ${requestPickup.pickupTime ?? ''}',
+                '${requestPickup.pickupDate?.toDate(originFormat: 'dd-MM-yyyy').toString().toLongDateFormat() ?? '-'} ${requestPickup.pickupTime ?? ''}',
                 c.isLoading),
             const SizedBox(height: 6),
             _textRow(context, "Status Pickup".tr,
