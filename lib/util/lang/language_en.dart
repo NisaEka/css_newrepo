@@ -29,6 +29,7 @@ class LanguageEN {
       "Simpan Perubahan": "Save Changes",
       "Biaya Kirim": "Shipping Cost",
       "Salin Label": "Copy Label",
+      "Cari data Petugas": "Search Officer Data",
       "Sembunyikan": "Hide",
       "Input Transaksi": "Input Transaction",
       "Nomor Akun": "Account Number",
