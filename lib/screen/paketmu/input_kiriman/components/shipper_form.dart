@@ -73,7 +73,7 @@ class ShipperForm extends StatelessWidget {
                             ),
                             CustomSwitch(
                               value: c.state.isDropshipper,
-                              label: 'Kirim sebagai dropshipper'.tr,
+                              label: 'Kirim sebagai Dropshipper'.tr,
                               onChange: (bool? value) =>
                                   c.sendAsDropshipper(value),
                             ),

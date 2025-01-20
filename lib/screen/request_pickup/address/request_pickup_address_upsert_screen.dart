@@ -65,7 +65,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           CustomTextFormField(
             controller: controller.phone,
             label: "No Handphone".tr,
-            hintText: "Masukkan no handphone".tr,
+            hintText: "Masukkan No Handphone".tr,
             inputType: TextInputType.phone,
             isRequired: true,
           ),
