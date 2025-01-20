@@ -16,7 +16,7 @@ class EclaimSearchField extends StatelessWidget {
         builder: (c) {
           return CustomSearchField(
             controller: c.state.searchField,
-            hintText: 'Cari berdasarkan awb'.tr,
+            hintText: 'Cari Berdasarkan AWB'.tr,
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
               color: Theme.of(context).brightness == Brightness.light
