@@ -154,7 +154,7 @@ class FacilityFormBankController extends BaseController {
 
   void _composeBankData() {
     final bankInfo = FacilityCreateBankInfoModel();
-    bankInfo.setBankId(selectedBank?.bankId ?? "");
+    bankInfo.setBankId(selectedBank?.id ?? "");
     bankInfo.setAccountNumber(accountNumber.text);
     bankInfo.setAccountName(accountName.text);
     bankInfo.setAccountImageUrl(pickedImagePath ?? "-");

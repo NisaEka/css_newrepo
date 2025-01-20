@@ -4,7 +4,7 @@ class InputLoginModel {
   InputLoginModel({
     String? email,
     String? password,
-    DeviceModel? device,
+    DeviceInfoModel? device,
     Coordinate? coordinate,
   }) {
     _email = email;
@@ -16,8 +16,9 @@ class InputLoginModel {
   InputLoginModel.fromJson(dynamic json) {
     _email = json['email'];
     _password = json['password'];
-    _device =
-        json['device'] != null ? DeviceModel.fromJson(json['device']) : null;
+    _device = json['device'] != null
+        ? DeviceInfoModel.fromJson(json['device'])
+        : null;
     _coordinate = json['coordinate'] != null
         ? Coordinate.fromJson(json['coordinate'])
         : null;
@@ -25,13 +26,13 @@ class InputLoginModel {
 
   String? _email;
   String? _password;
-  DeviceModel? _device;
+  DeviceInfoModel? _device;
   Coordinate? _coordinate;
 
   InputLoginModel copyWith({
     String? email,
     String? password,
-    DeviceModel? device,
+    DeviceInfoModel? device,
     Coordinate? coordinate,
   }) =>
       InputLoginModel(
@@ -45,7 +46,7 @@ class InputLoginModel {
 
   String? get password => _password;
 
-  DeviceModel? get device => _device;
+  DeviceInfoModel? get device => _device;
 
   Coordinate? get coordinate => _coordinate;
 

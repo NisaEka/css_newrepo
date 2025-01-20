@@ -358,7 +358,7 @@ class DashboardController extends BaseController {
       await auth
           .postFcmToken(
         await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
-            DeviceModel(),
+            DeviceInfoModel(),
       )
           .then((value) async {
         AppLogger.i('userID : ${state.basic?.id}');
@@ -366,20 +366,20 @@ class DashboardController extends BaseController {
             ? await auth.updateDeviceInfo(
                 (await LoginController().getDeviceinfo(state.fcmToken ?? ''))
                         ?.copyWith(registrationId: state.basic?.id) ??
-                    DeviceModel(),
+                    DeviceInfoModel(),
               )
             : value.code == 401
                 ? await auth
                     .postFcmTokenNonAuth(
                       await LoginController()
                               .getDeviceinfo(state.fcmToken ?? '') ??
-                          DeviceModel(),
+                          DeviceInfoModel(),
                     )
                     .then((v) async => v.code == 409
                         ? await auth.updateDeviceInfo(
                             await LoginController()
                                     .getDeviceinfo(state.fcmToken ?? '') ??
-                                DeviceModel(),
+                                DeviceInfoModel(),
                           )
                         : null)
                 : null;

@@ -1,39 +1,3 @@
-class PostJlcTransactionsModel {
-  PostJlcTransactionsModel({
-    List<JLCTransactions>? data,
-  }) {
-    _data = data;
-  }
-
-  PostJlcTransactionsModel.fromJson(dynamic json) {
-    if (json['data'] != null) {
-      _data = [];
-      json['data'].forEach((v) {
-        _data?.add(JLCTransactions.fromJson(v));
-      });
-    }
-  }
-
-  List<JLCTransactions>? _data;
-
-  PostJlcTransactionsModel copyWith({
-    List<JLCTransactions>? data,
-  }) =>
-      PostJlcTransactionsModel(
-        data: data ?? _data,
-      );
-
-  List<JLCTransactions>? get data => _data;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-}
-
 class JLCTransactions {
   JLCTransactions({
     String? tglTransaksi,

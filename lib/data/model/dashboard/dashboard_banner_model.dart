@@ -1,36 +1,36 @@
 class BannerModel {
   BannerModel({
-    String? namaBanner,
+    String? name,
     String? picture,
     String? link,
   }) {
-    _namaBanner = namaBanner;
+    _name = name;
     _picture = picture;
     _link = link;
   }
 
   BannerModel.fromJson(dynamic json) {
-    _namaBanner = json['namaBanner'];
+    _name = json['namaBanner'];
     _picture = json['picture'];
     _link = json['link'];
   }
 
-  String? _namaBanner;
+  String? _name;
   String? _picture;
   String? _link;
 
   BannerModel copyWith({
-    String? namaBanner,
+    String? name,
     String? picture,
     String? link,
   }) =>
       BannerModel(
-        namaBanner: namaBanner ?? _namaBanner,
+        name: name ?? _name,
         picture: picture ?? _picture,
         link: link ?? _link,
       );
 
-  String? get namaBanner => _namaBanner;
+  String? get namaBanner => _name;
 
   String? get picture => _picture;
 
@@ -38,7 +38,7 @@ class BannerModel {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['namaBanner'] = _namaBanner;
+    map['namaBanner'] = _name;
     map['picture'] = _picture;
     map['link'] = _link;
     return map;

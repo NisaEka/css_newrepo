@@ -89,7 +89,7 @@ class LogoutButton extends StatelessWidget {
     try {
       await auth.logout(refreshToken);
       await auth.updateDeviceInfo(
-        DeviceModel(
+        DeviceInfoModel(
           fcmToken: await storage.readString(StorageCore.fcmToken),
           registrationId: "",
         ),

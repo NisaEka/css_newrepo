@@ -1,5 +1,5 @@
-class DeviceModel {
-  DeviceModel({
+class DeviceInfoModel {
+  DeviceInfoModel({
     int? id,
     String? registrationId,
     String? fcmToken,
@@ -15,7 +15,7 @@ class DeviceModel {
     _createdDate = createdDate;
   }
 
-  DeviceModel.fromJson(dynamic json) {
+  DeviceInfoModel.fromJson(dynamic json) {
     _id = json['id'];
     _registrationId = json['registrationId'];
     _fcmToken = json['fcmToken'];
@@ -31,7 +31,7 @@ class DeviceModel {
   String? _versionOs;
   String? _createdDate;
 
-  DeviceModel copyWith({
+  DeviceInfoModel copyWith({
     int? id,
     String? registrationId,
     String? fcmToken,
@@ -39,7 +39,7 @@ class DeviceModel {
     String? versionOs,
     String? createdDate,
   }) =>
-      DeviceModel(
+      DeviceInfoModel(
         id: id ?? _id,
         registrationId: registrationId ?? _registrationId,
         fcmToken: fcmToken ?? _fcmToken,

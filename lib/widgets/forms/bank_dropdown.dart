@@ -86,14 +86,14 @@ class _BankDropdownState extends State<BankDropdown> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
-                  e.bankName.toString(),
+                  e.name.toString(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         color: textColor(context),
                       ),
                 ),
               );
             },
-            itemAsString: (BankModel e) => e.bankName.toString(),
+            itemAsString: (BankModel e) => e.name.toString(),
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,
@@ -180,15 +180,15 @@ class _BankDropdownState extends State<BankDropdown> {
         final post = data[index];
         return ListTile(
           title: Text(
-            post.bankName!,
+            post.name!,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           onTap: () {
             widget.value?.copyWith(
-              bankId: post.bankId,
-              bankName: post.bankName,
+              id: post.id,
+              name: post.name,
             );
-            widget.controller?.text = post.bankName ?? '';
+            widget.controller?.text = post.name ?? '';
             Get.back();
           },
         );

@@ -177,7 +177,7 @@ class AuthRepositoryImpl extends AuthRepository {
   // }
 
   @override
-  Future<BaseResponse> postFcmToken(DeviceModel data) async {
+  Future<BaseResponse> postFcmToken(DeviceInfoModel data) async {
     try {
       Response response = await network.base.post(
         '/auth/device-infos',
@@ -228,7 +228,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> postFcmTokenNonAuth(DeviceModel data) async {
+  Future<BaseResponse> postFcmTokenNonAuth(DeviceInfoModel data) async {
     try {
       Response response = await network.base.post(
         '/auth/device-infos/public',
@@ -244,7 +244,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> updateDeviceInfo(DeviceModel data) async {
+  Future<BaseResponse> updateDeviceInfo(DeviceInfoModel data) async {
     AppLogger.i("device model : ${data.toJson()}");
     try {
       Response response = await network.base.patch(
@@ -261,7 +261,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse<List<DeviceModel>>> getFcmToken() async {
+  Future<BaseResponse<List<DeviceInfoModel>>> getFcmToken() async {
     try {
       Response response = await network.base.get(
         "/auth/device-infos",
@@ -277,8 +277,8 @@ class AuthRepositoryImpl extends AuthRepository {
         response.data,
         (json) => json is List<dynamic>
             ? json
-                .map<DeviceModel>(
-                  (i) => DeviceModel.fromJson(i as Map<String, dynamic>),
+                .map<DeviceInfoModel>(
+                  (i) => DeviceInfoModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -288,8 +288,8 @@ class AuthRepositoryImpl extends AuthRepository {
         e.response?.data,
         (json) => json is List<dynamic>
             ? json
-                .map<DeviceModel>(
-                  (i) => DeviceModel.fromJson(i as Map<String, dynamic>),
+                .map<DeviceInfoModel>(
+                  (i) => DeviceInfoModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
