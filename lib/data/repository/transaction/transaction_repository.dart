@@ -1,7 +1,6 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
@@ -47,7 +46,7 @@ abstract class TransactionRepository {
   Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
       DataTransactionOngkirModel data);
 
-  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
+  Future<BaseResponse<TransactionSummaryModel>> postTransactionDashboard(
       QueryModel param);
 
   Future<BaseResponse<List<PantauCountModel>>> getPantauCount(QueryModel param);

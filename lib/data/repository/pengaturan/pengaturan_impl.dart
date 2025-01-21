@@ -3,7 +3,6 @@ import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/pengaturan/pengaturan_repository.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
@@ -48,12 +47,12 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   }
 
   @override
-  Future<PostTransactionModel> deleteOfficer(String id) async {
+  Future<BaseResponse> deleteOfficer(String id) async {
     try {
       Response response = await network.base.delete(
         "/officer/$id",
       );
-      return PostTransactionModel.fromJson(response.data);
+      return BaseResponse.fromJson(response.data, (json) => null);
     } on DioException catch (e) {
       return e.response?.data;
     }

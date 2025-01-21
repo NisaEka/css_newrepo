@@ -2,7 +2,6 @@ import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/dashboard/sticker_label_model.dart';
 import 'package:css_mobile/data/model/pengaturan/data_petugas_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
-import 'package:css_mobile/data/model/transaction/post_transaction_model.dart';
 
 abstract class PengaturanRepository {
   Future<BaseResponse<List<PetugasModel>>> getOfficers(
@@ -12,7 +11,7 @@ abstract class PengaturanRepository {
 
   Future<BaseResponse> postOfficer(DataPetugasModel data);
 
-  Future<PostTransactionModel> deleteOfficer(String id);
+  Future<BaseResponse> deleteOfficer(String id);
 
   Future<BaseResponse> putOfficer(DataPetugasModel data);
 
