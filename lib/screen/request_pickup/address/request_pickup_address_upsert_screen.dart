@@ -2,12 +2,14 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_controller.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:get/get.dart';
 
 class RequestPickupAddressUpsertScreen extends StatelessWidget {
@@ -31,17 +33,11 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
       BuildContext context, RequestPickupAddressUpsertController controller) {
     return Stack(
       children: [
-        CustomScrollView(
-          slivers: [
-            const SliverToBoxAdapter(child: SizedBox(height: 16)),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: _bodyForm(context, controller),
-              ),
-            ),
-            const SliverToBoxAdapter(child: SizedBox(height: 16))
-          ],
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+            child: _bodyForm(context, controller),
+          ),
         ),
         controller.createDataLoading ? const LoadingDialog() : Container(),
       ],
@@ -52,32 +48,37 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
       BuildContext context, RequestPickupAddressUpsertController controller) {
     return Form(
       key: controller.formKey,
+      // onChanged: () {
+      //   controller.update();
+      // },
       child: Column(
         children: [
-          const SizedBox(height: 16),
           CustomTextFormField(
             controller: controller.name,
-            label: "Nama Kamu".tr,
-            hintText: "Masukkan nama anda".tr,
+            // label: "Nama Kamu".tr,
+            hintText: "Nama Kamu".tr,
             inputType: TextInputType.name,
             isRequired: true,
+            prefixIcon: const Icon(Icons.person_2_rounded),
           ),
           CustomTextFormField(
             controller: controller.phone,
-            label: "No Handphone".tr,
-            hintText: "Masukkan No Handphone".tr,
+            // label: "No Handphone".tr,
+            hintText: "No Handphone".tr,
             inputType: TextInputType.phone,
             isRequired: true,
+            prefixIcon: const Icon(Icons.phone_rounded),
+            validator: ValidationBuilder().phoneNumber().build(),
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(
-                text: "Kota Penjemputan".tr,
-                style: formLabelTextStyle.copyWith(color: textColor(context)),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.centerLeft,
+          //   child: RichText(
+          //     text: TextSpan(
+          //       // text: "Kota Penjemputan".tr,
+          //       style: formLabelTextStyle.copyWith(color: textColor(context)),
+          //     ),
+          //   ),
+          // ),
           CustomSearchDropdownField<DestinationModel>(
             asyncItems: (String filter) =>
                 controller.getDestinationList(filter),
@@ -97,6 +98,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
             },
             value: controller.selectedDestination,
             isRequired: controller.selectedDestination == null ? true : false,
+            prefixIcon: const Icon(Icons.trip_origin_rounded),
             readOnly: false,
             hintText: controller.isLoadDestination
                 ? "Loading..."
@@ -109,13 +111,13 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           ),
           CustomTextFormField(
             controller: controller.address,
-            label: "Alamat Penjemputan".tr,
-            hintText: "Masukkan alamat penjemputan".tr,
+            // label: "Alamat Penjemputan".tr,
+            hintText: "Alamat Penjemputan".tr,
             inputType: TextInputType.streetAddress,
             multiLine: true,
+            prefixIcon: const Icon(Icons.home_work_rounded),
             isRequired: true,
           ),
-          const SizedBox(height: 16),
           CustomFilledButton(
             color: primaryColor(context),
             title: 'Simpan Alamat'.tr,
