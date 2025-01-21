@@ -17,17 +17,6 @@ class ImageConstant {
   static const String pantauPaketmuIcon = "assets/icons/Pantau Paketmu.png";
   static const String keuanganmuIcon = "assets/icons/Keuanganmu.png";
   static const String paketmuIcon = "assets/icons/Paketmu.png";
-  static const String truckIcon = "assets/icons/truck.png";
-  static const String belumTerkumpul = "assets/icons/belum-terkumpul.png";
-  static const String butuhDicek = "assets/icons/butuh-dicek.png";
-  static const String dalamPeninjauan = "assets/icons/dalam peninjauan.png";
-  static const String dalamPerjalanan = "assets/icons/dalam perjalanan.png";
-  static const String dibatalkan = "assets/icons/dibatalkan oleh kamu.png";
-  static const String jmlTransaksi = "assets/icons/jumlah transaksi.png";
-  static const String masihDikamu = "assets/icons/masih dikamu.png";
-  static const String dikembalikan = "assets/icons/sudah dikembalikan.png";
-  static const String diterima = "assets/icons/sukses diterima.png";
-
   static const String boxPackage = "assets/images/noun-packaging-package.png";
   static const String boxSudahDiJemput =
       "assets/images/noun-cargo-van-sudahdijemput.png";
@@ -54,27 +43,10 @@ class ImageConstant {
 
   static const String successLottie = "assets/lottie/success_lottie.json";
   static const String failedLottie = "assets/lottie/failed_lottie.json";
-
   static const String warningLottie = "assets/lottie/warning_lottie.json";
-
   static const String dataEmpty = "assets/images/data_empty.png";
 
   static const String logoJNESvg = "assets/images/logo-jne.svg";
   static const String redRectangle = "assets/images/red-rectangle.svg";
   static const String footerInvoice = "assets/images/footer-invoice.svg";
-  static const String tipsKeamanan = "assets/images/tips_keamanan.png";
-  static const String safetyTips = "assets/images/safety_tips.png";
-
-  static const List dashboardCountIcons = [
-    jmlTransaksi,
-    masihDikamu,
-    truckIcon,
-    dalamPerjalanan,
-    diterima,
-    dikembalikan,
-    dalamPeninjauan,
-    dibatalkan,
-    belumTerkumpul,
-    butuhDicek,
-  ];
 }
