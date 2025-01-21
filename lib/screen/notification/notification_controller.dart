@@ -108,7 +108,7 @@ class NotificationController extends BaseController {
           value.text?.split(' : ').elementAt(1).split('.').first ?? '';
 
       Get.to(
-        const AggByDocScreen(),
+        () => const AggByDocScreen(),
         arguments: {"aggregationID": aggDoc},
       )?.then((_) => updateNotificationStatus(value));
     } else {

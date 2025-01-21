@@ -93,14 +93,14 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 0,
                             notificationColor: warningColor,
                             onTap: () => Get.to(
-                              const PantauPaketmuScreen(),
+                              () => const PantauPaketmuScreen(),
                               arguments: {
                                 "status": "Total Kiriman",
                                 "tipe": "cod",
                               },
                             ),
                             onTapNotification: () => Get.to(
-                              const RiwayatKirimanScreen(),
+                              () => const RiwayatKirimanScreen(),
                               arguments: {
                                 "status": "Masih di Kamu",
                                 "tipe": "ALL",
@@ -137,14 +137,14 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                 notificationCount: kirimanKamu.totalCancel,
                                 notificationColor: errorColor,
                                 onTap: () => Get.to(
-                                  const PantauPaketmuScreen(),
+                                  () => const PantauPaketmuScreen(),
                                   arguments: {
                                     "status": "Dalam Proses",
                                     "tipe": "cod",
                                   },
                                 ),
                                 onTapNotification: () => Get.to(
-                                  const PantauPaketmuScreen(),
+                                  () => const PantauPaketmuScreen(),
                                   arguments: {
                                     "status": "Dibatalkan Oleh Kamu",
                                     "tipe": "cod",
@@ -177,7 +177,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () => Get.to(
-                                  const PantauPaketmuScreen(),
+                                  () => const PantauPaketmuScreen(),
                                   arguments: {
                                     "status": "Sukses Diterima",
                                     "tipe": "cod",
@@ -204,7 +204,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           lineColor: redJNE,
                           isLoading: isLoadingKiriman,
                           onTap: () => Get.to(
-                            const PantauPaketmuScreen(),
+                            () => const PantauPaketmuScreen(),
                             arguments: {
                               "status": "Total Kiriman",
                               "tipe": "cod",
@@ -221,7 +221,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           lineColor: warningColor,
                           isLoading: isLoadingKiriman,
                           onTap: () => Get.to(
-                            const PantauPaketmuScreen(),
+                            () => const PantauPaketmuScreen(),
                             arguments: {
                               "status": "Total Kiriman",
                               "tipe": "cod ongkir",
@@ -237,7 +237,7 @@ class DashboardKirimanCountItem extends StatelessWidget {
                           lineColor: Colors.green,
                           isLoading: isLoadingKiriman,
                           onTap: () => Get.to(
-                            const PantauPaketmuScreen(),
+                            () => const PantauPaketmuScreen(),
                             arguments: {
                               "status": "Total Kiriman",
                               "tipe": "non cod",

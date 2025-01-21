@@ -98,7 +98,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                   : const SizedBox(),
                             ),
                             onTap: () => Get.to(
-                              const RiwayatKirimanScreen(),
+                              () => const RiwayatKirimanScreen(),
                               arguments: {
                                 "status": "Sudah JNE",
                                 "tipe": "ALL",
@@ -144,7 +144,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               ),
                             ),
                             onTap: () => Get.to(
-                              const RiwayatKirimanScreen(),
+                              () => const RiwayatKirimanScreen(),
                               arguments: {
                                 "status": "Belum Terkumpul",
                                 "tipe": "ALL",
@@ -198,7 +198,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                   ),
                                 ),
                                 onTap: () => Get.to(
-                                  const RiwayatKirimanScreen(),
+                                  () => const RiwayatKirimanScreen(),
                                   arguments: {
                                     "status": "Sukses Diterima",
                                     "tipe": "ALL",
@@ -233,7 +233,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 lineColor: warningColor,
                                 isLoading: isLoadingKiriman,
                                 onTap: () => Get.to(
-                                  const RiwayatKirimanScreen(),
+                                  () => const RiwayatKirimanScreen(),
                                   arguments: {
                                     "status": "Dalam Peninjauan",
                                     "tipe": "ALL",
@@ -256,7 +256,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 lineColor: errorColor,
                                 isLoading: isLoadingKiriman,
                                 onTap: () => Get.to(
-                                  const RiwayatKirimanScreen(),
+                                  () => const RiwayatKirimanScreen(),
                                   arguments: {
                                     "status": "Dibatalkan",
                                     "tipe": "ALL",
@@ -297,7 +297,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 lineColor: successColor,
                                 isLoading: isLoadingKiriman,
                                 onTap: () => Get.to(
-                                  const RiwayatKirimanScreen(),
+                                  () => const RiwayatKirimanScreen(),
                                   arguments: {
                                     "status": "Sudah Kembali",
                                     "tipe": "ALL",
@@ -318,7 +318,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 lineColor: infoColor,
                                 isLoading: isLoadingKiriman,
                                 onTap: () => Get.to(
-                                  const RiwayatKirimanScreen(),
+                                  () => const RiwayatKirimanScreen(),
                                   arguments: {
                                     "status": "Butuh di Cek",
                                     "tipe": "ALL",

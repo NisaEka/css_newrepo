@@ -136,6 +136,7 @@ class FacilityFormBankController extends BaseController {
 
   void onRefreshPickImageState() {
     _pickImageFailed = false;
+
     update();
   }
 
@@ -271,6 +272,7 @@ class FacilityFormBankController extends BaseController {
     _postDataFailed = false;
     _showLoadingIndicator = false;
     _postFileFailed = false;
+    Get.back();
 
     update();
   }

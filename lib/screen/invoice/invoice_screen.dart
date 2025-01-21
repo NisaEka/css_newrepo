@@ -36,7 +36,8 @@ class InvoiceScreen extends StatelessWidget {
   Widget _mainContent(BuildContext context, InvoiceController controller) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
+        child: ListView(
+          shrinkWrap: true,
           children: [
             _invoiceSearchBar(context, controller),
             _invoiceCountCard(context, controller),
@@ -115,7 +116,8 @@ class InvoiceScreen extends StatelessWidget {
   }
 
   Widget _invoiceList(BuildContext context, InvoiceController controller) {
-    return Expanded(
+    return SizedBox(
+      height: Get.height / 2.1,
       child: RefreshIndicator(
         color: Theme.of(context).colorScheme.outline,
         onRefresh: () => Future.sync(() => controller.refreshInvoices()),

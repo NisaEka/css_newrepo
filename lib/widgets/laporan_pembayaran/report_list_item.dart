@@ -181,7 +181,7 @@ class _ReportListItemState extends State<ReportListItem> {
                             ValueItem(
                               title: "PAID DATE",
                               value: widget.data?.mpayWdrGrpPayDatePaid
-                                      ?.toShortDateFormat() ??
+                                      ?.toLongDateTimeFormat() ??
                                   '-',
                             ),
                             CustomFilledButton(

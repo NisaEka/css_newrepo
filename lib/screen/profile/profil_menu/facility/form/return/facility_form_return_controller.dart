@@ -145,8 +145,20 @@ class FacilityFormReturnController extends BaseController {
     }
   }
 
+  Widget imageAlertDialog() {
+    return DefaultAlertDialog(
+      title: 'Gagal mengambil gambar.'.tr,
+      subtitle:
+          'Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB'
+              .tr,
+      confirmButtonTitle: 'OK'.tr,
+      onConfirm: () => onRefreshPickImageState(),
+    );
+  }
+
   void onRefreshPickImageState() {
     _pickImageFailed = false;
+    Get.back();
     update();
   }
 

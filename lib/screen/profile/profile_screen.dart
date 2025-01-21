@@ -174,7 +174,7 @@ class ProfileScreen extends StatelessWidget {
                             title: 'Pengaturan Petugas'.tr,
                             leading: Icons.supervisor_account_rounded,
                             onTap: () => c.state.isLogin
-                                ? Get.to(const PengaturanPetugasScreen())
+                                ? Get.to(() => const PengaturanPetugasScreen())
                                 : showDialog(
                                     context: context,
                                     builder: (context) =>

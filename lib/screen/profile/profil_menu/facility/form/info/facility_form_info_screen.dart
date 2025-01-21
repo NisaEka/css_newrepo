@@ -43,6 +43,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
             if (c.state.formKey.currentState?.validate() == true) {
               if (c.state.pickedImageUrl == null) {
                 c.pickImageFailed = true;
+                Get.dialog(c.imageAlertDialog());
                 return;
               }
               Get.to(() => const FacilityFormReturnScreen(), arguments: {

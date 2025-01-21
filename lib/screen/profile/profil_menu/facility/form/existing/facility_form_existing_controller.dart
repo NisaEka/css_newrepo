@@ -39,7 +39,7 @@ class FacilityFormExistingController extends BaseController {
         if (response.code == HttpStatus.created) {
           _createDataSuccess = true;
           Get.to(
-            SuccessScreen(
+            () => SuccessScreen(
               message:
                   'Upgrade profil kamu berhasil diajukan\n Mohon tunggu Approval dari Tim JNE Ya!'
                       .tr,

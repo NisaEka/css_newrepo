@@ -76,7 +76,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
       child: CustomSearchField(
         margin: const EdgeInsets.symmetric(vertical: 0),
         controller: controller.searchField,
-        hintText: 'Cari berdasarkan no resi'.tr,
+        hintText: 'Cari Berdasarkan No Resi'.tr,
         prefixIcon: SvgPicture.asset(
           IconsConstant.search,
           color: Theme.of(context).brightness == Brightness.light
