@@ -18,28 +18,17 @@ class ImageConstant {
   static const String keuanganmuIcon = "assets/icons/Keuanganmu.png";
   static const String paketmuIcon = "assets/icons/Paketmu.png";
   static const String boxPackage = "assets/images/noun-packaging-package.png";
-  static const String boxSudahDiJemput =
-      "assets/images/noun-cargo-van-sudahdijemput.png";
-  static const String boxSudahDiGudang =
-      "assets/images/noun-warehouse-sudahdigudangjne.png";
-  static const String boxSudahDiKotaTujuan =
-      "assets/images/noun-logistic-address-sudahdikotatujuan.png";
-  static const String boxDalamProses =
-      "assets/images/noun-online-parcels-dalamproses.png";
-  static const String boxSuksesDiterima =
-      "assets/images/noun-packaging-suksesditerima.png";
-  static const String boxButuhDicek =
-      "assets/images/noun-packaging-butuhdicek.png";
-  static const String boxProsesReturn =
-      "assets/images/noun-packaging-shipmentreturn_alt.png";
-  static const String boxSuksesReturn =
-      "assets/images/noun-packaging-shipmentreturn.png";
-  static const String boxDibatalkan =
-      "assets/images/noun-packaging-dibatalkan.png";
-  static const String boxDalamPeninjauan =
-      "assets/images/noun-packaging-dalampeninjauan.png";
-  static const String boxInvoice =
-      "assets/images/noun-shipping-cost-invoice.png";
+  static const String boxSudahDiJemput = "assets/images/noun-cargo-van-sudahdijemput.png";
+  static const String boxSudahDiGudang = "assets/images/noun-warehouse-sudahdigudangjne.png";
+  static const String boxSudahDiKotaTujuan = "assets/images/noun-logistic-address-sudahdikotatujuan.png";
+  static const String boxDalamProses = "assets/images/noun-online-parcels-dalamproses.png";
+  static const String boxSuksesDiterima = "assets/images/noun-packaging-suksesditerima.png";
+  static const String boxButuhDicek = "assets/images/noun-packaging-butuhdicek.png";
+  static const String boxProsesReturn = "assets/images/noun-packaging-shipmentreturn_alt.png";
+  static const String boxSuksesReturn = "assets/images/noun-packaging-shipmentreturn.png";
+  static const String boxDibatalkan = "assets/images/noun-packaging-dibatalkan.png";
+  static const String boxDalamPeninjauan = "assets/images/noun-packaging-dalampeninjauan.png";
+  static const String boxInvoice = "assets/images/noun-shipping-cost-invoice.png";
 
   static const String successLottie = "assets/lottie/success_lottie.json";
   static const String failedLottie = "assets/lottie/failed_lottie.json";
