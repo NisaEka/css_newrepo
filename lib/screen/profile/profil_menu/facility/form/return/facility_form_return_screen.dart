@@ -48,6 +48,7 @@ class FacilityFormReturnScreen extends StatelessWidget {
           if (c.formKey.currentState?.validate() == true) {
             if (c.pickedImageUrl == null) {
               c.pickImageFailed = true;
+              Get.dialog(c.imageAlertDialog());
               return;
             }
             if (c.npwpNumber.text.length < 20) {

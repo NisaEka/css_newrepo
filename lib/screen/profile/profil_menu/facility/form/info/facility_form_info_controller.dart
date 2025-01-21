@@ -10,6 +10,7 @@ import 'package:css_mobile/screen/profile/profil_menu/facility/form/bank/facilit
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_controller.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pinput/pinput.dart';
@@ -95,8 +96,20 @@ class FacilityFormInfoController extends BaseController {
     }
   }
 
+  Widget imageAlertDialog() {
+    return DefaultAlertDialog(
+      title: 'Gagal mengambil gambar.'.tr,
+      subtitle:
+          'Periksa kembali file gambar KTP. File gambar tidak boleh kosong atau lebih dari 2MB'
+              .tr,
+      confirmButtonTitle: 'OK'.tr,
+      onConfirm: () => onRefreshUploadState(),
+    );
+  }
+
   void onRefreshUploadState() {
     _pickImageFailed = false;
+    Get.back();
     update();
   }
 
