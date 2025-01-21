@@ -472,9 +472,6 @@ class DashboardController extends BaseController {
                         (value.data?.totalKirimanCod?.codOngkirAmount
                                 ?.toInt() ??
                             0);
-                // for (var chart in (item.chart ?? [])) {
-                //   state.kirimanKamuCOD.lineChart.add(chart.y);
-                // }
               }
 
               if (item.status == 'Belum Terkumpul') {
@@ -545,13 +542,13 @@ class DashboardController extends BaseController {
           },
         );
         update();
-      } catch (e) {
+      } catch (e, i) {
         AppLogger.e('error loadTransCountList $e');
-      } finally {
-        await Future.delayed(const Duration(seconds: 2));
-        state.isLoadingKirimanCOD = false;
-        update();
+        AppLogger.e('error loadTransCountList $i');
       }
+      await Future.delayed(const Duration(seconds: 2));
+      state.isLoadingKirimanCOD = false;
+      update();
     }
   }
 

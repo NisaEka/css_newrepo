@@ -109,16 +109,18 @@ class TransactionController extends BaseController {
 
         try {
           await transaction
-              .postCalcOngkir(DataTransactionOngkirModel(
-            goodsAmount: goodsAmount == 0 ? 0 : goodsAmount,
-            isIsr: state.insurance,
-            ongkir: state.freightCharge,
-            accountNumber: state.account.accountNumber,
-            isCod: state.isCOD,
-            codFee: state.codfee,
-            isCongkir: state.codOngkir,
-            isPrefix3: prefix3,
-          ))
+              .postCalcOngkir(
+            DataTransactionOngkirModel(
+              goodsAmount: goodsAmount == 0 ? 0 : goodsAmount,
+              isIsr: state.insurance,
+              ongkir: state.freightCharge,
+              accountNumber: state.account.accountNumber,
+              isCod: state.isCOD,
+              codFee: state.codfee,
+              isCongkir: state.codOngkir,
+              isPrefix3: prefix3,
+            ),
+          )
               .then((value) {
             AppLogger.d('transaction ongkir : ${value.data?.toJson()}');
             state.getCodAmountMinimum = value.data?.codAmountMinimum ?? 0;

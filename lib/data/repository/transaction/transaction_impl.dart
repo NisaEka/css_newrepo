@@ -1,7 +1,6 @@
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
-import 'package:css_mobile/data/model/response_model.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_ongkir_model.dart';
 import 'package:css_mobile/data/model/transaction/get_cod_fee_model.dart';
 import 'package:css_mobile/data/model/transaction/get_transaction_count_model.dart';
@@ -326,7 +325,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<ResponseModel<TransactionSummaryModel>> postTransactionDashboard(
+  Future<BaseResponse<TransactionSummaryModel>> postTransactionDashboard(
       QueryModel param) async {
     var now = DateTime.now().toLocal();
     var startDate = DateTime(now.year, now.month, now.day)
@@ -351,7 +350,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         ).toJson(),
       );
 
-      final test = ResponseModel<TransactionSummaryModel>.fromJson(
+      final test = BaseResponse<TransactionSummaryModel>.fromJson(
         response.data,
         (json) {
           // Deserialize the PropertySummary
@@ -360,7 +359,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
       );
       return test;
     } on DioException catch (e) {
-      return ResponseModel<TransactionSummaryModel>.fromJson(
+      return BaseResponse<TransactionSummaryModel>.fromJson(
         e.response?.data,
         (json) =>
             TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
