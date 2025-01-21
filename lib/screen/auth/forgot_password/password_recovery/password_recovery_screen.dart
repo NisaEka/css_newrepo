@@ -64,12 +64,15 @@ class PasswordRecoveryScreen extends StatelessWidget {
                           'Kode OTP akan dikirimkan ke alamat email berikut :'
                               .tr,
                           style: Theme.of(context).textTheme.titleSmall),
-                      Text(c.getMail(),
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: AppConst.isLightTheme(context)
-                                  ? greyDarkColor1
-                                  : greyLightColor1)),
+                      Text(
+                        c.getMail(),
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: AppConst.isLightTheme(context)
+                              ? greyDarkColor1
+                              : greyLightColor1,
+                        ),
+                      ),
                     ],
                   ),
                 )

@@ -129,7 +129,7 @@ class _CustomSearchDropdownFieldState<T>
                 DataEmpty(text: "Anda sedang offline".tr),
             menuProps: MenuProps(
               backgroundColor:
-                  AppConst.isLightTheme(context) ? null : greyColor,
+                  AppConst.isLightTheme(context) ? null : greyDarkColor1,
               borderRadius: BorderRadius.circular(10),
             ),
             showSearchBox: true,
