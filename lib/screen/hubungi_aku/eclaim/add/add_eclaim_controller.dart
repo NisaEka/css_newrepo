@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -103,15 +104,15 @@ class AddEclaimController extends BaseController {
     update();
   }
 
-  void showManualCategoryList() {
+  void showManualCategoryList(BuildContext context) {
     Get.bottomSheet(
       enableDrag: true,
       isDismissible: true,
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: dropDownColor(context),
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
           ),
@@ -134,7 +135,7 @@ class AddEclaimController extends BaseController {
                     ListTile(
                       title: Text(
                         manualCategories[index].tr,
-                        style: const TextStyle(color: Colors.black),
+                        style: TextStyle(color: textColor(context)),
                       ),
                       onTap: () {
                         category.text = manualCategories[index];

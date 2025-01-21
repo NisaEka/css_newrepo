@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/profil_menu/akun_bank_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -78,8 +77,7 @@ class AkunBankScreen extends StatelessWidget {
                   return SecretDataDialog(
                       text: '${'bank_info'.tr}\n\n${'kerahasiaan_data'.tr}');
                 }),
-                backgroundColor:
-                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor: dropDownColor(context),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

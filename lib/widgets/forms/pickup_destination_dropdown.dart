@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -118,7 +117,7 @@ class _DestinationDropdownState extends State<PickupDestinationDropdown> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            color: dropDownColor(context),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),

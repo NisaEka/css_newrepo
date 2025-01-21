@@ -17,11 +17,12 @@ class HubungiAkuDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: Get.width,
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        color: Theme.of(context).dialogBackgroundColor,
+        color: dropDownColor(context),
         borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
         ),
       ),
       child: Column(
@@ -31,11 +32,11 @@ class HubungiAkuDialog extends StatelessWidget {
             width: Get.width,
             padding: const EdgeInsets.all(10),
             alignment: Alignment.center,
-            decoration: const BoxDecoration(
-              color: greyColor,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                topRight: Radius.circular(20),
+            decoration: BoxDecoration(
+              color: dropDownColor(context),
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
             ),
             child: Text(

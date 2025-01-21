@@ -75,5 +75,5 @@ Color formTextColor(BuildContext context) {
 }
 
 Color dropDownColor(BuildContext context) {
-  return AppConst.isLightTheme(context) ? whiteColor : greyColor;
+  return AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1;
 }

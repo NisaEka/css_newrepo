@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
@@ -149,7 +148,7 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            color: dropDownColor(context),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),

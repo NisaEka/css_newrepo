@@ -48,14 +48,10 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
       BuildContext context, RequestPickupAddressUpsertController controller) {
     return Form(
       key: controller.formKey,
-      // onChanged: () {
-      //   controller.update();
-      // },
       child: Column(
         children: [
           CustomTextFormField(
             controller: controller.name,
-            // label: "Nama Kamu".tr,
             hintText: "Nama Kamu".tr,
             inputType: TextInputType.name,
             isRequired: true,
@@ -63,22 +59,12 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           ),
           CustomTextFormField(
             controller: controller.phone,
-            // label: "No Handphone".tr,
             hintText: "No Handphone".tr,
             inputType: TextInputType.phone,
             isRequired: true,
             prefixIcon: const Icon(Icons.phone_rounded),
             validator: ValidationBuilder().phoneNumber().build(),
           ),
-          // Align(
-          //   alignment: Alignment.centerLeft,
-          //   child: RichText(
-          //     text: TextSpan(
-          //       // text: "Kota Penjemputan".tr,
-          //       style: formLabelTextStyle.copyWith(color: textColor(context)),
-          //     ),
-          //   ),
-          // ),
           CustomSearchDropdownField<DestinationModel>(
             asyncItems: (String filter) =>
                 controller.getDestinationList(filter),
@@ -111,7 +97,6 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           ),
           CustomTextFormField(
             controller: controller.address,
-            // label: "Alamat Penjemputan".tr,
             hintText: "Alamat Penjemputan".tr,
             inputType: TextInputType.streetAddress,
             multiLine: true,
