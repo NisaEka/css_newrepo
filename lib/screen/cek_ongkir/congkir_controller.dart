@@ -70,12 +70,11 @@ class CekOngkirController extends BaseController {
         state.ongkirList.addAll(resultJtrList);
         update();
       } catch (e, i) {
-        AppLogger.e('error loadOngkir $e, $i');
+        AppLogger.e('error load ongkir $e, $i');
         AppSnackBar.error('Failed to load cek ongkir');
-      } finally {
-        state.isLoading = false;
-        update();
       }
+      state.isLoading = false;
+      update();
     }
   }
 

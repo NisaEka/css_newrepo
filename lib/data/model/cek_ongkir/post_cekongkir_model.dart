@@ -10,7 +10,7 @@ class OngkirModel {
     String? etdFrom,
     String? etdThru,
     String? times,
-    int? insuranceAmount,
+    num? insuranceAmount,
   }) {
     _originName = originName;
     _destinationName = destinationName;
@@ -49,7 +49,7 @@ class OngkirModel {
   String? _etdFrom;
   String? _etdThru;
   String? _times;
-  int? _insuranceAmount;
+  num? _insuranceAmount;
 
   OngkirModel copyWith({
     String? originName,
@@ -62,7 +62,7 @@ class OngkirModel {
     String? etdFrom,
     String? etdThru,
     String? times,
-    int? insuranceAmount,
+    num? insuranceAmount,
   }) =>
       OngkirModel(
         originName: originName ?? _originName,
@@ -98,7 +98,7 @@ class OngkirModel {
 
   String? get times => _times;
 
-  int? get insuranceAmount => _insuranceAmount;
+  num? get insuranceAmount => _insuranceAmount;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
