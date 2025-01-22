@@ -77,8 +77,7 @@ class DokumenScreen extends StatelessWidget {
                     builder: (BuildContext context, StateSetter setState) {
                   return SecretDataDialog(text: 'kerahasiaan_data'.tr);
                 }),
-                backgroundColor:
-                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor: dropDownColor(context),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),

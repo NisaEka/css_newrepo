@@ -135,7 +135,7 @@ Widget _bodyContent(AddEclaimController c, BuildContext context) {
             readOnly: true,
             hintText: "Kategori".tr,
             isRequired: true,
-            onTap: () => c.showManualCategoryList(),
+            onTap: () => c.showManualCategoryList(context),
             suffixIcon: const Icon(Icons.keyboard_arrow_down),
           ),
           CustomTextFormField(

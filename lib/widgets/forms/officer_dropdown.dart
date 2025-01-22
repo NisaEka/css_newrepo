@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -121,7 +120,7 @@ class _OriginDropdownState extends State<OfficerDropdown> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            color: dropDownColor(context),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),

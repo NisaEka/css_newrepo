@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
@@ -113,11 +112,10 @@ class _OriginDropdownState extends State<OriginDropdown> {
                     const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.originName.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? Colors.black
-                            : whiteColor,
-                      ),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: textColor(context)),
                 ),
               );
             },
@@ -128,11 +126,10 @@ class _OriginDropdownState extends State<OriginDropdown> {
             hintText: widget.label ?? "Kota Pengiriman".tr,
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppConst.isLightTheme(context)
-                      ? Colors.black
-                      : whiteColor,
-                ),
+            textStyle: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: textColor(context)),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );
@@ -149,7 +146,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            color: dropDownColor(context),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),

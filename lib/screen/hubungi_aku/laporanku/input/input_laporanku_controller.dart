@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/laporanku/data_post_ticket_model.dart';
 import 'package:css_mobile/data/model/laporanku/get_ticket_category_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -75,7 +73,7 @@ class InputLaporankuController extends BaseController {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            color: dropDownColor(context),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),
@@ -86,11 +84,7 @@ class InputLaporankuController extends BaseController {
             children: [
               Text(
                 "Kategori".tr,
-                style: appTitleTextStyle.copyWith(
-                  color: AppConst.isLightTheme(context)
-                      ? greyDarkColor1
-                      : greyLightColor1,
-                ),
+                style: Theme.of(context).textTheme.titleLarge,
               ),
               CustomSearchField(
                 controller: searchCategory,

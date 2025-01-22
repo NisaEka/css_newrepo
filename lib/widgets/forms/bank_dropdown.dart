@@ -121,7 +121,7 @@ class _BankDropdownState extends State<BankDropdown> {
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           decoration: BoxDecoration(
-            color: AppConst.isLightTheme(context) ? whiteColor : greyDarkColor1,
+            color: dropDownColor(context),
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(15),
               topRight: Radius.circular(15),

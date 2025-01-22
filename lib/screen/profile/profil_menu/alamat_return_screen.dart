@@ -1,4 +1,3 @@
-import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/profil_menu/alamat_return_controller.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -92,8 +91,7 @@ class AlamatReturnScreen extends StatelessWidget {
                   return SecretDataDialog(
                       text: '${'return_info'.tr}\n\n${'kerahasiaan_data'.tr}');
                 }),
-                backgroundColor:
-                    AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                backgroundColor: dropDownColor(context),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
