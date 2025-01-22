@@ -32,8 +32,10 @@ class NewPasswordController extends BaseController {
     update();
     try {
       await auth
-          .postPasswordChage(
-              InputNewPasswordModel(password: newPW.text, token: token))
+          .postPasswordChage(InputNewPasswordModel(
+            password: newPW.text,
+            token: token,
+          ))
           .then((value) => value.code == 201
               ? Get.to(
                   () => SuccessScreen(

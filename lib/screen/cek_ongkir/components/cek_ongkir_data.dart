@@ -88,8 +88,10 @@ class CekOngkirData extends StatelessWidget {
                       (e) => OngkirListItem(
                         serviceTitle: e.serviceDisplay.toString(),
                         serviceSubtitle: e.goodsType.toString(),
-                        servicePrice:
-                            (e.insuranceAmount ?? 0).toCurrency().toString(),
+                        servicePrice: (e.insuranceAmount ?? 0)
+                            .toInt()
+                            .toCurrency()
+                            .toString(),
                         serviceDuration:
                             '${e.etdFrom ?? ''} - ${e.etdThru ?? ''} ${e.times ?? ''}',
                       ),
