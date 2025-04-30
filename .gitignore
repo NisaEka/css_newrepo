@@ -47,3 +47,4 @@ app.*.map.json
 /lib/config/env.dart
 /lib/config/api_config.dart
 /android/local_maps.properties
+/assets/cert

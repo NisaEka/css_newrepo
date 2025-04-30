@@ -46,28 +46,22 @@ class TransactionItems extends StatelessWidget {
                     ),
                     child: PagedListView<int, TransactionModel>(
                       pagingController: c.state.pagingController,
-                      builderDelegate:
-                          PagedChildBuilderDelegate<TransactionModel>(
+                      builderDelegate: PagedChildBuilderDelegate<TransactionModel>(
                         transitionDuration: const Duration(milliseconds: 500),
-                        itemBuilder: (context, item, index) =>
-                            RiwayatKirimanListItem(
+                        itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                           data: item,
                           isLoading: false,
                           index: index,
-                          isSelected: c.state.selectedTransaction
-                              .where((e) => e == item)
-                              .isNotEmpty,
+                          isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
                           onLongPress: () {
-                            if (item.statusAwb == "MASIH DI KAMU" &&
-                                c.state.allow?.hapusPesanan == 'Y') {
+                            if (item.statusAwb == "MASIH DI KAMU" && c.state.allow?.hapusPesanan == 'Y') {
                               c.select(item);
                             }
                           },
                           onTap: () {
                             c.unselect(item);
                           },
-                          isDelete: item.statusAwb == "MASIH DI KAMU" &&
-                              c.state.allow?.hapusPesanan == 'Y',
+                          isDelete: item.statusAwb == "MASIH DI KAMU" && c.state.allow?.hapusPesanan == 'Y',
                           onDelete: (context) => showDialog(
                             context: context,
                             builder: (context) => DeleteAlertDialog(
@@ -84,17 +78,14 @@ class TransactionItems extends StatelessWidget {
                             ),
                           ),
                         ),
-                        firstPageErrorIndicatorBuilder: (context) =>
-                            const DataEmpty(),
+                        firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                         firstPageProgressIndicatorBuilder: (context) => Column(
                           children: List.generate(
                             10,
-                            (index) =>
-                                const RiwayatKirimanListItem(isLoading: true),
+                            (index) => const RiwayatKirimanListItem(isLoading: true),
                           ),
                         ),
-                        noItemsFoundIndicatorBuilder: (context) =>
-                            const DataEmpty(),
+                        noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
                         noMoreItemsIndicatorBuilder: (context) => Center(
                           child: Divider(
                             indent: 100,
@@ -103,8 +94,7 @@ class TransactionItems extends StatelessWidget {
                             color: primaryColor(context),
                           ),
                         ),
-                        newPageProgressIndicatorBuilder: (context) =>
-                            const LoadingDialog(
+                        newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
                           background: Colors.transparent,
                           height: 50,
                           size: 30,

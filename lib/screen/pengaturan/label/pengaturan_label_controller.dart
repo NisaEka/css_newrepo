@@ -27,14 +27,12 @@ class PengaturanLabelController extends BaseController {
         labelList.addAll(value.data?.labels ?? []);
         selectedSticker = labelList.where((e) => e.enabled == true).first;
         shipcost = (value.data?.priceLabel != '0') ? "PUBLISH" : "HIDE";
-        hiddenPhone =
-            (value.data?.hideShipperphoneLabel != 'Y') ? "PUBLISH" : "HIDE";
+        hiddenPhone = (value.data?.hideShipperphoneLabel != 'Y') ? "PUBLISH" : "HIDE";
         copyLabel = value.data?.copyLabel?.toString() ?? '0';
       });
     } catch (e) {
       AppLogger.e('error initData pengaturan label', e);
-      selectedSticker = SettingLabelsModel.fromJson(
-          await storage.readData(StorageCore.transactionLabel));
+      selectedSticker = SettingLabelsModel.fromJson(await storage.readData(StorageCore.transactionLabel));
       shipcost = await storage.readString(StorageCore.shippingCost);
       hiddenPhone = await storage.readString(StorageCore.hiddenPhoneShipper);
       copyLabel = await storage.readString(StorageCore.isCopyLabel);
@@ -57,12 +55,9 @@ class PengaturanLabelController extends BaseController {
           .then((value) async {
         if (value.code == 200) {
           await storage.writeString(StorageCore.shippingCost, shipcost);
-          await storage.writeString(
-              StorageCore.hiddenPhoneShipper, hiddenPhone);
+          await storage.writeString(StorageCore.hiddenPhoneShipper, hiddenPhone);
           await storage.writeString(StorageCore.isCopyLabel, copyLabel);
-          await storage
-              .writeString(StorageCore.transactionLabel, selectedSticker?.name)
-              .then(
+          await storage.writeString(StorageCore.transactionLabel, selectedSticker?.name).then(
                 (value) => AppSnackBar.success('Label di update'.tr),
               );
         } else {

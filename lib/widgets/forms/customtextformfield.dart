@@ -66,13 +66,8 @@ class CustomTextFormField extends StatefulWidget {
     this.onSaved,
   }) {
     if (isRequired) {
-      StorageCore()
-          .readString(StorageCore.localeApp)
-          .then((value) => ValidationBuilder.setLocale(value));
-      validator ??=
-          ValidationBuilder(requiredMessage: 'Masukan tidak boleh kosong'.tr)
-              .required()
-              .build();
+      StorageCore().readString(StorageCore.localeApp).then((value) => ValidationBuilder.setLocale(value));
+      validator ??= ValidationBuilder(requiredMessage: 'Masukan tidak boleh kosong'.tr).required().build();
     }
   }
 
@@ -88,19 +83,17 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       children: [
         widget.label != null
             ? RichText(
-                text: TextSpan(
-                  text: widget.label,
-                  style: formLabelTextStyle.copyWith(color: textColor(context)),
-                  children: const <TextSpan>[],
-                ),
-              )
+          text: TextSpan(
+            text: widget.label,
+            style: formLabelTextStyle.copyWith(color: textColor(context)),
+            children: const <TextSpan>[],
+          ),
+        )
             : const SizedBox(),
         SizedBox(
           height: widget.helperText != null ? 16 : 8,
         ),
-        widget.helperText != null
-            ? Text(widget.helperText ?? "")
-            : const SizedBox(),
+        widget.helperText != null ? Text(widget.helperText ?? "") : const SizedBox(),
         SizedBox(
           height: widget.helperText != null ? 16 : 0,
         ),
@@ -108,9 +101,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           isLoading: widget.isLoading,
           child: Container(
             width: widget.width ?? Get.width,
-            height: widget.height != null && widget.multiLine == false
-                ? widget.height ?? 39
-                : null,
+            height: widget.height != null && widget.multiLine == false ? widget.height ?? 39 : null,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: widget.isLoading ? greyColor : Colors.transparent,
@@ -134,77 +125,82 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               inputFormatters: widget.inputFormatters ??
                   (widget.hintText?.contains('email') ?? false
                       ? [
-                          TextInputFormatter.withFunction((oldValue, newValue) {
-                            return newValue.copyWith(
-                                text: newValue.text.toLowerCase());
-                          })
-                        ]
-                      : (!(widget.hintText?.contains('Kata Sandi') ?? false) ||
-                              !(widget.hintText?.contains('Password') ?? false))
-                          ? [
-                              TextInputFormatter.withFunction(
-                                  (oldValue, newValue) {
-                                return newValue.copyWith(
-                                    text: newValue.text.toUpperCase());
-                              })
-                            ]
-                          : []),
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      return newValue.copyWith(text: newValue.text.toLowerCase());
+                    })
+                  ]
+                      : (!(widget.hintText?.contains('Kata Sandi') ?? false) || !(widget.hintText?.contains('Password') ?? false))
+                      ? [
+                    TextInputFormatter.withFunction((oldValue, newValue) {
+                      return newValue.copyWith(text: newValue.text.toUpperCase());
+                    })
+                  ]
+                      : []),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    fontSize: 16,
-                    color: AppConst.isLightTheme(context)
-                        ? Colors.black
-                        : whiteColor,
-                  ),
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(
+                fontSize: 16,
+                color: AppConst.isLightTheme(context) ? Colors.black : whiteColor,
+              ),
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
-                  filled: true,
-                  label: widget.label == null
-                      ? Text(widget.hintText ?? '')
-                      : const SizedBox(),
-                  fillColor: widget.backgroundColor ??
-                      (widget.onTap != null || !widget.readOnly
-                          ? Colors.transparent
-                          : AppConst.isLightTheme(context)
-                              ? greyLightColor3
-                              : greyColor),
-                  //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
-                  suffixIcon: widget.suffixIcon,
-                  prefixIcon: widget.prefixIcon,
-                  prefixIconColor: Theme.of(context).colorScheme.outline,
-                  suffixIconColor: Theme.of(context).colorScheme.outline,
-                  contentPadding: widget.contentPadding ??
-                      const EdgeInsets.only(
-                          top: 10, bottom: 10, left: 10, right: 10),
-                  hintText: widget.hintText ?? widget.label,
-                  errorMaxLines: 3,
-                  disabledBorder: widget.noBorder
-                      ? OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                            color: widget.readOnly
-                                ? Colors.white
-                                : AppConst.isLightTheme(context)
-                                    ? Theme.of(context).primaryColor
-                                    : greyLightColor1,
-                            width: widget.readOnly ? 1 : 2,
-                            style: BorderStyle.solid,
-                          ),
-                        )
-                      : null,
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: BorderSide(
-                      color: widget.readOnly
-                          ? greyDarkColor1
-                          : AppConst.isLightTheme(context)
-                              ? Theme.of(context).primaryColor
-                              : whiteColor,
-                      width: widget.readOnly ? 1 : 2,
-                      style: BorderStyle.solid,
-                    ),
+                filled: true,
+                label: widget.label == null ? Text(widget.hintText ?? '') : const SizedBox(),
+                fillColor: widget.backgroundColor ??
+                    (widget.onTap != null || !widget.readOnly
+                        ? Colors.transparent
+                        : AppConst.isLightTheme(context)
+                        ? greyLightColor3
+                        : greyColor),
+                //jika ontap!=null, maka state "active". jika bukan readyonly, maka state "active". Jika readonly dan ontap == null maka state "inactive"
+                suffixIcon: widget.suffixIcon,
+                prefixIcon: widget.prefixIcon,
+                prefixIconColor: Theme
+                    .of(context)
+                    .colorScheme
+                    .outline,
+                suffixIconColor: Theme
+                    .of(context)
+                    .colorScheme
+                    .outline,
+                contentPadding: widget.contentPadding ?? const EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 10),
+                hintText: widget.hintText ?? widget.label,
+                errorMaxLines: 3,
+                disabledBorder: widget.noBorder
+                    ? OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: widget.readOnly
+                        ? Colors.white
+                        : AppConst.isLightTheme(context)
+                        ? Theme
+                        .of(context)
+                        .primaryColor
+                        : greyLightColor1,
+                    width: widget.readOnly ? 1 : 2,
+                    style: BorderStyle.solid,
                   ),
-                  hintStyle: hintTextStyle),
+                )
+                    : null,
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(
+                    color: widget.readOnly
+                        ? greyDarkColor1
+                        : AppConst.isLightTheme(context)
+                        ? Theme
+                        .of(context)
+                        .primaryColor
+                        : whiteColor,
+                    width: widget.readOnly ? 1 : 2,
+                    style: BorderStyle.solid,
+                  ),
+                ),
+                hintStyle: hintTextStyle,
+              ),
             ),
           ),
         ),

@@ -12,8 +12,7 @@ class StorageImpl extends StorageRepository {
   final network = Get.find<NetworkCore>();
 
   @override
-  Future<BaseResponse<List<FileModel>?>> postCcrfFile(
-      Map<String, String> files) async {
+  Future<BaseResponse<List<FileModel>?>> postCcrfFile(Map<String, String> files) async {
     try {
       var formData = FormData.fromMap({});
 
@@ -21,17 +20,12 @@ class StorageImpl extends StorageRepository {
         String fileExtension = value.split('.').last.toLowerCase();
         String mimeType = _getMimeType(fileExtension);
         if (!value.contains("http")) {
-          formData.files.add(MapEntry(
-              key,
-              MultipartFile.fromFileSync(value,
-                  filename: value.split('/').last,
-                  contentType: DioMediaType.parse(mimeType))));
+          formData.files
+              .add(MapEntry(key, MultipartFile.fromFileSync(value, filename: value.split('/').last, contentType: DioMediaType.parse(mimeType))));
         }
       });
 
-      var response = await network.base.post("/uploads/ccrf",
-          data: formData,
-          options: Options(headers: {"Content-Type": "multipart/form-data"}));
+      var response = await network.base.post("/uploads/ccrf", data: formData, options: Options(headers: {"Content-Type": "multipart/form-data"}));
       return BaseResponse<List<FileModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -72,9 +66,8 @@ class StorageImpl extends StorageRepository {
         ),
       });
 
-      var response = await network.base.post("/uploads/laporanku",
-          data: formData,
-          options: Options(headers: {"Content-Type": "multipart/form-data"}));
+      var response =
+          await network.base.post("/uploads/laporanku", data: formData, options: Options(headers: {"Content-Type": "multipart/form-data"}));
       return BaseResponse<List<FileModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>

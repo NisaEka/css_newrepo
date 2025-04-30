@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/network_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
@@ -63,18 +64,26 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
   Future<List<OriginExternal>> getOriginList(String keyword) async {
     final network = Get.find<NetworkCore>();
 
-    Response response = await network.base.get(
-      '/master/origins/external/${keyword.toUpperCase()}',
-      options: Options(extra: {'skipAuth': true}),
-    );
+    try{
+      Response response = await network.base.get(
+        '/master/origins/external/${keyword.toUpperCase()}',
+        options: Options(extra: {'skipAuth': true}),
+      );
 
-    if (response.data['data'] != null && response.data['data'] is List) {
-      return (response.data['data'] as List)
-          .map((item) => OriginExternal.fromJson(item))
-          .toList();
-    } else {
+      AppLogger.w("response : $response");
+
+      if (response.data['data'] != null && response.data['data'] is List) {
+        return (response.data['data'] as List)
+            .map((item) => OriginExternal.fromJson(item))
+            .toList();
+      } else {
+        return [];
+      }
+    }catch(e){
+      AppLogger.e("response error : $e");
       return [];
     }
+
   }
 
   @override

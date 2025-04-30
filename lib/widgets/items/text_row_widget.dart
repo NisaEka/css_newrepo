@@ -39,7 +39,8 @@ class TextRowWidget extends StatelessWidget {
                   child: Text(
                     title,
                     style: titleStyle ??
-                        Theme.of(context)
+                        Theme
+                            .of(context)
                             .textTheme
                             .titleMedium
                             ?.copyWith(fontWeight: FontWeight.normal),
@@ -58,7 +59,8 @@ class TextRowWidget extends StatelessWidget {
                   child: Text(
                     value!,
                     style: valueStyle ??
-                        Theme.of(context)
+                        Theme
+                            .of(context)
                             .textTheme
                             .titleMedium
                             ?.copyWith(fontWeight: FontWeight.normal),

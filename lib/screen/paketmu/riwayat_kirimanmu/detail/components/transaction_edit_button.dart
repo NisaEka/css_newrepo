@@ -29,13 +29,11 @@ class TransactionEditButton extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                c.state.allow?.paketmuPrint == 'Y' ||
-                        c.state.allow?.cetakPesanan == 'Y'
+                c.state.allow?.paketmuPrint == 'Y' || c.state.allow?.cetakPesanan == 'Y'
                     ? Expanded(
                         flex: 3,
                         child: CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           color: primaryColor(context),
                           title: "Lihat Resi".tr,
                           suffixIcon: Icons.qr_code_rounded,
@@ -54,8 +52,7 @@ class TransactionEditButton extends StatelessWidget {
                     ? Expanded(
                         flex: 1,
                         child: CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           color: successColor,
                           isTransparent: true,
                           prefixIcon: Icons.edit_rounded,
@@ -76,13 +73,11 @@ class TransactionEditButton extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                c.state.transactionModel?.statusAwb == "MASIH DI KAMU" &&
-                        (c.state.allow?.hapusPesanan == 'Y')
+                c.state.transactionModel?.statusAwb == "MASIH DI KAMU" && (c.state.allow?.hapusPesanan == 'Y')
                     ? Expanded(
                         flex: 1,
                         child: CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           color: errorColor,
                           isTransparent: true,
                           prefixIcon: Icons.delete_rounded,
@@ -90,8 +85,7 @@ class TransactionEditButton extends StatelessWidget {
                           fontSize: 23,
                           isLoading: c.state.isLoading,
                           onPressed: () {
-                            if (c.state.transactionModel?.statusAwb ==
-                                "MASIH DI KAMU") {
+                            if (c.state.transactionModel?.statusAwb == "MASIH DI KAMU") {
                               showDialog(
                                 context: context,
                                 builder: (context) => DeleteAlertDialog(
@@ -109,14 +103,11 @@ class TransactionEditButton extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-                c.state.transactionModel?.statusAwb != "MASIH DI KAMU" &&
-                        c.state.transactionModel?.statusAwb !=
-                            "DIBATALKAN OLEH KAMU"
+                c.state.transactionModel?.statusAwb != "MASIH DI KAMU" && c.state.transactionModel?.statusAwb != "DIBATALKAN OLEH KAMU"
                     ? Expanded(
                         flex: 1,
                         child: CustomFilledButton(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 10),
+                          margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           color: warningColor,
                           isTransparent: true,
                           prefixIcon: Icons.phone_rounded,
@@ -127,8 +118,7 @@ class TransactionEditButton extends StatelessWidget {
                             Get.bottomSheet(
                               enableDrag: true,
                               isDismissible: true,
-                              StatefulBuilder(builder:
-                                  (BuildContext context, StateSetter setState) {
+                              StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                                 return HubungiAkuDialog(
                                   awb: c.state.awb,
                                   allow: c.state.allow ?? MenuModel(),

@@ -9,7 +9,7 @@ class SignupAppbar extends PreferredSize {
   const SignupAppbar({
     super.key,
     super.preferredSize = const Size.fromHeight(200),
-    required super.child,
+    super.child = const SizedBox(),
   });
 
   @override

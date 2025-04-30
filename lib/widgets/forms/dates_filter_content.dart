@@ -112,11 +112,9 @@ class _DatesFilterContentState extends State<DateFilterField> {
                 onTap: () => selectDate(context).then((value) {
                   setState(() {
                     startDate = value;
-                    startDateField.text =
-                        value.toString().toShortDateTimeFormat();
+                    startDateField.text = value.toString().toShortDateTimeFormat();
                     endDate = DateTime.now();
-                    endDateField.text =
-                        DateTime.now().toString().toShortDateTimeFormat();
+                    endDateField.text = DateTime.now().toString().toShortDateTimeFormat();
 
                     widget.onChanged(DateFilter(
                       dateFilter: dateFilter ?? '3',
@@ -134,8 +132,7 @@ class _DatesFilterContentState extends State<DateFilterField> {
                 onTap: () => selectDate(context).then((value) {
                   setState(() {
                     endDate = value;
-                    endDateField.text =
-                        value.toString().toShortDateTimeFormat();
+                    endDateField.text = value.toString().toShortDateTimeFormat();
 
                     widget.onChanged(DateFilter(
                       dateFilter: dateFilter ?? '3',
@@ -162,16 +159,12 @@ class _DatesFilterContentState extends State<DateFilterField> {
       startDateField.clear();
       endDateField.clear();
     } else if (filter == 1) {
-      startDate = DateTime.now()
-          .copyWith(hour: 0, minute: 0)
-          .subtract(const Duration(days: 29));
+      startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 29));
       endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
     } else if (filter == 2) {
-      startDate = DateTime.now()
-          .copyWith(hour: 0, minute: 0)
-          .subtract(const Duration(days: 6));
+      startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 6));
       endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
@@ -181,12 +174,8 @@ class _DatesFilterContentState extends State<DateFilterField> {
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
     } else if (filter == 5) {
-      startDate = DateTime.now()
-          .subtract(const Duration(days: 1))
-          .copyWith(hour: 0, minute: 0);
-      endDate = DateTime.now()
-          .subtract(const Duration(days: 1))
-          .copyWith(hour: 23, minute: 59, second: 59);
+      startDate = DateTime.now().subtract(const Duration(days: 1)).copyWith(hour: 0, minute: 0);
+      endDate = DateTime.now().subtract(const Duration(days: 1)).copyWith(hour: 23, minute: 59, second: 59);
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
     }

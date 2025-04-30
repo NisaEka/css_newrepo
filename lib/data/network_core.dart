@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
@@ -7,7 +8,9 @@ import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:get/get.dart' hide Response;
 import 'storage_core.dart';
@@ -29,8 +32,7 @@ class NetworkCore {
     final locale = await _getLocale();
 
     for (var i = 0; i < failedRequests.length; i++) {
-      RequestOptions requestOptions =
-          failedRequests[i]['err'].requestOptions as RequestOptions;
+      RequestOptions requestOptions = failedRequests[i]['err'].requestOptions as RequestOptions;
 
       requestOptions.headers = {
         'Authorization': 'Bearer $token',
@@ -51,8 +53,7 @@ class NetworkCore {
     failedRequests = [];
   }
 
-  FutureOr postRefreshToken(
-      DioException err, ErrorInterceptorHandler handler) async {
+  FutureOr postRefreshToken(DioException err, ErrorInterceptorHandler handler) async {
     final refreshToken = await StorageCore().readRefreshToken();
     AppLogger.i("refresh token local : $refreshToken");
 
@@ -86,8 +87,7 @@ class NetworkCore {
       AppLogger.i("masuk sini catch atas");
 
       StorageCore().deleteLogin();
-      Get.delete<DashboardController>()
-          .then((_) => Get.offAll(() => const DashboardScreen()));
+      Get.delete<DashboardController>().then((_) => Get.offAll(() => const DashboardScreen()));
 
       return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,
@@ -100,7 +100,40 @@ class NetworkCore {
     }
   }
 
-  NetworkCore() {
+  Future<Dio> createDioWithCertAndKey() async {
+    final certData = await rootBundle.loadString("assets/cert/client.crt");
+    final keyData = await rootBundle.loadString("assets/cert/client.key");
+
+    final tempDir = Directory.systemTemp;
+    final certFile = File('${tempDir.path}/client.crt')..writeAsStringSync(certData);
+    final keyFile = File('${tempDir.path}/client.key')..writeAsStringSync(keyData);
+
+    final dio = Dio();
+    dio.options = BaseOptions(
+      baseUrl: AppConst.base,
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+    final securityContext = SecurityContext(withTrustedRoots: true);
+    securityContext.useCertificateChain(certFile.path);
+    securityContext.usePrivateKey(keyFile.path);
+
+    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      return HttpClient(context: securityContext);
+    };
+    return dio;
+  }
+
+  Future<void> _init() async {
+    final certData = await rootBundle.loadString("assets/cert/client.crt");
+    final keyData = await rootBundle.loadString("assets/cert/client.key");
+
+    final tempDir = Directory.systemTemp;
+    final certFile = File('${tempDir.path}/client.crt')..writeAsStringSync(certData);
+    final keyFile = File('${tempDir.path}/client.key')..writeAsStringSync(keyData);
+
     base.options = BaseOptions(
       baseUrl: AppConst.base,
       headers: {
@@ -109,6 +142,14 @@ class NetworkCore {
       },
     );
 
+    final securityContext = SecurityContext(withTrustedRoots: true);
+    securityContext.useCertificateChain(certFile.path);
+    securityContext.usePrivateKey(keyFile.path);
+
+    (base.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      return HttpClient(context: securityContext);
+    };
+
     refreshDio.options = BaseOptions(
       baseUrl: AppConst.base,
       headers: {
@@ -116,6 +157,9 @@ class NetworkCore {
         'Content-Type': 'application/json',
       },
     );
+    (refreshDio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+      return HttpClient(context: securityContext);
+    };
 
     local.options = BaseOptions(
       baseUrl: "http://192.168.10.220:3001",
@@ -128,10 +172,8 @@ class NetworkCore {
 
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
-      base.interceptors
-          .add(LogInterceptor(responseBody: true, requestBody: true));
-      refreshDio.interceptors
-          .add(LogInterceptor(responseBody: true, requestBody: true));
+      base.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
+      refreshDio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
     }
 
     base.interceptors.add(
@@ -142,8 +184,7 @@ class NetworkCore {
           AppLogger.i('Option path ${options.path}');
 
           // Skip attaching token if `useAuth` is false
-          if (options.extra['skipAuth'] == false ||
-              options.extra['skipAuth'] == null) {
+          if (options.extra['skipAuth'] == false || options.extra['skipAuth'] == null) {
             final accessToken = await StorageCore().readAccessToken();
             if (accessToken != null) {
               options.headers['Authorization'] = 'Bearer $accessToken';
@@ -173,11 +214,9 @@ class NetworkCore {
             if (!isRefreshing) {
               isRefreshing = true;
 
-              final refreshTokenResponse =
-                  await postRefreshToken(dioError, handler);
+              final refreshTokenResponse = await postRefreshToken(dioError, handler);
 
-              AppLogger.i(
-                  "refresh token response : ${jsonEncode(refreshTokenResponse)}");
+              AppLogger.i("refresh token response : ${jsonEncode(refreshTokenResponse)}");
 
               if (refreshTokenResponse.code == 401) {
                 return handler.reject(dioError);
@@ -191,5 +230,9 @@ class NetworkCore {
         },
       ),
     );
+  }
+
+  NetworkCore() {
+    _init();
   }
 }

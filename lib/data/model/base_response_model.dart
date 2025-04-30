@@ -29,7 +29,6 @@ class BaseResponse<T> {
     U Function(Object? json) fromJson,
   ) =>
       input == null ? null : fromJson(input);
-
   dynamic _message;
   dynamic _error;
   num? _code;

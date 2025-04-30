@@ -29,7 +29,7 @@ class ObrolanLaporankuController extends BaseController {
   int? imageSize;
   var maxImageSize = 2 * 1048576;
   final PagingController<int, TicketMessageModel> pagingController =
-      PagingController(firstPageKey: 1);
+  PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   @override
@@ -47,15 +47,15 @@ class ObrolanLaporankuController extends BaseController {
     try {
       await laporanku
           .getTicketMessage(QueryModel(
-              table: true,
-              where: [
-                {"ticketId": id}
-              ],
-              sort: [
-                {"createdDate": "desc"}
-              ],
-              page: 1,
-              limit: pageSize))
+          table: true,
+          where: [
+            {"ticketId": id}
+          ],
+          sort: [
+            {"createdDate": "desc"}
+          ],
+          page: 1,
+          limit: pageSize))
           .then((value) {
         messages.addAll(value.data ?? []);
         subject = value.data?.first.subject;
@@ -114,7 +114,7 @@ class ObrolanLaporankuController extends BaseController {
       String? image;
       if (gettedPhoto != null) {
         final imageData =
-            await storageRepository.postLaporankuFiles(gettedPhoto ?? File(''));
+        await storageRepository.postLaporankuFiles(gettedPhoto ?? File(''));
         image = imageData.data?.first.fileUrl;
       }
       await laporanku
