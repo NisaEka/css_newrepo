@@ -26,8 +26,7 @@ class JLCRepositoryImpl extends JLCRepository {
           (json) => json is List<dynamic>
               ? json
                   .map<JLCTotalPointModel>(
-                    (i) =>
-                        JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
+                    (i) => JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
               : List.empty());
@@ -38,8 +37,7 @@ class JLCRepositoryImpl extends JLCRepository {
           (json) => json is List<dynamic>
               ? json
                   .map<JLCTotalPointModel>(
-                    (i) =>
-                        JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
+                    (i) => JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
               : List.empty());
@@ -107,8 +105,7 @@ class JLCRepositoryImpl extends JLCRepository {
   @override
   Future<BaseResponse<List<BannerModel>>> postDashboardBanner() async {
     try {
-      Response response = await network.base.get('/accounts/jlc/banner',
-          options: Options(extra: {'skipAuth': true}));
+      Response response = await network.base.get('/accounts/jlc/banner', options: Options(extra: {'skipAuth': true}));
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -130,7 +127,7 @@ class JLCRepositoryImpl extends JLCRepository {
                 )
                 .toList()
             : List.empty(),
-      );
+      ) ;
     }
   }
 

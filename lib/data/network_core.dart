@@ -100,39 +100,28 @@ class NetworkCore {
     }
   }
 
-  Future<Dio> createDioWithCertAndKey() async {
-    final certData = await rootBundle.loadString("assets/cert/client.crt");
-    final keyData = await rootBundle.loadString("assets/cert/client.key");
-
-    final tempDir = Directory.systemTemp;
-    final certFile = File('${tempDir.path}/client.crt')..writeAsStringSync(certData);
-    final keyFile = File('${tempDir.path}/client.key')..writeAsStringSync(keyData);
-
-    final dio = Dio();
-    dio.options = BaseOptions(
-      baseUrl: AppConst.base,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
-    final securityContext = SecurityContext(withTrustedRoots: true);
-    securityContext.useCertificateChain(certFile.path);
-    securityContext.usePrivateKey(keyFile.path);
-
-    (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      return HttpClient(context: securityContext);
-    };
-    return dio;
-  }
-
   Future<void> _init() async {
-    final certData = await rootBundle.loadString("assets/cert/client.crt");
-    final keyData = await rootBundle.loadString("assets/cert/client.key");
+    AppLogger.i("Base URL: ${AppConst.base}");
+    // final certData = await rootBundle.loadString("assets/cert/client.crt");
+    // final keyData = await rootBundle.loadString("assets/cert/client.key");
+    // final caData = await rootBundle.loadString("assets/cert/ca.crt");
+    final pem = await rootBundle.load('assets/cert/client.pem');
+    final pemBytes = pem.buffer.asUint8List();
 
-    final tempDir = Directory.systemTemp;
-    final certFile = File('${tempDir.path}/client.crt')..writeAsStringSync(certData);
-    final keyFile = File('${tempDir.path}/client.key')..writeAsStringSync(keyData);
+    // final tempDir = Directory.systemTemp;
+    // final certFile = File('${tempDir.path}/client.crt')..writeAsStringSync(certData);
+    // final keyFile = File('${tempDir.path}/client.key')..writeAsStringSync(keyData);
+    // final caFile = File('${tempDir.path}/ca.crt')..writeAsStringSync(caData);
+
+    final context = SecurityContext(withTrustedRoots: true);
+    context.setTrustedCertificatesBytes(pemBytes); // ← Memasang CA dari file .pem
+
+    final httpClient = HttpClient(context: context);
+    httpClient.badCertificateCallback = (cert, host, port) {
+      return true;
+    };
+
+    (base.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () => httpClient;
 
     base.options = BaseOptions(
       baseUrl: AppConst.base,
@@ -142,13 +131,22 @@ class NetworkCore {
       },
     );
 
-    final securityContext = SecurityContext(withTrustedRoots: true);
-    securityContext.useCertificateChain(certFile.path);
-    securityContext.usePrivateKey(keyFile.path);
+    AppLogger.i("Base URL base: ${base.options.baseUrl}");
 
-    (base.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      return HttpClient(context: securityContext);
-    };
+    // final securityContext = SecurityContext(withTrustedRoots: true);
+    // securityContext.useCertificateChain(certFile.path);
+    // securityContext.usePrivateKey(keyFile.path);
+    // securityContext.setTrustedCertificates(caFile.path);
+    //
+    // (base.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+    //   final httpClient = HttpClient(context: securityContext);
+    //   if (FlavorConfig.instance.name == "PROD") {
+    //     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => false; // Reject self-signed certs in production
+    //   } else {
+    //     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true; // Accept self-signed certs in dev
+    //   }
+    //   return httpClient;
+    // };
 
     refreshDio.options = BaseOptions(
       baseUrl: AppConst.base,
@@ -157,18 +155,27 @@ class NetworkCore {
         'Content-Type': 'application/json',
       },
     );
-    (refreshDio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-      return HttpClient(context: securityContext);
-    };
+    // (refreshDio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+    //   final httpClient = HttpClient(context: securityContext);
+    //   if (FlavorConfig.instance.name == "PROD") {
+    //     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => false; // Reject self-signed certs in production
+    //   } else {
+    //     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true; // Accept self-signed certs in dev
+    //   }
+    //   return httpClient;
+    // };
 
-    local.options = BaseOptions(
-      baseUrl: "http://192.168.10.220:3001",
-      // baseUrl: "http://10.0.2.2:3000",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    );
+    // local.options = BaseOptions(
+    //   baseUrl: "http://192.168.10.220:3001",
+    //   // baseUrl: "http://10.0.2.2:3000",
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    // );
+    // (local.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
+    //   return HttpClient(context: securityContext);
+    // };
 
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
@@ -202,7 +209,7 @@ class NetworkCore {
           return handler.next(response);
         },
         onError: (dioError, handler) async {
-          AppLogger.e("dio error : $dioError");
+          AppLogger.e("dio error : ${dioError.requestOptions.path} \n$dioError ");
 
           final refreshToken = await StorageCore().readRefreshToken();
           AppLogger.i("refresh token local : $refreshToken");
@@ -232,7 +239,9 @@ class NetworkCore {
     );
   }
 
-  NetworkCore() {
-    _init();
+  NetworkCore(); // constructor tidak lagi menjalankan _init()
+
+  Future<void> init() async {
+    await _init();
   }
 }

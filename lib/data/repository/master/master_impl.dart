@@ -393,8 +393,8 @@ class MasterRepositoryImpl extends MasterRepository {
                 .toList()
             : List.empty(),
       );
-    } on DioException catch (e) {
-      AppLogger.e("error get apps infos : $e");
+    } on DioException catch (e,i) {
+      AppLogger.e("error get apps infos : $e $i");
       return e.response?.data;
     }
   }

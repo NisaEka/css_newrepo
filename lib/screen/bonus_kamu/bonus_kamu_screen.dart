@@ -73,18 +73,14 @@ class BonusKamuScreen extends StatelessWidget {
         Row(
           children: [
             CustomFilledButton(
-              color: c.tabIndex == 0
-                  ? primaryColor(context)
-                  : primaryColor(context).withOpacity(0.5),
+              color: c.tabIndex != 0 ? primaryColor(context).withOpacity(0.5) : primaryColor(context),
               title: "Total Transaksi".tr,
               radius: 0,
               width: Get.width / 2,
               fontStyle: subTitleTextStyle.copyWith(color: whiteColor),
               boxShadow: [
                 BoxShadow(
-                  color: c.tabIndex == 0
-                      ? secondaryColor(context)
-                      : primaryColor(context).withOpacity(0.8),
+                  color: c.tabIndex == 0 ? secondaryColor(context) : primaryColor(context).withOpacity(0.8),
                   spreadRadius: 2,
                   offset: const Offset(-2, 2),
                 )
@@ -95,18 +91,14 @@ class BonusKamuScreen extends StatelessWidget {
               },
             ),
             CustomFilledButton(
-              color: c.tabIndex == 1
-                  ? primaryColor(context)
-                  : primaryColor(context).withOpacity(0.5),
+              color: c.tabIndex == 1 ? primaryColor(context) : primaryColor(context).withOpacity(0.5),
               title: "Penukaran Poin Terakhir".tr,
               radius: 0,
               width: Get.width / 2,
               fontStyle: subTitleTextStyle.copyWith(color: whiteColor),
               boxShadow: [
                 BoxShadow(
-                  color: c.tabIndex == 1
-                      ? secondaryColor(context)
-                      : primaryColor(context).withOpacity(0.8),
+                  color: c.tabIndex == 1 ? secondaryColor(context) : primaryColor(context).withOpacity(0.8),
                   spreadRadius: 2,
                   offset: const Offset(2, 2),
                 )
@@ -133,29 +125,16 @@ class BonusKamuScreen extends StatelessWidget {
                             ? c.totalTransaksiList
                                 .map(
                                   (e) => PointListItem(
-                                    dateTime: e.tglTransaksi
-                                            ?.toDate(
-                                                originFormat:
-                                                    'yyyy-MM-dd HH:mmzzz')
-                                            .toString()
-                                            .toLongDateTimeFormat() ??
-                                        '',
-                                    point: e.point == '0'
-                                        ? 0
-                                        : e.point?.toDouble(),
+                                    dateTime: e.tglTransaksi?.toDate(originFormat: 'yyyy-MM-dd HH:mmzzz').toString().toLongDateTimeFormat() ?? '',
+                                    point: e.point == '0' ? 0 : e.point?.toDouble(),
                                     title: 'Resi'.tr,
                                     subtitle: e.noConnote ?? '',
-                                    status:
-                                        e.status == "N" ? "Valid" : "Cancel",
+                                    status: e.status == "N" ? "Valid" : "Cancel",
                                     amount: e.jmlTransaksi,
                                   ),
                                 )
                                 .toList()
-                            : [
-                                DataEmpty(
-                                    text:
-                                        'Belum ada riwayat transaksi point'.tr)
-                              ],
+                            : [DataEmpty(text: 'Belum ada riwayat transaksi point'.tr)],
                   )
                 : ListView(
                     shrinkWrap: c.reedemPointList.isEmpty,
@@ -177,11 +156,7 @@ class BonusKamuScreen extends StatelessWidget {
                                   ),
                                 )
                                 .toList()
-                            : [
-                                DataEmpty(
-                                    text:
-                                        "Belum ada riwayat penukaran point".tr)
-                              ],
+                            : [DataEmpty(text: "Belum ada riwayat penukaran point".tr)],
                   ),
           ),
         ),

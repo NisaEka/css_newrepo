@@ -17,8 +17,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<AggregationModel>>> getAggregationReport(
-      QueryModel param) async {
+  Future<BaseResponse<List<AggregationModel>>> getAggregationReport(QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
       Response response = await network.base.get(
@@ -43,42 +42,36 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<BaseResponse<List<AggregationMinusModel>>> getAggregationMinus(
-      QueryModel param) async {
-    AppLogger.i("param toJson ${param.toJson()}");
+  Future<BaseResponse<List<AggregationMinusModel>>> getAggregationMinus(QueryModel param) async {
     try {
-      var response = await network.base
-          .get("/aggregations/minus", queryParameters: param.toJson());
+      var response = await network.base.get("/aggregations/minus", queryParameters: param.toJson());
       return BaseResponse<List<AggregationMinusModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
                 .map<AggregationMinusModel>(
-                  (i) =>
-                      AggregationMinusModel.fromJson(i as Map<String, dynamic>),
+                  (i) => AggregationMinusModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
       );
     } on DioException catch (e) {
-      return e.response?.data;
+      AppLogger.e("dio error agg minus : $e");
+      return e.response?.data ?? e;
     }
   }
 
   @override
-  Future<BaseResponse<List<AggregationMinusDocModel>>> getAggregationMinusDoc(
-      String doc, QueryModel param) async {
+  Future<BaseResponse<List<AggregationMinusDocModel>>> getAggregationMinusDoc(String doc, QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
-      var response = await network.base
-          .get("/aggregations/minus/$doc", queryParameters: param.toJson());
+      var response = await network.base.get("/aggregations/minus/$doc", queryParameters: param.toJson());
       return BaseResponse<List<AggregationMinusDocModel>>.fromJson(
         response.data,
         (json) => json is List<dynamic>
             ? json
                 .map<AggregationMinusDocModel>(
-                  (i) => AggregationMinusDocModel.fromJson(
-                      i as Map<String, dynamic>),
+                  (i) => AggregationMinusDocModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -114,8 +107,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
   }
 
   @override
-  Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(
-      String aggregationID, QueryModel param) async {
+  Future<BaseResponse<List<AggregationDetailModel>>> getAggregationByDoc(String aggregationID, QueryModel param) async {
     AppLogger.i("param toJson ${param.toJson()}");
     try {
       Response response = await network.base.get(
@@ -127,8 +119,7 @@ class AggregasiRepositoryImpl extends AggregasiRepository {
         (json) => json is List<dynamic>
             ? json
                 .map<AggregationDetailModel>(
-                  (i) => AggregationDetailModel.fromJson(
-                      i as Map<String, dynamic>),
+                  (i) => AggregationDetailModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
