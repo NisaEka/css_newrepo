@@ -119,7 +119,7 @@ class DashboardController extends BaseController {
           state.promoList.addAll(value.data ?? []);
           update();
         } else {
-          state.promoList.add(BannerModel());
+          state.promoList.clear();
         }
       });
     } catch (e) {

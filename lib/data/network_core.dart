@@ -16,7 +16,6 @@ import 'package:get/get.dart' hide Response;
 import 'storage_core.dart';
 
 class NetworkCore {
-  Dio local = Dio();
   Dio base = Dio();
   Dio refreshDio = Dio();
 
@@ -155,28 +154,6 @@ class NetworkCore {
         'Content-Type': 'application/json',
       },
     );
-    // (refreshDio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-    //   final httpClient = HttpClient(context: securityContext);
-    //   if (FlavorConfig.instance.name == "PROD") {
-    //     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => false; // Reject self-signed certs in production
-    //   } else {
-    //     httpClient.badCertificateCallback = (X509Certificate cert, String host, int port) => true; // Accept self-signed certs in dev
-    //   }
-    //   return httpClient;
-    // };
-
-    // local.options = BaseOptions(
-    //   baseUrl: "http://192.168.10.220:3001",
-    //   // baseUrl: "http://10.0.2.2:3000",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    // );
-    // (local.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {
-    //   return HttpClient(context: securityContext);
-    // };
-
     String env = FlavorConfig.instance.name ?? "PROD";
     if (env != "PROD") {
       base.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));

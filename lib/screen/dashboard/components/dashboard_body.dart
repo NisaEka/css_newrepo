@@ -45,9 +45,7 @@ class DashboardBody extends StatelessWidget {
                   child: Column(
                     children: [
                       const DashboardUserInfo(),
-                      c.state.isLogin
-                          ? const DashboardInfo()
-                          : const SizedBox(),
+                      c.state.isLogin ? const DashboardInfo() : const SizedBox(),
                       const DashboardMenu2(),
                       // CustomFilledButton(
                       //   color: Colors.blue,
@@ -71,9 +69,7 @@ class DashboardBody extends StatelessWidget {
                               isLoading: c.state.isLoadAggregation,
                             )
                           : const SizedBox(),
-                      c.state.isLogin &&
-                              (c.state.allow.riwayatPesanan == "Y" ||
-                                  c.state.allow.paketmuRiwayat == 'Y')
+                      c.state.isLogin && (c.state.allow.riwayatPesanan == "Y" || c.state.allow.paketmuRiwayat == 'Y')
                           ? DashboardKirimanCountItem(
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamu,
@@ -85,15 +81,12 @@ class DashboardBody extends StatelessWidget {
                             )
                           : const SizedBox(),
                       c.state.isLogin &&
-                              (c.state.allow.riwayatPesanan == "Y" ||
-                                  c.state.allow.paketmuRiwayat == 'Y') &&
+                              (c.state.allow.riwayatPesanan == "Y" || c.state.allow.paketmuRiwayat == 'Y') &&
                               (c.state.allow.accountCod == "Y")
                           ? DashboardKirimanCODCountItem(
                               transSummary: c.state.transSummary,
                               kirimanKamu: c.state.kirimanKamuCOD,
-                              isLoadingKiriman: c.state.isLoadingKirimanCOD ||
-                                  (c.state.transSummary?.summary?.isEmpty ??
-                                      false),
+                              isLoadingKiriman: c.state.isLoadingKirimanCOD || (c.state.transSummary?.summary?.isEmpty ?? false),
                               onRefresh: () {
                                 c.loadTransCountList(true);
                               },
