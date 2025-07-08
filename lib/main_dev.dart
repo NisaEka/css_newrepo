@@ -19,15 +19,22 @@ void main() async {
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      CssFirebaseConfig.init();
+      debugPrint("🔥 Flutter binding done");
+
+      await CssFirebaseConfig.init();
+      debugPrint("🔥 Firebase config done");
+
       final network = NetworkCore();
-      await network.init(); // ⬅️ Tunggu sampai inisialisasi lengkap
-
-      Get.put(network); // ⬅️ Baru inject
-
+      debugPrint("⏳ Initializing NetworkCore...");
+      await network.init();
+      debugPrint("✅ NetworkCore initialized");
+      Get.put(network);
+      debugPrint("📦 NetworkCore injected");
 
       GlobalBinding().dependencies();
+      debugPrint("🔗 GlobalBinding done");
       runApp(const CSS());
+      debugPrint("🚀 App started");
     },
     (error, stackTrace) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace);

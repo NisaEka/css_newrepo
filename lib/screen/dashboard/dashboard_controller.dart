@@ -8,7 +8,6 @@ import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
-import 'package:css_mobile/data/model/dashboard/dashboard_banner_model.dart';
 import 'package:css_mobile/data/model/dashboard/dashboard_news_model.dart';
 import 'package:css_mobile/data/model/dashboard/menu_item_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
@@ -119,11 +118,14 @@ class DashboardController extends BaseController {
           state.promoList.addAll(value.data ?? []);
           update();
         } else {
+          // state.promoList.add(BannerModel());
           state.promoList.clear();
         }
       });
     } catch (e) {
       AppLogger.e('error load promo : $e');
+      state.promoList.clear();
+
       update();
     }
   }
@@ -788,7 +790,7 @@ class DashboardController extends BaseController {
         totalAggMinus += e.netAmt;
       });
       state.aggregationMinus = AggregationMinusModel(netAmt: totalAggMinus);
-    } catch (e,i) {
+    } catch (e, i) {
       AppLogger.e("error get aggregation minus : $e $i");
     }
 
