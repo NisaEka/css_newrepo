@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:collection/collection.dart';
+import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_controller.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmation_screen.dart';
@@ -91,7 +92,8 @@ class LacakKirimanScreen extends StatelessWidget {
                 //   );
               } else {
                 if (c.isLogin) {
-                  c.cekResi(value, '');
+                  // c.cekResi(value, '');
+                  c.searchCnotes(value, '');
                 } else {
                   Get.to(
                     () => PhoneNumberConfirmationScreen(
@@ -104,173 +106,24 @@ class LacakKirimanScreen extends StatelessWidget {
               }
             },
           ),
-          // Expanded(
-          //   child: ListView(
-          //     children: c.trackModel != null && c.trackModel?.error == null || c.isLoading
-          //         ? [
-          //             const SizedBox(height: 5),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 CustomCodeLabel(
-          //                   label: c.trackModel?.data?.cnote?.cnoteNo ?? '',
-          //                   isLoading: c.isLoading,
-          //                 ),
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Service',
-          //                   value: c.trackModel?.data?.cnote?.cnoteServicesCode ?? '',
-          //                   valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
-          //                   alignment: 'end',
-          //                 )
-          //               ],
-          //             ),
-          //             const SizedBox(height: 16),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Dari'.tr,
-          //                   value: c.trackModel?.data?.detail?.first.cnoteShipperCity ?? '',
-          //                   width: Get.width / 2,
-          //                 ),
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Status Kiriman'.tr,
-          //                   value: c.trackModel?.data?.cnote?.podStatus ?? '',
-          //                   valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
-          //                   width: Get.width / 3,
-          //                   alignment: 'end',
-          //                 ),
-          //               ],
-          //             ),
-          //             const SizedBox(height: 6),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: [
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Menuju'.tr,
-          //                   value: c.trackModel?.data?.cnote?.cityName ?? '',
-          //                   width: Get.width / 2,
-          //                 ),
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Perkiraan Sampai'.tr,
-          //                   value: c.trackModel?.data?.cnote?.estimateDelivery ?? '',
-          //                   valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
-          //                   width: Get.width / 3,
-          //                   alignment: 'end',
-          //                 ),
-          //               ],
-          //             ),
-          //             const SizedBox(height: 16),
-          //             CustomFormLabel(
-          //               isLoading: c.isLoading,
-          //               label: 'Detail Kiriman'.tr,
-          //             ),
-          //             const SizedBox(height: 6),
-          //             const Divider(),
-          //             const SizedBox(height: 6),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Tanggal Kirim'.tr,
-          //                   value: c.trackModel?.data?.cnote?.cnoteDate?.toLongDateTimeFormat() ?? '',
-          //                   width: Get.width / 2,
-          //                 ),
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Berat Kiriman'.tr,
-          //                   value: '${c.trackModel?.data?.cnote?.cnoteWeight} KG',
-          //                   width: Get.width / 3,
-          //                   valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
-          //                   alignment: 'end',
-          //                 ),
-          //               ],
-          //             ),
-          //             const SizedBox(height: 6),
-          //             CustomLabelText(
-          //               isLoading: c.isLoading,
-          //               title: 'Deskripsi'.tr,
-          //               value: c.trackModel?.data?.cnote?.cnoteGoodsDescr ?? '',
-          //               width: Get.width / 2,
-          //             ),
-          //             const SizedBox(height: 6),
-          //             const Divider(),
-          //             const SizedBox(height: 6),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Nama Pengirim'.tr,
-          //                   value: c.trackModel?.data?.detail?.first.cnoteShipperName ?? '',
-          //                   width: Get.width / 3,
-          //                 ),
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Nama Penerima'.tr,
-          //                   value: c.trackModel?.data?.detail?.first.cnoteReceiverName ?? '',
-          //                   width: Get.width / 3,
-          //                   alignment: 'end',
-          //                 ),
-          //               ],
-          //             ),
-          //             const SizedBox(height: 6),
-          //             Row(
-          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //               children: [
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Kota Pengirim'.tr,
-          //                   value: c.trackModel?.data?.detail?.first.cnoteShipperCity ?? '',
-          //                   width: Get.width / 3,
-          //                 ),
-          //                 CustomLabelText(
-          //                   isLoading: c.isLoading,
-          //                   title: 'Kota Penerima'.tr,
-          //                   value: c.trackModel?.data?.detail?.first.cnoteReceiverCity ?? '',
-          //                   width: Get.width / 2,
-          //                   alignment: 'end',
-          //                 ),
-          //               ],
-          //             ),
-          //             const SizedBox(height: 16),
-          //             CustomFormLabel(
-          //               label: 'Riwayat Kiriman'.tr,
-          //               isLoading: c.isLoading,
-          //             ),
-          //             const SizedBox(height: 6),
-          //             const Divider(),
-          //             const SizedBox(height: 16),
-          //             Column(
-          //               children: c.trackModel?.data?.history?.isNotEmpty ?? false
-          //                   ? c.trackModel?.data?.history!.reversed
-          //                           .mapIndexed((i, e) => KirimanStepper(
-          //                                 currentStep: i,
-          //                                 length: c.trackModel?.data?.history?.length,
-          //                                 history: e,
-          //                                 cnote: c.trackModel?.data?.cnote,
-          //                                 isLogin: c.isLogin,
-          //                                 isLoading: c.isLoading,
-          //                               ))
-          //                           .toList() ??
-          //                       []
-          //                   : [],
-          //             ),
-          //           ]
-          //         : [
-          //             Center(
-          //               child: DataEmpty(text: c.trackModel?.error ?? 'Data Kosong'.tr),
-          //             )
-          //           ],
-          //   ),
-          // )
+          Expanded(
+            child: ListView(
+              children: c.cnotes
+                  .map(
+                    (e) => ListTile(
+                      title: Text(e?.cnote?.cnoteNo ?? ''),
+                      trailing: Text(
+                        e?.cnote?.podStatus ?? '',
+                        style: sublistTitleTextStyle.copyWith(
+                          color: e?.cnote?.podStatus == "NOT FOUND" ? errorColor : successColor,
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                  )
+                  .toList(),
+            ),
+          )
         ],
       ),
     );

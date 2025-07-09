@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
@@ -9,6 +10,8 @@ import 'package:get/get.dart';
 class LacakKirimanController extends BaseController {
   final searchField = TextEditingController();
   final String? resi = Get.arguments['nomor_resi'];
+
+  List<PostLacakKirimanModel?> cnotes = [];
 
   bool isLoading = false;
   bool isLogin = false;
@@ -35,6 +38,23 @@ class LacakKirimanController extends BaseController {
     }
   }
 
+  Future<void> searchCnotes(String value, p) async {
+    cnotes.clear();
+    update();
+
+    value.split('\n').forEachIndexed((index, cnote) async {
+      var response = await trace.postTracingByCnote(cnote);
+      if (response.code == 200) {
+        cnotes.add(response.data);
+      } else {
+        cnotes.add(PostLacakKirimanModel(
+          cnote: Cnote(cnoteNo: cnote, podStatus: "NOT FOUND"),
+        ));
+      }
+      update();
+    });
+  }
+
   Future<bool> cekToken() async {
     String? token = await storage.readAccessToken();
     AppLogger.d('token : $token');
@@ -44,14 +64,11 @@ class LacakKirimanController extends BaseController {
     return isLogin;
   }
 
-  Future<BaseResponse<PostLacakKirimanModel>> cekResi(
-      String nomorResi, String phoneNumber) async {
+  Future<BaseResponse<PostLacakKirimanModel>> cekResi(String nomorResi, String phoneNumber) async {
     isLoading = true;
     update();
     try {
-      final response = await cekToken()
-          ? await trace.postTracingByCnote(nomorResi)
-          : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
+      final response = await cekToken() ? await trace.postTracingByCnote(nomorResi) : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
       trackModel = response;
     } catch (e, i) {
       AppLogger.e('error cekResi $e, $i');

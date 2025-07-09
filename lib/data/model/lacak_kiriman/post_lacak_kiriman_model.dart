@@ -3,6 +3,8 @@ class PostLacakKirimanModel {
   List<Detail>? detail;
   List<HistoryKiriman>? history;
 
+
+
   PostLacakKirimanModel({
     this.cnote,
     this.detail,

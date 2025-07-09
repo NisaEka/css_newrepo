@@ -13,20 +13,13 @@ class PhoneNumberConfirmationScreen extends StatefulWidget {
   final Function(String awb, String phoneNumber) cekResi;
   final bool isLoading;
 
-  const PhoneNumberConfirmationScreen(
-      {Key? key,
-      required this.awb,
-      required this.cekResi,
-      required this.isLoading})
-      : super(key: key);
+  const PhoneNumberConfirmationScreen({Key? key, required this.awb, required this.cekResi, required this.isLoading}) : super(key: key);
 
   @override
-  PhoneNumberConfirmationScreenState createState() =>
-      PhoneNumberConfirmationScreenState();
+  PhoneNumberConfirmationScreenState createState() => PhoneNumberConfirmationScreenState();
 }
 
-class PhoneNumberConfirmationScreenState
-    extends State<PhoneNumberConfirmationScreen> {
+class PhoneNumberConfirmationScreenState extends State<PhoneNumberConfirmationScreen> {
   late String _phoneNumber;
   late FocusNode _pinputFocusNode;
 
@@ -69,8 +62,7 @@ class PhoneNumberConfirmationScreenState
                 Padding(
                   padding: const EdgeInsets.only(top: 80.0),
                   child: Text(
-                    'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'
-                        .tr,
+                    'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
