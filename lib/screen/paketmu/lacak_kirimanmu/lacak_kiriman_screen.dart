@@ -11,6 +11,7 @@ import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/kiriman_stepper.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customcodelabel.dart';
 import 'package:css_mobile/widgets/forms/customformlabel.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
@@ -109,29 +110,37 @@ class LacakKirimanScreen extends StatelessWidget {
             },
           ),
           Expanded(
-            child: ListView(
-              children: c.cnotes
-                  .map(
-                    (e) => ListTile(
-                      title: Text(e?.cnote?.cnoteNo ?? ''),
-                      trailing: Text(
-                        e?.cnote?.podStatus ?? '',
-                        style: sublistTitleTextStyle.copyWith(
-                          color: e?.cnote?.podStatus == "NOT FOUND" ? errorColor : successColor,
-                        ),
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: c.cnotes.length + 1,
+              itemBuilder: (context, index) {
+                if (index < c.cnotes.length) {
+                  var e = c.cnotes[index];
+                  return ListTile(
+                    title: Text(e?.cnote?.cnoteNo ?? ''),
+                    trailing: Text(
+                      e?.cnote?.podStatus ?? '',
+                      style: sublistTitleTextStyle.copyWith(
+                        color: e?.cnote?.podStatus == "NOT FOUND" ? errorColor : successColor,
                       ),
-                      contentPadding: EdgeInsets.zero,
-                      onTap: () => e?.cnote?.podStatus == "NOT FOUND"
-                          ? null
-                          : Get.to(LacakKirimanDetail(
-                              data: e ?? PostLacakKirimanModel(),
-                              isLogin: c.isLogin,
-                            )),
                     ),
-                  )
-                  .toList(),
+                    contentPadding: EdgeInsets.zero,
+                    onTap: () => e?.cnote?.podStatus == "NOT FOUND"
+                        ? null
+                        : Get.to(LacakKirimanDetail(
+                            data: e ?? PostLacakKirimanModel(),
+                            isLogin: c.isLogin,
+                          )),
+                  );
+                } else {
+                  return Shimmer(
+                    isLoading: true,
+                    child: ListTile(tileColor: c.isLoading ? greyLightColor2 : Colors.transparent),
+                  );
+                }
+              },
             ),
-          )
+          ),
         ],
       ),
     );

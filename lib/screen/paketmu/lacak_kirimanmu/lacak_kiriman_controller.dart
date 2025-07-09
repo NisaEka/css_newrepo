@@ -6,12 +6,14 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmat
 import 'package:css_mobile/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class LacakKirimanController extends BaseController {
   final searchField = TextEditingController();
   final String? resi = Get.arguments['nomor_resi'];
 
   List<PostLacakKirimanModel?> cnotes = [];
+  final PagingController<int, PostLacakKirimanModel> pagingController = PagingController(firstPageKey: 1);
 
   bool isLoading = false;
   bool isLogin = false;
@@ -40,6 +42,7 @@ class LacakKirimanController extends BaseController {
 
   Future<void> searchCnotes(String value, p) async {
     cnotes.clear();
+    isLoading = true;
     update();
 
     value.split('\n').forEachIndexed((index, cnote) async {
@@ -53,6 +56,15 @@ class LacakKirimanController extends BaseController {
       }
       update();
     });
+
+
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        isLoading = false;
+        update();
+      },
+    );
   }
 
   Future<bool> cekToken() async {
