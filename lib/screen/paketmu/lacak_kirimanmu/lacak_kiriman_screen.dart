@@ -2,8 +2,10 @@ import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_controller.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_detail.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmation_screen.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
@@ -119,6 +121,12 @@ class LacakKirimanScreen extends StatelessWidget {
                         ),
                       ),
                       contentPadding: EdgeInsets.zero,
+                      onTap: () => e?.cnote?.podStatus == "NOT FOUND"
+                          ? null
+                          : Get.to(LacakKirimanDetail(
+                              data: e ?? PostLacakKirimanModel(),
+                              isLogin: c.isLogin,
+                            )),
                     ),
                   )
                   .toList(),
