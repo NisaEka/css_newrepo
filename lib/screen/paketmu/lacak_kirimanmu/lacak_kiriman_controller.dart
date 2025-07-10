@@ -12,6 +12,7 @@ class LacakKirimanController extends BaseController {
   final searchField = TextEditingController();
   final String? resi = Get.arguments['nomor_resi'];
 
+  String? phoneNumber;
   List<PostLacakKirimanModel?> cnotes = [];
   final PagingController<int, PostLacakKirimanModel> pagingController = PagingController(firstPageKey: 1);
 
@@ -32,7 +33,7 @@ class LacakKirimanController extends BaseController {
         } else {
           Get.to(() => PhoneNumberConfirmationScreen(
                 awb: resi ?? '',
-                cekResi: cekResi,
+                // cekResi: cekResi,
                 isLoading: isLoading,
               ));
         }
@@ -40,13 +41,15 @@ class LacakKirimanController extends BaseController {
     }
   }
 
-  Future<void> searchCnotes(String value, p) async {
+  Future<void> searchCnotes(String value) async {
     cnotes.clear();
     isLoading = true;
     update();
 
     value.split('\n').forEachIndexed((index, cnote) async {
-      var response = await trace.postTracingByCnote(cnote);
+      // var response = await trace.postTracingByCnote(cnote);
+      final response = await cekToken() ? await trace.postTracingByCnote(cnote) : await trace.postTracingByCnotePublic(cnote, phoneNumber ?? '');
+
       if (response.code == 200) {
         cnotes.add(response.data);
       } else {
@@ -56,7 +59,6 @@ class LacakKirimanController extends BaseController {
       }
       update();
     });
-
 
     Future.delayed(
       const Duration(seconds: 3),

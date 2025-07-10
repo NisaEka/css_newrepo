@@ -10,10 +10,16 @@ import 'package:get/get.dart';
 
 class PhoneNumberConfirmationScreen extends StatefulWidget {
   final String awb;
-  final Function(String awb, String phoneNumber) cekResi;
+
+  // final Function(String awb, String phoneNumber) cekResi;
   final bool isLoading;
 
-  const PhoneNumberConfirmationScreen({Key? key, required this.awb, required this.cekResi, required this.isLoading}) : super(key: key);
+  const PhoneNumberConfirmationScreen({
+    Key? key,
+    required this.awb,
+    // required this.cekResi,
+    required this.isLoading,
+  }) : super(key: key);
 
   @override
   PhoneNumberConfirmationScreenState createState() => PhoneNumberConfirmationScreenState();
@@ -62,7 +68,7 @@ class PhoneNumberConfirmationScreenState extends State<PhoneNumberConfirmationSc
                 Padding(
                   padding: const EdgeInsets.only(top: 80.0),
                   child: Text(
-                    'Mohon masukkan empat digit terakhir nomor telepon pengirim atau penerima'.tr,
+                    'Mohon masukkan lima digit terakhir nomor telepon pengirim atau penerima'.tr,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
@@ -82,7 +88,7 @@ class PhoneNumberConfirmationScreenState extends State<PhoneNumberConfirmationSc
                 ),
                 const SizedBox(height: 40),
                 Pinput(
-                  length: 4,
+                  length: 5,
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly,
                   ],
@@ -96,27 +102,27 @@ class PhoneNumberConfirmationScreenState extends State<PhoneNumberConfirmationSc
                     setState(() {
                       _phoneNumber = phoneNumber;
                     });
-                    widget.cekResi(widget.awb, _phoneNumber).then((value) {
-                      if (value.code == 200) {
-                        Navigator.pop(context);
-                      } else {
-                        AppSnackBar.error(value.message);
-                      }
-                    });
+                    // widget.cekResi(widget.awb, _phoneNumber).then((value) {
+                    //   if (value.code == 200) {
+                    Get.back(result: _phoneNumber);
+                    //   } else {
+                    //     AppSnackBar.error(value.message);
+                    //   }
+                    // });
                   },
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    if (!widget.isLoading) {
-                      widget.cekResi(widget.awb, _phoneNumber).then((value) {
-                        if (value.code == 200) {
-                          Navigator.pop(context);
-                        } else {
-                          AppSnackBar.error(value.message);
-                        }
-                      });
-                    }
+                    //   if (!widget.isLoading) {
+                    //     widget.cekResi(widget.awb, _phoneNumber).then((value) {
+                    //       if (value.code == 200) {
+                    Get.back(result: _phoneNumber);
+                    //       } else {
+                    //         AppSnackBar.error(value.message);
+                    //       }
+                    //     });
+                    //   }
                   },
                   child: Text(
                     'Konfirmasi'.tr,

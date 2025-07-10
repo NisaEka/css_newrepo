@@ -54,9 +54,14 @@ class LacakKirimanScreen extends StatelessWidget {
                   Get.to(
                     () => PhoneNumberConfirmationScreen(
                       awb: result,
-                      cekResi: c.cekResi,
+                      // cekResi: c.cekResi,
                       isLoading: c.isLoading,
                     ),
+                  )?.then(
+                    (phoneNumber) {
+                      c.phoneNumber = phoneNumber;
+                      c.searchCnotes(result ?? '');
+                    },
                   );
                 }
               }),
@@ -96,14 +101,18 @@ class LacakKirimanScreen extends StatelessWidget {
               } else {
                 if (c.isLogin) {
                   // c.cekResi(value, '');
-                  c.searchCnotes(value, '');
+                  c.searchCnotes(value);
                 } else {
                   Get.to(
                     () => PhoneNumberConfirmationScreen(
                       awb: value,
-                      cekResi: c.cekResi,
                       isLoading: c.isLoading,
                     ),
+                  )?.then(
+                    (phoneNumber) {
+                      c.phoneNumber = phoneNumber;
+                      c.searchCnotes(value);
+                    },
                   );
                 }
               }
