@@ -32,30 +32,33 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   final String? searchHintText;
   final TextEditingController? controller;
   final bool isFilterOnline;
+  final bool showSearchBox;
 
-  CustomSearchDropdownField(
-      {super.key,
-      this.items,
-      this.asyncItems,
-      this.onChanged,
-      required this.itemAsString,
-      required this.itemBuilder,
-      this.label,
-      this.hintText,
-      this.selectedItem,
-      required this.readOnly,
-      this.textStyle,
-      this.width,
-      this.suffixIcon,
-      this.prefixIcon,
-      this.isRequired = false,
-      this.value,
-      this.showClearButton = false,
-      this.showDropdownButton = true,
-      this.isFilterOnline = true,
-      this.onClear,
-      this.searchHintText,
-      this.controller}) {
+  CustomSearchDropdownField({
+    super.key,
+    this.items,
+    this.asyncItems,
+    this.onChanged,
+    required this.itemAsString,
+    required this.itemBuilder,
+    this.label,
+    this.hintText,
+    this.selectedItem,
+    required this.readOnly,
+    this.textStyle,
+    this.width,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.isRequired = false,
+    this.value,
+    this.showClearButton = false,
+    this.showDropdownButton = true,
+    this.isFilterOnline = true,
+    this.onClear,
+    this.searchHintText,
+    this.showSearchBox = true,
+    this.controller,
+  }) {
     if (isRequired) {
       if (value == null || value == hintText || value == label) {
         // return validator!(value as T);
@@ -66,12 +69,10 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   }
 
   @override
-  State<CustomSearchDropdownField<T>> createState() =>
-      _CustomSearchDropdownFieldState<T>();
+  State<CustomSearchDropdownField<T>> createState() => _CustomSearchDropdownFieldState<T>();
 }
 
-class _CustomSearchDropdownFieldState<T>
-    extends State<CustomSearchDropdownField<T>> {
+class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField<T>> {
   FormFieldValidator<T>? validator;
 
   @override
@@ -81,21 +82,16 @@ class _CustomSearchDropdownFieldState<T>
         children: [
           const SizedBox(height: 10),
           TextField(
-            controller: widget.controller ??
-                TextEditingController(text: widget.selectedItem.toString()),
+            controller: widget.controller ?? TextEditingController(text: widget.selectedItem.toString()),
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
-                  color: AppConst.isLightTheme(context)
-                      ? Colors.black
-                      : whiteColor,
+                  color: AppConst.isLightTheme(context) ? Colors.black : whiteColor,
                 ),
             decoration: InputDecoration(
               label: Text(widget.label ?? widget.hintText ?? ''),
               filled: true,
-              fillColor: Theme.of(context).brightness == Brightness.light
-                  ? neutralColor
-                  : greyColor,
+              fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.suffixIcon,
               prefixIconColor: Theme.of(context).colorScheme.outline,
@@ -112,9 +108,7 @@ class _CustomSearchDropdownFieldState<T>
         DropdownSearch<T>(
           validator: (value) {
             if (widget.isRequired) {
-              if (value == null ||
-                  value == widget.hintText ||
-                  value == widget.label) {
+              if (value == null || value == widget.hintText || value == widget.label) {
                 return "Masukan tidak boleh kosong".tr;
               }
             }
@@ -125,13 +119,12 @@ class _CustomSearchDropdownFieldState<T>
             constraints: const BoxConstraints(maxHeight: 200),
             fit: FlexFit.loose,
             showSelectedItems: false,
-            errorBuilder: (context, searchEntry, exception) =>
-                DataEmpty(text: "Anda sedang offline".tr),
+            errorBuilder: (context, searchEntry, exception) => DataEmpty(text: "Anda sedang offline".tr),
             menuProps: MenuProps(
               backgroundColor: dropDownColor(context),
               borderRadius: BorderRadius.circular(10),
             ),
-            showSearchBox: true,
+            showSearchBox: widget.showSearchBox,
             searchDelay: const Duration(milliseconds: 500),
             isFilterOnline: widget.isFilterOnline,
             itemBuilder: widget.itemBuilder,
@@ -142,10 +135,7 @@ class _CustomSearchDropdownFieldState<T>
                   hintText: widget.searchHintText,
                   helperText: "Masukan minimal 3 karakter".tr,
                 ),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: regular)),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular)),
           ),
           dropdownButtonProps: DropdownButtonProps(
             icon: const Icon(Icons.keyboard_arrow_down),
@@ -159,8 +149,7 @@ class _CustomSearchDropdownFieldState<T>
                 prefixIcon: widget.prefixIcon,
                 suffixIcon: widget.suffixIcon,
                 prefixIconColor: Theme.of(context).colorScheme.outline),
-            baseStyle:
-                widget.textStyle ?? Theme.of(context).textTheme.titleSmall,
+            baseStyle: widget.textStyle ?? Theme.of(context).textTheme.titleSmall,
           ),
           asyncItems: widget.asyncItems,
           itemAsString: widget.itemAsString,

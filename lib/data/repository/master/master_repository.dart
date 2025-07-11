@@ -9,6 +9,7 @@ import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
 import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
+import 'package:css_mobile/data/model/master/vehicle_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/transaction/data_service_model.dart';
 
@@ -44,4 +45,6 @@ abstract class MasterRepository {
   Future<BaseResponse<TransServiceModel>> getServices(DataServiceModel param);
 
   Future<BaseResponse<List<AppsInfoModel>>> getAppsInfo(QueryModel param);
+
+  Future<BaseResponse<List<VehicleModel>>> getVehicles();
 }

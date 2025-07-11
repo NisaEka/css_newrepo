@@ -7,14 +7,13 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
   final Widget content;
   final String title;
 
-  const RequestPickupBottomSheetScaffold(
-      {super.key, required this.content, required this.title});
+  const RequestPickupBottomSheetScaffold({super.key, required this.content, required this.title});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: screenWidth < 400 ? Get.height : Get.height / 2.2,
+      height: screenWidth < 400 ? Get.height : Get.height * 0.6,
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surface,
         shape: BoxShape.rectangle,
@@ -37,8 +36,7 @@ class RequestPickupBottomSheetScaffold extends StatelessWidget {
               Expanded(
                 child: Text(
                   title.tr,
-                  style: listTitleTextStyle.copyWith(
-                      color: Theme.of(context).colorScheme.outline),
+                  style: listTitleTextStyle.copyWith(color: Theme.of(context).colorScheme.outline),
                   textAlign: TextAlign.center,
                 ),
               ),

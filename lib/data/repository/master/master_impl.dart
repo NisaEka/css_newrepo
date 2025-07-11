@@ -8,6 +8,7 @@ import 'package:css_mobile/data/model/master/get_dropshipper_model.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_service_model.dart';
 import 'package:css_mobile/data/model/master/group_owner_model.dart';
+import 'package:css_mobile/data/model/master/vehicle_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
@@ -59,8 +60,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<DestinationModel>>> getDestinations(
-      QueryModel param) async {
+  Future<BaseResponse<List<DestinationModel>>> getDestinations(QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/master/destinations',
@@ -105,8 +105,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(
-      String keyword) async {
+  Future<BaseResponse<List<GroupOwnerModel>>> getReferals(String keyword) async {
     try {
       Response response = await network.base.get(
         '/master/group-owners',
@@ -156,10 +155,8 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(
-      QueryModel param) async {
-    UserModel user = UserModel.fromJson(
-        await StorageCore().readData(StorageCore.basicProfile));
+  Future<BaseResponse<List<DropshipperModel>>> getDropshippers(QueryModel param) async {
+    UserModel user = UserModel.fromJson(await StorageCore().readData(StorageCore.basicProfile));
     List<Map<String, dynamic>> where = [
       {"registrationId": "${user.id?.split('-').first}"}
     ];
@@ -230,8 +227,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<ReceiverModel>>> getReceivers(
-      QueryModel param) async {
+  Future<BaseResponse<List<ReceiverModel>>> getReceivers(QueryModel param) async {
     UserModel user = UserModel.fromJson(
       await StorageCore().readData(StorageCore.basicProfile),
     );
@@ -309,8 +305,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<TransAccountModel>>> getAccounts(
-      QueryModel param) async {
+  Future<BaseResponse<List<TransAccountModel>>> getAccounts(QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/accounts',
@@ -350,8 +345,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<TransServiceModel>> getServices(
-      DataServiceModel param) async {
+  Future<BaseResponse<TransServiceModel>> getServices(DataServiceModel param) async {
     try {
       Response response = await network.base.get(
         "/transaction/fees",
@@ -376,8 +370,7 @@ class MasterRepositoryImpl extends MasterRepository {
   }
 
   @override
-  Future<BaseResponse<List<AppsInfoModel>>> getAppsInfo(
-      QueryModel param) async {
+  Future<BaseResponse<List<AppsInfoModel>>> getAppsInfo(QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/auth/apps-infos',
@@ -393,7 +386,30 @@ class MasterRepositoryImpl extends MasterRepository {
                 .toList()
             : List.empty(),
       );
-    } on DioException catch (e,i) {
+    } on DioException catch (e, i) {
+      AppLogger.e("error get apps infos : $e $i");
+      return e.response?.data;
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<VehicleModel>>> getVehicles() async {
+    try {
+      Response response = await network.base.get(
+        '/transaction/pickups/vehicle',
+        // queryParameters: param.toJson(),
+      );
+      return BaseResponse<List<VehicleModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<VehicleModel>(
+                  (i) => VehicleModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+    } on DioException catch (e, i) {
       AppLogger.e("error get apps infos : $e $i");
       return e.response?.data;
     }

@@ -46,7 +46,7 @@ class LacakKirimanController extends BaseController {
     isLoading = true;
     update();
 
-    value.split('\n').forEachIndexed((index, cnote) async {
+    value.split('\n').take(101).forEachIndexed((index, cnote) async {
       // var response = await trace.postTracingByCnote(cnote);
       final response = await cekToken() ? await trace.postTracingByCnote(cnote) : await trace.postTracingByCnotePublic(cnote, phoneNumber ?? '');
 

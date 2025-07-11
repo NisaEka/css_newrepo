@@ -343,6 +343,7 @@ class RequestPickupController extends BaseController {
       awbs: state.selectedAwbs,
       pickupAddressId: state.selectedAddressId ?? '',
       pickupTime: getSelectedPickupTime(),
+      vehicle: state.selectedVehicle ?? '1',
     );
   }
 }
