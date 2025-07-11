@@ -78,7 +78,7 @@ class _OriginDropdownState extends State<VehicleDropdown> {
             isRequired: true,
             suffixIcon: const Icon(Icons.keyboard_arrow_down),
             onChanged: widget.onChanged,
-            onTap: () => showCityList('Pilih Armadal'.tr),
+            onTap: () => showCityList('Pilih Armada'.tr),
           )
         : CustomSearchDropdownField<VehicleModel>(
             controller: widget.controller,
@@ -99,7 +99,7 @@ class _OriginDropdownState extends State<VehicleDropdown> {
             value: widget.value,
             selectedItem: widget.selectedItem,
             hintText: widget.label ?? "Pilih Armada".tr,
-            searchHintText: widget.label ?? 'Masukan Pilihan Armada'.tr,
+            searchHintText: widget.label ?? 'Pilih Armada'.tr,
             prefixIcon: widget.prefixIcon,
             textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor(context)),
             readOnly: widget.readOnly,
