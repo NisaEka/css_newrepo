@@ -78,8 +78,8 @@ class DashboardState {
 
   // Kiriman Kamu
   bool isLoadingKiriman = false;
-  bool isLoadingKirimanCOD = true;
-  bool isLoadAggregation = true;
+  bool isLoadingKirimanCOD = false;
+  bool isLoadAggregation = false;
   DashboardKirimanKamuModel kirimanKamu = DashboardKirimanKamuModel();
   DashboardKirimanKamuModel kirimanKamuCOD = DashboardKirimanKamuModel();
   AggregationModel? aggregationModel;

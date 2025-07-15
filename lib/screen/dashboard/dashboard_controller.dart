@@ -38,17 +38,21 @@ class DashboardController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      isFirst(),
-      cekToken(),
-      initData(),
-      cekLocalLanguage(),
-      loadPromo(),
-      loadNews(),
-      getAggregation(),
-      getAggregationMinus(),
-      getBanners(),
-    ]);
+    () async {
+      try {
+        await isFirst();
+        await cekToken();
+        await initData();
+        // await cekLocalLanguage();
+        // await loadPromo();
+        // await loadNews();
+        // await getAggregation();
+        // await getAggregationMinus();
+        // await getBanners();
+      } catch (e, s) {
+        AppLogger.e('onInit error $e\n$s');
+      }
+    }();
   }
 
   Future<void> cekMessages() async {

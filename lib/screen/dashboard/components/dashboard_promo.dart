@@ -16,25 +16,20 @@ class DashboardPromo extends StatelessWidget {
             margin: const EdgeInsets.only(left: 20, right: 20, top: 20),
             child: Column(
               children: [
-                c.state.promoList.isEmpty
-                    ? const SizedBox()
-                    : TitleTextItem(title: 'Promo Terkini'.tr),
+                c.state.promoList.isEmpty ? const SizedBox() : TitleTextItem(title: 'Promo Terkini'.tr),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: c.state.isLoading && c.state.promoList.isEmpty
-                        ? List.generate(
-                            3,
-                            (index) =>
-                                const PromoItem(isLoading: true, lang: ''))
+                        ? List.generate(3, (index) => const PromoItem(isLoading: true, lang: ''))
                         : c.state.promoList
                             .map(
                               (e) => PromoItem(
                                 promo: e,
                                 lang: c.state.local,
-                                isLoading: c.state.isLoading,
+                                // isLoading: c.state.isLoading,
                               ),
                             )
                             .toList(),

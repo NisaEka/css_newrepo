@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DocumentImageItem extends StatefulWidget {
   final String? img;
@@ -27,7 +27,7 @@ class DocumentImageItem extends StatefulWidget {
 }
 
 class _DocumentImageItemState extends State<DocumentImageItem> {
-  Completer<GoogleMapController>? googleMapController;
+  // Completer<GoogleMapController>? googleMapController;
 
   @override
   void initState() {
@@ -93,31 +93,31 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                       : widget.isLoading
                           ? const Center(
                               child: CircularProgressIndicator.adaptive(),
-                            )
-                          : GoogleMap(
-                              onMapCreated: (controller) =>
-                                  googleMapController?.complete(controller),
-                              zoomControlsEnabled: false,
-                              myLocationButtonEnabled: false,
-                              mapType: MapType.none,
-                              markers: <Marker>{
-                                Marker(
-                                  draggable: false,
-                                  markerId: const MarkerId('SomeId'),
-                                  position: LatLng(
-                                    widget.lat!,
-                                    widget.lng!,
-                                  ),
-                                )
-                              },
-                              initialCameraPosition: CameraPosition(
-                                target: LatLng(
-                                  widget.lat!,
-                                  widget.lng!,
-                                ),
-                                zoom: 16.0,
-                              ),
-                            ),
+                            ) : const SizedBox()
+                          // : GoogleMap(
+                          //     onMapCreated: (controller) =>
+                          //         googleMapController?.complete(controller),
+                          //     zoomControlsEnabled: false,
+                          //     myLocationButtonEnabled: false,
+                          //     mapType: MapType.none,
+                          //     markers: <Marker>{
+                          //       Marker(
+                          //         draggable: false,
+                          //         markerId: const MarkerId('SomeId'),
+                          //         position: LatLng(
+                          //           widget.lat!,
+                          //           widget.lng!,
+                          //         ),
+                          //       )
+                          //     },
+                          //     initialCameraPosition: CameraPosition(
+                          //       target: LatLng(
+                          //         widget.lat!,
+                          //         widget.lng!,
+                          //       ),
+                          //       zoom: 16.0,
+                          //     ),
+                          //   ),
                 ),
               ],
             ),
