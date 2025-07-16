@@ -29,13 +29,19 @@ class LacakKirimanController extends BaseController {
       searchField.text = resi ?? '';
       Future.delayed(Duration.zero, () async {
         if (await cekToken()) {
-          cekResi(resi ?? '', '');
+          searchCnotes(resi ?? '');
         } else {
-          Get.to(() => PhoneNumberConfirmationScreen(
-                awb: resi ?? '',
-                // cekResi: cekResi,
-                isLoading: isLoading,
-              ));
+          Get.to(
+            () => PhoneNumberConfirmationScreen(
+              awb: resi ?? '',
+              isLoading: isLoading,
+            ),
+          )?.then(
+            (phoneNumber) {
+              phoneNumber = phoneNumber;
+              searchCnotes(resi ?? '');
+            },
+          );
         }
       });
     }

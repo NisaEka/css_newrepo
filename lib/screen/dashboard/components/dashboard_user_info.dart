@@ -54,58 +54,59 @@ class DashboardUserInfo extends StatelessWidget {
                         : const SizedBox(),
                     const SizedBox(height: 10),
                     // c.state.isLogin ? const DashboardInfo() : const SizedBox(),
-                    !c.state.isLogin ||
-                            (c.state.allow.lacakPesanan == "Y" ||
-                                c.state.allow.keuanganBonus == "Y")
-                        ? TextField(
-                            controller: c.state.nomorResi,
-                            cursorColor: CustomTheme().cursorColor(context),
-                            decoration: InputDecoration(
-                              hintText:
-                                  'Masukan nomor resi untuk lacak kiriman'.tr,
-                              hintStyle: hintTextStyle,
-                              suffixIcon: GestureDetector(
-                                onTap: () {
-                                  c.onLacakKiriman(true, '');
-                                },
-                                child: Icon(
-                                  Icons.qr_code_rounded,
-                                  color: color ?? (primaryColor(context)),
+                    !c.state.isLogin || (c.state.allow.lacakPesanan == "Y" || c.state.allow.keuanganBonus == "Y")
+                        ? SizedBox(
+                            height: 60,
+                            child: TextField(
+                              controller: c.state.nomorResi,
+                              cursorColor: CustomTheme().cursorColor(context),
+                              maxLines: null,
+                              decoration: InputDecoration(
+                                hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                hintStyle: hintTextStyle,
+                                suffixIcon: GestureDetector(
+                                  onTap: () {
+                                    c.onLacakKiriman(true, '');
+                                  },
+                                  child: Icon(
+                                    c.state.nomorResi.text.isNotEmpty ? Icons.keyboard_return_rounded : Icons.qr_code_rounded,
+                                    color: color ?? (primaryColor(context)),
+                                  ),
                                 ),
                               ),
+                              onChanged: (value) => c.update(),
+                              onSubmitted: (value) {
+                                if (value.isEmpty) {
+                                  Get.showSnackbar(
+                                    GetSnackBar(
+                                      icon: const Icon(
+                                        Icons.warning,
+                                        color: whiteColor,
+                                      ),
+                                      message: 'Nomor resi tidak boleh kosong'.tr,
+                                      isDismissible: true,
+                                      duration: const Duration(seconds: 3),
+                                      backgroundColor: errorColor,
+                                    ),
+                                  );
+                                } else if (value.length > 16) {
+                                  Get.showSnackbar(
+                                    GetSnackBar(
+                                      icon: const Icon(
+                                        Icons.warning,
+                                        color: whiteColor,
+                                      ),
+                                      message: 'Nomor resi maksimal 16 karakter'.tr,
+                                      isDismissible: true,
+                                      duration: const Duration(seconds: 3),
+                                      backgroundColor: errorColor,
+                                    ),
+                                  );
+                                } else {
+                                  c.onLacakKiriman(false, value);
+                                }
+                              },
                             ),
-                            onSubmitted: (value) {
-                              if (value.isEmpty) {
-                                Get.showSnackbar(
-                                  GetSnackBar(
-                                    icon: const Icon(
-                                      Icons.warning,
-                                      color: whiteColor,
-                                    ),
-                                    message: 'Nomor resi tidak boleh kosong'.tr,
-                                    isDismissible: true,
-                                    duration: const Duration(seconds: 3),
-                                    backgroundColor: errorColor,
-                                  ),
-                                );
-                              } else if (value.length > 16) {
-                                Get.showSnackbar(
-                                  GetSnackBar(
-                                    icon: const Icon(
-                                      Icons.warning,
-                                      color: whiteColor,
-                                    ),
-                                    message:
-                                        'Nomor resi maksimal 16 karakter'.tr,
-                                    isDismissible: true,
-                                    duration: const Duration(seconds: 3),
-                                    backgroundColor: errorColor,
-                                  ),
-                                );
-                              } else {
-                                c.onLacakKiriman(false, value);
-                              }
-                            },
                           )
                         : const SizedBox(),
                   ],

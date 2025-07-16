@@ -719,16 +719,23 @@ class DashboardController extends BaseController {
   }
 
   onLacakKiriman(bool useBarcode, String value) {
-    Get.to(
-      useBarcode ? () => const BarcodeScanScreen() : () => const LacakKirimanScreen(),
-      arguments: {
-        'nomor_resi': value,
+    if (state.nomorResi.text.isNotEmpty) {
+      Get.to(const LacakKirimanScreen(), arguments: {
+        'nomor_resi': state.nomorResi.text,
         "cek_resi": true,
-      },
-    )?.then((value) {
-      state.nomorResi.clear();
-      update();
-    });
+      });
+    } else {
+      Get.to(
+        useBarcode ? () => const BarcodeScanScreen() : () => const LacakKirimanScreen(),
+        arguments: {
+          'nomor_resi': value,
+          "cek_resi": true,
+        },
+      )?.then((value) {
+        state.nomorResi.clear();
+        update();
+      });
+    }
   }
 
   @override
