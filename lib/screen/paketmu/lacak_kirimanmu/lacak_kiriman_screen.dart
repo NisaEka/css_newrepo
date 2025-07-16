@@ -1,20 +1,13 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:collection/collection.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/barcode_scan_screen.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_controller.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_detail.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmation_screen.dart';
-import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
-import 'package:css_mobile/widgets/bar/kiriman_stepper.dart';
-import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customcodelabel.dart';
-import 'package:css_mobile/widgets/forms/customformlabel.dart';
-import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -49,7 +42,7 @@ class LacakKirimanScreen extends StatelessWidget {
                 c.searchField.text = result;
                 c.update();
                 if (c.isLogin) {
-                  c.cekResi(result, '');
+                  c.searchCnotes(result);
                 } else {
                   Get.to(
                     () => PhoneNumberConfirmationScreen(

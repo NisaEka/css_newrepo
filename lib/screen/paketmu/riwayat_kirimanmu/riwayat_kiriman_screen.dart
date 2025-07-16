@@ -34,6 +34,7 @@ class RiwayatKirimanScreen extends StatelessWidget {
               child: Column(
                 children: [
                   TransactionSearchField(),
+                  SizedBox(height: 10),
                   TransactionStatusButton(),
                   TransactionItems(),
                 ],
