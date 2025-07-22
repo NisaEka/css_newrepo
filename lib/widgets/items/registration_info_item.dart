@@ -25,26 +25,28 @@ class RegistrationInfoItem extends StatelessWidget {
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: infoColor.withOpacity(0.7),
+        color: infoColor,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           const UserPhotoProfile(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CustomLabelText(
-                title: 'Email'.tr,
-                value: data.email ?? '',
-                fontColor: whiteColor,
-              ),
-              CustomLabelText(
-                title: 'Nomor Telepon'.tr,
-                value: maskingPhone(),
-                fontColor: whiteColor,
-              ),
-            ],
+          Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomLabelText(
+                  title: 'Email'.tr,
+                  value: data.email ?? '',
+                  fontColor: whiteColor,
+                ),
+                CustomLabelText(
+                  title: 'Nomor Telepon'.tr,
+                  value: maskingPhone(),
+                  fontColor: whiteColor,
+                ),
+              ],
+            ),
           ),
         ],
       ),
