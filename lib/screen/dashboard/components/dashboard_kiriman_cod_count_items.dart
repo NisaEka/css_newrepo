@@ -68,7 +68,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TransactionCard(
-                            height: screenHeight < 800 ? 150 : 140,
+                            height: screenHeight < 800 ? 150 : 150,
                             customTitle: DashboardMiniCount(
                               width: screenWidth < 400
                                   ? Get.width * 0.16
@@ -106,7 +106,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             ),
                           ),
                           TransactionCard(
-                            height: screenHeight < 800 ? 150 : 140,
+                            height: screenHeight < 800 ? 150 : 150,
                             customTitle: DashboardMiniCount(
                               width: Get.width * 0.19,
                               margin: EdgeInsets.zero,
@@ -155,7 +155,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TransactionCard(
-                                height: screenHeight < 800 ? 150 : 140,
+                                height: screenHeight < 800 ? 150 : 150,
                                 customTitle: Column(
                                   children: [
                                     DashboardMiniCount(

@@ -94,7 +94,7 @@ class ShipperForm extends StatelessWidget {
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
                               prefixIcon: const Icon(Icons.person_2_rounded),
-                              validator: ValidationBuilder().name().build(),
+                              // validator: ValidationBuilder().name().build(),
                             ),
                             CustomTextFormField(
                               controller: c.state.shipperPhone,

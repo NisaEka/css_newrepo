@@ -26,8 +26,8 @@ extension CustomValidationBuilder on ValidationBuilder {
           return "Nomor telepon tidak boleh kurang dari 10 karakter".tr;
         } else if (value.length > 13) {
           return "Nomor telepon tidak boleh lebih dari 13 karakter".tr;
-        // } else if (!value.startsWith("08")) {
-        //   return "Nomor telepon harus diawali dengan 08".tr;
+        } else if (!value.startsWith("0") && !value.startsWith("62")) {
+          return "Nomor telepon harus diawali dengan 0 atau 62".tr;
         }
         return null;
       });
