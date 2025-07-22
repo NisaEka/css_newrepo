@@ -15,6 +15,6 @@ class RequestPickupCreateRequestModel {
         'awbs': awbs,
         'pickupDataId': pickupAddressId,
         'pickupTime': pickupTime,
-        "pickupVehicle": vehicle,
+        "pickupVehicleId": vehicle,
       };
 }

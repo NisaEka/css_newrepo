@@ -45,4 +45,20 @@ class RequestPickupAddressModel {
     _pickupDataLatitude = json["pickupDataLatitude"] ?? "";
     _pickupDataLongitude = json["pickupDataLongitude"] ?? "";
   }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map["pickupDataId"] = _pickupDataId;
+    map["pickupDataName"] = _pickupDataName;
+    map["pickupDataPhone"] = _pickupDataPhone;
+    map["pickupDataAddress"] = _pickupDataAddress;
+    map["pickupDataZipCode"] = _pickupDataZipCode;
+    map["pickupDataSubdistrict"] = _pickupDataSubdistrict;
+    map["pickupDataDistrict"] = _pickupDataDistrict;
+    map["pickupDataCity"] = _pickupDataCity;
+    map["pickupDataRegion"] = _pickupDataRegion;
+    map["pickupDataLatitude"] = _pickupDataLatitude;
+    map["pickupDataLongitude"] = _pickupDataLongitude;
+    return map;
+  }
 }

@@ -185,7 +185,7 @@ class NetworkCore {
           },
           onResponse: (response, handler) {
             if (kDebugMode) {
-              AppLogger.d("kDebugMode response : $response");
+              debugPrint("kDebugMode response : $response");
             }
             return handler.next(response);
           },

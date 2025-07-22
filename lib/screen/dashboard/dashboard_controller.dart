@@ -101,8 +101,8 @@ class DashboardController extends BaseController {
     String? aToken = await storage.readAccessToken();
     String? rToken = await storage.readRefreshToken();
     state.isLogin = aToken?.isNotEmpty ?? false;
-    AppLogger.i('token : $aToken');
-    AppLogger.i('rtoken : $rToken');
+    // AppLogger.i('token : $token');
+    // AppLogger.i('rtoken : $rToken');
 
     update();
 
@@ -135,6 +135,7 @@ class DashboardController extends BaseController {
   }
 
   Future<void> loadNews() async {
+    AppLogger.d("cek load news");
     state.newsList.clear();
     if (state.isOnline) {
       try {
@@ -246,7 +247,7 @@ class DashboardController extends BaseController {
   }
 
   void cekAllowance() {
-    AppLogger.w("allowance : ${state.allow.toJson()}");
+    // AppLogger.w("allowance : ${state.allow.toJson()}");
     if (state.isLogin && state.allow.paketmuInput != "Y" && state.allow.buatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }

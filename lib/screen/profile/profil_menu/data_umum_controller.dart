@@ -22,7 +22,7 @@ class DataUmumController extends BaseController {
     isLoading = true;
     try {
       String? token = await storage.readAccessToken();
-      AppLogger.i('token : $token');
+      // AppLogger.i('token : $token');
       isLogin = token != null;
       await profil
           .getBasicProfil()

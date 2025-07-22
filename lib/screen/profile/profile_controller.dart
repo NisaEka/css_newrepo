@@ -61,7 +61,7 @@ class ProfileController extends BaseController {
     update();
 
     String? token = await storage.readAccessToken();
-    AppLogger.i('token : $token');
+    // AppLogger.i('token : $token');
     state.isLogin = token != null;
     bool basic = ((await storage.readString(StorageCore.basicProfile))
                 .isEmpty ||

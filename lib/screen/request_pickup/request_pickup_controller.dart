@@ -49,10 +49,7 @@ class RequestPickupController extends BaseController {
     if (state.startDate != null && state.endDate != null) {
       state.queryParam.setBetween([
         {
-          "createdDateSearch": [
-            state.startDate?.toIso8601String() ?? '',
-            state.endDate?.toIso8601String() ?? ''
-          ]
+          "createdDateSearch": [state.startDate?.toIso8601String() ?? '', state.endDate?.toIso8601String() ?? '']
         }
       ]);
     } else {
@@ -113,8 +110,7 @@ class RequestPickupController extends BaseController {
 
   Future<void> getRequestPickupCount() async {
     try {
-      final response =
-          await requestPickupRepository.getRequestPickupCount(QueryModel(
+      final response = await requestPickupRepository.getRequestPickupCount(QueryModel(
         where: state.queryParam.where,
         between: state.queryParam.between,
         search: state.queryParam.search,
@@ -176,11 +172,10 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses(int page) async {
     try {
-      final response = await requestPickupRepository
-          .getRequestPickupAddresses(QueryModel(page: page, sort: [
+      final response = await requestPickupRepository.getRequestPickupAddresses(QueryModel(page: page, sort: [
         {"createdDate": "desc"}
       ]));
-      AppLogger.i("addresses: ${response.data}");
+      AppLogger.i("addresses: ${response.data?.map((e) => e.toJson())}");
       final payload = response.data ?? List.empty();
       state.addresses.clear();
       state.addresses.addAll(payload);
@@ -190,14 +185,11 @@ class RequestPickupController extends BaseController {
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
       if (isLastPage) {
         state.pagingControllerPickupDataAddress.appendLastPage(payload);
-        AppLogger.i(
-            "pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
+        AppLogger.i("pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
       } else {
         final nextPageKey = page + 1;
-        state.pagingControllerPickupDataAddress
-            .appendPage(payload, nextPageKey);
-        AppLogger.i(
-            "pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
+        state.pagingControllerPickupDataAddress.appendPage(payload, nextPageKey);
+        AppLogger.i("pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
       }
     } catch (e) {
       AppLogger.e("getAddresses error: $e");
@@ -263,6 +255,7 @@ class RequestPickupController extends BaseController {
     state.checkMode = false;
     state.selectedAwbs.clear();
     update();
+    Get.back();
   }
 
   void requireRetry() {
@@ -277,18 +270,14 @@ class RequestPickupController extends BaseController {
     state.createDataLoading = true;
     update();
 
-    requestPickupRepository
-        .createRequestPickup(_prepareCreateData())
-        .then((response) {
-      if (response.code == HttpStatus.created &&
-          response.data!.errorDetails.isEmpty) {
+    requestPickupRepository.createRequestPickup(_prepareCreateData()).then((response) {
+      state.data = response.data;
+      if (response.code == HttpStatus.created && response.data!.errorDetails.isEmpty) {
         state.createDataSuccess = true;
         if (state.createDataFailed || state.createDataSuccess) {
           Get.dialog(
             DefaultAlertDialog(
-              title:
-                  "Success: ${state.data?.successCount}. Error: ${state.data?.errorCount}\n"
-                      .tr,
+              title: "Success: ${state.data?.successCount}. Error: ${state.data?.errorCount}\n".tr,
               subtitle: 'Error Details:\n'
                   '${state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
               backButtonTitle: "Kembali",

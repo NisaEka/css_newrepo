@@ -151,7 +151,7 @@ class FirebaseApi {
 
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-    AppLogger.i("FCM Token: ${await messaging.getToken()}");
+    // AppLogger.i("FCM Token: ${await messaging.getToken()}");
     await StorageCore()
         .writeString(StorageCore.fcmToken, await messaging.getToken());
 

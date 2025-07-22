@@ -145,7 +145,7 @@ class ForgotPasswordOTPController extends BaseController {
 
   Future<bool> cekToken() async {
     String? token = await storage.readAccessToken();
-    AppLogger.i('token : $token');
+    // AppLogger.i('token : $token');
     isLogin = token != null;
     update();
 
