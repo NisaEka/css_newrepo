@@ -35,7 +35,8 @@ class TransactionServicesList extends StatelessWidget {
                     ),
                   )
                 : SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 150,
                       mainAxisSpacing: 10,
                       crossAxisSpacing: 10,
@@ -48,30 +49,42 @@ class TransactionServicesList extends StatelessWidget {
                           child: Shimmer(
                             isLoading: c.state.isServiceLoad,
                             child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: c.state.isServiceLoad
-                                    ? greyColor
-                                    : c.state.selectedService == c.state.serviceList[index]
-                                        ? primaryColor(context)
-                                        : greyLightColor3,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: c.state.serviceList.isEmpty
-                                  ? const SizedBox()
-                                  : Text(
-                                      c.state.serviceList[index].serviceDisplay == 'INTL'
-                                          ? '${c.state.serviceList[index].serviceDisplay} - ${c.state.serviceList[index].goodsType}'
-                                          : c.state.serviceList[index].serviceDisplay ?? '',
-                                      style: listTitleTextStyle.copyWith(
-                                        color: c.state.selectedService == c.state.serviceList[index] ? whiteColor : primaryColor(context),
-                                      ),
-                                    ),
-                            ),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: c.state.isServiceLoad
+                                      ? greyColor
+                                      : c.state.selectedService ==
+                                              c.state.serviceList[index]
+                                          ? primaryColor(context)
+                                          : greyLightColor3,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: c.state.serviceList.isEmpty
+                                    ? const SizedBox()
+                                    : FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          c.state.serviceList[index]
+                                                      .serviceDisplay ==
+                                                  'INTL'
+                                              ? '${c.state.serviceList[index].serviceDisplay} - ${c.state.serviceList[index].goodsType}'
+                                              : c.state.serviceList[index]
+                                                      .serviceDisplay ??
+                                                  '',
+                                          style: listTitleTextStyle.copyWith(
+                                            color: c.state.selectedService ==
+                                                    c.state.serviceList[index]
+                                                ? whiteColor
+                                                : primaryColor(context),
+                                          ),
+                                        ),
+                                      )),
                           ),
                         );
                       },
-                      childCount: c.state.isServiceLoad ? 6 : c.state.serviceList.length,
+                      childCount: c.state.isServiceLoad
+                          ? 6
+                          : c.state.serviceList.length,
                     ),
                   ),
           );
