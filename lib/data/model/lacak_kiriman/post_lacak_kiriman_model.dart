@@ -3,8 +3,6 @@ class PostLacakKirimanModel {
   List<Detail>? detail;
   List<HistoryKiriman>? history;
 
-
-
   PostLacakKirimanModel({
     this.cnote,
     this.detail,
@@ -14,13 +12,8 @@ class PostLacakKirimanModel {
   factory PostLacakKirimanModel.fromJson(Map<String, dynamic> json) {
     return PostLacakKirimanModel(
       cnote: json['cnote'] != null ? Cnote.fromJson(json['cnote']) : null,
-      detail: json['detail'] != null
-          ? List<Detail>.from(json['detail'].map((x) => Detail.fromJson(x)))
-          : null,
-      history: json['history'] != null
-          ? List<HistoryKiriman>.from(
-              json['history'].map((x) => HistoryKiriman.fromJson(x)))
-          : null,
+      detail: json['detail'] != null ? List<Detail>.from(json['detail'].map((x) => Detail.fromJson(x))) : null,
+      history: json['history'] != null ? List<HistoryKiriman>.from(json['history'].map((x) => HistoryKiriman.fromJson(x))) : null,
     );
   }
 
@@ -31,6 +24,17 @@ class PostLacakKirimanModel {
       'history': history?.map((x) => x.toJson()).toList(),
     };
   }
+
+  PostLacakKirimanModel copyWith({
+    Cnote? cnote,
+    List<Detail>? detail,
+    List<HistoryKiriman>? history,
+  }) =>
+      PostLacakKirimanModel(
+        cnote: cnote,
+        detail: detail,
+        history: history,
+      );
 }
 
 class HistoryKiriman {
@@ -274,4 +278,69 @@ class Cnote {
       'estimateDelivery': estimateDelivery,
     };
   }
+
+
+
+  Cnote copyWith({
+    String? cnoteNo,
+    String? referenceNumber,
+    String? cnoteOrigin,
+    String? cnoteDestination,
+    String? cnoteServicesCode,
+    String? servicetype,
+    String? cnoteCustNo,
+    String? cnoteDate,
+    String? cnotePodReceiver,
+    String? cnoteReceiverName,
+    String? cityName,
+    String? cnotePodDate,
+    String? podStatus,
+    String? lastStatus,
+    String? custType,
+    String? cnoteAmount,
+    String? cnoteWeight,
+    String? podCode,
+    String? keterangan,
+    String? cnoteGoodsDescr,
+    String? freightCharge,
+    String? shippingcost,
+    String? insuranceamount,
+    String? priceperkg,
+    String? signature,
+    String? photo,
+    String? long,
+    String? lat,
+    String? estimateDelivery,
+  }) =>
+      Cnote(
+        cnoteNo: cnoteNo,
+        referenceNumber: referenceNumber,
+        cnoteOrigin: cnoteOrigin,
+        cnoteDestination: cnoteDestination,
+        cnoteServicesCode: cnoteServicesCode,
+        servicetype: servicetype,
+        cnoteCustNo: cnoteCustNo,
+        cnoteDate: cnoteDate,
+        cnotePodReceiver: cnotePodReceiver,
+        cnoteReceiverName: cnoteReceiverName,
+        cityName: cityName,
+        cnotePodDate: cnotePodDate,
+        podStatus: podStatus,
+        lastStatus: lastStatus,
+        custType: custType,
+        cnoteAmount: cnoteAmount,
+        cnoteWeight: cnoteWeight,
+        podCode: podCode,
+        keterangan: keterangan,
+        cnoteGoodsDescr: cnoteGoodsDescr,
+        freightCharge: freightCharge,
+        shippingcost: shippingcost,
+        insuranceamount: insuranceamount,
+        priceperkg: priceperkg,
+        signature: signature,
+        photo: photo,
+        long: long,
+        lat: lat,
+        estimateDelivery: estimateDelivery,
+      );
 }

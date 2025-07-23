@@ -37,6 +37,7 @@ class LacakKirimanScreen extends StatelessWidget {
             controller: c.searchField,
             hintText: 'Masukan Nomor Resimu'.tr,
             isMultiple: true,
+            autoFocus: false,
             suffixIcon: GestureDetector(
               onTap: () => Get.to(() => const BarcodeScanScreen(), arguments: {})?.then((result) {
                 c.searchField.text = result;
@@ -93,8 +94,8 @@ class LacakKirimanScreen extends StatelessWidget {
                 //   );
               } else {
                 // if (c.isLogin) {
-                  // c.cekResi(value, '');
-                  c.searchCnotes(value);
+                // c.cekResi(value, '');
+                c.searchCnotes(value);
                 // } else {
                 //   Get.to(
                 //     () => PhoneNumberConfirmationScreen(
@@ -127,23 +128,30 @@ class LacakKirimanScreen extends StatelessWidget {
                       ),
                     ),
                     contentPadding: EdgeInsets.zero,
-                    onTap: () => e?.cnote?.podStatus == "NOT FOUND"
-                        ? null
-                        : Get.to(
-                            c.isLogin
-                                ? LacakKirimanDetail(
-                                    data: e ?? PostLacakKirimanModel(),
-                                    isLogin: c.isLogin,
-                                  )
-                                : PhoneNumberConfirmationScreen(
-                                    awb: e?.cnote?.cnoteNo ?? '',
-                                    isLoading: false,
-                                  ),
+                    onTap: () {
+                      FocusScope.of(Get.context!).unfocus();
+                      if (e?.cnote?.podStatus != "NOT FOUND") {
+                        if (e?.cnote?.podStatus == "DETAIL") {
+                          Get.to(
+                            PhoneNumberConfirmationScreen(
+                              awb: e?.cnote?.cnoteNo ?? '',
+                              isLoading: false,
+                            ),
                           )?.then((phoneNumber) {
-                            if (!c.isLogin) {
-                              c.cekResi(e?.cnote?.cnoteNo ?? '', phoneNumber);
-                            }
-                          }),
+                            c.cekResi(
+                              nomorResi: e,
+                              phoneNumber: phoneNumber,
+                              index: index,
+                            );
+                          });
+                        } else {
+                          Get.to(LacakKirimanDetail(
+                            data: e ?? PostLacakKirimanModel(),
+                            isLogin: c.isLogin,
+                          ));
+                        }
+                      }
+                    },
                   );
                 } else {
                   return Shimmer(

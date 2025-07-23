@@ -51,6 +51,8 @@ class LacakKirimanController extends BaseController {
   Future<void> searchCnotes(String value) async {
     cnotes.clear();
     isLoading = true;
+    FocusScope.of(Get.context!).unfocus();
+
     update();
 
     value.split('\n').take(101).forEachIndexed((index, cnote) async {
@@ -60,9 +62,11 @@ class LacakKirimanController extends BaseController {
       if (response.code == 200) {
         cnotes.add(response.data);
       } else {
-        cnotes.add(PostLacakKirimanModel(
-          cnote: Cnote(cnoteNo: cnote, podStatus: isLogin ? "NOT FOUND" : "DETAIL"),
-        ));
+        if (cnote.isNotEmpty) {
+          cnotes.add(PostLacakKirimanModel(
+            cnote: Cnote(cnoteNo: cnote, podStatus: isLogin ? "NOT FOUND" : "DETAIL"),
+          ));
+        }
       }
       update();
     });
@@ -85,15 +89,21 @@ class LacakKirimanController extends BaseController {
     return isLogin;
   }
 
-  Future<void> cekResi(String nomorResi, String phoneNumber) async {
+  Future<void> cekResi({
+    required PostLacakKirimanModel? nomorResi,
+    required String phoneNumber,
+    required int index,
+  }) async {
     isLoading = true;
+    FocusScope.of(Get.context!).unfocus();
+
     Get.dialog(const LoadingDialog());
     update();
     try {
       // final response = await cekToken() ? await trace.postTracingByCnote(nomorResi) : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
-      final response = await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
+      final response = await trace.postTracingByCnotePublic(nomorResi?.cnote?.cnoteNo ?? '', phoneNumber);
       trackModel = response.data;
-      // debugPrint("lacaak response ${trackModel}");
+      debugPrint("lacaak response ${trackModel?.toJson()}");
     } catch (e, i) {
       AppLogger.e('error cekResi $e, $i');
     }
@@ -105,17 +115,32 @@ class LacakKirimanController extends BaseController {
     if (trackModel != null) {
       Get.to(LacakKirimanDetail(
         data: trackModel ?? PostLacakKirimanModel(),
-      ))?.then((_) => Get.back());
+      ))?.then((_) {
+        cnotes[index] = trackModel;
+        update();
+        Get.back();
+        FocusScope.of(Get.context!).unfocus();
+
+      });
     } else {
       Get.dialog(
         DefaultAlertDialog(
           subtitle: 'Data Tidak Ditemukan'.tr,
           confirmButtonTitle: 'Ok'.tr,
           onConfirm: () {
+            cnotes[index] = PostLacakKirimanModel(
+              cnote: Cnote(cnoteNo: nomorResi?.cnote?.cnoteNo, podStatus: "NOT FOUND"),
+            );
+            update();
+
             Get.close(2);
+            FocusScope.of(Get.context!).unfocus();
+
           },
         ),
       );
     }
+
+
   }
 }
