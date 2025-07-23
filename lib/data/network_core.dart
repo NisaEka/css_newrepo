@@ -169,7 +169,7 @@ class NetworkCore {
           onRequest: (options, handler) async {
             final locale = await _getLocale();
 
-            AppLogger.i('Option path ${options.path}');
+            AppLogger.i('Option path ${options.method} ${options.path}');
 
             // Skip attaching token if `useAuth` is false
             if (options.extra['skipAuth'] == false || options.extra['skipAuth'] == null) {
@@ -190,10 +190,10 @@ class NetworkCore {
             return handler.next(response);
           },
           onError: (dioError, handler) async {
-            AppLogger.e("dio error : ${dioError.requestOptions.path} \n$dioError ");
+            AppLogger.e("dio error : ${dioError.requestOptions.method} ${dioError.requestOptions.path} \n$dioError ");
 
             final refreshToken = await StorageCore().readRefreshToken();
-            AppLogger.i("refresh token local : $refreshToken");
+            // AppLogger.i("refresh token local : $refreshToken");
 
             if (dioError.response?.statusCode == 401) {
               if (refreshToken == null) {

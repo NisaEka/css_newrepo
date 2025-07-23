@@ -245,7 +245,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<BaseResponse> updateDeviceInfo(DeviceInfoModel data) async {
-    AppLogger.i("device model : ${data.toJson()}");
+    // AppLogger.i("device model : ${data.toJson()}");
     try {
       Response response = await network.base.patch(
         '/auth/device-infos/public',

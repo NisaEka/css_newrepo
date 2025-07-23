@@ -43,12 +43,12 @@ class DashboardController extends BaseController {
         await isFirst();
         await cekToken();
         await initData();
-        // await cekLocalLanguage();
-        // await loadPromo();
-        // await loadNews();
-        // await getAggregation();
-        // await getAggregationMinus();
-        // await getBanners();
+        await cekLocalLanguage();
+        await loadPromo();
+        await loadNews();
+        await getAggregation();
+        await getAggregationMinus();
+        await getBanners();
       } catch (e, s) {
         AppLogger.e('onInit error $e\n$s');
       }
@@ -99,7 +99,7 @@ class DashboardController extends BaseController {
 
   Future<bool> cekToken() async {
     String? aToken = await storage.readAccessToken();
-    String? rToken = await storage.readRefreshToken();
+    // String? rToken = await storage.readRefreshToken();
     state.isLogin = aToken?.isNotEmpty ?? false;
     // AppLogger.i('token : $token');
     // AppLogger.i('rtoken : $rToken');
@@ -369,7 +369,7 @@ class DashboardController extends BaseController {
 
   Future<void> loadPantauCountList() async {
     state.isLoadingKiriman = true;
-    state.kirimanKamu = DashboardKirimanKamuModel();
+    state.kirimanKamu = DashboardKirimanKamuModel(onProcess: 0);
     update();
     if (state.isLogin && state.isOnline) {
       try {
@@ -386,6 +386,7 @@ class DashboardController extends BaseController {
         ));
 
         pantau.data?.forEach((item) {
+          // debugPrint("item kiriman kamu ${state.kirimanKamu.onProcess}\n ${item.toJson()}");
           if (item.status == 'Total Kiriman') {
             state.kirimanKamu.totalKiriman = item.totalCod + item.totalCodOngkir + item.totalNonCod;
             for (var chart in item.chart) {
@@ -399,8 +400,11 @@ class DashboardController extends BaseController {
             state.kirimanKamu.nonCodAmount = item.ongkirNonCodAmount;
           }
 
-          if (item.status == 'Dalam Proses') {
-            state.kirimanKamu.onProcess = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+          if (item.status == 'Dalam Proses' ||
+              item.status == 'Sudah Dijemput' ||
+              item.status == "Sudah Di Gudang JNE" ||
+              item.status == "Sudah Di Kota Tujuan") {
+            state.kirimanKamu.onProcess += item.totalCod + item.totalCodOngkir + item.totalNonCod;
           }
 
           if (item.status == 'Sukses Diterima') {
@@ -709,7 +713,7 @@ class DashboardController extends BaseController {
           message: 'Ketuk dua kali untuk keluar'.tr,
           isDismissible: true,
           duration: const Duration(seconds: 3),
-          backgroundColor: greyColor.withOpacity(0.8),
+          backgroundColor: greyColor.withValues(alpha: 0.8),
           padding: const EdgeInsets.all(10),
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 100),
         ),
