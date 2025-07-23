@@ -732,6 +732,11 @@ class DashboardController extends BaseController {
       Get.to(const LacakKirimanScreen(), arguments: {
         'nomor_resi': state.nomorResi.text,
         "cek_resi": true,
+      })?.then((_) {
+        state.nomorResi.clear();
+        FocusScope.of(Get.context!).unfocus();
+        update();
+
       });
     } else {
       Get.to(
@@ -742,7 +747,9 @@ class DashboardController extends BaseController {
         },
       )?.then((value) {
         state.nomorResi.clear();
+        FocusScope.of(Get.context!).unfocus();
         update();
+
       });
     }
   }

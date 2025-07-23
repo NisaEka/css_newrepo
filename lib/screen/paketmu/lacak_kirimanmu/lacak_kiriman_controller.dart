@@ -1,16 +1,17 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
-import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/phone_number_confirmation_screen.dart';
+import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_detail.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class LacakKirimanController extends BaseController {
   final searchField = TextEditingController();
-  final String? resi = Get.arguments['nomor_resi'];
+  final String? resi = Get.arguments?['nomor_resi'];
 
   String? phoneNumber;
   List<PostLacakKirimanModel?> cnotes = [];
@@ -19,7 +20,7 @@ class LacakKirimanController extends BaseController {
   bool isLoading = false;
   bool isLogin = false;
 
-  BaseResponse<PostLacakKirimanModel>? trackModel;
+  PostLacakKirimanModel? trackModel = PostLacakKirimanModel();
 
   @override
   void onInit() {
@@ -28,21 +29,21 @@ class LacakKirimanController extends BaseController {
     if (resi != null) {
       searchField.text = resi ?? '';
       Future.delayed(Duration.zero, () async {
-        if (await cekToken()) {
-          searchCnotes(resi ?? '');
-        } else {
-          Get.to(
-            () => PhoneNumberConfirmationScreen(
-              awb: resi ?? '',
-              isLoading: isLoading,
-            ),
-          )?.then(
-            (phoneNumber) {
-              phoneNumber = phoneNumber;
-              searchCnotes(resi ?? '');
-            },
-          );
-        }
+        // if (await cekToken()) {
+        searchCnotes(resi ?? '');
+        // } else {
+        //   Get.to(
+        //     () => PhoneNumberConfirmationScreen(
+        //       awb: resi ?? '',
+        //       isLoading: isLoading,
+        //     ),
+        //   )?.then(
+        //     (phoneNumber) {
+        //       phoneNumber = phoneNumber;
+        //       searchCnotes(resi ?? '');
+        //     },
+        //   );
+        // }
       });
     }
   }
@@ -60,7 +61,7 @@ class LacakKirimanController extends BaseController {
         cnotes.add(response.data);
       } else {
         cnotes.add(PostLacakKirimanModel(
-          cnote: Cnote(cnoteNo: cnote, podStatus: "NOT FOUND"),
+          cnote: Cnote(cnoteNo: cnote, podStatus: isLogin ? "NOT FOUND" : "DETAIL"),
         ));
       }
       update();
@@ -84,12 +85,15 @@ class LacakKirimanController extends BaseController {
     return isLogin;
   }
 
-  Future<BaseResponse<PostLacakKirimanModel>> cekResi(String nomorResi, String phoneNumber) async {
+  Future<void> cekResi(String nomorResi, String phoneNumber) async {
     isLoading = true;
+    Get.dialog(const LoadingDialog());
     update();
     try {
-      final response = await cekToken() ? await trace.postTracingByCnote(nomorResi) : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
-      trackModel = response;
+      // final response = await cekToken() ? await trace.postTracingByCnote(nomorResi) : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
+      final response = await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
+      trackModel = response.data;
+      // debugPrint("lacaak response ${trackModel}");
     } catch (e, i) {
       AppLogger.e('error cekResi $e, $i');
     }
@@ -97,6 +101,21 @@ class LacakKirimanController extends BaseController {
     isLoading = false;
     update();
 
-    return trackModel ?? BaseResponse(data: null);
+    // return trackModel ?? PostLacakKirimanModel();
+    if (trackModel != null) {
+      Get.to(LacakKirimanDetail(
+        data: trackModel ?? PostLacakKirimanModel(),
+      ))?.then((_) => Get.back());
+    } else {
+      Get.dialog(
+        DefaultAlertDialog(
+          subtitle: 'Data Tidak Ditemukan'.tr,
+          confirmButtonTitle: 'Ok'.tr,
+          onConfirm: () {
+            Get.close(2);
+          },
+        ),
+      );
+    }
   }
 }

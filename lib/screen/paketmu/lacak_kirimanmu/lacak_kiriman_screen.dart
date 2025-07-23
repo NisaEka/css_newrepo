@@ -41,22 +41,22 @@ class LacakKirimanScreen extends StatelessWidget {
               onTap: () => Get.to(() => const BarcodeScanScreen(), arguments: {})?.then((result) {
                 c.searchField.text = result;
                 c.update();
-                if (c.isLogin) {
-                  c.searchCnotes(result);
-                } else {
-                  Get.to(
-                    () => PhoneNumberConfirmationScreen(
-                      awb: result,
-                      // cekResi: c.cekResi,
-                      isLoading: c.isLoading,
-                    ),
-                  )?.then(
-                    (phoneNumber) {
-                      c.phoneNumber = phoneNumber;
-                      c.searchCnotes(result ?? '');
-                    },
-                  );
-                }
+                // if (c.isLogin) {
+                c.searchCnotes(result);
+                // } else {
+                //   Get.to(
+                //     () => PhoneNumberConfirmationScreen(
+                //       awb: result,
+                //       // cekResi: c.cekResi,
+                //       isLoading: c.isLoading,
+                //     ),
+                //   )?.then(
+                //     (phoneNumber) {
+                //       c.phoneNumber = phoneNumber;
+                //       c.searchCnotes(result ?? '');
+                //     },
+                //   );
+                // }
               }),
               child: Icon(
                 Icons.qr_code_rounded,
@@ -92,22 +92,22 @@ class LacakKirimanScreen extends StatelessWidget {
                 //     ),
                 //   );
               } else {
-                if (c.isLogin) {
+                // if (c.isLogin) {
                   // c.cekResi(value, '');
                   c.searchCnotes(value);
-                } else {
-                  Get.to(
-                    () => PhoneNumberConfirmationScreen(
-                      awb: value,
-                      isLoading: c.isLoading,
-                    ),
-                  )?.then(
-                    (phoneNumber) {
-                      c.phoneNumber = phoneNumber;
-                      c.searchCnotes(value);
-                    },
-                  );
-                }
+                // } else {
+                //   Get.to(
+                //     () => PhoneNumberConfirmationScreen(
+                //       awb: value,
+                //       isLoading: c.isLoading,
+                //     ),
+                //   )?.then(
+                //     (phoneNumber) {
+                //       c.phoneNumber = phoneNumber;
+                //       c.searchCnotes(value);
+                //     },
+                //   );
+                // }
               }
             },
           ),
@@ -129,10 +129,21 @@ class LacakKirimanScreen extends StatelessWidget {
                     contentPadding: EdgeInsets.zero,
                     onTap: () => e?.cnote?.podStatus == "NOT FOUND"
                         ? null
-                        : Get.to(LacakKirimanDetail(
-                            data: e ?? PostLacakKirimanModel(),
-                            isLogin: c.isLogin,
-                          )),
+                        : Get.to(
+                            c.isLogin
+                                ? LacakKirimanDetail(
+                                    data: e ?? PostLacakKirimanModel(),
+                                    isLogin: c.isLogin,
+                                  )
+                                : PhoneNumberConfirmationScreen(
+                                    awb: e?.cnote?.cnoteNo ?? '',
+                                    isLoading: false,
+                                  ),
+                          )?.then((phoneNumber) {
+                            if (!c.isLogin) {
+                              c.cekResi(e?.cnote?.cnoteNo ?? '', phoneNumber);
+                            }
+                          }),
                   );
                 } else {
                   return Shimmer(
