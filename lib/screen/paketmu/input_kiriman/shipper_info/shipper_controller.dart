@@ -460,7 +460,9 @@ class ShipperController extends BaseController {
     try {
       await master
           .postDropshipper(DropshipperModel(
-            name: state.shipperName.text,
+            name: state.shipperName.text.length > 30
+                ? state.shipperName.text.substring(0, 30)
+                : state.shipperName.text,
             phone: state.shipperPhone.text,
             originCode: state.selectedOrigin?.originCode,
             zipCode: state.shipperZipCode.text,
