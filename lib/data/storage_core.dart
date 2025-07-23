@@ -31,6 +31,8 @@ class StorageCore {
   static const String hiddenPhoneShipper = "hidden_phone_shipper";
   static const String isCopyLabel = "copy_label";
   static const String lastAgg = "last_aggregation_payment_date";
+  static const String failedLoginAttempts = "failed_login_attempts";
+  static const String loginLockedUntil = "login_locked_until";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -70,6 +72,20 @@ class StorageCore {
   Future<String?> readRefreshToken() async {
     var rToken = await storage.read(key: refreshToken);
     return rToken;
+  }
+
+  Future<void> writeInt(String key, int value) async {
+    await storage.write(key: key, value: value.toString());
+  }
+
+  Future<int?> readInt(String key) async {
+    final val = await storage.read(key: key);
+    if (val == null) return null;
+    return int.tryParse(val);
+  }
+
+  Future<void> deleteKey(String key) async {
+    await storage.delete(key: key);
   }
 
   void deleteLogin() async {

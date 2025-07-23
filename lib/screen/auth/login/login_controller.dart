@@ -33,6 +33,7 @@ class LoginController extends BaseController {
   }
 
   Future<void> initData() async {
+    await isLoginLocked();
     state.lang = await storage.readString(StorageCore.localeApp);
     state.fcmToken = await storage.readString(StorageCore.fcmToken);
     update();
@@ -45,6 +46,8 @@ class LoginController extends BaseController {
   );
 
   Future<void> doLogin(BuildContext context) async {
+    if (await isLoginLocked()) return;
+
     state.isLoading = true;
     update();
     try {
@@ -61,6 +64,7 @@ class LoginController extends BaseController {
       )
           .then((value) async {
         if (value.code == 201) {
+          await resetLoginAttempts();
           await storage
               .saveToken(
                 value.data?.token?.accessToken,
@@ -84,7 +88,7 @@ class LoginController extends BaseController {
             ),
           );
         } else if (value.code == 401) {
-          AppSnackBar.error("login_failed".tr, duration: 5);
+          await handleFailedLogin();
         } else if (value.message == "Email not verified") {
           try {
             await auth
@@ -163,6 +167,53 @@ class LoginController extends BaseController {
 
     position = await Geolocator.getCurrentPosition();
     return Coordinate(lat: position.latitude, lng: position.longitude);
+  }
+
+  Future<bool> isLoginLocked() async {
+    final lockedUntil = await storage.readInt(StorageCore.loginLockedUntil);
+    if (lockedUntil != null) {
+      final now = DateTime.now().millisecondsSinceEpoch;
+      if (now < lockedUntil) {
+        final remaining = Duration(milliseconds: lockedUntil - now);
+        final mins = remaining.inMinutes;
+        final secs = remaining.inSeconds % 60;
+        AppSnackBar.error("Login dibekukan. Coba lagi dalam ${mins}m ${secs}s.",
+            duration: 3);
+        return true;
+      } else {
+        await storage.deleteKey(StorageCore.loginLockedUntil);
+        await storage.deleteKey(StorageCore.failedLoginAttempts);
+        state.isLoginLocked = false;
+        update();
+      }
+    } else {
+      state.isLoginLocked = false;
+      update();
+    }
+    return false;
+  }
+
+  Future<void> handleFailedLogin() async {
+    int attempts = await storage.readInt(StorageCore.failedLoginAttempts) ?? 0;
+    attempts++;
+
+    if (attempts >= 5) {
+      final lockUntil =
+          DateTime.now().add(const Duration(minutes: 5)).millisecondsSinceEpoch;
+      await storage.writeInt(StorageCore.loginLockedUntil, lockUntil);
+      await storage.writeInt(StorageCore.failedLoginAttempts, 0);
+      AppSnackBar.error(
+          "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.",
+          duration: 3);
+    } else {
+      await storage.writeInt(StorageCore.failedLoginAttempts, attempts);
+      AppSnackBar.error("Login gagal ($attempts/5 percobaan).", duration: 3);
+    }
+  }
+
+  Future<void> resetLoginAttempts() async {
+    await storage.deleteKey(StorageCore.failedLoginAttempts);
+    await storage.deleteKey(StorageCore.loginLockedUntil);
   }
 
   showPassword() {

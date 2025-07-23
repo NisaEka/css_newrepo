@@ -13,6 +13,7 @@ class LoginState {
   bool isLoading = false;
   bool pop = false;
   bool rememberMe = false;
+  bool isLoginLocked = false;
   String? lang;
   String? fcmToken;
 
