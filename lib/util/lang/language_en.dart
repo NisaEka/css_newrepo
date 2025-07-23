@@ -699,9 +699,16 @@ class LanguageEN {
       "Masukkan No Handphone": "Enter Phone Number",
       "Informasi Pembayaran": "Payment Information",
       "Document/Paket": "Document/Package",
-      "Nomor telepon harus diawali dengan 08": "Phone number must start with 08",
-      "Pilih Armada" : "Choose Vehicle",
-      "Maksimal Jumlah Packing adalah 1" : "Maximum Number of Packing is 1"
+      "Nomor telepon harus diawali dengan 08":
+          "Phone number must start with 08",
+      "Pilih Armada": "Choose Vehicle",
+      "Maksimal Jumlah Packing adalah 1": "Maximum Number of Packing is 1",
+      "Login sedang dibekukan, silakan coba setelah 5 menit.":
+          "Login is temporarily frozen, please try again after 5 minutes.",
+      "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.":
+          "Too many failed attempts. Try again in 5 minutes.",
+      "Login gagal": "Login failed",
+      "5 percobaan": "5 attemps"
     };
   }
 }
