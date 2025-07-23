@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
@@ -23,6 +24,7 @@ import 'package:get/get.dart';
 class LoginController extends BaseController {
   final state = LoginState();
   var isFirst = true.obs;
+  Timer? _lockCheckTimer;
 
   @override
   void onInit() async {
@@ -174,11 +176,22 @@ class LoginController extends BaseController {
     if (lockedUntil != null) {
       final now = DateTime.now().millisecondsSinceEpoch;
       if (now < lockedUntil) {
-        final remaining = Duration(milliseconds: lockedUntil - now);
-        final mins = remaining.inMinutes;
-        final secs = remaining.inSeconds % 60;
-        AppSnackBar.error("Login dibekukan. Coba lagi dalam ${mins}m ${secs}s.",
-            duration: 3);
+        state.isLoginLocked = true;
+        update();
+
+        _lockCheckTimer?.cancel();
+        _lockCheckTimer =
+            Timer.periodic(const Duration(seconds: 5), (timer) async {
+          final current = DateTime.now().millisecondsSinceEpoch;
+          if (current >= lockedUntil) {
+            state.isLoginLocked = false;
+            await storage.deleteKey(StorageCore.loginLockedUntil);
+            await storage.deleteKey(StorageCore.failedLoginAttempts);
+            update();
+            timer.cancel();
+          }
+        });
+
         return true;
       } else {
         await storage.deleteKey(StorageCore.loginLockedUntil);
@@ -202,12 +215,14 @@ class LoginController extends BaseController {
           DateTime.now().add(const Duration(minutes: 5)).millisecondsSinceEpoch;
       await storage.writeInt(StorageCore.loginLockedUntil, lockUntil);
       await storage.writeInt(StorageCore.failedLoginAttempts, 0);
+      await isLoginLocked();
       AppSnackBar.error(
-          "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.",
+          "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.".tr,
           duration: 3);
     } else {
       await storage.writeInt(StorageCore.failedLoginAttempts, attempts);
-      AppSnackBar.error("Login gagal ($attempts/5 percobaan).", duration: 3);
+      AppSnackBar.error("${'Login gagal'.tr} ($attempts/${'5 percobaan'.tr}).",
+          duration: 3);
     }
   }
 

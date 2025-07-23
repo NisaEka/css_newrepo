@@ -41,6 +41,7 @@ class LoginForm extends StatelessWidget {
                         hintText: "Alamat email".tr,
                         prefixIcon: const Icon(Icons.person_2_rounded),
                         isRequired: true,
+                        readOnly: c.state.isLoginLocked,
                         onSubmit: (_) {},
                         inputFormatters: [
                           TextInputFormatter.withFunction((oldValue, newValue) {
@@ -54,6 +55,7 @@ class LoginForm extends StatelessWidget {
                         hintText: "Kata Sandi".tr,
                         prefixIcon: const Icon(Icons.password_rounded),
                         isRequired: true,
+                        readOnly: c.state.isLoginLocked,
                         isObscure: c.state.isObscurePasswordLogin,
                         multiLine: false,
                         inputFormatters: const [],
@@ -86,16 +88,33 @@ class LoginForm extends StatelessWidget {
                         ],
                       ),
                       CustomFilledButton(
-                        color: primaryColor(context),
+                        color: c.state.isLoginLocked
+                            ? greyColor
+                            : primaryColor(context),
                         title: 'Masuk'.tr,
                         suffixIcon: Icons.login_rounded,
-                        onPressed: () async {
-                          if (c.state.formKey.currentState?.validate() ==
-                              true) {
-                            c.doLogin(context);
-                          }
-                        },
+                        onPressed: c.state.isLoginLocked
+                            ? null
+                            : () async {
+                                if (c.state.formKey.currentState?.validate() ==
+                                    true) {
+                                  c.doLogin(context);
+                                }
+                              },
+                        //     () async {
+                        //   if (c.state.formKey.currentState?.validate() ==
+                        //       true) {
+                        //     c.doLogin(context);
+                        //   }
+                        // },
                       ),
+                      if (c.state.isLoginLocked)
+                        Text(
+                          'Login sedang dibekukan, silakan coba setelah 5 menit.'
+                              .tr,
+                          style: const TextStyle(color: Colors.red),
+                          textAlign: TextAlign.center,
+                        ),
                       Container(
                         alignment: Alignment.center,
                         child: Text(
