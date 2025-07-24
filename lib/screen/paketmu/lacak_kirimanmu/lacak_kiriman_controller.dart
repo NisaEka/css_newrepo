@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_detail.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -29,6 +30,8 @@ class LacakKirimanController extends BaseController {
     if (resi != null) {
       searchField.text = resi ?? '';
       Future.delayed(Duration.zero, () async {
+        countInputSearch(searchField.text);
+
         // if (await cekToken()) {
         searchCnotes(resi ?? '');
         // } else {
@@ -120,7 +123,6 @@ class LacakKirimanController extends BaseController {
         update();
         Get.back();
         FocusScope.of(Get.context!).unfocus();
-
       });
     } else {
       Get.dialog(
@@ -135,12 +137,30 @@ class LacakKirimanController extends BaseController {
 
             Get.close(2);
             FocusScope.of(Get.context!).unfocus();
-
           },
         ),
       );
     }
+  }
 
-
+  void countInputSearch(String value) {
+    if (value.split('\n').length > 100) {
+      Get.dialog(
+        DefaultAlertDialog(
+          title: "Peringatan".tr,
+          icon: Icon(
+            Icons.warning,
+            color: warningColor,
+            size: Get.width / 4,
+          ),
+          subtitle: 'Maksimal Pencarian adalah 100 awb'.tr,
+          confirmButtonTitle: 'Ok'.tr,
+          onConfirm: () {
+            Get.back();
+            FocusScope.of(Get.context!).unfocus();
+          },
+        ),
+      );
+    }
   }
 }

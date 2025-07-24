@@ -91,11 +91,9 @@ class LanguageEN {
       "Cari Transaksimu": "Search Your Transaction",
       "Hapus": "Delete",
       "kembali": "Back",
-      "Anda harus login untuk menggunakan fitur ini":
-          "You must be logged in to use this feature",
+      "Anda harus login untuk menggunakan fitur ini": "You must be logged in to use this feature",
       "Akses Terbatas": "Access Denied",
-      "Anda yakin menghapus data ini ?":
-          "Are you sure you want to delete this data ?",
+      "Anda yakin menghapus data ini ?": "Are you sure you want to delete this data ?",
       "Data akan dihapus": "Data will be deleted",
       "Tidak": "Decline",
       "Ya": "Yes",
@@ -114,8 +112,7 @@ class LanguageEN {
       "Gunakan Asuransi Pengiriman": "Use Shipping Insurance",
       "No Referensi (opsional)": "Reference Number (Optional)",
       "Packing Kayu": "Use Wooden Packaging",
-      "Hanya sebagai instruksi penggunaan packing kayu":
-          "Only as instruction for using wooden packaging",
+      "Hanya sebagai instruksi penggunaan packing kayu": "Only as instruction for using wooden packaging",
       "Instruksi Khusus (Opsional)": "Special Instructions (Optional)",
       "Biaya & Durasi": "Tariff & ETD",
       "Estimasi Harga Barang": "Estimated Goods Amount",
@@ -200,18 +197,14 @@ class LanguageEN {
       "Daftar Akun Transaksi": "Transaction Account List",
       "Account Kosong": "Account Empty",
       "Data Kosong": "Data Empty",
-      "kerahasiaan_data":
-          "This information is confidential, only you can see it and it is not shared with anyone",
+      "kerahasiaan_data": "This information is confidential, only you can see it and it is not shared with anyone",
       "Kerahasiaan Data": "Data Confidentiality",
       "Informasi": "Information",
-      "Profil belum lengkap, silahkan lengkapi profil anda terlebih dahulu":
-          "Your profile is incomplete, please complete your profile first.",
+      "Profil belum lengkap, silahkan lengkapi profil anda terlebih dahulu": "Your profile is incomplete, please complete your profile first.",
       "Lengkapi Profil": "Complete my profile",
-      "return_info":
-          "This data is used in the process of returning your shipment.",
+      "return_info": "This data is used in the process of returning your shipment.",
       "Akun Bank": "Bank Account",
-      "bank_info":
-          "This data is used in the process of transferring your COD money.",
+      "bank_info": "This data is used in the process of transferring your COD money.",
       "Lihat Semua Layanan": "See All Services",
       "Tutup": "Close",
       "Masukan 3 atau lebih karakter": "Please enter 3 or more character",
@@ -257,15 +250,11 @@ class LanguageEN {
       "Update Berhasil": "Data Updated",
       "Edit Resi": "Update Transaction",
       "Bad Request": "something went wrong, please try again later",
-      "Belum ada riwayat transaksi point":
-          "There is no point transaction history yet",
-      "Belum ada riwayat penukaran point":
-          "There is no history of point reedem",
-      "Email atau nomor telepon sudah terdaftar":
-          "Email or phone number is registered",
+      "Belum ada riwayat transaksi point": "There is no point transaction history yet",
+      "Belum ada riwayat penukaran point": "There is no history of point reedem",
+      "Email atau nomor telepon sudah terdaftar": "Email or phone number is registered",
       "Nomor telepon sudah terdaftar": "Phone number is registered",
-      "Selamat, kamu sudah berhasil mendaftar":
-          "Congratulations, you have successfully registered",
+      "Selamat, kamu sudah berhasil mendaftar": "Congratulations, you have successfully registered",
       "Silahkan cek email anda": "Please check your email",
       "PIN tidak sesuai": "PIN does not match",
       "Saldo Kamu": "Your Balance",
@@ -288,14 +277,11 @@ class LanguageEN {
       "Tidak Aktif": "Non Active",
       "Profilku": "My Profile",
       "Edit Profil": "Edit Profile",
-      "Kode Pos/Provinsi/Kota/Kecamatan/Kelurahan":
-          "Zip Code/Province/City/District/Sub District",
+      "Kode Pos/Provinsi/Kota/Kecamatan/Kelurahan": "Zip Code/Province/City/District/Sub District",
       "Berikutnya": "Next",
       "Batal": "Cancel",
-      "forgot_password":
-          "Enter your email and we will send you a pin to reset your password",
-      "change_password":
-          "Enter your email and we will send you a pin to change your password",
+      "forgot_password": "Enter your email and we will send you a pin to reset your password",
+      "change_password": "Enter your email and we will send you a pin to change your password",
       "login_failed": "The email and password you entered don't match",
       "User Not Found": "The email you entered is not registered",
       "Password berhasil diperbaharui": "Your password is updated",
@@ -307,31 +293,23 @@ class LanguageEN {
       "Kirim ulang kode": "Resend code",
       "Gunakan cara lain": "Use another method",
       "Peringatan": "Alert",
-      "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000":
-          "Total shipping costs cannot exceed Rp. 1.000,000",
+      "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000": "Total shipping costs cannot exceed Rp. 1.000,000",
       "Tidak dapat menyimpan data": "Cannot save data",
       "Draft Kosong": "Draft Empty",
       "Mode offline": "Offline Mode",
-      "CSS tidak menerima pendaftaran menggunakan email temporary":
-          "CSS does not accept registration using temporary email",
+      "CSS tidak menerima pendaftaran menggunakan email temporary": "CSS does not accept registration using temporary email",
       "Masukan tidak boleh kosong": "This field is required",
-      "Nomor telepon harus lebih dari 10 karakter":
-          "Phone number must be more than 10 characters",
-      "Nomor telepon tidak boleh lebih dari 12 karakter":
-          "Phone number can't be more than 12 characters",
+      "Nomor telepon harus lebih dari 10 karakter": "Phone number must be more than 10 characters",
+      "Nomor telepon tidak boleh lebih dari 12 karakter": "Phone number can't be more than 12 characters",
       "Kode Pos harus terdiri dari 5 karakter": "Zip Code must be 5 characters",
       "Silakan masukkan url yang valid": "Please enter valid url",
       'Kata sandi tidak boleh "password"': 'Password should not "password"',
-      "Kata sandi harus lebih dari 8 karakter":
-          "Password must have more than 8 characters",
+      "Kata sandi harus lebih dari 8 karakter": "Password must have more than 8 characters",
       "Kata sandi harus mengandung huruf besar, huruf kecil, angka dan karakter khusus":
           "Password should contain upper,lower,digit and Special character",
-      "Nama tidak boleh lebih dari 30 karakter":
-          "Names cannot be more than 30 characters",
-      "Alamat tidak boleh lebih dari 100 karakter":
-          "Address cannot be more than 100 characters",
-      "Bidang ini harus terdiri dari minimal 8 karakter":
-          "This field must be at least 8 characters long",
+      "Nama tidak boleh lebih dari 30 karakter": "Names cannot be more than 30 characters",
+      "Alamat tidak boleh lebih dari 100 karakter": "Address cannot be more than 100 characters",
+      "Bidang ini harus terdiri dari minimal 8 karakter": "This field must be at least 8 characters long",
       "Lihat Detail": "View Detail",
       "Tanggal Cnote": "Cnote Date",
       "Tanggal POD": "POD Date",
@@ -345,15 +323,11 @@ class LanguageEN {
       "Masukan Kota Pengiriman": "Type Shipment City",
       "tutup": "close",
       "Akun recovery belum tersedia": "Account recovery is not available",
-      "Kode OTP akan dikirimkan ke alamat email berikut :":
-          "OTP Code will be sent to this email:",
-      "Kode OTP sudah dikirimkan ke alamat email berikut :":
-          "OTP code was sent to this email :",
+      "Kode OTP akan dikirimkan ke alamat email berikut :": "OTP Code will be sent to this email:",
+      "Kode OTP sudah dikirimkan ke alamat email berikut :": "OTP code was sent to this email :",
       "Akun Pemulihan": "Recovery Account",
-      "Favorit tidak dapat lebih dari 4 item":
-          "Favorite can't more than 4 items",
-      "Lengkapi profil Kamu untuk menikmati semua fitur unggulan.":
-          "Complete your profile to enjoy all the features.",
+      "Favorit tidak dapat lebih dari 4 item": "Favorite can't more than 4 items",
+      "Lengkapi profil Kamu untuk menikmati semua fitur unggulan.": "Complete your profile to enjoy all the features.",
       "Buat kata sandi baru anda": "Create your new password",
       "Konfirmasi Kata Sandi Baru": "Confirm New Password",
       "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas":
@@ -386,10 +360,8 @@ class LanguageEN {
       "Pilih Tanggal Sendiri": "Custom Range",
       "Nomor Resi Tidak Terdaftar": "Receipt number not found",
       "Tiket Sudah Terdaftar": "This Ticket is already exist",
-      "Isian Harus lebih besar atau sama dengan":
-          "Value must be greater than or equal",
-      "Harga COD tidak boleh kurang dari":
-          "COD Price can't must be greater than or equal",
+      "Isian Harus lebih besar atau sama dengan": "Value must be greater than or equal",
+      "Harga COD tidak boleh kurang dari": "COD Price can't must be greater than or equal",
       "Isian tidak boleh lebih besar dari": "Value must be less than",
       "Karakter": "Character",
       "Lihat Obrolan": "View Chats",
@@ -417,10 +389,8 @@ class LanguageEN {
       "Pencairan COD Cepat dan Detail": "Fast and Detailed COD Disbursement",
       "Kamu dapat memilih skema pencairan otomatis ke rekening setiap hari atau withdraw dengan penarikan dana suka-suka kapanpun dan dimanapun.":
           "You can choose an automatic withdrawal scheme to your account every day or withdraw funds whenever and wherever you like.",
-      "Pantau Progres Pengiriman Realtime":
-          "Monitor Realtime Delivery Progress",
-      "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.":
-          "At any time you can see all your shipment status in real time.",
+      "Pantau Progres Pengiriman Realtime": "Monitor Realtime Delivery Progress",
+      "Kapanpun kamu dapat melihat semua status kiriman kamu secara realtime.": "At any time you can see all your shipment status in real time.",
       "Lewati": "Skip",
       "Anda akan keluar": "You will be logged out",
       "Anda yakin Keluar ?": "Are you sure you want to Logout?",
@@ -459,44 +429,35 @@ class LanguageEN {
           "Check back the TaxID image file. Image files must not be empty or more than 2MB",
       "Periksa kembali file gambar rekening. File gambar tidak boleh kosong atau lebih dari 2MB":
           "Check back the account image file. Image files must not be empty or more than 2MB",
-      "Upgrade akunmu untuk menggunakan fasilitas lebih banyak":
-          "Upgrade your account to use more facilities",
-      "Permintaan upgrade akunmu sedang dalam proses":
-          "Your account upgrade request is in progress",
+      "Upgrade akunmu untuk menggunakan fasilitas lebih banyak": "Upgrade your account to use more facilities",
+      "Permintaan upgrade akunmu sedang dalam proses": "Your account upgrade request is in progress",
       "Gunakan": "Use",
       "Mingguan": "Weekly",
       "Bulanan": "Monthly",
-      "Sudah punya akun kerjasama dengan JNE?":
-          "Already have a JNE partnership account?",
+      "Sudah punya akun kerjasama dengan JNE?": "Already have a JNE partnership account?",
       "Belum Punya": "Don't have",
       "Sudah Punya": "Already have",
       "Upgrade Profil Kamu": "Upgrade Your Profile",
       "Nama": "Name",
       "Nama customer yang terdaftar": "Registered customer name",
-      "Alamat email terdaftar saat kerjasama":
-          "Email address registered during partnership",
-      "Nomor telepon yang terdaftar di akun JNE":
-          "Phone number registered in JNE account",
+      "Alamat email terdaftar saat kerjasama": "Email address registered during partnership",
+      "Nomor telepon yang terdaftar di akun JNE": "Phone number registered in JNE account",
       "Simpan": "Save",
       "Terdapat input yang tidak valid": "There is invalid input",
-      "Periksa kembali data yang telah anda masukkan.":
-          "Check again the data you entered.",
+      "Periksa kembali data yang telah anda masukkan.": "Check again the data you entered.",
       "Gagal mengambil gambar.": "Failed to select image",
       "Data Pemohon": "Applicant Data",
       "No Identitas / KTP": "ID Card Number",
       "Pilih Gambar Identitas / KTP": "Select ID Card Image",
-      "Kota / Kecamatan / Kelurahan / Kode Pos":
-          "City / District / Sub District / Zip Code",
+      "Kota / Kecamatan / Kelurahan / Kode Pos": "City / District / Sub District / Zip Code",
       "No. Telepon": "Phone Number",
       "No. WhatsApp": "WhatsApp Number",
       "Masukan minimal 3 karakter": "Enter at least 3 characters",
-      "Ceklis bila informasi pengembalian barang sama dengan data pemohon":
-          "Check if the return information is the same as the applicant's data",
+      "Ceklis bila informasi pengembalian barang sama dengan data pemohon": "Check if the return information is the same as the applicant's data",
       "Gagal menyimpan data": "Failed to save data",
       "Pastikan input data sudah benar": "Make sure the input data is correct",
       "Gagal menyimpan file": "Failed to save file",
-      "Pastikan file yang diupload sudah benar":
-          "Make sure the uploaded file is correct",
+      "Pastikan file yang diupload sudah benar": "Make sure the uploaded file is correct",
       "Pilih Nama Bank": "Select Bank Name",
       "Masukkan Nama Bank": "Enter Bank Name",
       "Nomor Rekening": "Account Number",
@@ -572,13 +533,11 @@ class LanguageEN {
       "Tanggal AWB": "AWB Date",
       "Kemarin": "Yesterday",
       "Gagal mengambil data pantau": "Failed to load tracking data",
-      "Data dropshipper berhasil di simpan":
-          "Dropshipper data successfully saved",
+      "Data dropshipper berhasil di simpan": "Dropshipper data successfully saved",
       "Pilih minimal satu hak akses": "Select at least one authority",
       "Saya telah membaca & memahami": "I have read & understood",
       "TIPS AMAN MENGGUNAKAN CSS": "SAFETY TIPS CSS",
-      "Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.":
-          "Please ensure that you access only the CSS link: http://css.jne.co.id.",
+      "Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.": "Please ensure that you access only the CSS link: http://css.jne.co.id.",
       "Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.":
           "Please ensure the confidentiality of your Company ID, User ID, Password, Email Password, and other credential data.",
       "Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.":
@@ -596,23 +555,19 @@ class LanguageEN {
       "Alamat email sudah digunakan": "Email address is already in use",
       "check_connection": "Connection Failed",
       "Service tidak tersedia": "Service not available",
-      "Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.":
-          "Make sure you only install CSS Mobile app from the Play Store.",
+      "Pastikan Anda hanya memasang aplikasi CSS Mobile dari playstore.": "Make sure you only install CSS Mobile app from the Play Store.",
       "Ketuk dua kali untuk keluar": "Double click back button to exit",
       "Lisensi": "License",
       "Hak Akses": "Authority",
       "Pribadi": "Individual",
       "Badan Usaha": "Business Entity",
       "Format nomor NPWP tidak sesuai": "TaxID number format is incorrect",
-      "Periksa kembali format nomor NPWP yang diinputkan":
-          "Please check the TaxID number format you have entered",
+      "Periksa kembali format nomor NPWP yang diinputkan": "Please check the TaxID number format you have entered",
       "Total Nilai COD": "Total COD Amount",
       "Ringkasan Transaksi": "Summary Transaction",
       "Harga COD tidak boleh lebih dari": "COD Price must not be greater than",
-      "Nomor telepon tidak boleh lebih dari 13 karakter":
-          "The phone number cannot be more than 13 characters",
-      "Nomor telepon tidak boleh kurang dari 10 karakter":
-          "The phone number cannot be less than 10 characters",
+      "Nomor telepon tidak boleh lebih dari 13 karakter": "The phone number cannot be more than 13 characters",
+      "Nomor telepon tidak boleh kurang dari 10 karakter": "The phone number cannot be less than 10 characters",
       "Claim Gagal YES": "Claim Failed YES",
       "Claim Kiriman Hilang": "Claim Shipment is Missing",
       "Claim Kiriman Rusak": "Claim Shipment is Damaged",
@@ -635,13 +590,11 @@ class LanguageEN {
       "Masukkan alamat penjemputan": "Enter pickup address",
       "Simpan Alamat": "Save Address",
       "Tambah Alamat Penjemputan": "Add Pickup Address",
-      "Apakah kamu sudah yakin untuk melakukan penjemputan di jam ":
-          "Are you sure to schedule the pickup at ",
+      "Apakah kamu sudah yakin untuk melakukan penjemputan di jam ": "Are you sure to schedule the pickup at ",
       "REVISI ALAMAT": "Address Revision",
       "ISI KIRIMAN KURANG KOLI": "Shipment Contents Less Than The Package",
       "ISI KIRIMAN TIDAK SESUAI": "Shipment Contents Do Not Match",
-      "PENERIMA MERASA BELUM MENERIMA KIRIMAN":
-          "Receiver Not Receive The Shipment",
+      "PENERIMA MERASA BELUM MENERIMA KIRIMAN": "Receiver Not Receive The Shipment",
       "KIRIMAN BELUM SAMPAI": "Shipment Not Arrived",
       "PERMINTAAN KIRIM ULANG": "Request for Reshipment",
       "PERMINTAAN RETUR": "Return Request",
@@ -650,21 +603,17 @@ class LanguageEN {
       "KLAIM BARANG RUSAK": "Claim Damaged Goods",
       "KLAIM BARANG HILANG": "Claim Lost Goods",
       "KLAIM KIRIMAN DITERIMA KURANG": "Claim Incomplete Shipment Received",
-      "Data diperbaharui setiap jam 06.45 WIB":
-          "Data is updated every day at 06:45 AM WIB",
-      "Hubungi sales cabang kota anda":
-          "Contact the sales of your city branch.",
+      "Data diperbaharui setiap jam 06.45 WIB": "Data is updated every day at 06:45 AM WIB",
+      "Hubungi sales cabang kota anda": "Contact the sales of your city branch.",
       "Transaksi": "Transaction",
       "Berhasil menambahkan kode referral": "Successfully added referral code",
       "Ubah Profile": "Change profile",
       "Pengajuan pengubahan data CCRF": "Request for modification CCRF data",
       "Formulir belum disetujui oleh": "The form has not been approved by",
       "Berhasil melakukan sinkronisasi data": "Successfully synchronize data",
-      "Berhasil Mengubah formulir Flat Rate":
-          "Successfully change Flat Rate form",
+      "Berhasil Mengubah formulir Flat Rate": "Successfully change Flat Rate form",
       "Pengubahan ccrf disetujui oleh": "CCRF modification approved by",
-      "Berhasil Menambahkan formulir Flat Rate":
-          "Successfully added Flat Rate form",
+      "Berhasil Menambahkan formulir Flat Rate": "Successfully added Flat Rate form",
       "Berhasil mengajukkan formulir pendaftaran akun untuk fitur fasilitasku.":
           "Successfully submitted the account registration form for the My Facility feature",
       "Formulir disetujui oleh": "Form is approved by",
@@ -681,8 +630,7 @@ class LanguageEN {
       "Revisi Alamat": "Address Revision",
       "Isi Kiriman Kurang Koli": "Shipment Contents Less Than The Package",
       "Isi Kiriman Tidak Sesuai": "Shipment Contents Do Not Match",
-      "Penerima Merasa Belum Menerima Kiriman":
-          "Receiver Not Receive The Shipment",
+      "Penerima Merasa Belum Menerima Kiriman": "Receiver Not Receive The Shipment",
       "Kiriman Belum Sampai": "Shipment Not Arrived",
       "Permintaan Kirim Ulang": "Request for Reshipment",
       "Permintaan Retur": "Return Request",
@@ -699,16 +647,14 @@ class LanguageEN {
       "Masukkan No Handphone": "Enter Phone Number",
       "Informasi Pembayaran": "Payment Information",
       "Document/Paket": "Document/Package",
-      "Nomor telepon harus diawali dengan 08":
-          "Phone number must start with 08",
+      "Nomor telepon harus diawali dengan 08": "Phone number must start with 08",
       "Pilih Armada": "Choose Vehicle",
       "Maksimal Jumlah Packing adalah 1": "Maximum Number of Packing is 1",
-      "Login sedang dibekukan, silakan coba setelah 5 menit.":
-          "Login is temporarily frozen, please try again after 5 minutes.",
-      "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.":
-          "Too many failed attempts. Try again in 5 minutes.",
+      "Login sedang dibekukan, silakan coba setelah 5 menit.": "Login is temporarily frozen, please try again after 5 minutes.",
+      "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.": "Too many failed attempts. Try again in 5 minutes.",
       "Login gagal": "Login failed",
-      "5 percobaan": "5 attemps"
+      "5 percobaan": "5 attemps",
+      "Maksimal Pencarian adalah 100 awb": "Maximum Search is 100 awb",
     };
   }
 }

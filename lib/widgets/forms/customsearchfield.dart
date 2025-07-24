@@ -1,16 +1,14 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
-import 'package:css_mobile/widgets/forms/multiplesearchfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 class CustomSearchField<T> extends StatefulWidget {
   final String hintText;
   final VoidCallback? onTap;
   final ValueChanged<String>? onSubmit;
-  final void Function(String)? onChanged;
+  final ValueChanged<String>? onChanged;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final TextEditingController controller;
@@ -160,7 +158,7 @@ class _CustomSearchFieldState<T> extends State<CustomSearchField<T>> {
                     ),
                     onTap: widget.onTap,
                     onSubmitted: (value) => widget.onSubmit!(value),
-                    onChanged: widget.onChanged ?? (_) => setState(() {}),
+                    onChanged: (value) => widget.onChanged!(value),
                   ),
                 ),
                 widget.isMultiple

@@ -65,6 +65,9 @@ class LacakKirimanScreen extends StatelessWidget {
                 size: 25,
               ),
             ),
+            onChanged: (value) {
+              c.countInputSearch(value);
+            },
             onSubmit: (value) {
               if (value.isEmpty) {
                 Get.showSnackbar(
