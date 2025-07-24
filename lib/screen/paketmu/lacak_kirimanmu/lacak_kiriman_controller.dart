@@ -144,7 +144,7 @@ class LacakKirimanController extends BaseController {
   }
 
   void countInputSearch(String value) {
-    if (value.split('\n').length > 100) {
+    if (value.split('\n').where((element) => element.isNotEmpty).length > 100) {
       Get.dialog(
         DefaultAlertDialog(
           title: "Peringatan".tr,
