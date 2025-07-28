@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -52,73 +51,75 @@ class _DocumentImageItemState extends State<DocumentImageItem> {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
                 SizedBox(
-                  height: 62,
-                  width: Get.width * 0.3,
-                  child: widget.img != null
-                      ? Image.network(
-                          widget.img ?? '',
-                          fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) =>
-                              Container(
-                            height: 62,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color: greyLightColor3,
-                              borderRadius: BorderRadius.circular(5),
+                    height: 62,
+                    width: Get.width * 0.3,
+                    child: widget.img != null
+                        ? Image.network(
+                            widget.img ?? '',
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) =>
+                                Container(
+                              height: 62,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: greyLightColor3,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Center(
+                                child: widget.isLoading
+                                    ? const CircularProgressIndicator.adaptive()
+                                    : const Icon(
+                                        Icons.image_not_supported_outlined),
+                              ),
                             ),
-                            child: Center(
-                              child: widget.isLoading
-                                  ? const CircularProgressIndicator.adaptive()
-                                  : const Icon(
-                                      Icons.image_not_supported_outlined),
-                            ),
-                          ),
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent? loadingProgress) {
-                            if (loadingProgress == null) {
-                              return child;
-                            } else {
-                              return Center(
-                                child: CircularProgressIndicator(
-                                  value: loadingProgress.expectedTotalBytes !=
-                                          null
-                                      ? loadingProgress.cumulativeBytesLoaded /
-                                          loadingProgress.expectedTotalBytes!
-                                      : null,
-                                ),
-                              );
-                            }
-                          },
-                        )
-                      : widget.isLoading
-                          ? const Center(
-                              child: CircularProgressIndicator.adaptive(),
-                            ) : const SizedBox()
-                          // : GoogleMap(
-                          //     onMapCreated: (controller) =>
-                          //         googleMapController?.complete(controller),
-                          //     zoomControlsEnabled: false,
-                          //     myLocationButtonEnabled: false,
-                          //     mapType: MapType.none,
-                          //     markers: <Marker>{
-                          //       Marker(
-                          //         draggable: false,
-                          //         markerId: const MarkerId('SomeId'),
-                          //         position: LatLng(
-                          //           widget.lat!,
-                          //           widget.lng!,
-                          //         ),
-                          //       )
-                          //     },
-                          //     initialCameraPosition: CameraPosition(
-                          //       target: LatLng(
-                          //         widget.lat!,
-                          //         widget.lng!,
-                          //       ),
-                          //       zoom: 16.0,
-                          //     ),
-                          //   ),
-                ),
+                            loadingBuilder: (BuildContext context, Widget child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              }
+                            },
+                          )
+                        : widget.isLoading
+                            ? const Center(
+                                child: CircularProgressIndicator.adaptive(),
+                              )
+                            : const SizedBox()
+                    // : GoogleMap(
+                    //     onMapCreated: (controller) =>
+                    //         googleMapController?.complete(controller),
+                    //     zoomControlsEnabled: false,
+                    //     myLocationButtonEnabled: false,
+                    //     mapType: MapType.none,
+                    //     markers: <Marker>{
+                    //       Marker(
+                    //         draggable: false,
+                    //         markerId: const MarkerId('SomeId'),
+                    //         position: LatLng(
+                    //           widget.lat!,
+                    //           widget.lng!,
+                    //         ),
+                    //       )
+                    //     },
+                    //     initialCameraPosition: CameraPosition(
+                    //       target: LatLng(
+                    //         widget.lat!,
+                    //         widget.lng!,
+                    //       ),
+                    //       zoom: 16.0,
+                    //     ),
+                    //   ),
+                    ),
               ],
             ),
             const SizedBox(height: 8),

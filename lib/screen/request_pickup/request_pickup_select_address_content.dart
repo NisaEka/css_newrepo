@@ -2,15 +2,12 @@ import 'dart:async';
 
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/data/model/master/vehicle_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customdropdownfield.dart';
-import 'package:css_mobile/widgets/forms/customdropdownformfield.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/vehicle_dropdown.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_address_item.dart';
@@ -84,7 +81,8 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
 
   Widget _addressesWidget(BuildContext context) {
     AppLogger.i("addresses: $addresses");
-    AppLogger.i("pagingController.itemList: ${pagingController.itemList}, ${pagingController.itemList == null}");
+    AppLogger.i(
+        "pagingController.itemList: ${pagingController.itemList}, ${pagingController.itemList == null}");
     if (addresses.isNotEmpty) {
       return SizedBox(
         height: 136,
@@ -115,7 +113,9 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         width: Get.width,
         height: 136,
         margin: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(border: Border.all(color: Theme.of(context).colorScheme.outline), borderRadius: BorderRadius.circular(16)),
+        decoration: BoxDecoration(
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
+            borderRadius: BorderRadius.circular(16)),
         alignment: Alignment.center,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -154,14 +154,17 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
                 }
               });
             },
-            style: ButtonStyle(padding: WidgetStateProperty.resolveWith((states) {
+            style:
+                ButtonStyle(padding: WidgetStateProperty.resolveWith((states) {
               return const EdgeInsets.symmetric(horizontal: 4, vertical: 2);
             }), side: WidgetStateProperty.resolveWith((states) {
               return BorderSide(color: Theme.of(context).colorScheme.outline);
             })),
             child: Text(
               selectedTime.tr,
-              style: TextStyle(color: Theme.of(context).colorScheme.outline, fontWeight: FontWeight.normal),
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.outline,
+                  fontWeight: FontWeight.normal),
             ),
           ),
         ],
@@ -174,7 +177,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: VehicleDropdown(
         isRequired: true,
-        onChanged:(item) => onSelectVehicle(item.vehicleId),
+        onChanged: (item) => onSelectVehicle(item.vehicleId),
       ),
     );
   }
@@ -185,9 +188,11 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       child: SizedBox(
           width: Get.width,
           child: CustomFilledButton(
-              color: selectedAddressId != null ? primaryColor(context) : greyColor,
+              color:
+                  selectedAddressId != null ? primaryColor(context) : greyColor,
               title: _pickupButtonText(),
-              onPressed: () => selectedAddressId != null ? onPickupClick() : null)),
+              onPressed: () =>
+                  selectedAddressId != null ? onPickupClick() : null)),
     );
   }
 
@@ -206,7 +211,9 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: Theme.of(context).copyWith(
-              colorScheme: AppConst.isLightTheme(context) ? const ColorScheme.light() : const ColorScheme.dark(),
+              colorScheme: AppConst.isLightTheme(context)
+                  ? const ColorScheme.light()
+                  : const ColorScheme.dark(),
               textButtonTheme: TextButtonThemeData(
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.red,
