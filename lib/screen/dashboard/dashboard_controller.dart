@@ -519,15 +519,37 @@ class DashboardController extends BaseController {
     }
   }
 
-  Future<void> isFirst() async {
-    state.isFirstInstall = (await storage.readString(StorageCore.isFirstInstall)).isEmpty ||
-        (await storage.readString(StorageCore.isFirstInstall)) == 'null' ||
-        (await storage.readString(StorageCore.isFirstInstall)) == 'false';
+  // Future<void> isFirst() async {
+  //   var firsInstall = await storage.readString(StorageCore.isFirstInstall);
+  //   AppLogger.i("first install : $firsInstall");
+  //   state.isFirstInstall = firsInstall.isEmpty || firsInstall == 'null' || firsInstall == 'false';
+  //
+  //   if (state.isFirstInstall) {
+  //     StorageCore().writeString(StorageCore.isFirstInstall, "true");
+  //   }
+  // }
 
-    if (state.isFirstInstall) {
-      StorageCore().writeString(StorageCore.isFirstInstall, "true");
+  Future<void> isFirst() async {
+    try {
+      var firstInstall = await storage.readString(StorageCore.isFirstInstall);
+      state.isFirstInstall = firstInstall.isEmpty || firstInstall == 'null' || firstInstall == 'false';
+
+      if (state.isFirstInstall) {
+        // await storage.deleteAll();
+        await storage.writeString(StorageCore.isFirstInstall, "true");
+      }
+    } catch (e) {
+      // Tangani jika dekripsi gagal (BAD_DECRYPT)
+      AppLogger.e("Gagal membaca isFirstInstall: $e");
+
+      // Recovery: hapus semua data secure storage
+      // await storage.deleteAll();
+      await storage.writeString(StorageCore.isFirstInstall, "true");
+
+      state.isFirstInstall = true;
     }
   }
+
 
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
@@ -736,7 +758,6 @@ class DashboardController extends BaseController {
         state.nomorResi.clear();
         FocusScope.of(Get.context!).unfocus();
         update();
-
       });
     } else {
       Get.to(
@@ -749,7 +770,6 @@ class DashboardController extends BaseController {
         state.nomorResi.clear();
         FocusScope.of(Get.context!).unfocus();
         update();
-
       });
     }
   }

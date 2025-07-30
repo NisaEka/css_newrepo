@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class StorageCore {
@@ -65,8 +66,15 @@ class StorageCore {
   }
 
   Future<String?> readAccessToken() async {
-    var accessToken = await storage.read(key: token);
-    return accessToken;
+    // var accessToken = await storage.read(key: token);
+    // return accessToken;
+    try {
+      return await storage.read(key: token);
+    } catch (e) {
+      AppLogger.e('readAccessToken failed: $e');
+      await storage.deleteAll();
+      return null;
+    }
   }
 
   Future<String?> readRefreshToken() async {
