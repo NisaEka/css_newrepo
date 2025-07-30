@@ -29,8 +29,7 @@ class NotificationController extends BaseController {
 
     try {
       // unread meesage
-      var unread = GetNotificationModel.fromJson(
-          await storage.readData(StorageCore.unreadMessage));
+      var unread = GetNotificationModel.fromJson(await storage.readData(StorageCore.unreadMessage));
       unreadNotifList.clear();
       unreadNotifList.addAll(unread.payload ?? []);
       unreadNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
@@ -49,8 +48,7 @@ class NotificationController extends BaseController {
       }
 
       // read meessage
-      var read = GetNotificationModel.fromJson(
-          await storage.readData(StorageCore.readMessage));
+      var read = GetNotificationModel.fromJson(await storage.readData(StorageCore.readMessage));
       readNotifList
         ..clear()
         ..addAll(read.payload ?? []);
@@ -69,8 +67,7 @@ class NotificationController extends BaseController {
       }
 
       // Sort notificationList
-      notificationList
-          .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
+      notificationList.sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
     } catch (e, i) {
       AppLogger.e('error getNotification $e, $i');
     }
@@ -104,8 +101,7 @@ class NotificationController extends BaseController {
         AppLogger.e('error get ticket message : $e');
       }
     } else if (value.title == "CSS MOBILE - AGREGASI PEMBAYARAN") {
-      String aggDoc =
-          value.text?.split(' : ').elementAt(1).split('.').first ?? '';
+      String aggDoc = value.text?.split(' : ').elementAt(1).split('.').first ?? '';
 
       Get.to(
         () => const AggByDocScreen(),
@@ -125,8 +121,7 @@ class NotificationController extends BaseController {
     bool wasUnread = unreadNotifList.any((unread) => unread.id == value.id);
     unreadNotifList.removeWhere((unread) => unread.id == value.id);
 
-    if (wasUnread &&
-        readNotifList.indexWhere((read) => read.id == value.id) == -1) {
+    if (wasUnread && readNotifList.indexWhere((read) => read.id == value.id) == -1) {
       readNotifList.add(value);
       update();
     }
@@ -154,8 +149,7 @@ class NotificationController extends BaseController {
     ];
 
     readNotifList.sort((a, b) => b.createDate!.compareTo(a.createDate!));
-    notificationList
-        .sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
+    notificationList.sort((a, b) => b.data.createDate!.compareTo(a.data.createDate!));
     update();
   }
 }

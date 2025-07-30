@@ -16,8 +16,9 @@ import 'package:css_mobile/util/logger.dart';
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   AppLogger.i("Handling background message: ${message.messageId}");
-  saveUnreadMessage(message);
+  // saveUnreadMessage(message);
   await Firebase.initializeApp();
+  await saveUnreadMessageToStorageOnly(message);
 }
 
 @pragma('vm:entry-point')
@@ -33,8 +34,7 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
 
   List<Messages> listUnread = [];
   List<NotificationModel> listUnreadMessage = [];
-  var u = GetNotificationModel.fromJson(
-      await StorageCore().readData(StorageCore.unreadMessage));
+  var u = GetNotificationModel.fromJson(await StorageCore().readData(StorageCore.unreadMessage));
   if (u.payload?.isNotEmpty ?? false) {
     listUnreadMessage.addAll(u.payload ?? []);
   }
@@ -74,8 +74,7 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
       GetNotificationModel(payload: listUnreadMessage),
     );
     if (data.notification?.title == "CSS MOBILE - AGREGASI PEMBAYARAN") {
-      await StorageCore()
-          .writeString(StorageCore.lastAgg, data.sentTime.toString());
+      await StorageCore().writeString(StorageCore.lastAgg, data.sentTime.toString());
       controller.getAggregation();
     }
     controller.cekMessages();
@@ -85,6 +84,37 @@ Future<void> saveUnreadMessage(RemoteMessage data) async {
     AppLogger.e("Failed to save message", e, stackTrace);
   }
 }
+
+Future<void> saveUnreadMessageToStorageOnly(RemoteMessage data) async {
+  try {
+    List<NotificationModel> listUnreadMessage = [];
+
+    var raw = await StorageCore().readData(StorageCore.unreadMessage);
+    if (raw != null) {
+      var old = GetNotificationModel.fromJson(raw);
+      listUnreadMessage.addAll(old.payload ?? []);
+    }
+
+    listUnreadMessage.add(
+      NotificationModel(
+        id: data.messageId,
+        title: data.notification?.title,
+        text: data.notification?.body,
+        createDate: data.sentTime.toString(),
+        isRead: false,
+        img: data.notification?.android?.imageUrl,
+      ),
+    );
+
+    await StorageCore().saveData(
+      StorageCore.unreadMessage,
+      GetNotificationModel(payload: listUnreadMessage),
+    );
+  } catch (e, st) {
+    AppLogger.e("Gagal menyimpan notifikasi di background", e, st);
+  }
+}
+
 
 String? payload;
 
@@ -106,23 +136,17 @@ class FirebaseApi {
       importance: Importance.max,
     );
 
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
     final NotificationAppLaunchDetails? notificationAppLaunchDetails =
-        !kIsWeb && Platform.isLinux
-            ? null
-            : await flutterLocalNotificationsPlugin
-                .getNotificationAppLaunchDetails();
+        !kIsWeb && Platform.isLinux ? null : await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
       payload = notificationAppLaunchDetails!.notificationResponse?.payload;
     }
 
-    const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
-    DarwinInitializationSettings initializationSettingsDarwin =
-        const DarwinInitializationSettings(
+    const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+    DarwinInitializationSettings initializationSettingsDarwin = const DarwinInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
@@ -143,8 +167,7 @@ class FirebaseApi {
     );
 
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -152,8 +175,7 @@ class FirebaseApi {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
     // AppLogger.i("FCM Token: ${await messaging.getToken()}");
-    await StorageCore()
-        .writeString(StorageCore.fcmToken, await messaging.getToken());
+    await StorageCore().writeString(StorageCore.fcmToken, await messaging.getToken());
 
     FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
@@ -165,8 +187,7 @@ class FirebaseApi {
       if (message.notification != null) {
         saveUnreadMessage(message);
         AppLogger.i("Received message at ${message.sentTime}");
-        AppLogger.i(
-            "Received message android ${message.notification?.android}");
+        AppLogger.i("Received message android ${message.notification?.android}");
 
         AndroidNotification? android = message.notification?.android;
         if (android != null) {
@@ -197,8 +218,17 @@ class FirebaseApi {
     });
   }
 
-  static void _handleTapOnNotification(RemoteMessage data) {
-    AppLogger.i("Navigating to notification screen");
+  static Future<void> _handleTapOnNotification(RemoteMessage data) async {
+    AppLogger.i("Navigating to notification screen from tap");
+
+    // Pastikan data notifikasi terakhir sudah disimpan (opsional, jika belum sempat tersimpan)
+    // await saveUnreadMessage(data);
+
+    // Pastikan controller di-refresh
+    final NotificationController notification = Get.put(NotificationController());
+    await notification.initData();
+
+    // Arahkan ke halaman
     Get.to(() => const NotificationScreen());
   }
 }

@@ -72,7 +72,7 @@ class StorageCore {
       return await storage.read(key: token);
     } catch (e) {
       AppLogger.e('readAccessToken failed: $e');
-      await storage.deleteAll();
+      // await storage.deleteAll();
       return null;
     }
   }
