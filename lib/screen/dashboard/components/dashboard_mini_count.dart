@@ -49,18 +49,14 @@ class DashboardMiniCount extends StatelessWidget {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: labelBgColor ??
-                      (AppConst.isLightTheme(context)
-                          ? greyLightColor3
-                          : greyDarkColor1),
+                  color: labelBgColor ?? (AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1),
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 3),
-                      width: width ?? Get.width * 0.21,
+                      padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 3),
+                      width: width ?? Get.width * 0.2,
                       child: Row(
                         children: [
                           Icon(
@@ -74,11 +70,7 @@ class DashboardMiniCount extends StatelessWidget {
                             child: Text(
                               label ?? '',
                               style: TextStyle(
-                                color: labelBgColor != null
-                                    ? whiteColor
-                                    : (AppConst.isLightTheme(context)
-                                        ? blueJNE
-                                        : warningColor),
+                                color: labelBgColor != null ? whiteColor : (AppConst.isLightTheme(context) ? blueJNE : warningColor),
                                 fontWeight: FontWeight.bold,
                                 fontSize: fontSize ?? 7,
                               ),
@@ -95,11 +87,9 @@ class DashboardMiniCount extends StatelessWidget {
                 child: Text(
                   value ?? '',
                   style: TextStyle(
-                    color: AppConst.isLightTheme(context)
-                        ? whiteColor
-                        : whiteColor,
+                    color: AppConst.isLightTheme(context) ? whiteColor : whiteColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 9,
+                    fontSize: (value?.length ?? 0) < 4 ? 9 : 8,
                   ),
                 ),
               ),

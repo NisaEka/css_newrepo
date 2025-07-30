@@ -37,11 +37,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color:
-              AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1,
+          color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1,
         ),
-        color:
-            AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1,
+        color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1,
       ),
       child: Column(
         children: [
@@ -54,9 +52,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Kiriman COD Kamu".tr,
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.titleMedium),
+                Text("Kiriman COD Kamu".tr, textAlign: TextAlign.left, style: Theme.of(context).textTheme.titleMedium),
                 const SizedBox(height: 10),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,14 +66,10 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                           TransactionCard(
                             height: screenHeight < 800 ? 150 : 150,
                             customTitle: DashboardMiniCount(
-                              width: screenWidth < 400
-                                  ? Get.width * 0.16
-                                  : Get.width * 0.18,
+                              width: screenWidth < 400 ? Get.width * 0.16 : Get.width * 0.18,
                               margin: EdgeInsets.zero,
                               label: 'Jumlah Transaksi COD'.tr,
-                              value: transSummary?.totalKirimanCod?.totalCod
-                                      ?.toString() ??
-                                  '0',
+                              value: transSummary?.totalKirimanCod?.totalCod?.toString() ?? '0',
                               labelBgColor: blueJNE,
                               valueBgColor: warningColor,
                               fontSize: 5,
@@ -92,9 +84,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               width: 45,
                               height: 20,
                               child: kirimanKamu.lineChart.isNotEmpty
-                                  ? LineChartItem(kirimanKamu.lineChart
-                                      .map((e) => e.toDouble())
-                                      .toList())
+                                  ? LineChartItem(kirimanKamu.lineChart.map((e) => e.toDouble()).toList())
                                   : const SizedBox(),
                             ),
                             onTap: () => Get.to(
@@ -108,7 +98,7 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                           TransactionCard(
                             height: screenHeight < 800 ? 150 : 150,
                             customTitle: DashboardMiniCount(
-                              width: Get.width * 0.19,
+                              width: screenWidth < 400 ? Get.width * 0.16 : Get.width * 0.18,
                               margin: EdgeInsets.zero,
                               label: 'Belum Terkumpul dari pembeli'.tr,
                               value: kirimanKamu.onProcess.toString(),
@@ -127,17 +117,14 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                     ?.toInt()
                                     .toCurrency() ??
                                 '0',
-                            subtitle:
-                                "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                            subtitle: "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                             color: primaryColor(context),
                             statusColor: Colors.green,
                             prefixChart: SizedBox(
                               width: 25,
                               height: 25,
                               child: CircularProgressIndicator(
-                                value: (kirimanKamu.suksesDiterimaPercentage
-                                        .toDouble() /
-                                    100),
+                                value: (kirimanKamu.suksesDiterimaPercentage.toDouble() / 100),
                                 backgroundColor: Colors.grey[300],
                                 color: Colors.green,
                                 strokeWidth: 4,
@@ -159,11 +146,10 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                 customTitle: Column(
                                   children: [
                                     DashboardMiniCount(
-                                      width: Get.width * 0.19,
+                                      width: screenWidth < 400 ? Get.width * 0.16 : Get.width * 0.18,
                                       margin: EdgeInsets.zero,
                                       label: 'Terkumpul dari pembeli'.tr,
-                                      value:
-                                          kirimanKamu.suksesDiterima.toString(),
+                                      value: kirimanKamu.suksesDiterima.toString(),
                                       labelBgColor: blueJNE,
                                       valueBgColor: successColor,
                                       fontSize: 5,
@@ -181,17 +167,14 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                         ?.toInt()
                                         .toCurrency() ??
                                     '0',
-                                subtitle:
-                                    "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
+                                subtitle: "${double.parse((kirimanKamu.suksesDiterimaPercentage).toStringAsFixed(2))}% ${'dari jumlah transaksi'.tr}",
                                 color: primaryColor(context),
                                 statusColor: Colors.green,
                                 suffixChart: SizedBox(
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
-                                    value: (kirimanKamu.suksesDiterimaPercentage
-                                            .toDouble() /
-                                        100),
+                                    value: (kirimanKamu.suksesDiterimaPercentage.toDouble() / 100),
                                     backgroundColor: Colors.grey[300],
                                     color: Colors.green,
                                     strokeWidth: 4,
@@ -222,13 +205,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                             children: [
                               TypeTransactionCard(
                                 prefixVal1: "Rp.",
-                                value1: kirimanKamu.codOngkirAmount
-                                    .toInt()
-                                    .toCurrency(),
+                                value1: kirimanKamu.codOngkirAmount.toInt().toCurrency(),
                                 suffixVal2: "Kiriman".tr,
-                                value2: kirimanKamu.totalCodOngkir
-                                    .toInt()
-                                    .toCurrency(),
+                                value2: kirimanKamu.totalCodOngkir.toInt().toCurrency(),
                                 description: "Dalam Peninjauan".tr,
                                 lineColor: warningColor,
                                 isLoading: isLoadingKiriman,
@@ -240,18 +219,12 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              isLoadingKiriman
-                                  ? const SizedBox(height: 5)
-                                  : const SizedBox(),
+                              isLoadingKiriman ? const SizedBox(height: 5) : const SizedBox(),
                               TypeTransactionCard(
                                 prefixVal1: "Rp.",
-                                value1: kirimanKamu.nonCodAmount
-                                    .toInt()
-                                    .toCurrency(),
+                                value1: kirimanKamu.nonCodAmount.toInt().toCurrency(),
                                 suffixVal2: "Kiriman".tr,
-                                value2: kirimanKamu.totalNonCod
-                                    .toInt()
-                                    .toCurrency(),
+                                value2: kirimanKamu.totalNonCod.toInt().toCurrency(),
                                 description: "Dibatalkan Oleh Kamu".tr,
                                 lineColor: errorColor,
                                 isLoading: isLoadingKiriman,
@@ -304,16 +277,12 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                                   },
                                 ),
                               ),
-                              isLoadingKiriman
-                                  ? const SizedBox(height: 5)
-                                  : const SizedBox(),
+                              isLoadingKiriman ? const SizedBox(height: 5) : const SizedBox(),
                               TypeTransactionCard(
                                 prefixVal1: "Rp.",
-                                value1:
-                                    kirimanKamu.codAmount.toInt().toCurrency(),
+                                value1: kirimanKamu.codAmount.toInt().toCurrency(),
                                 suffixVal2: "Kiriman".tr,
-                                value2:
-                                    kirimanKamu.totalCod.toInt().toCurrency(),
+                                value2: kirimanKamu.totalCod.toInt().toCurrency(),
                                 description: "Butuh Di Cek".tr,
                                 lineColor: infoColor,
                                 isLoading: isLoadingKiriman,
@@ -343,29 +312,21 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Icon(CupertinoIcons.clock_solid,
-                      size: 15,
-                      color: AppConst.isLightTheme(context)
-                          ? redJNE
-                          : warningColor),
+                  Icon(CupertinoIcons.clock_solid, size: 15, color: AppConst.isLightTheme(context) ? redJNE : warningColor),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       alignment: Alignment.centerLeft,
                       child: StreamBuilder<int>(
-                        stream: Stream.periodic(
-                            const Duration(seconds: 3), (count) => count),
+                        stream: Stream.periodic(const Duration(seconds: 3), (count) => count),
                         builder: (context, snapshot) {
                           int currentSecond = snapshot.data ?? 0;
                           return AnimatedSwitcher(
                             duration: const Duration(milliseconds: 300),
-                            transitionBuilder:
-                                (Widget child, Animation<double> animation) {
+                            transitionBuilder: (Widget child, Animation<double> animation) {
                               final slideAnimation = Tween<Offset>(
-                                begin: currentSecond % 2 == 0
-                                    ? const Offset(0, 1)
-                                    : const Offset(0, 1),
+                                begin: currentSecond % 2 == 0 ? const Offset(0, 1) : const Offset(0, 1),
                                 end: Offset.zero,
                               ).animate(animation);
                               final fadeAnimation = Tween<double>(
@@ -384,15 +345,9 @@ class DashboardKirimanCODCountItem extends StatelessWidget {
                               width: double.infinity,
                               key: ValueKey<int>(currentSecond),
                               child: Text(
-                                Constant
-                                    .dashboardRefreshText[currentSecond %
-                                        Constant.dashboardRefreshText.length]
-                                    .tr,
+                                Constant.dashboardRefreshText[currentSecond % Constant.dashboardRefreshText.length].tr,
                                 textAlign: TextAlign.left,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(fontWeight: FontWeight.normal),
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.normal),
                               ),
                             ),
                           );

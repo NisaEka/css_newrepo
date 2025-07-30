@@ -20,8 +20,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<TransactionModel>> postTransaction(
-      TransactionModel data) async {
+  Future<BaseResponse<TransactionModel>> postTransaction(TransactionModel data) async {
     data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.base.post(
@@ -263,8 +262,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getTransOfficer(
-      QueryModel param) async {
+  Future<BaseResponse<List<PetugasModel>>> getTransOfficer(QueryModel param) async {
     // UserModel user = UserModel.fromJson(
     //   await StorageCore().readData(StorageCore.basicProfile),
     // );
@@ -300,8 +298,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
-      DataTransactionOngkirModel data) async {
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
     data.toJson().printInfo();
     try {
       Response response = await network.base.post(
@@ -312,27 +309,24 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
         response.data,
-        (json) =>
-            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     } on DioException catch (e) {
       return BaseResponse<PostTransactionOngkirModel>.fromJson(
         e.response?.data,
-        (json) =>
-            PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
+        (json) => PostTransactionOngkirModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
 
   @override
-  Future<BaseResponse<TransactionSummaryModel>> postTransactionDashboard(
-      QueryModel param) async {
+  Future<BaseResponse<TransactionSummaryModel>> postTransactionDashboard(QueryModel param) async {
     var now = DateTime.now().toLocal();
     var startDate = DateTime(now.year, now.month, now.day)
         .subtract(const Duration(days: 6))
+        .copyWith(hour: 0, millisecond: 0, second: 0, microsecond: 0)
         .toIso8601String();
-    var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999)
-        .toIso8601String();
+    var endDate = DateTime(now.year, now.month, now.day, 23, 59, 59, 999).toIso8601String();
     network.base.options.copyWith(connectTimeout: const Duration(seconds: 20));
 
     try {
@@ -361,15 +355,13 @@ class TransactionRepositoryImpl extends TransactionRepository {
     } on DioException catch (e) {
       return BaseResponse<TransactionSummaryModel>.fromJson(
         e.response?.data,
-        (json) =>
-            TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
+        (json) => TransactionSummaryModel.fromJson(json as Map<String, dynamic>),
       );
     }
   }
 
   @override
-  Future<BaseResponse<List<PantauCountModel>>> getPantauCount(
-      QueryModel param) async {
+  Future<BaseResponse<List<PantauCountModel>>> getPantauCount(QueryModel param) async {
     network.base.options.copyWith(connectTimeout: const Duration(seconds: 20));
 
     try {

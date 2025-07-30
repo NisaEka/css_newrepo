@@ -550,7 +550,6 @@ class DashboardController extends BaseController {
     }
   }
 
-
   Future<void> initData() async {
     connection.isOnline().then((value) => state.isOnline = value);
     cekMessages();

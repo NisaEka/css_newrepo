@@ -4,7 +4,7 @@ import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/screen/keuanganmu/minus/aggregation_minus_screen.dart';
 import 'package:css_mobile/screen/keuanganmu/pembayaran_aggregasi/pembayaran_aggregasi_screen.dart';
-import 'package:css_mobile/util/ext/num_ext.dart';
+import 'package:css_mobile/util/ext/int_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/items/type_transaction_card.dart';
 import 'package:flutter/material.dart';
@@ -27,19 +27,15 @@ class DashboardAggregationCountItem extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     return Shimmer(
       isLoading: isLoading,
-      child: (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null ||
-                  aggregationPembayaran?.mpayWdrGrpPayNetAmt == 0) &&
-              (aggregationMinus?.netAmt == null ||
-                  aggregationMinus?.netAmt == 0)
+      child: (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null || aggregationPembayaran?.mpayWdrGrpPayNetAmt == 0) &&
+              (aggregationMinus?.netAmt == null || aggregationMinus?.netAmt == 0)
           ? const SizedBox()
           : Container(
               margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
-                  color: AppConst.isLightTheme(context)
-                      ? greyLightColor3
-                      : greyDarkColor1,
+                  color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1,
                 ),
                 color: isLoading
                     ? greyColor
@@ -52,19 +48,14 @@ class DashboardAggregationCountItem extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppConst.isLightTheme(context)
-                          ? whiteColor
-                          : bgDarkColor,
+                      color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment:
-                          (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null ||
-                                  aggregationPembayaran?.mpayWdrGrpPayNetAmt ==
-                                      0)
-                              ? MainAxisAlignment.start
-                              : MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: (aggregationPembayaran?.mpayWdrGrpPayNetAmt == null || aggregationPembayaran?.mpayWdrGrpPayNetAmt == 0)
+                          ? MainAxisAlignment.start
+                          : MainAxisAlignment.spaceBetween,
                       // MainAxisAlignment.start,
                       children: [
                         aggregationPembayaran?.mpayWdrGrpPayNetAmt != null
@@ -75,23 +66,13 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                   children: [
                                     Text("Aggregasi Pembayaran".tr,
                                         textAlign: TextAlign.left,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                                fontSize: screenWidth < 400
-                                                    ? 12
-                                                    : 14)),
+                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: screenWidth < 400 ? 12 : 14)),
                                     TypeTransactionCard(
-                                      value1: aggregationPembayaran
-                                              ?.mpayWdrGrpPayNo ??
-                                          '',
-                                      value2:
-                                          'Rp. ${aggregationPembayaran?.mpayWdrGrpPayNetAmt?.toCurrency().toString() ?? '0'}',
+                                      value1: aggregationPembayaran?.mpayWdrGrpPayNo ?? '',
+                                      value2: 'Rp. ${aggregationPembayaran?.mpayWdrGrpPayNetAmt?.toInt().toCurrency().toString() ?? '0'}',
                                       // description: aggregationPembayaran?.createddtm?.toLongDateTimeFormat() ?? '',
                                       lineColor: successColor,
-                                      value1fontSize:
-                                          screenWidth < 400 ? 10 : 12,
+                                      value1fontSize: screenWidth < 400 ? 10 : 12,
                                       value2fontSize: 14,
                                       isSuccess: true,
                                       onTap: () => Get.to(
@@ -105,30 +86,19 @@ class DashboardAggregationCountItem extends StatelessWidget {
                                 ),
                               )
                             : const SizedBox(),
-                        aggregationMinus?.netAmt != null ||
-                                aggregationMinus?.netAmt != 0
+                        aggregationMinus?.netAmt != null || aggregationMinus?.netAmt != 0
                             ? SizedBox(
-                                width: screenWidth < 400
-                                    ? Get.width / 2.3
-                                    : Get.width / 2.2,
+                                width: screenWidth < 400 ? Get.width / 2.3 : Get.width / 2.2,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text("Aggregasi Minus".tr,
                                         textAlign: TextAlign.left,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium
-                                            ?.copyWith(
-                                                fontSize: screenWidth < 400
-                                                    ? 12
-                                                    : 14)),
+                                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontSize: screenWidth < 400 ? 12 : 14)),
                                     const SizedBox(height: 3),
                                     TypeTransactionCard(
-                                      value1:
-                                          aggregationMinus?.aggMinDoc ?? '-',
-                                      value2:
-                                          'Rp. ${aggregationMinus?.netAmt.toCurrency().toString() ?? '0'}',
+                                      value1: aggregationMinus?.aggMinDoc ?? '-',
+                                      value2: 'Rp. ${aggregationMinus?.netAmt.toCurrency().toString() ?? '0'}',
                                       // description: aggregationMinus?.createddtm.isNotEmpty ?? false
                                       //     ? aggregationMinus?.createddtm.toLongDateTimeFormat() ?? ''
                                       //     : '-',
