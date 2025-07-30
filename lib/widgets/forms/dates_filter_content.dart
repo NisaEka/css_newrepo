@@ -159,18 +159,18 @@ class _DatesFilterContentState extends State<DateFilterField> {
       startDateField.clear();
       endDateField.clear();
     } else if (filter == 1) {
-      startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 29));
-      endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+      startDate = DateTime.now().subtract(const Duration(days: 29)).copyWith(hour: 0, minute: 0);
+      endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 9999);
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
     } else if (filter == 2) {
-      startDate = DateTime.now().copyWith(hour: 0, minute: 0).subtract(const Duration(days: 6));
-      endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+      startDate = DateTime.now().subtract(const Duration(days: 6)).copyWith(hour: 0, minute: 0, second: 0);
+      endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 9999);
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
     } else if (filter == 3) {
       startDate = DateTime.now().copyWith(hour: 0, minute: 0);
-      endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
+      endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59, millisecond: 9999);
       startDateField.text = startDate.toString().toShortDateTimeFormat();
       endDateField.text = endDate.toString().toShortDateTimeFormat();
     } else if (filter == 5) {

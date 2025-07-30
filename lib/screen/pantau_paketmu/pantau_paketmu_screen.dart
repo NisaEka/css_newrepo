@@ -27,15 +27,13 @@ class PantauPaketmuScreen extends StatelessWidget {
     // Find the controller (initialization is handled here)
 
     return GetBuilder<PantauPaketmuController>(
-      init:
-          PantauPaketmuController(), // Ensure controller is initialized here if not already
+      init: PantauPaketmuController(), // Ensure controller is initialized here if not already
       builder: (controller) {
         return Scaffold(
           appBar: CustomTopBar(
             title: 'Pantau Paketmu'.tr,
             leading: CustomBackButton(
-              onPressed: () =>
-                  Get.delete<DashboardController>().then((_) => Get.back()),
+              onPressed: () => Get.delete<DashboardController>().then((_) => Get.back()),
             ),
             action: const [
               PantauPaketmuListFilter(),
@@ -60,9 +58,7 @@ class PantauPaketmuScreen extends StatelessWidget {
             ],
             prefixIcon: SvgPicture.asset(
               IconsConstant.search,
-              color: Theme.of(context).brightness == Brightness.light
-                  ? whiteColor
-                  : blueJNE,
+              color: Theme.of(context).brightness == Brightness.light ? whiteColor : blueJNE,
             ),
             onChanged: (value) {
               c.onSearchChanged(value); // Assuming this method calls update()
@@ -83,8 +79,7 @@ class PantauPaketmuScreen extends StatelessWidget {
               ),
               child: PagedListView<int, PantauPaketmuListModel>(
                 pagingController: c.state.pagingController,
-                builderDelegate:
-                    PagedChildBuilderDelegate<PantauPaketmuListModel>(
+                builderDelegate: PagedChildBuilderDelegate<PantauPaketmuListModel>(
                   transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => RiwayatKirimanListItem(
                     data: TransactionModel(
@@ -98,16 +93,11 @@ class PantauPaketmuScreen extends StatelessWidget {
                     ),
                     isLoading: false,
                     index: index,
-                    isSelected: c.state.selectedTransaction
-                        .where((e) => e == item)
-                        .isNotEmpty,
+                    isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
                     onTap: () {
                       Get.to(
                         () => const PantauPaketmuDetailScreen(),
-                        arguments: {
-                          "awbNo": item.awbNo,
-                          "status": item.statusawb
-                        },
+                        arguments: {"awbNo": item.awbNo, "status": item.statusawb},
                       );
                     },
                   ),
@@ -122,8 +112,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                       color: primaryColor(context),
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) =>
-                      const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,

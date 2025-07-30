@@ -28,10 +28,7 @@ class PantauPaketmuController extends BaseController {
     AppLogger.i('selected status filter : ${state.statusFilter}');
     if (state.statusFilter != null) {
       state.selectedStatusKiriman = state.statusFilter;
-      state.startDate = state.startDateFilter ??
-          DateTime.now()
-              .subtract(const Duration(days: 6))
-              .copyWith(hour: 0, minute: 0);
+      state.startDate = state.startDateFilter ?? DateTime.now().subtract(const Duration(days: 6)).copyWith(hour: 0, minute: 0);
       state.endDate = state.endDateFilter ?? DateTime.now();
       state.dateFilter = state.dateF ?? '2';
       state.selectedTipeKiriman = state.tipeFilter;
@@ -56,8 +53,7 @@ class PantauPaketmuController extends BaseController {
     state.startDateField.dispose();
     state.endDateField.dispose();
     state.searchField.dispose();
-    _debounceTimer
-        ?.cancel(); // Cancel the timer when the controller is disposed
+    _debounceTimer?.cancel(); // Cancel the timer when the controller is disposed
     super.onClose();
   }
 
@@ -67,8 +63,7 @@ class PantauPaketmuController extends BaseController {
     update();
     AppLogger.i('initDataaaa');
     try {
-      state.basic =
-          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       update();
 
       state.listOfficerEntry.add('SEMUA');
@@ -86,8 +81,12 @@ class PantauPaketmuController extends BaseController {
     } catch (e, i) {
       AppLogger.e('error pantau', e, i);
       AppSnackBar.error('Gagal mengambil data'.tr);
+      state.isLoading = false;
+      update();
     } finally {
       // state.selectedStatusKiriman = state.listStatusKiriman.first;
+      state.isLoading = false;
+      update();
     }
     state.isLoading = false;
     update();
@@ -95,6 +94,7 @@ class PantauPaketmuController extends BaseController {
 
   Future<void> getPantauList(int page) async {
     state.isLoading = true;
+    update();
     try {
       final trans = await pantau.getPantauList(QueryModel(
         search: state.searchField.text,
@@ -103,8 +103,7 @@ class PantauPaketmuController extends BaseController {
         type: state.selectedTipeKiriman,
         petugasEntry: state.selectedPetugasEntry?.name,
       ));
-      final isLastPage =
-          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+      final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
       } else {
