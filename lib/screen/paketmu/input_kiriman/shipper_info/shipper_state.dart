@@ -23,6 +23,7 @@ class ShipperState {
   final GlobalKey<TooltipState> offlineTooltipKey = GlobalKey<TooltipState>();
 
   bool isDropshipper = false;
+  bool isSaveDropshipper = false;
   bool codOgkir = false;
   bool isLoading = true;
   bool isLoadOrigin = false;
