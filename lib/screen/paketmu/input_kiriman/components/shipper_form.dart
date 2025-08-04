@@ -24,8 +24,7 @@ class ShipperForm extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   // padding: const EdgeInsets.all(10),
                   width: Get.width,
                   child: Column(
@@ -35,9 +34,8 @@ class ShipperForm extends StatelessWidget {
                         key: c.state.formKey,
                         onChanged: () {
                           c.formValidate();
-                          c.connection
-                              .isOnline()
-                              .then((value) => c.state.isOnline = value);
+                          c.connection.isOnline().then((value) => c.state.isOnline = value);
+                          c.isSaveDropshipper();
                           c.update();
                         },
                         child: Column(
@@ -50,21 +48,16 @@ class ShipperForm extends StatelessWidget {
                                   ? Row(
                                       children: List.generate(
                                         3,
-                                        (index) =>
-                                            AccountListItem(isLoading: true),
+                                        (index) => AccountListItem(isLoading: true),
                                       ),
                                     )
                                   : Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: c.state.accountList
                                           .map(
                                             (e) => AccountListItem(
                                               data: e,
-                                              isSelected:
-                                                  c.state.selectedAccount == e
-                                                      ? true
-                                                      : false,
+                                              isSelected: c.state.selectedAccount == e ? true : false,
                                               onTap: () => c.selectAccount(e),
                                             ),
                                           )
@@ -74,8 +67,7 @@ class ShipperForm extends StatelessWidget {
                             CustomSwitch(
                               value: c.state.isDropshipper,
                               label: 'Kirim sebagai Dropshipper'.tr,
-                              onChange: (bool? value) =>
-                                  c.sendAsDropshipper(value),
+                              onChange: (bool? value) => c.sendAsDropshipper(value),
                             ),
                             c.state.selectedAccount?.accountService == "JLC"
                                 ? CustomSwitch(
@@ -103,30 +95,20 @@ class ShipperForm extends StatelessWidget {
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
                               prefixIcon: const Icon(Icons.phone_rounded),
-                              validator:
-                                  ValidationBuilder().phoneNumber().build(),
+                              validator: ValidationBuilder().phoneNumber().build(),
                             ),
                             OriginDropdown(
                               label: "Kota Pengirim".tr,
                               isRequired: c.state.isOnline,
-                              isOfficer:
-                                  c.state.userBasic?.userType != "PEMILIK",
+                              isOfficer: c.state.userBasic?.userType != "PEMILIK",
                               value: c.state.selectedOrigin,
                               selectedItem: c.state.shipperOrigin.text,
-                              originCode:
-                                  (c.state.selectedAccount?.accountCategory ==
-                                          "LOKAL")
-                                      ? c.state.userBasic?.origin?.originCode
-                                      : null,
-                              readOnly: c.state.selectedAccount == null ||
-                                      c.state.isOnline == false
-                                  ? true
-                                  : !c.state.isDropshipper,
+                              originCode: (c.state.selectedAccount?.accountCategory == "LOKAL") ? c.state.userBasic?.origin?.originCode : null,
+                              readOnly: c.state.selectedAccount == null || c.state.isOnline == false ? true : !c.state.isDropshipper,
                               prefixIcon: const Icon(Icons.trip_origin_rounded),
                               onChanged: (value) {
                                 c.state.selectedOrigin = value;
-                                c.state.shipperOrigin.text =
-                                    c.state.selectedOrigin?.originName ?? '';
+                                c.state.shipperOrigin.text = c.state.selectedOrigin?.originName ?? '';
                                 c.update();
                               },
                             ),
@@ -135,8 +117,7 @@ class ShipperForm extends StatelessWidget {
                               hintText: "Kode Pos".tr,
                               readOnly: !c.state.isDropshipper,
                               isRequired: true,
-                              prefixIcon:
-                                  const Icon(Icons.markunread_mailbox_rounded),
+                              prefixIcon: const Icon(Icons.markunread_mailbox_rounded),
                               // validator: ValidationBuilder().zipCode().build(),
                               inputType: TextInputType.number,
                             ),
@@ -149,28 +130,22 @@ class ShipperForm extends StatelessWidget {
                               prefixIcon: const Icon(Icons.home_work_rounded),
                               validator: ValidationBuilder().address().build(),
                             ),
-                            c.state.isDropshipper &&
-                                    c.state.isOnline &&
-                                    c.isSaveDropshipper()
+                            c.state.isDropshipper && c.state.isOnline && c.state.isSaveDropshipper
                                 ? CustomFilledButton(
                                     color: whiteColor,
-                                    borderColor: c.state.isValidate
-                                        ? primaryColor(context)
-                                        : greyColor,
+                                    borderColor: c.state.isValidate ? primaryColor(context) : greyColor,
                                     title: 'Simpan Data Dropshipper'.tr,
                                     suffixIcon: Icons.save_alt_rounded,
-                                    fontColor: c.state.isValidate
-                                        ? primaryColor(context)
-                                        : greyColor,
+                                    fontColor: c.state.isValidate ? primaryColor(context) : greyColor,
                                     onPressed: () => c.state.isValidate
-                                        ? c.saveDropshipper()
+                                        ? c.isSaveDropshipper().then(
+                                              (value) => c.saveDropshipper(),
+                                            )
                                         : null,
                                   )
                                 : const SizedBox(),
                             CustomFilledButton(
-                              color: c.state.isValidate
-                                  ? primaryColor(context)
-                                  : greyColor,
+                              color: c.state.isValidate ? primaryColor(context) : greyColor,
                               title: "Selanjutnya".tr,
                               suffixIcon: Icons.arrow_circle_right_rounded,
                               // radius: 20,

@@ -153,7 +153,7 @@ class LacakKirimanController extends BaseController {
             color: warningColor,
             size: Get.width / 4,
           ),
-          subtitle: 'Maksimal Pencarian adalah 100 awb'.tr,
+          subtitle: 'Maksimal Pencarian adalah 101 awb'.tr,
           confirmButtonTitle: 'Ok'.tr,
           onConfirm: () {
             Get.back();

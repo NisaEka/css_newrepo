@@ -654,7 +654,7 @@ class LanguageEN {
       "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.": "Too many failed attempts. Try again in 5 minutes.",
       "Login gagal": "Login failed",
       "5 percobaan": "5 attemps",
-      "Maksimal Pencarian adalah 100 awb": "Maximum Search is 100 awb",
+      "Maksimal Pencarian adalah 101 awb": "Maximum Search is 101 awb",
     };
   }
 }
