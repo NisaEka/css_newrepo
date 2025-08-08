@@ -474,6 +474,8 @@ class ShipperController extends BaseController {
 
       state.isValidate = state.selectedAccount != null;
     }
+
+    isSaveDropshipper();
     update();
   }
 }

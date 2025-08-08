@@ -170,57 +170,23 @@ class DashboardController extends BaseController {
   }
 
   Future<void> cekFavoritMenu() async {
-    state.menuItems = [
-      Items(
-        title: "Input Kirimanmu",
-        // icon: IconsConstant.add,
-        icon: ImageConstant.paketmuIcon,
-        route: "/inputKiriman",
-        isFavorite: true,
-        isEdit: false,
-        isAuth: true,
-      ),
-      Items(
-        title: "Cek Ongkir",
-        // icon: IconsConstant.cekOngkir,
-        icon: ImageConstant.cekOngkirIcon,
-        route: "/cekOngkir",
-        isFavorite: true,
-        isEdit: false,
-        isAuth: false,
-      ),
-      Items(
-        title: "Draft Transaksi",
-        // icon: IconsConstant.bookmark,
-        icon: ImageConstant.paketmuIcon,
-        route: "/draftTransaksi",
-        isFavorite: true,
-        isEdit: false,
-        isAuth: true,
-      ),
-      Items(
-        title: "Riwayat Kiriman",
-        // icon: IconsConstant.history,
-        icon: ImageConstant.paketmuIcon,
-        route: "/riwayatKiriman",
-        isFavorite: true,
-        isEdit: false,
-        isAuth: true,
-      ),
-    ];
+    // state.menuItems ;
     var favMenu = await storage.readData(StorageCore.favoriteMenu);
     // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
       await storage.saveData(
         StorageCore.favoriteMenu,
-        MenuItemModel(items: state.menuItems),
+        state.menuItems,
       );
       update();
     } else {
-      state.menuItems = [];
-      var menu = MenuItemModel.fromJson(favMenu);
-      state.menuItems.addAll(menu.items ?? []);
+      // state.menuItems = [];
+      if (favMenu is List) {
+        state.menuItems = favMenu.map((e) => Items.fromJson(e)).toList();
+      }
+      // var menu = MenuItemModel.fromJson(favMenu);
+      // state.menuItems.addAll(menu.items ?? []);
     }
 
     update();

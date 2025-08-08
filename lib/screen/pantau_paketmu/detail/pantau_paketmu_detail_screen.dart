@@ -33,8 +33,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _detailBody(
-      BuildContext context, PantauPaketmuDetailController controller) {
+  Widget _detailBody(BuildContext context, PantauPaketmuDetailController controller) {
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
     }
@@ -50,8 +49,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
     return Container();
   }
 
-  Widget _mainContent(
-      BuildContext context, PantauPaketmuDetailController controller) {
+  Widget _mainContent(BuildContext context, PantauPaketmuDetailController controller) {
     final Map<String, dynamic> arguments = Get.arguments ?? {};
     final String statusawb = arguments["status"] ?? "";
     return Padding(
@@ -62,8 +60,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
           children: [
             Card.filled(
               color: Theme.of(context).cardColor,
-              shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(16))),
+              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -77,8 +74,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          statusawb != "DIBATALKAN OLEH KAMU" &&
-                                  statusawb != "MASIH DI KAMU"
+                          statusawb != "DIBATALKAN OLEH KAMU" && statusawb != "MASIH DI KAMU"
                               ? CustomFilledButton(
                                   color: warningColor,
                                   isTransparent: true,
@@ -91,14 +87,10 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                                     Get.bottomSheet(
                                       enableDrag: true,
                                       isDismissible: true,
-                                      StatefulBuilder(builder:
-                                          (BuildContext context,
-                                              StateSetter setState) {
+                                      StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
                                         return HubungiAkuDialog(
-                                          awb: controller.pantauPaketmu.awbNo ??
-                                              '',
-                                          allow:
-                                              controller.allow ?? MenuModel(),
+                                          awb: controller.pantauPaketmu.awbNo ?? '',
+                                          allow: controller.allow ?? MenuModel(),
                                         );
                                       }),
                                     );
@@ -128,14 +120,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: controller.isLoading
-                              ? greyColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(5)),
+                      decoration: BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
+                      margin: const EdgeInsets.only(right: 20), // Margin between the two text widgets
                       child: Text(
                         'Informasi Transaksi'.tr,
                         style: listTitleTextStyle.copyWith(
@@ -176,21 +163,15 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Transaksi",
-                    controller.pantauPaketmu.createDate
-                        .toString()
-                        .toLongDateTimeFormat(),
+                    controller.pantauPaketmu.createDate.toString().toLongDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
                   _textRow(
                     context,
                     "Tanggal Serah Terima / Pickup",
-                    controller.pantauPaketmu.hoCourierDate
-                            ?.toString()
-                            .toLongDateTimeFormat() ??
-                        controller.pantauPaketmu.puLastAttempStatusDate
-                            ?.toString()
-                            .toLongDateTimeFormat() ??
+                    controller.pantauPaketmu.hoCourierDate?.toString().toLongDateTimeFormat() ??
+                        controller.pantauPaketmu.puLastAttempStatusDate?.toString().toLongDateTimeFormat() ??
                         "-",
                     controller.isLoading,
                   ),
@@ -202,14 +183,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: controller.isLoading
-                              ? greyColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(5)),
+                      decoration: BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
+                      margin: const EdgeInsets.only(right: 20), // Margin between the two text widgets
                       child: Text(
                         'Detail Kiriman'.tr,
                         style: listTitleTextStyle.copyWith(
@@ -271,9 +247,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Berat Kiriman",
-                    controller.pantauPaketmu.weightAwb != null
-                        ? '${controller.pantauPaketmu.weightAwb?.toDouble().toString()} KG'
-                        : "- KG",
+                    controller.pantauPaketmu.weightAwb != null ? '${controller.pantauPaketmu.weightAwb?.toDouble().toString()} KG' : "- KG",
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -284,36 +258,18 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
-                  _textRow(
-                      context,
-                      "Nominal COD",
-                      'Rp. ${NumberFormat('#,##0.00', 'id').format(controller.pantauPaketmu.codAmount ?? 0)}',
+                  _textRow(context, "Nominal COD", 'Rp. ${NumberFormat('#,##0.00', 'id').format(controller.pantauPaketmu.codAmount ?? 0)}',
                       controller.isLoading,
-                      style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : Colors.lightBlueAccent)),
+                      style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)),
                   const SizedBox(height: 6),
-                  _textRow(
-                      context,
-                      "Nominal Asuransi",
-                      'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? '0'}',
+                  _textRow(context, "Nominal Asuransi", 'Rp. ${controller.pantauPaketmu.awbInsuranceValue?.toCurrency().toString() ?? '0'}',
                       controller.isLoading,
                       style: listTitleTextStyle.copyWith(
-                        color: AppConst.isLightTheme(context)
-                            ? blueJNE
-                            : Colors.lightBlueAccent,
+                        color: AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent,
                       )),
                   const SizedBox(height: 6),
-                  _textRow(
-                      context,
-                      "Ongkos Kirim",
-                      'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? '0'}',
-                      controller.isLoading,
-                      style: listTitleTextStyle.copyWith(
-                          color: AppConst.isLightTheme(context)
-                              ? blueJNE
-                              : Colors.lightBlueAccent)),
+                  _textRow(context, "Ongkos Kirim", 'Rp. ${controller.pantauPaketmu.awbAmount?.toCurrency().toString() ?? '0'}', controller.isLoading,
+                      style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? blueJNE : Colors.lightBlueAccent)),
                   const SizedBox(height: 16),
                   const Divider(
                     color: greyLightColor3,
@@ -322,14 +278,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: controller.isLoading
-                              ? greyColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(5)),
+                      decoration: BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
+                      margin: const EdgeInsets.only(right: 20), // Margin between the two text widgets
                       child: Text(
                         'Informasi Pengantaran'.tr,
                         style: listTitleTextStyle.copyWith(
@@ -342,9 +293,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   _textRow(
                     context,
                     "Tanggal Status Pengantaran",
-                    controller.pantauPaketmu.tglReceived
-                        .toString()
-                        .toLongDateTimeFormat(),
+                    controller.pantauPaketmu.tglReceived.toString().toLongDateTimeFormat(),
                     controller.isLoading,
                   ),
                   const SizedBox(height: 6),
@@ -391,20 +340,14 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     Shimmer(
                       isLoading: controller.isLoading,
                       child: Container(
-                        decoration: BoxDecoration(
-                            color: controller.isLoading
-                                ? greyColor
-                                : Colors.transparent,
-                            borderRadius: BorderRadius.circular(5)),
+                        decoration:
+                            BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                         alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(
-                            right: 20), // Margin between the two text widgets
+                        margin: const EdgeInsets.only(right: 20), // Margin between the two text widgets
                         child: Text(
                           'Informasi Pembayaran'.tr,
                           style: listTitleTextStyle.copyWith(
-                            color: AppConst.isLightTheme(context)
-                                ? blueJNE
-                                : warningColor,
+                            color: AppConst.isLightTheme(context) ? blueJNE : warningColor,
                           ),
                         ),
                       ),
@@ -420,9 +363,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     _textRow(
                       context,
                       "Tanggal Pembayaran",
-                      controller.pantauPaketmu.repcssPaymentDate
-                          .toString()
-                          .toLongDateTimeFormat(),
+                      controller.pantauPaketmu.repcssPaymentDate.toString().toLongDateTimeFormat(),
                       controller.isLoading,
                     ),
                   ],
@@ -434,14 +375,9 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                   Shimmer(
                     isLoading: controller.isLoading,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: controller.isLoading
-                              ? greyColor
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(5)),
+                      decoration: BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(
-                          right: 20), // Margin between the two text widgets
+                      margin: const EdgeInsets.only(right: 20), // Margin between the two text widgets
                       child: Text(
                         'Informasi Tiket Laporan'.tr,
                         style: listTitleTextStyle.copyWith(
@@ -467,9 +403,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _textRow(
-      BuildContext context, String title, String? value, bool isLoading,
-      {TextStyle? style}) {
+  Widget _textRow(BuildContext context, String title, String? value, bool isLoading, {TextStyle? style}) {
     if (value == null) {
       return Container();
     }
@@ -482,15 +416,10 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              decoration: BoxDecoration(
-                  color: isLoading ? greyColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
               child: Text(
                 title.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: regular),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
               ),
             ),
           ),
@@ -500,9 +429,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              decoration: BoxDecoration(
-                  color: isLoading ? greyColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
               child: value.startsWith("http")
                   ? GestureDetector(
                       onTap: () {
@@ -531,11 +458,7 @@ class PantauPaketmuDetailScreen extends StatelessWidget {
                     )
                   : Text(
                       value,
-                      style: style ??
-                          Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(fontWeight: regular),
+                      style: style ?? Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
                       textAlign: TextAlign.start,
                     ),
             ),

@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/lacak_kiriman/post_lacak_kiriman_model.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_detail.dart';
 import 'package:css_mobile/util/logger.dart';
@@ -102,11 +103,12 @@ class LacakKirimanController extends BaseController {
 
     Get.dialog(const LoadingDialog());
     update();
+    BaseResponse<PostLacakKirimanModel>? response;
     try {
       // final response = await cekToken() ? await trace.postTracingByCnote(nomorResi) : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
-      final response = await trace.postTracingByCnotePublic(nomorResi?.cnote?.cnoteNo ?? '', phoneNumber);
+      response = await trace.postTracingByCnotePublic(nomorResi?.cnote?.cnoteNo ?? '', phoneNumber);
       trackModel = response.data;
-      debugPrint("lacaak response ${trackModel?.toJson()}");
+      debugPrint("lacaak response ${response.toJson()}");
     } catch (e, i) {
       AppLogger.e('error cekResi $e, $i');
     }
@@ -127,11 +129,11 @@ class LacakKirimanController extends BaseController {
     } else {
       Get.dialog(
         DefaultAlertDialog(
-          subtitle: 'Data Tidak Ditemukan'.tr,
+          subtitle: response?.message ?? 'Data Tidak Ditemukan'.tr,
           confirmButtonTitle: 'Ok'.tr,
           onConfirm: () {
             cnotes[index] = PostLacakKirimanModel(
-              cnote: Cnote(cnoteNo: nomorResi?.cnote?.cnoteNo, podStatus: "NOT FOUND"),
+              cnote: Cnote(cnoteNo: nomorResi?.cnote?.cnoteNo, podStatus: response?.code == 401 ? "INVALID PHONE" : "NOT FOUND"),
             );
             update();
 

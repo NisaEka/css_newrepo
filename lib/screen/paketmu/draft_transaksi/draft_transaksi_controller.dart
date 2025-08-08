@@ -51,14 +51,11 @@ class DraftTransaksiController extends BaseController {
     update();
     searchList = [];
     draftList = [];
-    var data = DraftTransactionModel.fromJson(
-        await storage.readData(StorageCore.draftTransaction));
+    var data = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(data.draft);
     update();
 
-    isSync = draftList
-        .where((element) => element.delivery?.freightCharge != 0)
-        .isNotEmpty;
+    isSync = draftList.where((element) => element.delivery?.freightCharge != 0).isNotEmpty;
 
     update();
   }
@@ -95,20 +92,15 @@ class DraftTransaksiController extends BaseController {
   Future<void> syncData() async {
     isLoading = true;
     update();
-    draftList
-        .where((e) => e.delivery?.freightCharge != 0)
-        .forEach((upload) async {
+    draftList.where((e) => e.delivery?.freightCharge != 0).forEach((upload) async {
       update();
       try {
         await transaction
             .postTransaction(TransactionModel(
           apiType: upload.account?.accountService,
           custId: upload.account?.accountNumber,
-          branch:
-              upload.origin?.branchCode ?? upload.origin?.branch?.branchCode,
-          codAmount: upload.delivery?.codFlag == "YES"
-              ? upload.delivery?.codFee
-              : null,
+          branch: upload.origin?.branchCode ?? upload.origin?.branch?.branchCode,
+          codAmount: upload.delivery?.codFlag == "YES" ? upload.delivery?.codFee : null,
           codFlag: upload.delivery?.codFlag,
           codOngkir: upload.delivery?.codOngkir,
           deliveryPrice: upload.delivery?.freightCharge,
@@ -116,13 +108,9 @@ class DraftTransaksiController extends BaseController {
           destinationCode: upload.receiver?.destinationCode,
           goodsAmount: upload.goods?.amount,
           goodsDesc: upload.goods?.desc,
-          goodsType: (upload.goods?.type?.isNotEmpty ?? false)
-              ? upload.goods?.type
-              : "PAKET",
+          goodsType: (upload.goods?.type?.isNotEmpty ?? false) ? upload.goods?.type : "PAKET",
           qty: upload.goods?.quantity,
-          insuranceAmount: upload.delivery?.insuranceFlag == "Y"
-              ? upload.delivery?.insuranceFee
-              : null,
+          insuranceAmount: upload.delivery?.insuranceFlag == "Y" ? upload.delivery?.insuranceFee : null,
           insuranceFlag: upload.delivery?.insuranceFlag,
           originCode: upload.origin?.originCode,
           originDesc: upload.origin?.originName,
@@ -134,22 +122,13 @@ class DraftTransaksiController extends BaseController {
           receiverSubdistrict: upload.receiver?.subDistrict,
           receiverRegion: upload.receiver?.region,
           receiverZip: upload.receiver?.zipCode,
-          receiverAddr1: upload.receiver?.address?.substring(
-              0,
-              (upload.receiver?.address?.length ?? 0) > 30
-                  ? 29
-                  : (upload.receiver?.address?.length ?? 0)),
+          receiverAddr1:
+              upload.receiver?.address?.substring(0, (upload.receiver?.address?.length ?? 0) > 30 ? 29 : (upload.receiver?.address?.length ?? 0)),
           receiverAddr2: (upload.receiver?.address?.length ?? 0) > 30
-              ? upload.receiver?.address?.substring(
-                  30,
-                  (upload.receiver?.address?.length ?? 0) > 60
-                      ? 59
-                      : (upload.receiver?.address?.length ?? 0))
+              ? upload.receiver?.address?.substring(30, (upload.receiver?.address?.length ?? 0) > 60 ? 59 : (upload.receiver?.address?.length ?? 0))
               : '',
-          receiverAddr3: (upload.receiver?.address?.length ?? 0) >= 60
-              ? upload.receiver?.address
-                  ?.substring(60, (upload.receiver?.address?.length ?? 0))
-              : '',
+          receiverAddr3:
+              (upload.receiver?.address?.length ?? 0) >= 60 ? upload.receiver?.address?.substring(60, (upload.receiver?.address?.length ?? 0)) : '',
           receiverName: upload.receiver?.name,
           receiverPhone: upload.receiver?.phone,
           receiverContact: upload.receiver?.contact,
@@ -160,8 +139,7 @@ class DraftTransaksiController extends BaseController {
           shipperCity: upload.shipper?.city,
           shipperZip: upload.shipper?.zipCode,
           shipperContact: upload.shipper?.contact,
-          shipperRegion: upload.shipper?.region?.name ??
-              upload.origin?.branch?.region?.name,
+          shipperRegion: upload.shipper?.region?.name ?? upload.origin?.branch?.region?.name,
           shipperCountry: upload.shipper?.country,
           shipperAddr1: upload.shipper?.address1,
           shipperAddr2: upload.shipper?.address2,
@@ -171,23 +149,18 @@ class DraftTransaksiController extends BaseController {
         ))
             .then((value) async {
           if (value.code == 201) {
-            draftList
-                .removeWhere((draft) => draft.delivery?.freightCharge != 0);
+            draftList.removeWhere((draft) => draft.delivery?.freightCharge != 0);
             var data = '{"draft" : ${jsonEncode(draftList)}}';
             draftData = DraftTransactionModel.fromJson(jsonDecode(data));
 
-            await storage
-                .saveData(StorageCore.draftTransaction, draftData)
-                .then((_) {
+            await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
               initData();
             });
           }
 
           update();
 
-          value.code == 201
-              ? AppSnackBar.success('Draft berhasil di upload'.tr)
-              : AppSnackBar.error('Draft gagal di upload'.tr);
+          value.code == 201 ? AppSnackBar.success('Draft berhasil di upload'.tr) : AppSnackBar.error('Draft gagal di upload'.tr);
         });
       } catch (e) {
         AppLogger.e('error sync $e');

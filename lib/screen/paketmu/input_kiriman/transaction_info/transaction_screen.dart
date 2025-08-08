@@ -35,10 +35,9 @@ class TransactionScreen extends StatelessWidget {
                       TransactionAccountCard(
                         account: controller.state.account,
                         onTap: () => controller.state.dropship == false
-                            ? Get.to(() => const AkunTransaksiScreen(),
-                                arguments: {
-                                    "account": controller.state.account,
-                                  })?.then(
+                            ? Get.to(() => const AkunTransaksiScreen(), arguments: {
+                                "account": controller.state.account,
+                              })?.then(
                                 (result) => controller.onChangeAccount(result),
                               )
                             : null,
@@ -50,9 +49,7 @@ class TransactionScreen extends StatelessWidget {
                 ),
               ),
               controller.state.isLoading ? const LoadingDialog() : Container(),
-              controller.state.isShowDialog
-                  ? _warningDialog(context, controller)
-                  : const SizedBox()
+              controller.state.isShowDialog ? _warningDialog(context, controller) : const SizedBox()
             ],
           );
         });
@@ -88,8 +85,7 @@ class TransactionScreen extends StatelessWidget {
               ),
               Text(
                 "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
-                style: subTitleTextStyle.copyWith(
-                    color: greyDarkColor1, fontSize: fontSize),
+                style: subTitleTextStyle.copyWith(color: greyDarkColor1, fontSize: fontSize),
                 textAlign: TextAlign.center,
               ),
               CustomFilledButton(

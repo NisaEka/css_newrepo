@@ -40,7 +40,13 @@ class StorageCore {
   }
 
   Future<String> readString(String key) async {
-    return await storage.read(key: key) ?? "";
+    try {
+      return await storage.read(key: key) ?? "";
+    } catch (e) {
+      AppLogger.e('Decryption error on key [$key]: $e');
+      await storage.delete(key: key); // Optional: hapus jika corrupt
+      return "";
+    }
   }
 
   Future<void> saveData(String key, dynamic data) async {
@@ -48,7 +54,14 @@ class StorageCore {
   }
 
   Future<dynamic> readData(String key) async {
-    return jsonDecode(await storage.read(key: key) ?? '{}');
+    try {
+      final raw = await storage.read(key: key);
+      return jsonDecode(raw ?? '{}');
+    } catch (e) {
+      AppLogger.e('readData failed for key [$key]: $e');
+      await storage.delete(key: key); // optional
+      return {};
+    }
   }
 
   void deleteString(String key) async {

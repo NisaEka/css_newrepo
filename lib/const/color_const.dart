@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 const Color neutralColor = Color(0xffE0E0E0);
 const Color whiteColor = Colors.white;
 const Color blueJNE = Color(0xff202F72);
+const Color altBlueJNE = Color(0xff223d83); // alternate blue for dark mode
 const Color blueJNEna = Color(0xff4B5B93);
 const Color redJNE = Color(0xffE01B22);
 const Color successColor = Color(0xff22A121);
@@ -65,9 +66,7 @@ Color iconColor(BuildContext context) {
 }
 
 Color iconShadowColor(BuildContext context) {
-  return AppConst.isLightTheme(context)
-      ? CupertinoColors.systemGrey2
-      : greyLightColor2;
+  return AppConst.isLightTheme(context) ? CupertinoColors.systemGrey2 : greyLightColor2;
 }
 
 Color formTextColor(BuildContext context) {

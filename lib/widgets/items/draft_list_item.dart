@@ -23,8 +23,7 @@ class DraftTransactionListItem extends StatefulWidget {
   });
 
   @override
-  State<DraftTransactionListItem> createState() =>
-      _DraftTransactionListItemState();
+  State<DraftTransactionListItem> createState() => _DraftTransactionListItemState();
 }
 
 class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
@@ -65,21 +64,16 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
               right: 0,
               top: 5,
               child: Container(
-                padding: const EdgeInsets.only(
-                    top: 5, right: 5, left: 20, bottom: 2),
+                padding: const EdgeInsets.only(top: 5, right: 5, left: 20, bottom: 2),
                 decoration: BoxDecoration(
-                  color: widget.data.delivery?.freightCharge == 0
-                      ? infoColor
-                      : successColor,
+                  color: widget.data.delivery?.freightCharge == 0 ? infoColor : successColor,
                   borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(8),
                     bottomLeft: Radius.circular(20),
                   ),
                 ),
                 child: Text(
-                  widget.data.delivery?.freightCharge == 0
-                      ? 'Draft'
-                      : 'Ready to Upload',
+                  widget.data.delivery?.freightCharge == 0 ? 'Draft' : 'Ready to Upload',
                   style: listTitleTextStyle.copyWith(color: whiteColor),
                 ),
               ),
@@ -101,9 +95,7 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                         style: sublistTitleTextStyle,
                       ),
                       Icon(
-                        showDetail
-                            ? Icons.keyboard_arrow_up
-                            : Icons.keyboard_arrow_down,
+                        showDetail ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
                       ),
                     ],
                   ),
@@ -112,16 +104,12 @@ class _DraftTransactionListItemState extends State<DraftTransactionListItem> {
                     children: [
                       CustomLabelText(
                         title: 'Account Number'.tr,
-                        value: widget.data.dataAccount?.accountNumber ??
-                            widget.data.account?.accountNumber ??
-                            '',
+                        value: widget.data.dataAccount?.accountNumber ?? widget.data.account?.accountNumber ?? '',
                         width: Get.width / 3,
                       ),
                       CustomLabelText(
                         title: 'Account Name'.tr,
-                        value: widget.data.dataAccount?.accountName ??
-                            widget.data.account?.accountName ??
-                            '',
+                        value: widget.data.dataAccount?.accountName ?? widget.data.account?.accountName ?? '',
                         alignment: 'end',
                         width: Get.width / 3,
                       ),

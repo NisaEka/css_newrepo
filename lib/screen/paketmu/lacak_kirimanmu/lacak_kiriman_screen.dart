@@ -127,14 +127,18 @@ class LacakKirimanScreen extends StatelessWidget {
                     trailing: Text(
                       e?.cnote?.podStatus ?? '',
                       style: sublistTitleTextStyle.copyWith(
-                        color: e?.cnote?.podStatus == "NOT FOUND" ? errorColor : successColor,
+                        color: e?.cnote?.podStatus == "NOT FOUND"
+                            ? errorColor
+                            : (e?.cnote?.podStatus?.contains("INVALID") ?? false)
+                                ? warningColor
+                                : successColor,
                       ),
                     ),
                     contentPadding: EdgeInsets.zero,
                     onTap: () {
                       FocusScope.of(Get.context!).unfocus();
                       if (e?.cnote?.podStatus != "NOT FOUND") {
-                        if (e?.cnote?.podStatus == "DETAIL") {
+                        if (e?.cnote?.podStatus == "DETAIL" || (e?.cnote?.podStatus?.contains("INVALID") ?? false)) {
                           Get.to(
                             PhoneNumberConfirmationScreen(
                               awb: e?.cnote?.cnoteNo ?? '',

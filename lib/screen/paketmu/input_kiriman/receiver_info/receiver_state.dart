@@ -30,7 +30,7 @@ class ReceiverState {
   bool isOnline = true;
   bool isLoadSave = false;
   bool isValidate = false;
-  bool isSaveReceiver = true;
+  bool isSaveReceiver = false;
 
   DestinationModel? selectedDestination;
   ReceiverModel? receiver;

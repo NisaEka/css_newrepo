@@ -127,7 +127,7 @@ class JLCRepositoryImpl extends JLCRepository {
                 )
                 .toList()
             : List.empty(),
-      ) ;
+      );
     }
   }
 

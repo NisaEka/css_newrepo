@@ -40,31 +40,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 menu: 0,
                 allow: controller.state.allow,
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.miniStartDocked,
+              floatingActionButtonLocation: FloatingActionButtonLocation.miniStartDocked,
               resizeToAvoidBottomInset: false,
-              floatingActionButton: (controller.state.allow.paketmuInput ==
-                              "Y" &&
-                          MediaQuery.of(context).viewInsets.bottom == 0) ||
-                      !controller.state.isLogin
-                  ? MenuIcon(
-                      // icon: IconsConstant.add,
-                      icon: ImageConstant.paketmuIcon,
-                      margin: EdgeInsets.only(left: leftPadding, bottom: 29),
-                      radius: 100,
-                      height: 65,
-                      width: 65,
-                      background: (AppConst.isLightTheme(context)
-                          ? (controller.state.isLogin
-                              ? redJNE
-                              : errorLightColor2)
-                          : (controller.state.isLogin
-                              ? warningColor
-                              : warningLightColor2)),
-                      showContainer: false,
-                      onTap: () => controller.onAddTransaction(context),
-                    )
-                  : const SizedBox(),
+              floatingActionButton:
+                  (controller.state.allow.paketmuInput == "Y" && MediaQuery.of(context).viewInsets.bottom == 0) || !controller.state.isLogin
+                      ? MenuIcon(
+                          // icon: IconsConstant.add,
+                          icon: ImageConstant.paketmuIcon,
+                          margin: EdgeInsets.only(left: leftPadding, bottom: 29),
+                          radius: 100,
+                          height: 65,
+                          width: 65,
+                          background: (AppConst.isLightTheme(context)
+                              ? (controller.state.isLogin ? redJNE : errorLightColor2)
+                              : (controller.state.isLogin ? warningColor : warningLightColor2)),
+                          showContainer: false,
+                          onTap: () => controller.onAddTransaction(context),
+                        )
+                      : const SizedBox(),
             ),
           );
         }

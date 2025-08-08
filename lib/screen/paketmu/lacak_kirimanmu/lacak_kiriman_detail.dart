@@ -40,8 +40,7 @@ class LacakKirimanDetail extends StatelessWidget {
               CustomLabelText(
                 title: 'Service',
                 value: data.cnote?.cnoteServicesCode ?? '',
-                valueColor:
-                    AppConst.isLightTheme(context) ? redJNE : warningColor,
+                valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
                 alignment: 'end',
               )
             ],
@@ -58,8 +57,7 @@ class LacakKirimanDetail extends StatelessWidget {
               CustomLabelText(
                 title: 'Status Kiriman'.tr,
                 value: data.cnote?.podStatus ?? '',
-                valueColor:
-                    AppConst.isLightTheme(context) ? redJNE : warningColor,
+                valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
                 width: Get.width / 3,
                 alignment: 'end',
               ),
@@ -78,8 +76,7 @@ class LacakKirimanDetail extends StatelessWidget {
               CustomLabelText(
                 title: 'Perkiraan Sampai'.tr,
                 value: data.cnote?.estimateDelivery ?? '',
-                valueColor:
-                    AppConst.isLightTheme(context) ? redJNE : warningColor,
+                valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
                 width: Get.width / 3,
                 alignment: 'end',
               ),
@@ -104,8 +101,7 @@ class LacakKirimanDetail extends StatelessWidget {
                 title: 'Berat Kiriman'.tr,
                 value: '${data.cnote?.cnoteWeight} KG',
                 width: Get.width / 3,
-                valueColor:
-                    AppConst.isLightTheme(context) ? redJNE : warningColor,
+                valueColor: AppConst.isLightTheme(context) ? redJNE : warningColor,
                 alignment: 'end',
               ),
             ],

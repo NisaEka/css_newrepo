@@ -55,10 +55,7 @@ class PantauPaketmuFilter extends HookWidget {
                                   .map(
                                     (e) => DropdownMenuItem(
                                       value: e,
-                                      child: Text(e.toUpperCase().tr,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium),
+                                      child: Text(e.toUpperCase().tr, style: Theme.of(context).textTheme.bodyMedium),
                                     ),
                                   )
                                   .toList(),
@@ -66,8 +63,7 @@ class PantauPaketmuFilter extends HookWidget {
                               hintText: 'Tipe Kiriman'.tr,
                               value: controller.state.selectedTipeKiriman,
                               onChanged: (value) {
-                                controller.state.selectedTipeKiriman =
-                                    value as String;
+                                controller.state.selectedTipeKiriman = value as String;
                                 if (value == 'cod') {
                                   controller.state.selectedKiriman = 0;
                                 } else if (value == 'cod ongkir') {
@@ -81,10 +77,8 @@ class PantauPaketmuFilter extends HookWidget {
                             CustomFormLabel(label: 'Petugas Entry'.tr),
                             OfficerDropdown(
                               label: 'Petugas Entry'.tr,
-                              readOnly:
-                                  controller.state.basic?.userType != "PEMILIK",
-                              selectedItem:
-                                  controller.state.selectedPetugasEntry?.name,
+                              readOnly: controller.state.basic?.userType != "PEMILIK",
+                              selectedItem: controller.state.selectedPetugasEntry?.name,
                               value: controller.state.selectedPetugasEntry,
                               onChanged: (value) {
                                 setState(() {
@@ -102,8 +96,7 @@ class PantauPaketmuFilter extends HookWidget {
               },
             ),
             isFiltered: controller.state.isFiltered,
-            isApplyFilter:
-                (controller.state.selectedStatusKiriman != "Total Kiriman"),
+            isApplyFilter: (controller.state.selectedStatusKiriman != "Total Kiriman"),
             onResetFilter: () {
               controller.resetFilter();
               Get.back();

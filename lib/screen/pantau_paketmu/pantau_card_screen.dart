@@ -22,8 +22,7 @@ class PantauCardScreen extends StatelessWidget {
             appBar: CustomTopBar(
               title: 'Pantau Paketmu'.tr,
               leading: CustomBackButton(
-                onPressed: () =>
-                    Get.delete<DashboardController>().then((_) => Get.back()),
+                onPressed: () => Get.delete<DashboardController>().then((_) => Get.back()),
               ),
               action: const [
                 PantauPaketmuFilter(),
@@ -32,29 +31,23 @@ class PantauCardScreen extends StatelessWidget {
             body: RefreshIndicator(
               onRefresh: () => controller.initData(),
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const PantauStatusButton(),
                     // Total Kiriman
-                    PantauTotalKiriman(
-                        isLoading: controller.state.isLoading ||
-                            controller.state.countList.isEmpty),
+                    PantauTotalKiriman(isLoading: controller.state.isLoading || controller.state.countList.isEmpty),
                     Expanded(
                       child: ListView(
-                        children: controller.state.countList.isEmpty ||
-                                controller.state.isLoading
+                        children: controller.state.countList.isEmpty || controller.state.isLoading
                             ? List.generate(
                                 8,
                                 (index) => const PantauItems(
                                   isLoading: true,
                                 ),
                               )
-                            : controller.state.selectedStatusKiriman == null ||
-                                    controller.state.selectedStatusKiriman ==
-                                        "Total Kiriman"
+                            : controller.state.selectedStatusKiriman == null || controller.state.selectedStatusKiriman == "Total Kiriman"
                                 ? controller.state.countList
                                     .mapIndexed((index, item) => (index != 0
                                         ? PantauItems(
@@ -64,8 +57,7 @@ class PantauCardScreen extends StatelessWidget {
                                           )
                                         : const SizedBox()))
                                     .toList()
-                                : controller.state.filteredCountList
-                                    .mapIndexed((index, item) {
+                                : controller.state.filteredCountList.mapIndexed((index, item) {
                                     return PantauItems(
                                       item: item,
                                       index: index,

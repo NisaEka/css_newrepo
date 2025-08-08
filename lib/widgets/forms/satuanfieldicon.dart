@@ -8,13 +8,9 @@ class SatuanFieldIcon extends StatelessWidget {
   final bool? isPrefix;
   final bool? isSuffix;
   final double? width;
+  final double? fontSize;
 
-  const SatuanFieldIcon(
-      {super.key,
-      required this.title,
-      this.isPrefix = false,
-      this.isSuffix = false,
-      this.width});
+  const SatuanFieldIcon({super.key, required this.title, this.isPrefix = false, this.isSuffix = false, this.width, this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +18,7 @@ class SatuanFieldIcon extends StatelessWidget {
       alignment: Alignment.center,
       width: width ?? 30,
       height: 39,
-      margin:
-          EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
+      margin: EdgeInsets.only(right: isPrefix! ? 10 : 0, left: isSuffix! ? 5 : 0),
       decoration: BoxDecoration(
         color: primaryColor(context),
         borderRadius: BorderRadius.only(
@@ -33,9 +28,7 @@ class SatuanFieldIcon extends StatelessWidget {
           bottomLeft: isPrefix! ? const Radius.circular(8) : Radius.zero,
         ),
       ),
-      child: Text(title,
-          style: listTitleTextStyle.copyWith(
-              color: AppConst.isLightTheme(context) ? whiteColor : whiteColor)),
+      child: Text(title, style: listTitleTextStyle.copyWith(color: AppConst.isLightTheme(context) ? whiteColor : whiteColor, fontSize: fontSize)),
     );
   }
 }

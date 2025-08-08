@@ -60,17 +60,12 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                          'Kode OTP akan dikirimkan ke alamat email berikut :'
-                              .tr,
-                          style: Theme.of(context).textTheme.titleSmall),
+                      Text('Kode OTP akan dikirimkan ke alamat email berikut :'.tr, style: Theme.of(context).textTheme.titleSmall),
                       Text(
                         c.getMail(),
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          color: AppConst.isLightTheme(context)
-                              ? greyDarkColor1
-                              : greyLightColor1,
+                          color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
                         ),
                       ),
                     ],
@@ -103,10 +98,7 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   groupValue: c.recovery,
                   onChanged: (value) {},
                 ),
-                SizedBox(
-                    width: Get.width / 1.5,
-                    child: Text('Hubungi sales cabang kota anda'.tr,
-                        style: Theme.of(context).textTheme.titleSmall))
+                SizedBox(width: Get.width / 1.5, child: Text('Hubungi sales cabang kota anda'.tr, style: Theme.of(context).textTheme.titleSmall))
               ],
             ),
           ),

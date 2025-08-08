@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
@@ -45,7 +46,44 @@ class DashboardState {
     const ProfileScreen(),
   ];
 
-  List<Items> menuItems = [];
+  List<Items> menuItems = [
+    Items(
+      title: "Input Kirimanmu",
+      // icon: IconsConstant.add,
+      icon: ImageConstant.paketmuIcon,
+      route: "/inputKiriman",
+      isFavorite: true,
+      isEdit: false,
+      isAuth: true,
+    ),
+    Items(
+      title: "Cek Ongkir",
+      // icon: IconsConstant.cekOngkir,
+      icon: ImageConstant.cekOngkirIcon,
+      route: "/cekOngkir",
+      isFavorite: true,
+      isEdit: false,
+      isAuth: false,
+    ),
+    Items(
+      title: "Draft Transaksi",
+      // icon: IconsConstant.bookmark,
+      icon: ImageConstant.paketmuIcon,
+      route: "/draftTransaksi",
+      isFavorite: true,
+      isEdit: false,
+      isAuth: true,
+    ),
+    Items(
+      title: "Riwayat Kiriman",
+      // icon: IconsConstant.history,
+      icon: ImageConstant.paketmuIcon,
+      route: "/riwayatKiriman",
+      isFavorite: true,
+      isEdit: false,
+      isAuth: true,
+    ),
+  ];
   List<String> appTitle = <String>["Beranda".tr, "Profil".tr];
   List<BannerModel> promoList = [];
   List<NewsModel> newsList = [];

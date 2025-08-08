@@ -26,8 +26,7 @@ class DraftTransaksiScreen extends StatelessWidget {
         builder: (controller) {
           return PopScope(
             canPop: false,
-            onPopInvokedWithResult: (bool didPop, Object? result) =>
-                Get.delete<DashboardController>().then(
+            onPopInvokedWithResult: (bool didPop, Object? result) => Get.delete<DashboardController>().then(
               (_) => Get.offAll(() => const DashboardScreen()),
             ),
             child: Scaffold(
@@ -107,20 +106,14 @@ class DraftTransaksiScreen extends StatelessWidget {
                                   (i, e) => c.draftItem(e, i, context),
                                 )
                                 .toList()
-                            : [
-                                Center(
-                                    child: DataEmpty(text: "Draft Kosong".tr))
-                              ]
+                            : [Center(child: DataEmpty(text: "Draft Kosong".tr))]
                         : c.draftList.isNotEmpty
                             ? c.draftList
                                 .mapIndexed(
                                   (i, e) => c.draftItem(e, i, context),
                                 )
                                 .toList()
-                            : [
-                                Center(
-                                    child: DataEmpty(text: "Draft Kosong".tr))
-                              ]),
+                            : [Center(child: DataEmpty(text: "Draft Kosong".tr))]),
                   ),
                 ),
         ],
