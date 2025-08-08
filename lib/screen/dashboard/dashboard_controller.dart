@@ -171,10 +171,13 @@ class DashboardController extends BaseController {
 
   Future<void> cekFavoritMenu() async {
     // state.menuItems ;
+    AppLogger.d("Cek Favorit menu");
     var favMenu = await storage.readData(StorageCore.favoriteMenu);
+    AppLogger.i("Favorit menu $favMenu");
     // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
+      AppLogger.d("favorit local empty");
       await storage.saveData(
         StorageCore.favoriteMenu,
         state.menuItems,
@@ -185,6 +188,7 @@ class DashboardController extends BaseController {
       if (favMenu is List) {
         state.menuItems = favMenu.map((e) => Items.fromJson(e)).toList();
       }
+      await storage.saveData(StorageCore.favoriteMenu, state.menuItems);
       // var menu = MenuItemModel.fromJson(favMenu);
       // state.menuItems.addAll(menu.items ?? []);
     }
