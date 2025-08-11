@@ -116,6 +116,8 @@ class DestinationModel {
     return map;
   }
 
+
+
   String asFacilityFormFormat() {
     return '${zipCode == null || zipCode == '00000' ? '' : '$zipCode; '}'
             '${provinceName == null ? '' : '$provinceName; '}'

@@ -12,6 +12,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/receiver_info/receiver_s
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class ReceiverController extends BaseController {
@@ -86,13 +87,13 @@ class ReceiverController extends BaseController {
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
     state.selectedDestination = null;
-    AppLogger.i("receiver ${jsonEncode(state.receiver)}");
+    debugPrint("selected receiver ${jsonEncode(state.receiver)}");
     state.receiverName.text = state.receiver?.name?.toUpperCase() ?? '';
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
     try {
-      getDestinationList(QueryModel(
+      await getDestinationList(QueryModel(
         table: true,
         limit: 0,
         where: [
@@ -115,11 +116,15 @@ class ReceiverController extends BaseController {
             "zipCode": state.receiver?.zipCode,
           },
         ],
-      )).then((value) {
-        AppLogger.i("getSelectedReceiver destination ${jsonEncode(value)}");
-        if (value.isEmpty) {}
-        state.selectedDestination = value.first;
-      });
+      )).then((destReceiver) {
+        AppLogger.i("get destination selected receiver $destReceiver");
+        if (destReceiver.isEmpty) {}
+        state.selectedDestination = destReceiver.first;
+      }).onError(
+        (error, stackTrace) {
+          AppLogger.e("error get destination selected receiver $error");
+        },
+      );
     } catch (e) {
       AppLogger.e("error get selected receiver $e");
       state.selectedDestination = DestinationModel(
@@ -163,8 +168,9 @@ class ReceiverController extends BaseController {
 
   Future<List<DestinationModel>> getDestinationList(QueryModel param) async {
     state.isLoading = true;
-    BaseResponse<List<DestinationModel>>? response;
+    var response;
     try {
+      AppLogger.d("load destination list ${param.toJson()}");
       response = await master.getDestinations(param);
     } catch (e, i) {
       AppLogger.e('error getDestinationList $e, $i');

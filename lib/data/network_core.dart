@@ -169,7 +169,7 @@ class NetworkCore {
           onRequest: (options, handler) async {
             final locale = await _getLocale();
 
-            AppLogger.i('Option path ${options.method} ${options.path}');
+            AppLogger.i('Option path ${options.method} ${options.path}\n${options.queryParameters}');
 
             // Skip attaching token if `useAuth` is false
             if (options.extra['skipAuth'] == false || options.extra['skipAuth'] == null) {

@@ -93,8 +93,7 @@ class PantauPaketmuController extends BaseController {
   }
 
   Future<void> getPantauList(int page) async {
-    state.isLoading = true;
-    update();
+
     try {
       final trans = await pantau.getPantauList(QueryModel(
         search: state.searchField.text,

@@ -3,7 +3,6 @@ import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/data/model/aggregasi/aggregation_minus_model.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
@@ -140,7 +139,7 @@ class DashboardController extends BaseController {
     if (state.isOnline) {
       try {
         jlc.postDashboardNews().then((value) {
-          AppLogger.i('respon news : ${value.toJson()}');
+          debugPrint('respon news : ${value.toJson()}');
           if (value.code == 200) {
             state.newsList.addAll(value.data ?? []);
             update();

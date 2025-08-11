@@ -83,8 +83,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             asyncItems: (String filter) => getDestinationList(filter),
             itemBuilder: (context, e, b) {
               return Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.asFacilityFormFormat(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -93,6 +92,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                 ),
               );
             },
+      /// TODO : BUG format text destinasi
             itemAsString: widget.itemAsString ??
                 (DestinationModel e) => ''
                     '${e.asFacilityFormFormat()}',
@@ -103,9 +103,7 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
             searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
             prefixIcon: widget.prefixIcon,
             textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppConst.isLightTheme(context)
-                      ? Colors.black
-                      : whiteColor,
+                  color: AppConst.isLightTheme(context) ? Colors.black : whiteColor,
                 ),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,

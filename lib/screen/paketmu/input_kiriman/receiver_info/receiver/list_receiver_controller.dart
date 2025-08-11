@@ -20,8 +20,7 @@ class ListPenerimaController extends BaseController {
   bool isOnline = false;
   ReceiverModel? selectedReceiver;
 
-  final PagingController<int, ReceiverModel> pagingController =
-      PagingController(firstPageKey: Constant.defaultPage);
+  final PagingController<int, ReceiverModel> pagingController = PagingController(firstPageKey: Constant.defaultPage);
 
   @override
   void onInit() {
@@ -51,17 +50,16 @@ class ListPenerimaController extends BaseController {
   Future<void> fetchReceiverData(int page) async {
     isLoading = true;
     try {
-      var response = await master
-          .getReceivers(QueryModel(search: search.text, page: page));
+      var response = await master.getReceivers(QueryModel(search: search.text.isNotEmpty ? search.text : null, page: page));
       final payload = response.data ?? List.empty();
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
       if (isLastPage) {
         pagingController.appendLastPage(payload);
-        AppLogger.i("pagingController, $pagingController");
+        // AppLogger.i("pagingController, $pagingController");
       } else {
         final nextPageKey = page + 1;
         pagingController.appendPage(payload, nextPageKey);
-        AppLogger.i("pagingController, $pagingController");
+        // AppLogger.i("pagingController, $pagingController");
       }
       await storage.saveData(StorageCore.receiver, response);
     } catch (e) {
@@ -69,12 +67,7 @@ class ListPenerimaController extends BaseController {
       pagingController.error = e;
       var receiver = BaseResponse<List<ReceiverModel>>.fromJson(
         await storage.readData(StorageCore.receiver),
-        (json) => json is List<dynamic>
-            ? json
-                .map<ReceiverModel>(
-                    (i) => ReceiverModel.fromJson(i as Map<String, dynamic>))
-                .toList()
-            : List.empty(),
+        (json) => json is List<dynamic> ? json.map<ReceiverModel>((i) => ReceiverModel.fromJson(i as Map<String, dynamic>)).toList() : List.empty(),
       );
       pagingController.itemList = receiver.data ?? [];
     }
@@ -95,9 +88,7 @@ class ListPenerimaController extends BaseController {
   void delete(ReceiverModel data) async {
     try {
       await master.deleteReceiver(data.idReceive ?? '').then(
-            (value) => value.code == 200
-                ? AppSnackBar.success('Data Dihapus'.tr)
-                : AppSnackBar.error('Bad Request'.tr),
+            (value) => value.code == 200 ? AppSnackBar.success('Data Dihapus'.tr) : AppSnackBar.error('Bad Request'.tr),
           );
     } catch (e) {
       AppLogger.e('error deleteReceiver $e');

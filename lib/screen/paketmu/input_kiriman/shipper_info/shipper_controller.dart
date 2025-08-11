@@ -61,23 +61,21 @@ class ShipperController extends BaseController {
   }
 
   Future<bool> isSaveDropshipper() async {
-    var receivers = await master.getDropshippers(QueryModel(
+    var dropshippers = await master.getDropshippers(QueryModel(
       where: [
         {"dropshipperPhone": state.shipperPhone.text}
       ],
     ));
 
-    var receiver = receivers.data;
-    AppLogger.i("get same dropshipper : ${receiver?.isEmpty}");
-    if ((receiver?.isEmpty ?? false) && (state.formKey.currentState?.validate() == true) && state.isOnline) {
+    var dropshipper = dropshippers.data;
+    AppLogger.i("cek is different dropshipper : ${dropshipper?.isEmpty}");
+    if ((dropshipper?.isEmpty ?? false) && (state.formKey.currentState?.validate() == true) && state.isOnline) {
       state.isSaveDropshipper = true;
       update();
-      print("isDropshipper ${state.isSaveDropshipper}");
       return true;
     } else {
       state.isSaveDropshipper = false;
       update();
-      print("isDropshipper ${state.isSaveDropshipper}");
       return false;
     }
   }
