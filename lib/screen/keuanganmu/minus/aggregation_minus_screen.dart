@@ -60,6 +60,7 @@ class _AggregationMinusScreenState extends State<AggregationMinusScreen> {
               c.pagingController.refresh();
             },
           ),
+          const SizedBox(height: 10),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(() => c.pagingController.refresh()),

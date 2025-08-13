@@ -713,6 +713,11 @@ class LanguageEN {
       "Alamat tidak boleh lebih dari 90 karakter":
           "Address cannot be more than 90 characters",
       "Pilih Akun Transaksi": "Select Transaction Account",
+      "Laporanmu berhasil dibuat dan akan diproses lebih lanjut":
+          "Your report has been submitted and will be processed",
+      'Perkiraan Sampai': "Estimated Arrival",
+      "Kata sandi baru": "New Password",
+      "Konfirmasi Kata Sandi baru": "Confirm New Password",
     };
   }
 }

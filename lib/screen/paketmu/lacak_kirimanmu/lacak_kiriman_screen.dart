@@ -10,6 +10,7 @@ import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class LacakKirimanScreen extends StatelessWidget {
@@ -38,8 +39,18 @@ class LacakKirimanScreen extends StatelessWidget {
             hintText: 'Masukan Nomor Resimu'.tr,
             isMultiple: true,
             autoFocus: false,
+            inputFormatters: [
+              TextInputFormatter.withFunction((oldValue, newValue) {
+                return newValue.copyWith(
+                  text: newValue.text.toUpperCase(),
+                  selection: newValue.selection,
+                );
+              }),
+            ],
             suffixIcon: GestureDetector(
-              onTap: () => Get.to(() => const BarcodeScanScreen(), arguments: {})?.then((result) {
+              onTap: () =>
+                  Get.to(() => const BarcodeScanScreen(), arguments: {})
+                      ?.then((result) {
                 c.searchField.text = result;
                 c.update();
                 // if (c.isLogin) {
@@ -129,7 +140,8 @@ class LacakKirimanScreen extends StatelessWidget {
                       style: sublistTitleTextStyle.copyWith(
                         color: e?.cnote?.podStatus == "NOT FOUND"
                             ? errorColor
-                            : (e?.cnote?.podStatus?.contains("INVALID") ?? false)
+                            : (e?.cnote?.podStatus?.contains("INVALID") ??
+                                    false)
                                 ? warningColor
                                 : successColor,
                       ),
@@ -138,7 +150,9 @@ class LacakKirimanScreen extends StatelessWidget {
                     onTap: () {
                       FocusScope.of(Get.context!).unfocus();
                       if (e?.cnote?.podStatus != "NOT FOUND") {
-                        if (e?.cnote?.podStatus == "DETAIL" || (e?.cnote?.podStatus?.contains("INVALID") ?? false)) {
+                        if (e?.cnote?.podStatus == "DETAIL" ||
+                            (e?.cnote?.podStatus?.contains("INVALID") ??
+                                false)) {
                           Get.to(
                             PhoneNumberConfirmationScreen(
                               awb: e?.cnote?.cnoteNo ?? '',
@@ -163,7 +177,9 @@ class LacakKirimanScreen extends StatelessWidget {
                 } else {
                   return Shimmer(
                     isLoading: true,
-                    child: ListTile(tileColor: c.isLoading ? greyLightColor2 : Colors.transparent),
+                    child: ListTile(
+                        tileColor:
+                            c.isLoading ? greyLightColor2 : Colors.transparent),
                   );
                 }
               },

@@ -41,6 +41,10 @@ class PengaturanController extends BaseController {
   }
 
   void changeLanguage(String language) async {
+    isLoading = true;
+    update();
+    await Future.delayed(const Duration(seconds: 1));
+
     if (language == "ID") {
       Get.updateLocale(const Locale("id", "ID"));
       await storage.writeString(StorageCore.localeApp, "id");
@@ -70,6 +74,7 @@ class PengaturanController extends BaseController {
     }
 
     initData();
+    isLoading = false;
     update();
   }
 

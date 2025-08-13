@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/dashboard/components/jlcpoint_widget.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class DashboardUserInfo extends StatelessWidget {
@@ -54,22 +55,36 @@ class DashboardUserInfo extends StatelessWidget {
                         : const SizedBox(),
                     const SizedBox(height: 10),
                     // c.state.isLogin ? const DashboardInfo() : const SizedBox(),
-                    !c.state.isLogin || (c.state.allow.lacakPesanan == "Y" || c.state.allow.keuanganBonus == "Y")
+                    !c.state.isLogin ||
+                            (c.state.allow.lacakPesanan == "Y" ||
+                                c.state.allow.keuanganBonus == "Y")
                         ? SizedBox(
                             height: 60,
                             child: TextField(
                               controller: c.state.nomorResi,
                               cursorColor: CustomTheme().cursorColor(context),
                               maxLines: null,
+                              inputFormatters: [
+                                TextInputFormatter.withFunction(
+                                    (oldValue, newValue) {
+                                  return newValue.copyWith(
+                                    text: newValue.text.toUpperCase(),
+                                    selection: newValue.selection,
+                                  );
+                                }),
+                              ],
                               decoration: InputDecoration(
-                                hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
+                                hintText:
+                                    'Masukan nomor resi untuk lacak kiriman'.tr,
                                 hintStyle: hintTextStyle,
                                 suffixIcon: GestureDetector(
                                   onTap: () {
                                     c.onLacakKiriman(true, '');
                                   },
                                   child: Icon(
-                                    c.state.nomorResi.text.isNotEmpty ? Icons.keyboard_return_rounded : Icons.qr_code_rounded,
+                                    c.state.nomorResi.text.isNotEmpty
+                                        ? Icons.keyboard_return_rounded
+                                        : Icons.qr_code_rounded,
                                     color: color ?? (primaryColor(context)),
                                   ),
                                 ),
@@ -79,11 +94,10 @@ class DashboardUserInfo extends StatelessWidget {
                                 if (value.isEmpty) {
                                   Get.showSnackbar(
                                     GetSnackBar(
-                                      icon: const Icon(
-                                        Icons.warning,
-                                        color: whiteColor,
-                                      ),
-                                      message: 'Nomor resi tidak boleh kosong'.tr,
+                                      icon: const Icon(Icons.warning,
+                                          color: whiteColor),
+                                      message:
+                                          'Nomor resi tidak boleh kosong'.tr,
                                       isDismissible: true,
                                       duration: const Duration(seconds: 3),
                                       backgroundColor: errorColor,
@@ -92,11 +106,10 @@ class DashboardUserInfo extends StatelessWidget {
                                 } else if (value.length > 16) {
                                   Get.showSnackbar(
                                     GetSnackBar(
-                                      icon: const Icon(
-                                        Icons.warning,
-                                        color: whiteColor,
-                                      ),
-                                      message: 'Nomor resi maksimal 16 karakter'.tr,
+                                      icon: const Icon(Icons.warning,
+                                          color: whiteColor),
+                                      message:
+                                          'Nomor resi maksimal 16 karakter'.tr,
                                       isDismissible: true,
                                       duration: const Duration(seconds: 3),
                                       backgroundColor: errorColor,
