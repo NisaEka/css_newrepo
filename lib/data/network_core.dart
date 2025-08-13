@@ -13,6 +13,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
 import 'storage_core.dart';
 
@@ -169,7 +170,7 @@ class NetworkCore {
           onRequest: (options, handler) async {
             final locale = await _getLocale();
 
-            AppLogger.i('Option path ${options.method} ${options.path}\n${options.queryParameters}');
+            // AppLogger.i('Option path ${options.method} ${options.path}\n${options.queryParameters}');
 
             // Skip attaching token if `useAuth` is false
             if (options.extra['skipAuth'] == false || options.extra['skipAuth'] == null) {
@@ -185,14 +186,16 @@ class NetworkCore {
           },
           onResponse: (response, handler) {
             if (kDebugMode) {
-              debugPrint("kDebugMode response : $response");
+              debugPrint("kDebugMode response : ${response.requestOptions.method} ${response.requestOptions.path} \n$response");
             }
             return handler.next(response);
           },
           onError: (dioError, handler) async {
-            AppLogger.e("dio error : ${dioError.requestOptions.method} ${dioError.requestOptions.path} \n$dioError ");
+            if(dioError.requestOptions.path != "/auth/device-infos "){
+              AppLogger.e("dio error : ${dioError.requestOptions.method} ${dioError.requestOptions.path} ${dioError.response ?? dioError} ");
+            }
 
-            final refreshToken = await StorageCore().readRefreshToken();
+            final refreshToken = await const FlutterSecureStorage().read(key: StorageCore.refreshToken);
             // AppLogger.i("refresh token local : $refreshToken");
 
             if (dioError.response?.statusCode == 401) {
@@ -210,9 +213,11 @@ class NetworkCore {
                   return handler.reject(dioError);
                 }
               } else {
+                AppLogger.w("failed refresh");
                 failedRequests.add({'err': dioError, 'handler': handler});
               }
             } else {
+              // AppLogger.w("failed ${dioError.requestOptions.method} ${dioError.requestOptions.path} ${dioError.response}");
               return handler.next(dioError);
             }
           },

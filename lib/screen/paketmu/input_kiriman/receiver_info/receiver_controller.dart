@@ -98,27 +98,30 @@ class ReceiverController extends BaseController {
         table: true,
         limit: 0,
         where: [
+          // {
+          //   "countryName": state.receiver?.country,
+          // },
+          // {
+          //   "provinceName": state.receiver?.region,
+          // },
+          // {
+          //   "cityName": state.receiver?.city,
+          // },
+          // {
+          //   "districtName": state.receiver?.district,
+          // },
+          // {
+          //   "subdistrictName": state.receiver?.subDistrict,
+          // },
+          // {
+          //   "zipCode": state.receiver?.zipCode,
+          // },
           {
-            "countryName": state.receiver?.country,
-          },
-          {
-            "provinceName": state.receiver?.region,
-          },
-          {
-            "cityName": state.receiver?.city,
-          },
-          {
-            "districtName": state.receiver?.district,
-          },
-          {
-            "subdistrictName": state.receiver?.subDistrict,
-          },
-          {
-            "zipCode": state.receiver?.zipCode,
-          },
+            "tariffCode": state.receiver?.destinationCode,
+          }
         ],
       )).then((destReceiver) {
-        AppLogger.i("get destination selected receiver $destReceiver");
+        AppLogger.i("get destination selected receiver ${destReceiver.map((e) => e.toJson())}");
         if (destReceiver.isEmpty) {}
         state.selectedDestination = destReceiver.first;
       }).onError(

@@ -139,7 +139,8 @@ class DashboardController extends BaseController {
     if (state.isOnline) {
       try {
         jlc.postDashboardNews().then((value) {
-          debugPrint('respon news : ${value.toJson()}');
+          AppLogger.i("Success load news");
+          // debugPrint('respon news : ${value.toJson()}');
           if (value.code == 200) {
             state.newsList.addAll(value.data ?? []);
             update();
@@ -172,7 +173,7 @@ class DashboardController extends BaseController {
     // state.menuItems ;
     AppLogger.d("Cek Favorit menu");
     var favMenu = await storage.readData(StorageCore.favoriteMenu);
-    AppLogger.i("Favorit menu $favMenu");
+    // AppLogger.i("Favorit menu $favMenu");
     // var shipcost = await storage.readString(StorageCore.shippingCost);
     update();
     if (favMenu.isEmpty == true) {
@@ -314,7 +315,7 @@ class DashboardController extends BaseController {
         await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceInfoModel(),
       )
           .then((value) async {
-        AppLogger.i('userID : ${state.basic?.id}');
+        // AppLogger.i('userID : ${state.basic?.id}');
         value.code == 409
             ? await auth.updateDeviceInfo(
                 (await LoginController().getDeviceinfo(state.fcmToken ?? ''))?.copyWith(registrationId: state.basic?.id) ?? DeviceInfoModel(),

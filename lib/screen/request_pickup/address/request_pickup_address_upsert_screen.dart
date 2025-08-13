@@ -29,8 +29,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
         });
   }
 
-  Widget _bodyContent(
-      BuildContext context, RequestPickupAddressUpsertController controller) {
+  Widget _bodyContent(BuildContext context, RequestPickupAddressUpsertController controller) {
     return Stack(
       children: [
         SingleChildScrollView(
@@ -44,8 +43,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
     );
   }
 
-  Widget _bodyForm(
-      BuildContext context, RequestPickupAddressUpsertController controller) {
+  Widget _bodyForm(BuildContext context, RequestPickupAddressUpsertController controller) {
     return Form(
       key: controller.formKey,
       child: Column(
@@ -66,14 +64,12 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
             validator: ValidationBuilder().phoneNumber().build(),
           ),
           CustomSearchDropdownField<DestinationModel>(
-            asyncItems: (String filter) =>
-                controller.getDestinationList(filter),
+            asyncItems: (String filter) => controller.getDestinationList(filter),
             itemBuilder: (context, e, b) {
               return GestureDetector(
                   onTap: () => controller.update(),
                   child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     child: Text(e.asFacilityFormFormat()),
                   ));
             },
@@ -86,9 +82,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
             isRequired: controller.selectedDestination == null ? true : false,
             prefixIcon: const Icon(Icons.trip_origin_rounded),
             readOnly: false,
-            hintText: controller.isLoadDestination
-                ? "Loading..."
-                : "Kota Penjemputan".tr,
+            hintText: controller.isLoadDestination ? "Loading..." : "Kota Penjemputan".tr,
             textStyle: controller.selectedDestination != null
                 ? Theme.of(context).textTheme.bodyLarge?.copyWith(
                       color: formTextColor(context),
@@ -106,9 +100,7 @@ class RequestPickupAddressUpsertScreen extends StatelessWidget {
           CustomFilledButton(
             color: primaryColor(context),
             title: 'Simpan Alamat'.tr,
-            onPressed: () => controller.formKey.currentState?.validate() == true
-                ? controller.onSubmitAction()
-                : null,
+            onPressed: () => controller.formKey.currentState?.validate() == true ? controller.onSubmitAction() : null,
           )
         ],
       ),

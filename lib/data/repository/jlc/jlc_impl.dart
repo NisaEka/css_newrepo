@@ -31,7 +31,7 @@ class JLCRepositoryImpl extends JLCRepository {
                   .toList()
               : List.empty());
     } on DioException catch (e) {
-      AppLogger.e('error: ${e.message}');
+      // AppLogger.e('error: ${e.message}');
       return BaseResponse.fromJson(
           e.response?.data,
           (json) => json is List<dynamic>
