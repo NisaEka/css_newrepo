@@ -92,7 +92,8 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
                 ),
               );
             },
-      /// TODO : BUG format text destinasi
+
+            /// TODO : BUG format text destinasi
             itemAsString: widget.itemAsString ??
                 (DestinationModel e) => ''
                     '${e.asFacilityFormFormat()}',

@@ -256,7 +256,8 @@ class AuthRepositoryImpl extends AuthRepository {
         data: data,
         options: Options(extra: {'skipAuth': true}),
       );
-      AppLogger.i('update device info : ${response.data}');
+      AppLogger.i("Success Update Device Info");
+      // AppLogger.i('update device info : ${response.data}');
       return BaseResponse.fromJson(response.data, (json) => json);
     } on DioException catch (e) {
       AppLogger.e('error update device info : ${e.response?.data}');

@@ -17,7 +17,6 @@ class InvoiceImpl extends InvoiceRepository {
 
   @override
   Future<BaseResponse<num>> getInvoiceCount(QueryModel queryParam) async {
-    AppLogger.i("param toJson ${queryParam.toJson()}");
 
     try {
       var response = await network.base
@@ -37,7 +36,6 @@ class InvoiceImpl extends InvoiceRepository {
   @override
   Future<BaseResponse<List<InvoiceModel>>> getInvoices(
       QueryModel queryParam) async {
-    AppLogger.i("param toJson ${queryParam.toJson()}");
 
     try {
       Response response = await network.base.get(

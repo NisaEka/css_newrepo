@@ -28,8 +28,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _detailBody(
-      BuildContext context, RequestPickupDetailController controller) {
+  Widget _detailBody(BuildContext context, RequestPickupDetailController controller) {
     if (controller.showEmptyContainer) {
       return const Center(child: Text("Not Found"));
     }
@@ -45,8 +44,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
     return Container();
   }
 
-  Widget _mainContent(
-      BuildContext context, RequestPickupDetailController controller) {
+  Widget _mainContent(BuildContext context, RequestPickupDetailController controller) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SingleChildScrollView(
@@ -61,12 +59,10 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _contentSection(BuildContext context,
-      RequestPickupDetailModel requestPickup, RequestPickupDetailController c) {
+  Widget _contentSection(BuildContext context, RequestPickupDetailModel requestPickup, RequestPickupDetailController c) {
     return Card.filled(
       color: Theme.of(context).cardColor,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(16))),
+      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -91,16 +87,13 @@ class RequestPickupDetailScreen extends StatelessWidget {
             Shimmer(
               isLoading: c.isLoading,
               child: Container(
-                decoration: BoxDecoration(
-                    color: c.isLoading ? greyColor : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5)),
+                decoration: BoxDecoration(color: c.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(right: 20),
                 child: Text(
                   'Detail Permintaan Pickup'.tr,
                   style: listTitleTextStyle.copyWith(
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                    color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                   ),
                 ),
               ),
@@ -108,32 +101,21 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _textRow(context, "ID", requestPickup.awb, c.isLoading),
             const SizedBox(height: 10),
-            _textRow(
-                context,
-                "Tanggal dan Jam".tr,
-                requestPickup.createdDateSearch.toLongDateTimeFormat(),
-                c.isLoading),
+            _textRow(context, "Tanggal dan Jam".tr, requestPickup.createdDateSearch.toLongDateTimeFormat(), c.isLoading),
             const SizedBox(height: 6),
-            _textRow(
-                context, "Nama PIC".tr, requestPickup.pickupName, c.isLoading),
+            _textRow(context, "Nama PIC".tr, requestPickup.pickupName, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Telepon".tr, requestPickup.pickupPicPhone,
-                c.isLoading),
+            _textRow(context, "Telepon".tr, requestPickup.pickupPicPhone, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kota Penjemputan".tr, requestPickup.pickupCity,
-                c.isLoading),
+            _textRow(context, "Kota Penjemputan".tr, requestPickup.pickupCity, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kecamatan Penjemputan".tr,
-                requestPickup.pickupDistrict, c.isLoading),
+            _textRow(context, "Kecamatan Penjemputan".tr, requestPickup.pickupDistrict, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Alamat Penjemputan".tr,
-                requestPickup.pickupAddress, c.isLoading),
+            _textRow(context, "Alamat Penjemputan".tr, requestPickup.pickupAddress, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Layanan Pickup".tr, requestPickup.pickupService,
-                c.isLoading),
+            _textRow(context, "Layanan Pickup".tr, requestPickup.pickupService, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kendaraan Pickup".tr,
-                requestPickup.pickupVehicle, c.isLoading),
+            _textRow(context, "Kendaraan Pickup".tr, requestPickup.pickupVehicle, c.isLoading),
             const Divider(
               color: greyLightColor3,
             ),
@@ -141,16 +123,13 @@ class RequestPickupDetailScreen extends StatelessWidget {
             Shimmer(
               isLoading: c.isLoading,
               child: Container(
-                decoration: BoxDecoration(
-                    color: c.isLoading ? greyColor : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5)),
+                decoration: BoxDecoration(color: c.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(right: 20),
                 child: Text(
                   'Status Permintaan Pickup'.tr,
                   style: listTitleTextStyle.copyWith(
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                    color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                   ),
                 ),
               ),
@@ -162,11 +141,9 @@ class RequestPickupDetailScreen extends StatelessWidget {
                 '${requestPickup.pickupDate?.toDate(originFormat: 'dd-MM-yyyy').toString().toLongDateFormat() ?? '-'} ${requestPickup.pickupTime ?? ''}',
                 c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Status Pickup".tr,
-                requestPickup.pickupStatus ?? '-', c.isLoading),
+            _textRow(context, "Status Pickup".tr, requestPickup.pickupStatus?.isNotEmpty ?? false ? requestPickup.pickupStatus : '-', c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kendaraan Pickup".tr,
-                requestPickup.statusDesc ?? "-", c.isLoading),
+            _textRow(context, "Kendaraan Pickup".tr, requestPickup.statusDesc ?? "-", c.isLoading),
             const SizedBox(height: 16),
             const Divider(
               color: greyLightColor3,
@@ -175,16 +152,13 @@ class RequestPickupDetailScreen extends StatelessWidget {
             Shimmer(
               isLoading: c.isLoading,
               child: Container(
-                decoration: BoxDecoration(
-                    color: c.isLoading ? greyColor : Colors.transparent,
-                    borderRadius: BorderRadius.circular(5)),
+                decoration: BoxDecoration(color: c.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(right: 20),
                 child: Text(
                   'Detail Kiriman'.tr,
                   style: listTitleTextStyle.copyWith(
-                    color:
-                        AppConst.isLightTheme(context) ? blueJNE : whiteColor,
+                    color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                   ),
                 ),
               ),
@@ -192,30 +166,19 @@ class RequestPickupDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _textRow(context, "Account".tr, requestPickup.custId, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(
-                context, "Pengirim".tr, requestPickup.shipperName, c.isLoading),
+            _textRow(context, "Pengirim".tr, requestPickup.shipperName, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Petugas Entry".tr, requestPickup.petugasEntry,
-                c.isLoading),
+            _textRow(context, "Petugas Entry".tr, requestPickup.petugasEntry, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kota Pengiriman".tr, requestPickup.shipperCity,
-                c.isLoading),
+            _textRow(context, "Kota Pengiriman".tr, requestPickup.shipperCity, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Penerima".tr, requestPickup.receiverName,
-                c.isLoading),
+            _textRow(context, "Penerima".tr, requestPickup.receiverName, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Kota Penerima".tr, requestPickup.receiverCity,
-                c.isLoading),
+            _textRow(context, "Kota Penerima".tr, requestPickup.receiverCity, c.isLoading),
             const SizedBox(height: 6),
-            _textRow(context, "Deskripsi Kiriman".tr,
-                requestPickup.goodDesc ?? "-", c.isLoading),
+            _textRow(context, "Deskripsi Kiriman".tr, requestPickup.goodDesc ?? "-", c.isLoading),
             const SizedBox(height: 6),
-            _textRow(
-                context,
-                "Berat Kiriman".tr,
-                requestPickup.weight != null
-                    ? '${requestPickup.weight?.toDouble().toString()} KG'
-                    : "- KG",
+            _textRow(context, "Berat Kiriman".tr, requestPickup.weight != null ? '${requestPickup.weight?.toDouble().toString()} KG' : "- KG",
                 c.isLoading),
             const SizedBox(height: 6),
           ],
@@ -224,9 +187,7 @@ class RequestPickupDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _textRow(
-      BuildContext context, String title, String? value, bool isLoading,
-      {TextStyle? style}) {
+  Widget _textRow(BuildContext context, String title, String? value, bool isLoading, {TextStyle? style}) {
     if (value == null) {
       return Container();
     }
@@ -239,15 +200,10 @@ class RequestPickupDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              decoration: BoxDecoration(
-                  color: isLoading ? greyColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
               child: Text(
                 title.tr,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(fontWeight: regular),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
               ),
             ),
           ),
@@ -257,16 +213,10 @@ class RequestPickupDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: isLoading,
             child: Container(
-              decoration: BoxDecoration(
-                  color: isLoading ? greyColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
               child: Text(
                 value,
-                style: style ??
-                    Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: regular),
+                style: style ?? Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
                 textAlign: TextAlign.start,
               ),
             ),
