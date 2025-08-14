@@ -6,6 +6,7 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_f
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_services_list.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/trans_account/trans_account_screen.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_controller.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
@@ -58,49 +59,63 @@ class TransactionScreen extends StatelessWidget {
   Widget _warningDialog(BuildContext context, TransactionController c) {
     double screenWidth = MediaQuery.of(context).size.width;
     double fontSize = screenWidth < 400 ? 12 : 14;
-    return Container(
-      height: Get.height,
-      width: Get.width,
-      color: greyDarkColor2.withOpacity(0.5),
-      child: Center(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          width: Get.width - 50,
-          height: Get.width / 1.5,
-          decoration: BoxDecoration(
-            color: whiteColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Peringatan'.tr,
-                style: appTitleTextStyle.copyWith(color: greyDarkColor1),
-              ),
-              Icon(
-                Icons.warning,
-                color: warningColor,
-                size: Get.width / 4,
-              ),
-              Text(
-                "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
-                style: subTitleTextStyle.copyWith(color: greyDarkColor1, fontSize: fontSize),
-                textAlign: TextAlign.center,
-              ),
-              CustomFilledButton(
-                color: primaryColor(context),
-                isTransparent: true,
-                title: 'OK',
-                onPressed: () {
-                  c.state.isShowDialog = false;
-                  c.update();
-                },
-              )
-            ],
-          ),
-        ),
+    return DefaultAlertDialog(
+      title: "Peringatan".tr,
+      icon:  Icon(
+        Icons.warning,
+        color: warningColor,
+        size: Get.width / 4,
       ),
+      subtitle:  "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
+      confirmButtonTitle: "OK",
+      onConfirm: () {
+        c.state.isShowDialog = false;
+        c.update();
+      },
     );
+    // return Container(
+    //   height: Get.height,
+    //   width: Get.width,
+    //   color: greyDarkColor2.withOpacity(0.5),
+    //   child: Center(
+    //     child: Container(
+    //       padding: const EdgeInsets.all(20),
+    //       width: Get.width - 50,
+    //       height: Get.width / 1.5,
+    //       decoration: BoxDecoration(
+    //         color: whiteColor,
+    //         borderRadius: BorderRadius.circular(10),
+    //       ),
+    //       child: Column(
+    //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //         children: [
+    //           Text(
+    //             'Peringatan'.tr,
+    //             style: appTitleTextStyle.copyWith(color: greyDarkColor1),
+    //           ),
+    //           Icon(
+    //             Icons.warning,
+    //             color: warningColor,
+    //             size: Get.width / 4,
+    //           ),
+    //           Text(
+    //             "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
+    //             style: subTitleTextStyle.copyWith(color: greyDarkColor1, fontSize: fontSize),
+    //             textAlign: TextAlign.center,
+    //           ),
+    //           CustomFilledButton(
+    //             color: primaryColor(context),
+    //             isTransparent: true,
+    //             title: 'OK',
+    //             onPressed: () {
+    //               c.state.isShowDialog = false;
+    //               c.update();
+    //             },
+    //           )
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }

@@ -122,7 +122,7 @@ class TransactionController extends BaseController {
             state.getCodAmount = state.isCOD ? value.data?.codAmountMinimum ?? 0 : 0;
             state.getCodFee = value.data?.codFee ?? 0;
             state.congkirAmount = value.data?.codOngkirAmount ?? 0;
-            state.codAmountText.text = state.isCOD ? value.data?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0' : '0';
+            state.codAmountText.text = state.isCOD || state.codOngkir ? value.data?.codAmountMinimum?.toInt().toCurrency().toString() ?? '0' : '0';
             state.totalOngkir = state.codOngkir && state.account.accountService == "JLC" ? state.congkirAmount.toInt() : value.data?.totalOngkir ?? 0;
           });
         } catch (e) {
