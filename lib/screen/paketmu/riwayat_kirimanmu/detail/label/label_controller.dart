@@ -188,6 +188,7 @@ class LabelController extends BaseController {
                             data: data,
                             shippingCost: shippingCost,
                             hiddenPhoneShipper: hiddenPhoneShipper,
+                            showOrderId: true,
                           )
                         : stickerLabel == "Sticker Label (Mega HUB HYBRID 2)"
                             ? StickerMegahubHybrid2(

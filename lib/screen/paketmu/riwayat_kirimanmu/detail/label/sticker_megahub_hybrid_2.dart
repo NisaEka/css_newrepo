@@ -14,13 +14,16 @@ class StickerMegahubHybrid2 extends StatelessWidget {
   final bool shippingCost;
   final bool hiddenPhoneShipper;
   final String? stickerLabel;
+  final bool showOrderId;
 
-  const StickerMegahubHybrid2(
-      {super.key,
-      required this.data,
-      this.shippingCost = false,
-      this.hiddenPhoneShipper = false,
-      this.stickerLabel});
+  const StickerMegahubHybrid2({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+    this.hiddenPhoneShipper = false,
+    this.stickerLabel,
+    this.showOrderId = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -183,8 +186,9 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                                     style: labelTextStyle),
                                 Text('Pembayaran: ${data.type ?? '-'}',
                                     style: labelTextStyle),
-                                Text('Order ID: ${data.orderId ?? '-'}',
-                                    style: labelTextStyle)
+                                if (showOrderId)
+                                  Text('Order ID: ${data.orderId ?? '-'}',
+                                      style: labelTextStyle)
                               ],
                             ),
                           ),

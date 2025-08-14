@@ -254,6 +254,15 @@ class StickerDefault extends StatelessWidget {
                   valueTextStyle: const TextStyle(),
                   isHorizontal: true,
                 ),
+                if (data.delivery?.insuranceFee != null)
+                  CustomLabelText(
+                    title: "Insurance Amount :   ",
+                    value:
+                        "Rp ${data.delivery?.insuranceFee?.toInt().toCurrency() ?? '0'}",
+                    titleTextStyle: TextStyle(fontWeight: bold),
+                    valueTextStyle: const TextStyle(),
+                    isHorizontal: true,
+                  ),
                 Center(
                   child: Text(
                     data.receiver?.destinationCode ?? '',

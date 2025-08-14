@@ -8,12 +8,15 @@ class StickerMegahubHybrid3 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
   final bool hiddenPhoneShipper;
+  // final bool showOrderId;
 
-  const StickerMegahubHybrid3(
-      {super.key,
-      required this.data,
-      this.shippingCost = false,
-      this.hiddenPhoneShipper = false});
+  const StickerMegahubHybrid3({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+    this.hiddenPhoneShipper = false,
+    // this.showOrderId = true
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,7 @@ class StickerMegahubHybrid3 extends StatelessWidget {
             data: data,
             shippingCost: shippingCost,
             hiddenPhoneShipper: hiddenPhoneShipper,
+            showOrderId: false,
           ).sticker(context),
         ),
         const SizedBox(height: 20),
@@ -32,6 +36,7 @@ class StickerMegahubHybrid3 extends StatelessWidget {
           data: data,
           shippingCost: shippingCost,
           hiddenPhoneShipper: hiddenPhoneShipper,
+          showOrderId: false,
         ).sticker2(context),
         Center(
           child: Text(

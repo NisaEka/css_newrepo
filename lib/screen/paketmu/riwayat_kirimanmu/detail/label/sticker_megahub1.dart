@@ -37,6 +37,7 @@ class StickerMegahub1 extends StatelessWidget {
               data: data,
               shippingCost: shippingCost,
               hiddenPhoneShipper: hiddenPhoneShipper,
+              showOrderId: true,
             ).sticker2(context),
             Center(
               child: Text(

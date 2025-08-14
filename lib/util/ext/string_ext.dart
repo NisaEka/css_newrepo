@@ -158,8 +158,8 @@ extension StringExt on String {
       : '';
 
   String maskPhoneNumber() {
-    if (length > 6) {
-      return substring(0, length - 6) + '*' * 6;
+    if (length > 3) {
+      return '*' * (length - 3) + substring(length - 3);
     } else {
       return this;
     }
