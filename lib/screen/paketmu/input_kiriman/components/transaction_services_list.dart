@@ -63,7 +63,7 @@ class TransactionServicesList extends StatelessWidget {
                                         fit: BoxFit.scaleDown,
                                         child: Text(
                                           c.state.serviceList[index].serviceDisplay == 'INTL'
-                                              ? '${c.state.serviceList[index].serviceDisplay} - ${c.state.serviceList[index].goodsType}'
+                                              ? '${c.state.serviceList[index].serviceDisplay} - ${c.state.serviceList[index].goodsType == "Document" ? c.state.serviceList[index].goodsType?.substring(0, 3) : c.state.serviceList[index].goodsType}'
                                               : c.state.serviceList[index].serviceDisplay ?? '',
                                           style: listTitleTextStyle.copyWith(
                                             color: c.state.selectedService == c.state.serviceList[index] ? whiteColor : primaryColor(context),
