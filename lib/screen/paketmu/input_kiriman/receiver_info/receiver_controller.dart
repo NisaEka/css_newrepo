@@ -47,8 +47,7 @@ class ReceiverController extends BaseController {
       state.isValidate = state.isEdit ?? false;
       update();
     }
-    state.tempData = DataTransactionModel.fromJson(
-        await storage.readData(StorageCore.transactionTemp));
+    state.tempData = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
     if (state.tempData?.receiver != null) {
       state.receiverName.text = state.tempData?.receiver?.name ?? '';
       state.receiverPhone.text = state.tempData?.receiver?.phone ?? '';
@@ -82,8 +81,7 @@ class ReceiverController extends BaseController {
     );
     await storage.saveData(StorageCore.transactionTemp, temp);
     update();
-    state.tempData = DataTransactionModel.fromJson(
-        await storage.readData(StorageCore.transactionTemp));
+    state.tempData = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
@@ -93,33 +91,34 @@ class ReceiverController extends BaseController {
     state.receiverPhone.text = state.receiver?.phone ?? '';
     state.receiverDest.text = state.receiver?.idDestination ?? '';
     state.receiverAddress.text = state.receiver?.address?.toUpperCase() ?? '';
+
+    List<Map<String, dynamic>> where = [];
+
+    if (state.receiver?.destinationCode?.isNotEmpty ?? false) {
+      where.add({
+        "tariffCode": state.receiver?.destinationCode,
+      });
+    }
+    if (state.receiver?.subDistrict?.isNotEmpty ?? false) {
+      where.add({
+        "subdistrictName": state.receiver?.subDistrict,
+      });
+    }
+    if (state.receiver?.district?.isNotEmpty ?? false) {
+      where.add({
+        "districtName": state.receiver?.district,
+      });
+    }
+    if (state.receiver?.city?.isNotEmpty ?? false) {
+      where.add({
+        "cityName": state.receiver?.city,
+      });
+    }
     try {
       await getDestinationList(QueryModel(
         table: true,
         limit: 0,
-        where: [
-          // {
-          //   "countryName": state.receiver?.country,
-          // },
-          // {
-          //   "provinceName": state.receiver?.region,
-          // },
-          // {
-          //   "cityName": state.receiver?.city,
-          // },
-          // {
-          //   "districtName": state.receiver?.district,
-          // },
-          // {
-          //   "subdistrictName": state.receiver?.subDistrict,
-          // },
-          // {
-          //   "zipCode": state.receiver?.zipCode,
-          // },
-          {
-            "tariffCode": state.receiver?.destinationCode,
-          }
-        ],
+        where: where,
       )).then((destReceiver) {
         AppLogger.i("get destination selected receiver ${destReceiver.map((e) => e.toJson())}");
         if (destReceiver.isEmpty) {}
@@ -157,9 +156,7 @@ class ReceiverController extends BaseController {
 
     var receiver = receivers.data;
     AppLogger.i("get same receiver : ${receiver?.isEmpty}");
-    if ((receiver?.isEmpty ?? false) &&
-        (state.formKey.currentState?.validate() == true) &&
-        state.isOnline) {
+    if ((receiver?.isEmpty ?? false) && (state.formKey.currentState?.validate() == true) && state.isOnline) {
       state.isSaveReceiver = true;
       update();
       // print("isSaveReceiver ${state.isSaveReceiver}");
@@ -247,8 +244,7 @@ class ReceiverController extends BaseController {
         "destination": state.selectedDestination,
       },
     )?.then((v) async {
-      state.tempData = DataTransactionModel.fromJson(
-          await storage.readData(StorageCore.transactionTemp));
+      state.tempData = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
       update();
     });
   }
@@ -274,9 +270,7 @@ class ReceiverController extends BaseController {
             subDistrict: state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
-            (value) => value.code == 201
-                ? AppSnackBar.success('Data receiver telah disimpan'.tr)
-                : AppSnackBar.error(value.error?.first.message.trs),
+            (value) => value.code == 201 ? AppSnackBar.success('Data receiver telah disimpan'.tr) : AppSnackBar.error(value.error?.first.message.trs),
           );
     } catch (e) {
       AppLogger.e('error saveReceiver $e');
