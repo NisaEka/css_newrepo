@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -32,6 +34,7 @@ class NetworkCore {
 
     for (var i = 0; i < failedRequests.length; i++) {
       RequestOptions requestOptions = failedRequests[i]['err'].requestOptions as RequestOptions;
+      AppLogger.i("retry request ${requestOptions.method} ${requestOptions.path}");
 
       requestOptions.headers = {
         'Authorization': 'Bearer $token',
@@ -53,8 +56,9 @@ class NetworkCore {
   }
 
   FutureOr postRefreshToken(DioException err, ErrorInterceptorHandler handler) async {
+    AppLogger.d("running refresh token");
     final refreshToken = await StorageCore().readRefreshToken();
-    AppLogger.i("refresh token local : $refreshToken");
+    AppLogger.i("get refresh token from local : $refreshToken");
 
     try {
       Response response = await base.post(
@@ -84,11 +88,10 @@ class NetworkCore {
 
       return refreshTokenResponse;
     } on DioException catch (e) {
-      AppLogger.i("masuk sini catch atas");
-      AppLogger.e("gagal retry refresh");
+      AppLogger.e("Failed refresh token");
 
-      // StorageCore().deleteLogin();
-      // Get.delete<DashboardController>().then((_) => Get.offAll(() => const DashboardScreen()));
+      StorageCore().deleteLogin();
+      Get.delete<DashboardController>().then((_) => Get.offAll(() => const DashboardScreen()));
 
       return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,
@@ -200,7 +203,7 @@ class NetworkCore {
             final refreshToken = await const FlutterSecureStorage().read(key: StorageCore.refreshToken);
             AppLogger.i("refresh token local : $refreshToken");
 
-            if (dioError.response?.statusCode == 401) {
+            if (dioError.response?.statusCode == 401 ) {
               if (refreshToken == null) {
                 AppLogger.w("refresh token local kosong");
                 return handler.reject(dioError);
@@ -216,7 +219,7 @@ class NetworkCore {
                   return handler.reject(dioError);
                 }
               } else {
-                AppLogger.w("failed refresh");
+                AppLogger.w("failed request \n${dioError.requestOptions.method} ${dioError.requestOptions.path} ${dioError.response}");
                 failedRequests.add({'err': dioError, 'handler': handler});
               }
             } else {
