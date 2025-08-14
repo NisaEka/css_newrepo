@@ -1,5 +1,4 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_account_card.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_appbar.dart';
 import 'package:css_mobile/screen/paketmu/input_kiriman/components/transaction_form.dart';
@@ -8,7 +7,6 @@ import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/trans_a
 import 'package:css_mobile/screen/paketmu/input_kiriman/transaction_info/transaction_controller.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
-import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,9 +34,10 @@ class TransactionScreen extends StatelessWidget {
                       TransactionAccountCard(
                         account: controller.state.account,
                         onTap: () => controller.state.dropship == false
-                            ? Get.to(() => const AkunTransaksiScreen(), arguments: {
-                                "account": controller.state.account,
-                              })?.then(
+                            ? Get.to(() => const AkunTransaksiScreen(),
+                                arguments: {
+                                    "account": controller.state.account,
+                                  })?.then(
                                 (result) => controller.onChangeAccount(result),
                               )
                             : null,
@@ -50,23 +49,25 @@ class TransactionScreen extends StatelessWidget {
                 ),
               ),
               controller.state.isLoading ? const LoadingDialog() : Container(),
-              controller.state.isShowDialog ? _warningDialog(context, controller) : const SizedBox()
+              controller.state.isShowDialog
+                  ? _warningDialog(context, controller)
+                  : const SizedBox()
             ],
           );
         });
   }
 
   Widget _warningDialog(BuildContext context, TransactionController c) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double fontSize = screenWidth < 400 ? 12 : 14;
+    // double screenWidth = MediaQuery.of(context).size.width;
+    // double fontSize = screenWidth < 400 ? 12 : 14;
     return DefaultAlertDialog(
       title: "Peringatan".tr,
-      icon:  Icon(
+      icon: Icon(
         Icons.warning,
         color: warningColor,
         size: Get.width / 4,
       ),
-      subtitle:  "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
+      subtitle: "Total Ongkos Kirim tidak bisa lebih dari Rp.1.000.000".tr,
       confirmButtonTitle: "OK",
       onConfirm: () {
         c.state.isShowDialog = false;

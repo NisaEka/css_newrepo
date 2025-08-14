@@ -254,7 +254,7 @@ class StickerDefault extends StatelessWidget {
                   valueTextStyle: const TextStyle(),
                   isHorizontal: true,
                 ),
-                if (data.delivery?.insuranceFee != null)
+                if (data.delivery?.insuranceFee != 0)
                   CustomLabelText(
                     title: "Insurance Amount :   ",
                     value:

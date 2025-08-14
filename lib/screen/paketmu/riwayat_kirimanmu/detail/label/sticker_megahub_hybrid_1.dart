@@ -14,6 +14,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
   final bool hiddenPhoneShipper;
+  final bool? showOrderId;
   final String? stickerLabel;
 
   const StickerMegahubHybrid1({
@@ -22,6 +23,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
     this.shippingCost = false,
     this.hiddenPhoneShipper = false,
     this.stickerLabel,
+    this.showOrderId = false,
   });
 
   @override
@@ -34,6 +36,7 @@ class StickerMegahubHybrid1 extends StatelessWidget {
             data: data,
             shippingCost: shippingCost,
             hiddenPhoneShipper: hiddenPhoneShipper,
+            showOrderId: true,
           ).sticker(context),
           const SizedBox(height: 20),
           sticker2(context),
@@ -180,17 +183,29 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                       style: labelTextStyle),
                   Text('Kota Tujuan: ${data.receiver?.city ?? ''}',
                       style: labelTextStyle),
-                  Text('Order ID: ${data.orderId ?? '-'}',
-                      style: labelTextStyle),
+                  if (showOrderId == true)
+                    Text('Order ID: ${data.orderId ?? '-'}',
+                        style: labelTextStyle),
                   Text(
                       "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? ((data.delivery?.insuranceFee ?? 0) - (data.delivery?.insuranceAdm ?? 0)).toCurrency() : 0}",
                       style: labelTextStyle),
                   Text(
-                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt() ?? 0) - 600 : 0}",
+                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt().toCurrency() ?? 0) : 0}",
                       style: labelTextStyle),
-                  Text(
-                      "Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee ?? '0' : 0}",
-                      style: labelTextStyle),
+                  Text.rich(
+                    TextSpan(
+                      text: 'Total Biaya Asuransi : ',
+                      style: labelTextStyle, // style umum untuk label
+                      children: [
+                        TextSpan(
+                          text:
+                              'Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee?.toInt().toCurrency() ?? '0' : '0'}',
+                          style: labelTextStyle.copyWith(
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ),
                   const SizedBox(height: 5)
                 ],
               ),
