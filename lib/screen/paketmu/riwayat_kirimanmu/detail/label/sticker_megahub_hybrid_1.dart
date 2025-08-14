@@ -161,35 +161,25 @@ class StickerMegahubHybrid1 extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                      'Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? ''}',
-                      style: labelTextStyle),
-                  Text('No. Pelanggan: ${data.account?.accountNumber ?? ''}',
-                      style: labelTextStyle),
+                  Text('Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? ''}', style: labelTextStyle),
+                  Text('No. Pelanggan: ${data.account?.accountNumber ?? ''}', style: labelTextStyle),
                   SizedBox(
                     width: Get.width / 2.9,
-                    child: Text('Deskripsi: ${data.goods?.desc ?? ''}',
-                        style: labelTextStyle),
+                    child: Text('Deskripsi: ${data.goods?.desc ?? ''}', style: labelTextStyle),
                   ),
-                  Text('Berat: ${data.goods?.weight ?? '0'} Kg',
-                      style: labelTextStyle),
-                  Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}',
-                      style: labelTextStyle),
+                  Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
+                  Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
                   Text(
                       'Biaya Kirim: Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                       style: labelTextStyle),
-                  Text('Kota Tujuan: ${data.receiver?.city ?? ''}',
-                      style: labelTextStyle),
-                  Text('Order ID: ${data.orderId ?? '-'}',
-                      style: labelTextStyle),
+                  Text('Kota Tujuan: ${data.receiver?.city ?? ''}', style: labelTextStyle),
+                  Text('Order ID: ${data.orderId ?? '-'}', style: labelTextStyle),
                   Text(
-                      "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee?.toCurrency() : 0}",
+                      "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? ((data.delivery?.insuranceFee ?? 0) - (data.delivery?.insuranceAdm ?? 0)).toCurrency() : 0}",
                       style: labelTextStyle),
-                  Text(
-                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceFee?.toInt() ?? 0) - 600 : 0}",
+                  Text("Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt() ?? 0) - 600 : 0}",
                       style: labelTextStyle),
-                  Text(
-                      "Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceAdm ?? '0' : 0}",
+                  Text("Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee ?? '0' : 0}",
                       style: labelTextStyle),
                   const SizedBox(height: 5)
                 ],

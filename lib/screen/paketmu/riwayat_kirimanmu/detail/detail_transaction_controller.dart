@@ -112,7 +112,7 @@ class DetailTransactionController extends BaseController {
             flatRateWithInsurance: data?.insuranceAmount,
             freightChargeWithInsurance: (data?.insuranceAmount ?? 0) + (data?.deliveryPrice ?? 0),
             insuranceFee: data?.insuranceAmount,
-            insuranceAdm: (data?.insuranceAmount ?? 0) - (data?.insuranceAdm ?? 0)
+            insuranceAdm: (data?.insuranceAdm ?? 0)
           ),
           goods: Goods(
             weight: data?.weight,
