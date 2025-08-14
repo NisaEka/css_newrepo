@@ -36,6 +36,7 @@ class LaporankuBody extends StatelessWidget {
                   margin: EdgeInsets.zero,
                   onChanged: (p0) => c.state.pagingController.refresh(),
                 ),
+                const SizedBox(height: 10),
                 const StatusLaporanku(),
                 Expanded(
                   child: RefreshIndicator(

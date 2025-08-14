@@ -97,6 +97,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
             onChanged: (value) => c.onSearch(value),
             onClear: () => c.onSearchClear(),
           ),
+          const SizedBox(height: 10),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () => Future.sync(

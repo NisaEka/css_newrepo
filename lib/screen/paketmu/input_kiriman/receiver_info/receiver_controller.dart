@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/data/model/master/destination_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -48,7 +47,8 @@ class ReceiverController extends BaseController {
       state.isValidate = state.isEdit ?? false;
       update();
     }
-    state.tempData = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
+    state.tempData = DataTransactionModel.fromJson(
+        await storage.readData(StorageCore.transactionTemp));
     if (state.tempData?.receiver != null) {
       state.receiverName.text = state.tempData?.receiver?.name ?? '';
       state.receiverPhone.text = state.tempData?.receiver?.phone ?? '';
@@ -82,7 +82,8 @@ class ReceiverController extends BaseController {
     );
     await storage.saveData(StorageCore.transactionTemp, temp);
     update();
-    state.tempData = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
+    state.tempData = DataTransactionModel.fromJson(
+        await storage.readData(StorageCore.transactionTemp));
   }
 
   FutureOr<ReceiverModel?> getSelectedReceiver() async {
@@ -156,21 +157,24 @@ class ReceiverController extends BaseController {
 
     var receiver = receivers.data;
     AppLogger.i("get same receiver : ${receiver?.isEmpty}");
-    if ((receiver?.isEmpty ?? false) && (state.formKey.currentState?.validate() == true) && state.isOnline) {
+    if ((receiver?.isEmpty ?? false) &&
+        (state.formKey.currentState?.validate() == true) &&
+        state.isOnline) {
       state.isSaveReceiver = true;
       update();
-      print("isSaveReceiver ${state.isSaveReceiver}");
+      // print("isSaveReceiver ${state.isSaveReceiver}");
       return true;
     } else {
       state.isSaveReceiver = false;
       update();
-      print("isSaveReceiver ${state.isSaveReceiver}");
+      // print("isSaveReceiver ${state.isSaveReceiver}");
       return false;
     }
   }
 
   Future<List<DestinationModel>> getDestinationList(QueryModel param) async {
     state.isLoading = true;
+    // ignore: prefer_typing_uninitialized_variables
     var response;
     try {
       AppLogger.d("load destination list ${param.toJson()}");
@@ -243,7 +247,8 @@ class ReceiverController extends BaseController {
         "destination": state.selectedDestination,
       },
     )?.then((v) async {
-      state.tempData = DataTransactionModel.fromJson(await storage.readData(StorageCore.transactionTemp));
+      state.tempData = DataTransactionModel.fromJson(
+          await storage.readData(StorageCore.transactionTemp));
       update();
     });
   }
@@ -269,7 +274,9 @@ class ReceiverController extends BaseController {
             subDistrict: state.selectedDestination?.subdistrictName ?? '-',
           ))
           .then(
-            (value) => value.code == 201 ? AppSnackBar.success('Data receiver telah disimpan'.tr) : AppSnackBar.error(value.error?.first.message.trs),
+            (value) => value.code == 201
+                ? AppSnackBar.success('Data receiver telah disimpan'.tr)
+                : AppSnackBar.error(value.error?.first.message.trs),
           );
     } catch (e) {
       AppLogger.e('error saveReceiver $e');

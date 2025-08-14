@@ -48,22 +48,25 @@ class InvoiceScreen extends StatelessWidget {
   }
 
   Widget _invoiceSearchBar(BuildContext context, InvoiceController controller) {
-    return CustomSearchField(
-      controller: controller.state.searchTextController,
-      hintText: 'Cari'.tr,
-      prefixIcon: SvgPicture.asset(
-        IconsConstant.search,
-        color: Theme.of(context).brightness == Brightness.light
-            ? whiteColor
-            : blueJNE,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: CustomSearchField(
+        controller: controller.state.searchTextController,
+        hintText: 'Cari'.tr,
+        prefixIcon: SvgPicture.asset(
+          IconsConstant.search,
+          color: Theme.of(context).brightness == Brightness.light
+              ? whiteColor
+              : blueJNE,
+        ),
+        onChanged: (value) {
+          controller.onKeywordChange(value);
+        },
+        onClear: () {
+          controller.onKeywordChange("");
+        },
+        margin: const EdgeInsets.only(top: 20),
       ),
-      onChanged: (value) {
-        controller.onKeywordChange(value);
-      },
-      onClear: () {
-        controller.onKeywordChange("");
-      },
-      margin: const EdgeInsets.only(top: 20),
     );
   }
 

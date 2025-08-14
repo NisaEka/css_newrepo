@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
+import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/widgets/bar/logoheader.dart';
 import 'package:css_mobile/screen/auth/forgot_password/password_recovery/password_recovery_controller.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
@@ -60,12 +61,17 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Kode OTP akan dikirimkan ke alamat email berikut :'.tr, style: Theme.of(context).textTheme.titleSmall),
+                      Text(
+                          'Kode OTP akan dikirimkan ke alamat email berikut :'
+                              .tr,
+                          style: Theme.of(context).textTheme.titleSmall),
                       Text(
                         c.getMail(),
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
+                          color: AppConst.isLightTheme(context)
+                              ? greyDarkColor1
+                              : greyLightColor1,
                         ),
                       ),
                     ],
@@ -98,13 +104,17 @@ class PasswordRecoveryScreen extends StatelessWidget {
                   groupValue: c.recovery,
                   onChanged: (value) {},
                 ),
-                SizedBox(width: Get.width / 1.5, child: Text('Hubungi sales cabang kota anda'.tr, style: Theme.of(context).textTheme.titleSmall))
+                SizedBox(
+                    width: Get.width / 1.5,
+                    child: Text('Hubungi sales cabang kota anda'.tr,
+                        style: Theme.of(context).textTheme.titleSmall))
               ],
             ),
           ),
           onTap: () {
             c.recovery = 2;
             c.update();
+            Get.offAll(() => const DashboardScreen());
           },
         ),
       ],
