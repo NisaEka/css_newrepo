@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
-import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
@@ -59,18 +57,19 @@ class NetworkCore {
     AppLogger.i("refresh token local : $refreshToken");
 
     try {
-      Response response = await refreshDio.post(
+      Response response = await base.post(
         '/authentications/refresh',
         data: {
-          "refreshToken": refreshToken,
+          "refreshToken": refreshToken
         },
       );
 
       final refreshTokenResponse = BaseResponse<PostLoginModel>.fromJson(
         response.data,
-        (json) => PostLoginModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
+            (json) =>
+            PostLoginModel.fromJson(
+              json as Map<String, dynamic>,
+            ),
       );
 
       await StorageCore().saveToken(
@@ -86,15 +85,17 @@ class NetworkCore {
       return refreshTokenResponse;
     } on DioException catch (e) {
       AppLogger.i("masuk sini catch atas");
+      AppLogger.e("gagal retry refresh");
 
-      StorageCore().deleteLogin();
-      Get.delete<DashboardController>().then((_) => Get.offAll(() => const DashboardScreen()));
+      // StorageCore().deleteLogin();
+      // Get.delete<DashboardController>().then((_) => Get.offAll(() => const DashboardScreen()));
 
       return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,
-        (json) => PostLoginModel.fromJson(
-          json as Map<String, dynamic>,
-        ),
+            (json) =>
+            PostLoginModel.fromJson(
+              json as Map<String, dynamic>,
+            ),
       );
     } finally {
       isRefreshing = false;
@@ -177,6 +178,7 @@ class NetworkCore {
               final accessToken = await StorageCore().readAccessToken();
               if (accessToken != null) {
                 options.headers['Authorization'] = 'Bearer $accessToken';
+                // options.headers['Authorization'] = 'Bearer ';
               }
             }
 
@@ -191,15 +193,16 @@ class NetworkCore {
             return handler.next(response);
           },
           onError: (dioError, handler) async {
-            if(dioError.requestOptions.path != "/auth/device-infos "){
+            if (dioError.requestOptions.path != "/auth/device-infos ") {
               AppLogger.e("dio error : ${dioError.requestOptions.method} ${dioError.requestOptions.path} ${dioError.response ?? dioError} ");
             }
 
             final refreshToken = await const FlutterSecureStorage().read(key: StorageCore.refreshToken);
-            // AppLogger.i("refresh token local : $refreshToken");
+            AppLogger.i("refresh token local : $refreshToken");
 
             if (dioError.response?.statusCode == 401) {
               if (refreshToken == null) {
+                AppLogger.w("refresh token local kosong");
                 return handler.reject(dioError);
               }
               if (!isRefreshing) {

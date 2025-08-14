@@ -68,47 +68,38 @@ class _DestinationDropdownState extends State<DestinationDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.showfromBottom
-        ? CustomTextFormField(
-            controller: widget.controller,
-            hintText: widget.label ?? "Kota Tujuan".tr,
-            readOnly: true,
-            isRequired: true,
-            suffixIcon: const Icon(Icons.keyboard_arrow_down),
-            onChanged: widget.onChanged,
-            onTap: () => showCityList('Kota Tujuan'.tr),
-          )
-        : CustomSearchDropdownField<DestinationModel>(
-            controller: widget.controller,
-            asyncItems: (String filter) => getDestinationList(filter),
-            itemBuilder: (context, e, b) {
-              return Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: Text(
-                  e.asFacilityFormFormat(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: textColor(context),
-                      ),
+    return CustomSearchDropdownField<DestinationModel>(
+      controller: widget.controller,
+      asyncItems: (String filter) => getDestinationList(filter),
+      showFromBottom: widget.showfromBottom,
+      itemBuilder: (context, e, b) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: Text(
+            e.asFacilityFormFormat(),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: textColor(context),
                 ),
-              );
-            },
+          ),
+        );
+      },
 
-            /// TODO : BUG format text destinasi
-            itemAsString: widget.itemAsString ??
-                (DestinationModel e) => ''
-                    '${e.asFacilityFormFormat()}',
-            onChanged: widget.onChanged,
-            value: widget.value,
-            selectedItem: widget.selectedItem,
-            hintText: widget.label ?? "Kota Pengiriman".tr,
-            searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
-            prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: AppConst.isLightTheme(context) ? Colors.black : whiteColor,
-                ),
-            readOnly: widget.readOnly,
-            isRequired: widget.isRequired,
-          );
+      /// TODO : BUG format text destinasi
+      itemAsString: widget.itemAsString ??
+          (DestinationModel e) => ''
+              '${e.asFacilityFormFormat()}',
+      onChanged: widget.onChanged,
+      value: widget.value,
+      selectedItem: widget.selectedItem,
+      hintText: widget.label ?? "Kota Pengiriman".tr,
+      searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
+      prefixIcon: widget.prefixIcon,
+      textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+            color: AppConst.isLightTheme(context) ? Colors.black : whiteColor,
+          ),
+      readOnly: widget.readOnly,
+      isRequired: widget.isRequired,
+    );
   }
 
   void showCityList(String title) {

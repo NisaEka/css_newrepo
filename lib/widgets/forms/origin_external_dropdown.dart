@@ -64,7 +64,7 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
   Future<List<OriginExternal>> getOriginList(String keyword) async {
     final network = Get.find<NetworkCore>();
 
-    try{
+    try {
       Response response = await network.base.get(
         '/master/origins/external/${keyword.toUpperCase()}',
         options: Options(extra: {'skipAuth': true}),
@@ -73,17 +73,14 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
       AppLogger.w("response : $response");
 
       if (response.data['data'] != null && response.data['data'] is List) {
-        return (response.data['data'] as List)
-            .map((item) => OriginExternal.fromJson(item))
-            .toList();
+        return (response.data['data'] as List).map((item) => OriginExternal.fromJson(item)).toList();
       } else {
         return [];
       }
-    }catch(e){
+    } catch (e) {
       AppLogger.e("response error : $e");
       return [];
     }
-
   }
 
   @override
@@ -109,39 +106,29 @@ class _OriginExternalDropdownState extends State<OriginExternalDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.showfromBottom
-        ? CustomTextFormField(
-            controller: widget.controller,
-            hintText: widget.label ?? "Kota Asal".tr,
-            readOnly: true,
-            isRequired: widget.isRequired,
-            suffixIcon: const Icon(Icons.keyboard_arrow_down),
-            onChanged: widget.onChanged,
-            onTap: () => showCityList('Kota Pengirim'.tr),
-          )
-        : CustomSearchDropdownField<OriginExternal>(
-            controller: widget.controller,
-            asyncItems: (String filter) => getOriginList(filter),
-            itemBuilder: (context, e, b) {
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: Text(
-                  e.label.toString(),
-                ),
-              );
-            },
-            itemAsString: (e) => e.label.toString(),
-            onChanged: widget.onChanged,
-            value: widget.value,
-            selectedItem: widget.selectedItem,
-            hintText: widget.label ?? "Kota Pengiriman".tr,
-            searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
-            prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.titleSmall,
-            readOnly: widget.readOnly,
-            isRequired: widget.isRequired,
-          );
+    return CustomSearchDropdownField<OriginExternal>(
+      controller: widget.controller,
+      asyncItems: (String filter) => getOriginList(filter),
+      showFromBottom: widget.showfromBottom,
+      itemBuilder: (context, e, b) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: Text(
+            e.label.toString(),
+          ),
+        );
+      },
+      itemAsString: (e) => e.label.toString(),
+      onChanged: widget.onChanged,
+      value: widget.value,
+      selectedItem: widget.selectedItem,
+      hintText: widget.label ?? "Kota Pengiriman".tr,
+      searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
+      prefixIcon: widget.prefixIcon,
+      textStyle: Theme.of(context).textTheme.titleSmall,
+      readOnly: widget.readOnly,
+      isRequired: widget.isRequired,
+    );
   }
 
   void showCityList(String title) {

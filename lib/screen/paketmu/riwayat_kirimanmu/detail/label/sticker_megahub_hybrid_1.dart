@@ -4,7 +4,6 @@ import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/label/sticker_megahub_hybrid_2.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
-import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/bar/solid_border.dart';
 import 'package:flutter/material.dart';
@@ -187,10 +186,11 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                     Text('Order ID: ${data.orderId ?? '-'}',
                         style: labelTextStyle),
                   Text(
-                      "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? ((data.delivery?.insuranceFee ?? 0) - (data.delivery?.insuranceAdm ?? 0)).toCurrency() : 0}",
+                      "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? ((data.delivery?.insuranceFee ?? 0) - (data.delivery?.insuranceAdm ?? 0)).toInt().toCurrency() : 0}",
                       style: labelTextStyle),
-                  Text(
-                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt().toCurrency() ?? 0) : 0}",
+                  Text("Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt() ?? 0).toCurrency() : 0}",
+                      style: labelTextStyle),
+                  Text("Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee?.toInt().toCurrency() ?? '0' : 0}",
                       style: labelTextStyle),
                   Text.rich(
                     TextSpan(

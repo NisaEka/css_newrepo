@@ -72,8 +72,7 @@ class _OriginDropdownState extends State<OriginDropdown> {
     var response = await master.getOrigins(QueryModel(
       search: keyword.toUpperCase(),
       where: whereList,
-      table: (widget.branchCode?.isNotEmpty ?? false) ||
-          (widget.originCode?.isNotEmpty ?? false),
+      table: (widget.branchCode?.isNotEmpty ?? false) || (widget.originCode?.isNotEmpty ?? false),
       relation: true,
     ));
     var models = response.data?.toList();
@@ -82,57 +81,38 @@ class _OriginDropdownState extends State<OriginDropdown> {
   }
 
   Future<List<OriginModel>> getOfficerOriginList() async {
-    officer = PetugasModel.fromJson(
-        await StorageCore().readData(StorageCore.officerProfile));
+    officer = PetugasModel.fromJson(await StorageCore().readData(StorageCore.officerProfile));
 
     return officer?.origins ?? [];
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.showfromBottom
-        ? CustomTextFormField(
-            controller: widget.controller,
-            hintText: widget.label ?? "Kota Asal".tr,
-            readOnly: true,
-            isRequired: true,
-            suffixIcon: const Icon(Icons.keyboard_arrow_down),
-            onChanged: widget.onChanged,
-            onTap: () => showCityList('Kota Asal'.tr),
-          )
-        : CustomSearchDropdownField<OriginModel>(
-            controller: widget.controller,
-            isFilterOnline: !widget.isOfficer,
-            asyncItems: (String filter) => widget.isOfficer
-                ? getOfficerOriginList()
-                : getOriginList(filter),
-            itemBuilder: (context, e, b) {
-              return Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                child: Text(
-                  e.originName.toString(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(color: textColor(context)),
-                ),
-              );
-            },
-            itemAsString: (OriginModel e) => e.originName.toString(),
-            onChanged: widget.onChanged,
-            value: widget.value,
-            selectedItem: widget.selectedItem,
-            hintText: widget.label ?? "Kota Pengiriman".tr,
-            searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
-            prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context)
-                .textTheme
-                .bodyLarge
-                ?.copyWith(color: textColor(context)),
-            readOnly: widget.readOnly,
-            isRequired: widget.isRequired,
-          );
+    return CustomSearchDropdownField<OriginModel>(
+      controller: widget.controller,
+      isFilterOnline: !widget.isOfficer,
+      showFromBottom: widget.showfromBottom,
+      asyncItems: (String filter) => widget.isOfficer ? getOfficerOriginList() : getOriginList(filter),
+      itemBuilder: (context, e, b) {
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          child: Text(
+            e.originName.toString(),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor(context)),
+          ),
+        );
+      },
+      itemAsString: (OriginModel e) => e.originName.toString(),
+      onChanged: widget.onChanged,
+      value: widget.value,
+      selectedItem: widget.selectedItem,
+      hintText: widget.label ?? "Kota Pengiriman".tr,
+      searchHintText: widget.label ?? 'Masukan Kota Pengiriman'.tr,
+      prefixIcon: widget.prefixIcon,
+      textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor(context)),
+      readOnly: widget.readOnly,
+      isRequired: widget.isRequired,
+    );
   }
 
   void showCityList(String title) {
