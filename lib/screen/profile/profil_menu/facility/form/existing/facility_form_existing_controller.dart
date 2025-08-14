@@ -68,6 +68,7 @@ class FacilityFormExistingController extends BaseController {
 
   void onRestartValidationState() {
     _showInvalidInputMessage = false;
+    Get.back();
     update();
   }
 

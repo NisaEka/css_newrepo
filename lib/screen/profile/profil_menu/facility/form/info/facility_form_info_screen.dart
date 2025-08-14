@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/info/facility_form_info_controller.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/return/facility_form_return_screen.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customstepper.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -63,6 +64,10 @@ class FacilityFormInfoScreen extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: Form(
               key: c.state.formKey,
+              onChanged: () {
+                c.state.formKey.currentState?.validate();
+                c.update();
+              },
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -122,8 +127,7 @@ class FacilityFormInfoScreen extends StatelessWidget {
                     hintText: 'No. Telepon'.tr,
                     inputType: TextInputType.phone,
                     isRequired: true,
-                    validator:
-                        ValidationBuilder().maxLength(15).phone().build(),
+                    validator: ValidationBuilder().phoneNumber().build(),
                   ),
                   CustomTextFormField(
                     controller: c.state.whatsAppPhone,

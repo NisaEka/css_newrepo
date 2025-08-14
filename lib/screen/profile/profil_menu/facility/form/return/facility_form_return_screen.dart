@@ -72,6 +72,10 @@ class FacilityFormReturnScreen extends StatelessWidget {
           width: Get.width,
           child: Form(
             key: c.formKey,
+            onChanged: () {
+              c.formKey.currentState?.validate();
+              c.update();
+            },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
