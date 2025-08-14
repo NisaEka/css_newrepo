@@ -201,7 +201,7 @@ class NetworkCore {
             }
 
             final refreshToken = await const FlutterSecureStorage().read(key: StorageCore.refreshToken);
-            AppLogger.i("refresh token local : $refreshToken");
+            // AppLogger.i("refresh token local : $refreshToken");
 
             if (dioError.response?.statusCode == 401 ) {
               if (refreshToken == null) {

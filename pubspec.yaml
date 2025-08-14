@@ -39,7 +39,7 @@ dependencies:
   screenshot: ^3.0.0
   printing: ^5.12.0
   multi_select_flutter:
-    git:
+    ogit:
       url: https://github.com/derrydwi/multi_select_flutter.git
       ref: feat/select-all
   path_provider: ^2.1.3
