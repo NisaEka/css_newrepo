@@ -6,11 +6,9 @@ import 'package:css_mobile/data/model/master/get_origin_model.dart';
 import 'package:css_mobile/data/model/master/get_receiver_model.dart';
 import 'package:css_mobile/data/model/master/get_shipper_model.dart';
 
-DataTransactionModel transactionDataModelFromJson(String str) =>
-    DataTransactionModel.fromJson(json.decode(str));
+DataTransactionModel transactionDataModelFromJson(String str) => DataTransactionModel.fromJson(json.decode(str));
 
-String transactionDataModelToJson(DataTransactionModel data) =>
-    json.encode(data.toJson());
+String transactionDataModelToJson(DataTransactionModel data) => json.encode(data.toJson());
 
 class DataTransactionModel {
   DataTransactionModel({
@@ -75,26 +73,14 @@ class DataTransactionModel {
             : json['transaction'] != null
                 ? Delivery.fromJson(json['transaction'])
                 : null;
-    _account = json['account'] != null
-        ? TransAccountModel.fromJson(json['account'])
-        : null;
-    _origin =
-        json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
-    _destination = json['destination'] != null
-        ? DestinationModel.fromJson(json['destination'])
-        : null;
+    _account = json['account'] != null ? TransAccountModel.fromJson(json['account']) : null;
+    _origin = json['origin'] != null ? OriginModel.fromJson(json['origin']) : null;
+    _destination = json['destination'] != null ? DestinationModel.fromJson(json['destination']) : null;
     _goods = json['goods'] != null ? Goods.fromJson(json['goods']) : null;
-    _shipper =
-        json['shipper'] != null ? ShipperModel.fromJson(json['shipper']) : null;
-    _receiver = json['receiver'] != null
-        ? ReceiverModel.fromJson(json['receiver'])
-        : null;
-    _dataAccount = json['data_account'] != null
-        ? TransAccountModel.fromJson(json['data_account'])
-        : null;
-    _dataDestination = json['data_destination'] != null
-        ? DestinationModel.fromJson(json['data_destination'])
-        : null;
+    _shipper = json['shipper'] != null ? ShipperModel.fromJson(json['shipper']) : null;
+    _receiver = json['receiver'] != null ? ReceiverModel.fromJson(json['receiver']) : null;
+    _dataAccount = json['data_account'] != null ? TransAccountModel.fromJson(json['data_account']) : null;
+    _dataDestination = json['data_destination'] != null ? DestinationModel.fromJson(json['data_destination']) : null;
     _createAt = json['create_at'];
     _updateAt = json['update_at'];
   }
@@ -346,6 +332,7 @@ class Delivery {
     num? flatRateWithInsurance,
     num? freightCharge,
     num? freightChargeWithInsurance,
+    num? insuranceAdm,
   }) {
     _serviceCode = serviceCode;
     _woodPackaging = woodPackaging;
@@ -359,6 +346,7 @@ class Delivery {
     _flatRateWithInsurance = flatRateWithInsurance;
     _freightCharge = freightCharge;
     _freightChargeWithInsurance = freightChargeWithInsurance;
+    _insuranceAdm = insuranceAdm;
   }
 
   Delivery.fromJson(dynamic json) {
@@ -374,6 +362,7 @@ class Delivery {
     _flatRateWithInsurance = json['flat_rate_with_insurance'];
     _freightCharge = json['freight_charge'];
     _freightChargeWithInsurance = json['freight_charge_with_insurance'];
+    _insuranceAdm = json['insuranceAdm'];
   }
 
   String? _serviceCode;
@@ -388,6 +377,7 @@ class Delivery {
   num? _flatRateWithInsurance;
   num? _freightCharge;
   num? _freightChargeWithInsurance;
+  num? _insuranceAdm;
 
   Delivery copyWith({
     String? serviceCode,
@@ -402,6 +392,7 @@ class Delivery {
     num? flatRateWithInsurance,
     num? freightCharge,
     num? freightChargeWithInsurance,
+    num? insuranceAdm,
   }) =>
       Delivery(
         serviceCode: serviceCode ?? _serviceCode,
@@ -415,8 +406,8 @@ class Delivery {
         flatRate: flatRate ?? _flatRate,
         flatRateWithInsurance: flatRateWithInsurance ?? _flatRateWithInsurance,
         freightCharge: freightCharge ?? _freightCharge,
-        freightChargeWithInsurance:
-            freightChargeWithInsurance ?? _freightChargeWithInsurance,
+        freightChargeWithInsurance: freightChargeWithInsurance ?? _freightChargeWithInsurance,
+        insuranceAdm: insuranceAdm ?? _insuranceAdm,
       );
 
   String? get serviceCode => _serviceCode;
@@ -443,6 +434,8 @@ class Delivery {
 
   num? get freightChargeWithInsurance => _freightChargeWithInsurance;
 
+  num? get insuranceAdm => _insuranceAdm;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['service_code'] = _serviceCode;
@@ -457,6 +450,7 @@ class Delivery {
     map['flat_rate_with_insurance'] = _flatRateWithInsurance;
     map['freight_charge'] = _freightCharge;
     map['freight_charge_with_insurance'] = _freightChargeWithInsurance;
+    map['insuranceAdm'] = _insuranceAdm;
     return map;
   }
 }
