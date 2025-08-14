@@ -14,16 +14,15 @@ class StickerMegahubHybrid1 extends StatelessWidget {
   final DataTransactionModel data;
   final bool shippingCost;
   final bool hiddenPhoneShipper;
-  final bool? showOrderId;
   final String? stickerLabel;
 
-  const StickerMegahubHybrid1(
-      {super.key,
-      required this.data,
-      this.shippingCost = false,
-      this.hiddenPhoneShipper = false,
-      this.stickerLabel,
-      this.showOrderId = false});
+  const StickerMegahubHybrid1({
+    super.key,
+    required this.data,
+    this.shippingCost = false,
+    this.hiddenPhoneShipper = false,
+    this.stickerLabel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,6 @@ class StickerMegahubHybrid1 extends StatelessWidget {
             data: data,
             shippingCost: shippingCost,
             hiddenPhoneShipper: hiddenPhoneShipper,
-            showOrderId: showOrderId ?? true,
           ).sticker(context),
           const SizedBox(height: 20),
           sticker2(context),
@@ -182,17 +180,16 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                       style: labelTextStyle),
                   Text('Kota Tujuan: ${data.receiver?.city ?? ''}',
                       style: labelTextStyle),
-                  if (showOrderId == true)
-                    Text('Order ID: ${data.orderId ?? '-'}',
-                        style: labelTextStyle),
-                  Text(
-                      "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee?.toCurrency() : 0}",
+                  Text('Order ID: ${data.orderId ?? '-'}',
                       style: labelTextStyle),
                   Text(
-                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceFee?.toInt() ?? 0) - 600 : 0}",
+                      "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? ((data.delivery?.insuranceFee ?? 0) - (data.delivery?.insuranceAdm ?? 0)).toCurrency() : 0}",
                       style: labelTextStyle),
                   Text(
-                      "Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceAdm ?? '0' : 0}",
+                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt() ?? 0) - 600 : 0}",
+                      style: labelTextStyle),
+                  Text(
+                      "Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee ?? '0' : 0}",
                       style: labelTextStyle),
                   const SizedBox(height: 5)
                 ],

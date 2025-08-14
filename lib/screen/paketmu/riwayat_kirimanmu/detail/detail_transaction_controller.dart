@@ -26,7 +26,8 @@ class DetailTransactionController extends BaseController {
     state.isLoading = true;
     state.locale = await storage.readString(StorageCore.localeApp);
     update();
-    state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    state.allow =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
     state.transStatus.text = state.data?.statusAwb ?? '';
     state.pickupStatus.text = state.data?.pickupStatus ?? '';
@@ -96,24 +97,26 @@ class DetailTransactionController extends BaseController {
           status: data?.statusAwb,
           createdDate: data?.createdDate ?? data?.createdDateSearch,
           awb: data?.awb,
-          type: data?.codOngkir == "YES" || data?.codFlag == "YES" ? "COD" : "NON COD",
+          type: data?.codOngkir == "YES" || data?.codFlag == "YES"
+              ? "COD"
+              : "NON COD",
           awbType: data?.apiType,
           createAt: data?.createdDate,
           delivery: Delivery(
-            serviceCode: data?.serviceCode,
-            insuranceFlag: data?.insuranceFlag,
-            codFlag: data?.codFlag,
-            codFee: data?.codAmount,
-            codOngkir: data?.codOngkir,
-            flatRate: data?.deliveryPrice,
-            freightCharge: data?.deliveryPrice,
-            specialInstruction: data?.specialIns,
-            woodPackaging: data?.packingkayuFlag,
-            flatRateWithInsurance: data?.insuranceAmount,
-            freightChargeWithInsurance: (data?.insuranceAmount ?? 0) + (data?.deliveryPrice ?? 0),
-            insuranceFee: data?.insuranceAmount,
-            insuranceAdm: (data?.insuranceAmount ?? 0) - (data?.insuranceAdm ?? 0)
-          ),
+              serviceCode: data?.serviceCode,
+              insuranceFlag: data?.insuranceFlag,
+              codFlag: data?.codFlag,
+              codFee: data?.codAmount,
+              codOngkir: data?.codOngkir,
+              flatRate: data?.deliveryPrice,
+              freightCharge: data?.deliveryPrice,
+              specialInstruction: data?.specialIns,
+              woodPackaging: data?.packingkayuFlag,
+              flatRateWithInsurance: data?.insuranceAmount,
+              freightChargeWithInsurance:
+                  (data?.insuranceAmount ?? 0) + (data?.deliveryPrice ?? 0),
+              insuranceFee: data?.insuranceAmount,
+              insuranceAdm: (data?.insuranceAdm ?? 0)),
           goods: Goods(
             weight: data?.weight,
             type: data?.goodsType,
@@ -137,7 +140,9 @@ class DetailTransactionController extends BaseController {
 
   Future<void> deleteTransaction() async {
     try {
-      await transaction.deleteTransaction(state.transactionModel?.awb?.toString() ?? '').then((value) {
+      await transaction
+          .deleteTransaction(state.transactionModel?.awb?.toString() ?? '')
+          .then((value) {
         if (value.code == 400) {
           AppSnackBar.error(value.message!.tr);
         } else {
@@ -155,7 +160,8 @@ class DetailTransactionController extends BaseController {
 
   bool isEdit() {
     if (state.transactionModel?.statusAwb == "MASIH DI KAMU") {
-      if (state.transactionModel?.apiStatus == 2 || state.transactionModel?.apiStatus == 7) {
+      if (state.transactionModel?.apiStatus == 2 ||
+          state.transactionModel?.apiStatus == 7) {
         return false;
       }
       return true;
