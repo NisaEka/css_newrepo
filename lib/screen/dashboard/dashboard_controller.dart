@@ -616,7 +616,7 @@ class DashboardController extends BaseController {
       if (basic) {
         try {
           await profil.getBasicProfil().then((value) async {
-            AppLogger.i("get basic : ${value.data?.toJson()}");
+            // AppLogger.i("get basic : ${value.data?.toJson()}");
             await storage.saveData(
               StorageCore.basicProfile,
               value.data?.user,

@@ -38,16 +38,13 @@ abstract class TransactionRepository {
 
   Future<BaseResponse<List<String>>> getTransactionStatus();
 
-  Future<BaseResponse<TransactionModel>> putTransaction(
-      TransactionModel data, String awb);
+  Future<BaseResponse<TransactionModel>> putTransaction(TransactionModel data, String awb);
 
   Future<BaseResponse<List<PetugasModel>>> getTransOfficer(QueryModel param);
 
-  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(
-      DataTransactionOngkirModel data);
+  Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data);
 
-  Future<BaseResponse<TransactionSummaryModel>> postTransactionDashboard(
-      QueryModel param);
+  Future<BaseResponse<TransactionSummaryModel>> postTransactionDashboard(QueryModel param);
 
   Future<BaseResponse<List<PantauCountModel>>> getPantauCount(QueryModel param);
 }

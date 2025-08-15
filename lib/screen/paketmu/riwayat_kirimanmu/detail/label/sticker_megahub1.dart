@@ -96,11 +96,7 @@ class StickerMegahub1 extends StatelessWidget {
               ),
             ),
             Table(
-              border: const TableBorder(
-                  verticalInside: BorderSide(),
-                  right: BorderSide(),
-                  left: BorderSide(),
-                  bottom: BorderSide()),
+              border: const TableBorder(verticalInside: BorderSide(), right: BorderSide(), left: BorderSide(), bottom: BorderSide()),
               children: <TableRow>[
                 TableRow(
                   children: <Widget>[
@@ -134,8 +130,7 @@ class StickerMegahub1 extends StatelessWidget {
                 children: [
                   Container(
                     width: (Get.width - 50.5) / 1.5,
-                    decoration: const BoxDecoration(
-                        border: Border(right: BorderSide())),
+                    decoration: const BoxDecoration(border: Border(right: BorderSide())),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -153,7 +148,7 @@ class StickerMegahub1 extends StatelessWidget {
                   SizedBox(
                     width: Get.width / 3.6,
                     child: Text(
-                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.destination?.facilityCode ?? data.destination?.cityZone ?? data.destination?.destinationCode?.substring(0, 3)} \n${data.receiver?.zipCode ?? ''}',
+                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.destination?.facilityCode ?? data.destination?.cityZone ?? /*data.destination?.destinationCode?.substring(0, 3)*/''} \n${data.receiver?.zipCode ?? ''}',
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
@@ -162,8 +157,7 @@ class StickerMegahub1 extends StatelessWidget {
               ),
             ),
             Table(
-              border: const TableBorder(
-                  right: BorderSide(), verticalInside: BorderSide()),
+              border: const TableBorder(right: BorderSide(), verticalInside: BorderSide()),
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               children: <TableRow>[
                 TableRow(
@@ -185,16 +179,12 @@ class StickerMegahub1 extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(3),
-                          child: Text(
-                              'Deskripsi: \n${data.goods?.desc ?? '-'}\n',
-                              style: labelTextStyle),
+                          child: Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n', style: labelTextStyle),
                         ),
                         const Divider(height: 1),
                         Padding(
                           padding: const EdgeInsets.all(3),
-                          child: Text(
-                              'Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n',
-                              style: labelTextStyle),
+                          child: Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n', style: labelTextStyle),
                         ),
                       ],
                     ),
@@ -203,25 +193,14 @@ class StickerMegahub1 extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                              'Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? ''}',
-                              style: labelTextStyle),
-                          Text(
-                              'No. Pelanggan: ${data.account?.accountNumber ?? ''}',
-                              style: labelTextStyle),
-                          Text(
-                              'Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}',
-                              style: labelTextStyle),
-                          Text('Berat: ${data.goods?.weight ?? '0'} Kg',
-                              style: labelTextStyle),
-                          Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}',
-                              style: labelTextStyle),
-                          Text('Jenis Kiriman: ${data.goods?.type ?? '0'}',
-                              style: labelTextStyle),
-                          Text('Pembayaran: ${data.type ?? ''}',
-                              style: labelTextStyle),
-                          Text('Order ID: ${data.orderId ?? ''}',
-                              style: labelTextStyle),
+                          Text('Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? ''}', style: labelTextStyle),
+                          Text('No. Pelanggan: ${data.account?.accountNumber ?? ''}', style: labelTextStyle),
+                          Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? ''}', style: labelTextStyle),
+                          Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
+                          Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
+                          Text('Jenis Kiriman: ${data.goods?.type ?? '0'}', style: labelTextStyle),
+                          Text('Pembayaran: ${data.type ?? ''}', style: labelTextStyle),
+                          Text('Order ID: ${data.orderId ?? ''}', style: labelTextStyle),
                         ],
                       ),
                     ),
@@ -316,8 +295,7 @@ class StickerMegahub1 extends StatelessWidget {
                   children: [
                     pw.Container(
                       width: (Get.width - 50.5) / 1.5,
-                      decoration: const pw.BoxDecoration(
-                          border: pw.Border(right: pw.BorderSide())),
+                      decoration: const pw.BoxDecoration(border: pw.Border(right: pw.BorderSide())),
                       child: pw.Column(
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         mainAxisAlignment: pw.MainAxisAlignment.start,
@@ -325,8 +303,7 @@ class StickerMegahub1 extends StatelessWidget {
                           pw.Text(
                               'Pengirim: ${data.shipper?.name}\n${data.shipper?.address}\nTelp.${hiddenPhoneShipper ? data.shipper?.phone?.maskPhoneNumber() : data.shipper?.phone}',
                               style: const pw.TextStyle(fontSize: 8)),
-                          pw.Text(
-                              'Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone?.maskPhoneNumber()}\n',
+                          pw.Text('Penerima: ${data.receiver?.name}\n${data.receiver?.address}\nTelp.${data.receiver?.phone?.maskPhoneNumber()}\n',
                               style: const pw.TextStyle(fontSize: 8)),
                         ],
                       ),
@@ -363,11 +340,9 @@ class StickerMegahub1 extends StatelessWidget {
                         crossAxisAlignment: pw.CrossAxisAlignment.start,
                         mainAxisAlignment: pw.MainAxisAlignment.start,
                         children: [
-                          pw.Text('Deskripsi: ',
-                              style: const pw.TextStyle(fontSize: 10)),
+                          pw.Text('Deskripsi: ', style: const pw.TextStyle(fontSize: 10)),
                           pw.Divider(),
-                          pw.Text('Intruksi Khusus:',
-                              style: const pw.TextStyle(fontSize: 10)),
+                          pw.Text('Intruksi Khusus:', style: const pw.TextStyle(fontSize: 10)),
                         ],
                       ),
                       pw.Container(
@@ -375,23 +350,13 @@ class StickerMegahub1 extends StatelessWidget {
                         child: pw.Column(
                           crossAxisAlignment: pw.CrossAxisAlignment.start,
                           children: [
-                            pw.Text(
-                                'Tanggal: ${data.createdDate?.toLongDateFormat()}',
-                                style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text(
-                                'No. Pelanggan: ${data.receiver?.registrationId}',
-                                style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text('Kota Asal: ${data.shipper?.city}',
-                                style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text('Berat:',
-                                style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text('Jumlah Kiriman:',
-                                style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text(
-                                'Pembayaran: ${data.type == 'COD' ? 'COD' : 'NON COD'}',
-                                style: const pw.TextStyle(fontSize: 8)),
-                            pw.Text('Order ID: ${data.orderId}',
-                                style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Tanggal: ${data.createdDate?.toLongDateFormat()}', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('No. Pelanggan: ${data.receiver?.registrationId}', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Kota Asal: ${data.shipper?.city}', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Berat:', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Jumlah Kiriman:', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Pembayaran: ${data.type == 'COD' ? 'COD' : 'NON COD'}', style: const pw.TextStyle(fontSize: 8)),
+                            pw.Text('Order ID: ${data.orderId}', style: const pw.TextStyle(fontSize: 8)),
                           ],
                         ),
                       ),
@@ -502,28 +467,18 @@ class StickerMegahub1 extends StatelessWidget {
                     pw.Column(
                       crossAxisAlignment: pw.CrossAxisAlignment.start,
                       children: [
-                        pw.Text('Tanggal: ${data.createdDate}',
-                            style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text(
-                            'No. Pelanggan: ${data.receiver?.registrationId}',
-                            style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text('Deskripsi: ${data.receiver?.registrationId}',
-                            style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text('Berat: ${data.receiver?.registrationId}',
-                            style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text(
-                            'Jumlah Kiriman: ${data.receiver?.registrationId}',
-                            style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Tanggal: ${data.createdDate}', style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('No. Pelanggan: ${data.receiver?.registrationId}', style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Deskripsi: ${data.receiver?.registrationId}', style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Berat: ${data.receiver?.registrationId}', style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Jumlah Kiriman: ${data.receiver?.registrationId}', style: const pw.TextStyle(fontSize: 8)),
                         pw.Text(
                           'Biaya Kirim: Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() ?? '0' : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}',
                           style: const pw.TextStyle(fontSize: 8),
                         ),
-                        pw.Text('Kota Tujuan: ${data.receiver?.city}',
-                            style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text('Asuransi: ${data.receiver?.registrationId} ',
-                            style: const pw.TextStyle(fontSize: 8)),
-                        pw.Text('Order ID: ${data.orderId}',
-                            style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Kota Tujuan: ${data.receiver?.city}', style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Asuransi: ${data.receiver?.registrationId} ', style: const pw.TextStyle(fontSize: 8)),
+                        pw.Text('Order ID: ${data.orderId}', style: const pw.TextStyle(fontSize: 8)),
                       ],
                     ),
                   ],

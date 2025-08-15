@@ -305,7 +305,7 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<BaseResponse<PostLoginModel>> updateToken() async {
     final refreshToken = await StorageCore().readRefreshToken();
-    AppLogger.i("refresh token local : $refreshToken");
+    // AppLogger.i("refresh token local : $refreshToken");
 
     try {
       Response response = await network.refreshDio.post(

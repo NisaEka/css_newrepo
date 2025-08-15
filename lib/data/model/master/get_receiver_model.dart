@@ -37,7 +37,7 @@ class ReceiverModel {
     _name = json['name'] ?? json['receiverName'];
     _address = json['address'] ?? json['receiverAddr'];
     _city = json['city'] ?? json['receiverCity'];
-    _zipCode = json['zip_code'] ?? json['receiverZip'];
+    _zipCode = json['zip_code'] ?? json['receiverZip'] ;
     _region = json['region'] ?? json['receiverRegion'];
     _country = json['country'] ?? json['receiverCountry'];
     _contact = json['contact'] ?? json['receiverContact'];

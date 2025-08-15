@@ -149,7 +149,7 @@ class EditProfileController extends BaseController {
       )
           .then((_) async {
         await profil.getBasicProfil().then((value) async {
-          AppLogger.i("get basic : ${value.data?.user?.toJson()}");
+          // AppLogger.i("get basic : ${value.data?.user?.toJson()}");
           await storage.saveData(
             StorageCore.basicProfile,
             value.data?.user,

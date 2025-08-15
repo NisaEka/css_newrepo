@@ -33,6 +33,7 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   final TextEditingController? controller;
   final bool isFilterOnline;
   final bool showSearchBox;
+  final bool showFromBottom;
 
   CustomSearchDropdownField({
     super.key,
@@ -58,6 +59,7 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
     this.searchHintText,
     this.showSearchBox = true,
     this.controller,
+    this.showFromBottom = false,
   }) {
     if (isRequired) {
       if (value == null || value == hintText || value == label) {
@@ -115,28 +117,61 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
             return null;
           },
           items: widget.items ?? [],
-          popupProps: PopupProps.menu(
-            constraints: const BoxConstraints(maxHeight: 200),
-            fit: FlexFit.loose,
-            showSelectedItems: false,
-            errorBuilder: (context, searchEntry, exception) => DataEmpty(text: "Anda sedang offline".tr),
-            menuProps: MenuProps(
-              backgroundColor: dropDownColor(context),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            showSearchBox: widget.showSearchBox,
-            searchDelay: const Duration(milliseconds: 500),
-            isFilterOnline: widget.isFilterOnline,
-            itemBuilder: widget.itemBuilder,
-            searchFieldProps: TextFieldProps(
-                cursorColor: CustomTheme().cursorColor(context),
-                autofocus: true,
-                decoration: InputDecoration(
-                  hintText: widget.searchHintText,
-                  helperText: "Masukan minimal 3 karakter".tr,
+          popupProps: widget.showFromBottom
+              ? PopupProps.modalBottomSheet(
+                  constraints: BoxConstraints(maxHeight: Get.height * 0.65, minHeight: Get.height * 0.5),
+                  fit: FlexFit.loose,
+                  showSelectedItems: false,
+                  modalBottomSheetProps: const ModalBottomSheetProps(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    useSafeArea: true
+                  ),
+                  title: Container(
+                    padding: const EdgeInsets.only(top: 20, left: 20, bottom: 10),
+                    child: Text(
+                      widget.label ?? widget.hintText ?? '',
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ),
+                  ),
+                  errorBuilder: (context, searchEntry, exception) => const DataEmpty(),
+                  showSearchBox: widget.showSearchBox,
+                  searchDelay: const Duration(milliseconds: 500),
+                  isFilterOnline: widget.isFilterOnline,
+                  itemBuilder: widget.itemBuilder,
+                  searchFieldProps: TextFieldProps(
+                    cursorColor: CustomTheme().cursorColor(context),
+                    autofocus: false,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    decoration: InputDecoration(
+                      hintText: "Cari",
+                      helperText: "Masukan minimal 3 karakter".tr,
+                    ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                  ),
+                )
+              : PopupProps.menu(
+                  constraints: const BoxConstraints(maxHeight: 200),
+                  fit: FlexFit.loose,
+                  showSelectedItems: false,
+                  errorBuilder: (context, searchEntry, exception) => DataEmpty(text: "Anda sedang offline".tr),
+                  menuProps: MenuProps(
+                    backgroundColor: dropDownColor(context),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  showSearchBox: widget.showSearchBox,
+                  searchDelay: const Duration(milliseconds: 500),
+                  isFilterOnline: widget.isFilterOnline,
+                  itemBuilder: widget.itemBuilder,
+                  searchFieldProps: TextFieldProps(
+                    cursorColor: CustomTheme().cursorColor(context),
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      hintText: widget.searchHintText,
+                      helperText: "Masukan minimal 3 karakter".tr,
+                    ),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                  ),
                 ),
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular)),
-          ),
           dropdownButtonProps: DropdownButtonProps(
             icon: const Icon(Icons.keyboard_arrow_down),
             isVisible: widget.showDropdownButton,
