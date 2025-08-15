@@ -21,7 +21,7 @@ class LoadingDialog extends StatelessWidget {
     return Container(
       height: height ?? Get.height,
       width: width ?? Get.width,
-      color: background ?? greyColor.withOpacity(0.3),
+      color: background ?? greyColor.withValues(alpha: 0.3),
       alignment: Alignment.center,
       child: Center(
         child: SizedBox(

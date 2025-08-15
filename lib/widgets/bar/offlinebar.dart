@@ -16,7 +16,7 @@ class OfflineBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 2),
       decoration: BoxDecoration(
         color: AppConst.isLightTheme(context)
-            ? redJNE.withOpacity(0.5)
+            ? redJNE.withValues(alpha: 0.5)
             : warningColor,
       ),
       child: Text(

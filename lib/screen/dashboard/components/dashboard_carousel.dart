@@ -39,7 +39,7 @@ class DashboardCarousel extends StatelessWidget {
               width: Get.size.width,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: greyColor.withOpacity(0.8),
+                color: greyColor.withValues(alpha: 0.8),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: CarouselSlider(

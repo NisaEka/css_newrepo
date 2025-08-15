@@ -1,3 +1,4 @@
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,11 +66,35 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   }
 
   void _handleScanResult(String barcode) {
-    if (cekResi) {
+    final upperBarcode = barcode.toUpperCase();
+
+    if (upperBarcode.trim().isEmpty) {
+      Get.back();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(Icons.warning, color: whiteColor),
+          message: 'Nomor resi tidak boleh kosong'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
+    } else if (upperBarcode.length > 16) {
+      Get.back();
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(Icons.warning, color: whiteColor),
+          message: 'Nomor resi maksimal 16 karakter'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
+    } else if (cekResi) {
       Get.off(() => const LacakKirimanScreen(),
-          arguments: {'nomor_resi': barcode});
+          arguments: {'nomor_resi': upperBarcode});
     } else {
-      Get.back(result: barcode);
+      Get.back(result: upperBarcode);
     }
   }
 

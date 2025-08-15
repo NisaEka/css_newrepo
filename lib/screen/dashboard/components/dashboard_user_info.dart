@@ -79,10 +79,42 @@ class DashboardUserInfo extends StatelessWidget {
                                 hintStyle: hintTextStyle,
                                 suffixIcon: GestureDetector(
                                   onTap: () {
-                                    c.onLacakKiriman(true, '');
+                                    final value = c.state.nomorResi.text
+                                        .replaceAll('\r', '')
+                                        .split('\n')
+                                        .map((e) => e.trim())
+                                        .where((e) => e.isNotEmpty)
+                                        .join('\n');
+
+                                    if (value.isEmpty) {
+                                      c.onLacakKiriman(true, '');
+                                      return;
+                                    }
+                                    final lines = value.split('\n');
+                                    final tooLong =
+                                        lines.any((l) => l.length > 16);
+                                    if (tooLong) {
+                                      Get.showSnackbar(GetSnackBar(
+                                        icon: const Icon(Icons.warning,
+                                            color: whiteColor),
+                                        message:
+                                            'Nomor resi maksimal 16 karakter'
+                                                .tr,
+                                        isDismissible: true,
+                                        duration: const Duration(seconds: 3),
+                                        backgroundColor: errorColor,
+                                      ));
+                                      return;
+                                    }
+                                    c.onLacakKiriman(false, value);
                                   },
                                   child: Icon(
-                                    c.state.nomorResi.text.isNotEmpty
+                                    c.state.nomorResi.text
+                                            .replaceAll('\r', '')
+                                            .split('\n')
+                                            .map((e) => e.trim())
+                                            .where((e) => e.isNotEmpty)
+                                            .isNotEmpty
                                         ? Icons.keyboard_return_rounded
                                         : Icons.qr_code_rounded,
                                     color: color ?? (primaryColor(context)),
@@ -103,7 +135,7 @@ class DashboardUserInfo extends StatelessWidget {
                                       backgroundColor: errorColor,
                                     ),
                                   );
-                                } else if (value.length > 16) {
+                                } else if (value.length < 16) {
                                   Get.showSnackbar(
                                     GetSnackBar(
                                       icon: const Icon(Icons.warning,
