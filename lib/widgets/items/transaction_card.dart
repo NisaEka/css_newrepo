@@ -91,7 +91,7 @@ class TransactionCard extends StatelessWidget {
                       customTitle ??
                           Container(
                             width: screenWidth < 400
-                                ? Get.width * 0.22
+                                ? Get.width * 0.235
                                 : Get.width * 0.237,
                             padding: EdgeInsets.symmetric(
                                 horizontal: horizontalPadding, vertical: 2),
