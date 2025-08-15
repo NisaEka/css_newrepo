@@ -17,6 +17,7 @@ import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
@@ -125,10 +126,12 @@ class RequestPickupScreen extends StatelessWidget {
           children: [
             Text("Terjadi kesalahan ketika mengambil data".tr),
             const Padding(padding: EdgeInsets.only(top: 16)),
-            FilledButton(
+            CustomFilledButton(
+              color: primaryColor(context),
+              title: 'Muat Ulang'.tr,
+              width: 100,
               onPressed: () => controller.requireRetry(),
-              child: const Text("Muat ulang"),
-            )
+            ),
           ],
         ),
       );
@@ -138,7 +141,7 @@ class RequestPickupScreen extends StatelessWidget {
       return _mainContentStack(context, controller);
     }
 
-    return Text("No Content".tr);
+    return const DataEmpty();
   }
 
   Widget _mainContentStack(
