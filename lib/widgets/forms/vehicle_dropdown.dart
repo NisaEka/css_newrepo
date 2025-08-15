@@ -87,10 +87,14 @@ class _OriginDropdownState extends State<VehicleDropdown> {
             showSearchBox: false,
             itemBuilder: (context, e, b) {
               return Container(
-                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
                   e.vehicleName.toString(),
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor(context)),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: textColor(context)),
                 ),
               );
             },
@@ -101,7 +105,10 @@ class _OriginDropdownState extends State<VehicleDropdown> {
             hintText: widget.label ?? "Pilih Armada".tr,
             searchHintText: widget.label ?? 'Pilih Armada'.tr,
             prefixIcon: widget.prefixIcon,
-            textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(color: textColor(context)),
+            textStyle: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: textColor(context)),
             readOnly: widget.readOnly,
             isRequired: widget.isRequired,
           );
@@ -183,6 +190,7 @@ class _OriginDropdownState extends State<VehicleDropdown> {
           onTap: () {
             widget.value;
             widget.controller?.text = post.vehicleName ?? '';
+            widget.onChanged?.call(post);
             Get.back();
           },
         );

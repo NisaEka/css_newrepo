@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/vehicle_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_address_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_count_model.dart';
@@ -48,6 +49,7 @@ class RequestPickupState {
   String selectedPickupTime = Constant.defaultPickupTime;
   String? selectedAddressId;
   String? selectedVehicle;
+  VehicleModel? vehicleItem;
 
   bool createDataLoading = false;
   bool createDataFailed = false;

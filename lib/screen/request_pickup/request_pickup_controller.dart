@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/master/get_origin_model.dart';
+import 'package:css_mobile/data/model/master/vehicle_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_create_request_model.dart';
 import 'package:css_mobile/screen/request_pickup/request_pickup_state.dart';
@@ -231,6 +232,12 @@ class RequestPickupController extends BaseController {
 
   void onSelectAddress(String id) {
     state.selectedAddressId = id;
+  }
+
+  void onSelectVehicle(String id, {VehicleModel? item}) {
+    state.selectedVehicle = id;
+    state.vehicleItem = item; // penting: simpan untuk initial value dropdown
+    update();
   }
 
   void selectItem(String awb) {
