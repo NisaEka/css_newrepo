@@ -76,11 +76,21 @@ class PromoItem extends StatelessWidget {
                   child: Container(
                     height: 55,
                     padding: const EdgeInsets.all(8),
-                    color: Colors.black.withOpacity(0.6),
+                    color: Colors.black.withValues(alpha: 0.6),
                     child: Text(
                       lang == "id"
-                          ? news?.detail?.where((e) => e.lang == "id").first.title ?? promo?.namaBanner ?? ''
-                          : news?.detail?.where((e) => e.lang == "en").first.title ?? promo?.namaBanner ?? '',
+                          ? news?.detail
+                                  ?.where((e) => e.lang == "id")
+                                  .first
+                                  .title ??
+                              promo?.namaBanner ??
+                              ''
+                          : news?.detail
+                                  ?.where((e) => e.lang == "en")
+                                  .first
+                                  .title ??
+                              promo?.namaBanner ??
+                              '',
                       textAlign: TextAlign.left,
                       style: const TextStyle(
                         color: Colors.white,

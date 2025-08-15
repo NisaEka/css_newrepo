@@ -53,22 +53,20 @@ class LacakKirimanScreen extends StatelessWidget {
                       ?.then((result) {
                 c.searchField.text = result;
                 c.update();
-                // if (c.isLogin) {
-                c.searchCnotes(result);
-                // } else {
-                //   Get.to(
-                //     () => PhoneNumberConfirmationScreen(
-                //       awb: result,
-                //       // cekResi: c.cekResi,
-                //       isLoading: c.isLoading,
-                //     ),
-                //   )?.then(
-                //     (phoneNumber) {
-                //       c.phoneNumber = phoneNumber;
-                //       c.searchCnotes(result ?? '');
-                //     },
-                //   );
-                // }
+                if (result == null || result.isEmpty) {
+                  Get.showSnackbar(
+                    GetSnackBar(
+                      icon: const Icon(Icons.warning, color: whiteColor),
+                      message: 'Nomor resi tidak boleh kosong'.tr,
+                      isDismissible: true,
+                      duration: const Duration(seconds: 3),
+                      backgroundColor: errorColor,
+                    ),
+                  );
+                  return;
+                } else {
+                  c.searchCnotes(result);
+                }
               }),
               child: Icon(
                 Icons.qr_code_rounded,
@@ -80,32 +78,29 @@ class LacakKirimanScreen extends StatelessWidget {
               c.countInputSearch(value);
             },
             onSubmit: (value) {
-              if (value.isEmpty) {
+              if (value.isEmpty || value.trim().isEmpty) {
                 Get.showSnackbar(
                   GetSnackBar(
-                    icon: const Icon(
-                      Icons.warning,
-                      color: whiteColor,
-                    ),
+                    icon: const Icon(Icons.warning, color: whiteColor),
                     message: 'Nomor resi tidak boleh kosong'.tr,
                     isDismissible: true,
                     duration: const Duration(seconds: 3),
                     backgroundColor: errorColor,
                   ),
                 );
-                // } else if (value.length > 16) {
-                //   Get.showSnackbar(
-                //     GetSnackBar(
-                //       icon: const Icon(
-                //         Icons.warning,
-                //         color: whiteColor,
-                //       ),
-                //       message: 'Nomor resi maksimal 16 karakter'.tr,
-                //       isDismissible: true,
-                //       duration: const Duration(seconds: 3),
-                //       backgroundColor: errorColor,
-                //     ),
-                //   );
+              } else if (value.length > 16) {
+                Get.showSnackbar(
+                  GetSnackBar(
+                    icon: const Icon(
+                      Icons.warning,
+                      color: whiteColor,
+                    ),
+                    message: 'Nomor resi maksimal 16 karakter'.tr,
+                    isDismissible: true,
+                    duration: const Duration(seconds: 3),
+                    backgroundColor: errorColor,
+                  ),
+                );
               } else {
                 // if (c.isLogin) {
                 // c.cekResi(value, '');

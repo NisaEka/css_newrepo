@@ -25,7 +25,7 @@ class AppSnackBar {
     custom(
       durationInSeconds: duration,
       message: message,
-      backgroundColor: greyColor.withOpacity(0.8),
+      backgroundColor: greyColor.withValues(alpha: 0.8),
       icon: const Icon(Icons.info, color: Colors.white),
     );
   }

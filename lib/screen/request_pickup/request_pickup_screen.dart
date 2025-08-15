@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/const/icon_const.dart';
+import 'package:css_mobile/data/model/master/vehicle_model.dart';
 import 'package:css_mobile/data/model/request_pickup/request_pickup_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
 import 'package:css_mobile/screen/request_pickup/address/request_pickup_address_upsert_screen.dart';
@@ -17,6 +18,7 @@ import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_bottom_sheet_scaffold.dart';
 import 'package:css_mobile/widgets/request_pickup/request_pickup_list_item.dart';
@@ -125,10 +127,12 @@ class RequestPickupScreen extends StatelessWidget {
           children: [
             Text("Terjadi kesalahan ketika mengambil data".tr),
             const Padding(padding: EdgeInsets.only(top: 16)),
-            FilledButton(
+            CustomFilledButton(
+              color: primaryColor(context),
+              title: 'Muat Ulang'.tr,
+              width: 100,
               onPressed: () => controller.requireRetry(),
-              child: const Text("Muat ulang"),
-            )
+            ),
           ],
         ),
       );
@@ -138,7 +142,7 @@ class RequestPickupScreen extends StatelessWidget {
       return _mainContentStack(context, controller);
     }
 
-    return Text("No Content".tr);
+    return const DataEmpty();
   }
 
   Widget _mainContentStack(
@@ -238,10 +242,12 @@ class RequestPickupScreen extends StatelessWidget {
                         children: [
                           Text("Terjadi kesalahan ketika mengambil data".tr),
                           const Padding(padding: EdgeInsets.only(top: 16)),
-                          FilledButton(
+                          CustomFilledButton(
+                            color: primaryColor(context),
+                            title: 'Muat Ulang'.tr,
+                            width: 100,
                             onPressed: () => controller.requireRetry(),
-                            child: const Text("Muat ulang"),
-                          )
+                          ),
                         ],
                       ));
                     },
@@ -313,11 +319,12 @@ class RequestPickupScreen extends StatelessWidget {
                 }
               });
             },
-            onSelectVehicle: (vehicle) {
-              controller.state.selectedVehicle = vehicle;
-              controller.update();
-              // print("selected vehicle  = ${controller.state.selectedVehicle}");
-            },
+            // onSelectVehicle: (vehicle) {
+            //   setState(() => controller.onSelectVehicle(vehicle));
+            //   controller.state.selectedVehicle = vehicle;
+            //   controller.update();
+            //   print("selected vehicle  = ${controller.state.selectedVehicle}");
+            // },
             onPickupClick: () {
               Get.dialog(RequestPickupConfirmationDialog(
                 pickupTime: controller.getSelectedPickupTime(),
@@ -339,6 +346,16 @@ class RequestPickupScreen extends StatelessWidget {
               setState(() => controller.onSelectAddress(addressId));
             },
             selectedAddressId: controller.state.selectedAddressId,
+            selectedVehicle: controller.state.selectedVehicle,
+            selectedVehicleItem: controller.state.vehicleItem,
+            onSelectVehicle: (VehicleModel item) {
+              setState(() =>
+                  controller.onSelectVehicle(item.vehicleId ?? '', item: item));
+              controller.state.selectedVehicle = item.vehicleName;
+              controller.state.selectedVehicle = item.vehicleId;
+              controller.update();
+              // print("selected vehicle  = ${controller.state.selectedVehicle}");
+            },
           ),
         );
       }),

@@ -210,7 +210,13 @@ class StickerA6 extends StatelessWidget {
                     children: [
                       Text(
                         data.delivery?.serviceCode ?? '-',
-                        style: TextStyle(fontSize: 30, fontWeight: bold),
+                        style: TextStyle(
+                          fontSize:
+                              (data.delivery?.serviceCode?.length ?? 0) > 4
+                                  ? 20
+                                  : 30,
+                          fontWeight: bold,
+                        ),
                       ),
                       Text(
                         data.type == 'COD' ? data.type ?? '' : '',

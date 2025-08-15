@@ -76,8 +76,12 @@ class TransactionCard extends StatelessWidget {
               height: height,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppConst.isLightTheme(context) ? greyLightColor3 : greyDarkColor1),
-                color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
+                border: Border.all(
+                    color: AppConst.isLightTheme(context)
+                        ? greyLightColor3
+                        : greyDarkColor1),
+                color:
+                    AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,22 +90,32 @@ class TransactionCard extends StatelessWidget {
                     children: [
                       customTitle ??
                           Container(
-                            width: Get.width * 0.237,
-                            padding: EdgeInsets.symmetric(horizontal: horizontalPadding, vertical: 2),
+                            width: screenWidth < 400
+                                ? Get.width * 0.235
+                                : Get.width * 0.237,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: horizontalPadding, vertical: 2),
                             decoration: BoxDecoration(
-                              color: color ?? (AppConst.isLightTheme(context) ? blueJNE : warningColor),
+                              color: color ??
+                                  (AppConst.isLightTheme(context)
+                                      ? blueJNE
+                                      : warningColor),
                               borderRadius: BorderRadius.circular(3),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
-                                Icon(Icons.circle, color: statusColor ?? whiteColor, size: 6),
+                                Icon(Icons.circle,
+                                    color: statusColor ?? whiteColor, size: 6),
                                 const SizedBox(width: 5),
                                 SizedBox(
                                   width: titleWidth,
                                   child: Text(
                                     title ?? '',
-                                    style: const TextStyle(color: whiteColor, fontWeight: FontWeight.bold, fontSize: 7),
+                                    style: const TextStyle(
+                                        color: whiteColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 7),
                                   ),
                                 ),
                               ],
@@ -109,7 +123,9 @@ class TransactionCard extends StatelessWidget {
                           ),
                     ],
                   ),
-                  count.toString().length >= 5 ? SizedBox(height: innerPadding ?? 17) : SizedBox(height: innerPadding ?? 13),
+                  count.toString().length >= 5
+                      ? SizedBox(height: innerPadding ?? 17)
+                      : SizedBox(height: innerPadding ?? 13),
                   lineChartCountValue != null
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,12 +135,16 @@ class TransactionCard extends StatelessWidget {
                               lineChartCountValue ?? '',
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
-                            countValueChart != null ? const Spacer() : const SizedBox(),
+                            countValueChart != null
+                                ? const Spacer()
+                                : const SizedBox(),
                             countValueChart ?? const SizedBox(),
                           ],
                         )
                       : const SizedBox(),
-                  screenWidth < 400 || screenWidth >= 400 && screenWidth > 500 ? SizedBox(height: sizedBox) : const SizedBox(),
+                  screenWidth < 400 || screenWidth >= 400 && screenWidth > 500
+                      ? SizedBox(height: sizedBox)
+                      : const SizedBox(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -142,7 +162,10 @@ class TransactionCard extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
-                                  ?.copyWith(fontSize: count.toString().length >= 5 ? 16 - (count.toString().length - 5) : (countFontSize ?? 22)),
+                                  ?.copyWith(
+                                      fontSize: count.toString().length >= 5
+                                          ? 16 - (count.toString().length - 5)
+                                          : (countFontSize ?? 22)),
                             ),
                           ],
                         ),
@@ -151,10 +174,15 @@ class TransactionCard extends StatelessWidget {
                       suffixChart ?? const SizedBox(),
                     ],
                   ),
-                  count.toString().length >= 5 ? SizedBox(height: innerPadding ?? 17) : SizedBox(height: innerPadding ?? 13),
+                  count.toString().length >= 5
+                      ? SizedBox(height: innerPadding ?? 17)
+                      : SizedBox(height: innerPadding ?? 13),
                   Text(
                     subtitle,
-                    style: Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 8),
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium
+                        ?.copyWith(fontSize: 8),
                   ),
                 ],
               ),

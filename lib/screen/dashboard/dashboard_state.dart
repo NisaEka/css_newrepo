@@ -21,6 +21,7 @@ class DashboardState {
   bool? isFromLogin = Get.arguments?['isFromLogin'];
   final selectedIndex = 0.obs;
   final nomorResi = TextEditingController();
+  final searchField = TextEditingController();
   DateTime? currentBackPressTime;
 
   bool isLogin = false;
