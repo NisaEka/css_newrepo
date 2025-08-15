@@ -25,6 +25,7 @@ import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.d
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/safety_tips_dialog.dart';
 import 'package:flutter/material.dart';
@@ -52,6 +53,28 @@ class DashboardController extends BaseController {
         AppLogger.e('onInit error $e\n$s');
       }
     }();
+    if (state.nomorResi.text.isNotEmpty) {
+      state.searchField.text = state.nomorResi.text;
+      Future.delayed(Duration.zero, () async {
+        countInputSearch(state.searchField.text);
+
+        // if (await cekToken()) {
+        // searchCnotes(state.nomorResi.text);
+        // } else {
+        //   Get.to(
+        //     () => PhoneNumberConfirmationScreen(
+        //       awb: resi ?? '',
+        //       isLoading: isLoading,
+        //     ),
+        //   )?.then(
+        //     (phoneNumber) {
+        //       phoneNumber = phoneNumber;
+        //       searchCnotes(resi ?? '');
+        //     },
+        //   );
+        // }
+      });
+    }
   }
 
   Future<void> cekMessages() async {
@@ -780,6 +803,27 @@ class DashboardController extends BaseController {
     pop = true;
     update();
     return true;
+  }
+
+  void countInputSearch(String value) {
+    if (value.split('\n').where((element) => element.isNotEmpty).length > 100) {
+      Get.dialog(
+        DefaultAlertDialog(
+          title: "Peringatan".tr,
+          icon: Icon(
+            Icons.warning,
+            color: warningColor,
+            size: Get.width / 4,
+          ),
+          subtitle: 'Maksimal Pencarian adalah 101 awb'.tr,
+          confirmButtonTitle: 'Ok'.tr,
+          onConfirm: () {
+            Get.back();
+            FocusScope.of(Get.context!).unfocus();
+          },
+        ),
+      );
+    }
   }
 
   onLacakKiriman(bool useBarcode, String value) {

@@ -121,7 +121,10 @@ class DashboardUserInfo extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              onChanged: (value) => c.update(),
+                              onChanged: (value) {
+                                c.countInputSearch(value);
+                                c.update();
+                              },
                               onSubmitted: (value) {
                                 if (value.isEmpty) {
                                   Get.showSnackbar(
