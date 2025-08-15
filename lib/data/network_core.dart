@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
@@ -63,17 +62,14 @@ class NetworkCore {
     try {
       Response response = await base.post(
         '/authentications/refresh',
-        data: {
-          "refreshToken": refreshToken
-        },
+        data: {"refreshToken": refreshToken},
       );
 
       final refreshTokenResponse = BaseResponse<PostLoginModel>.fromJson(
         response.data,
-            (json) =>
-            PostLoginModel.fromJson(
-              json as Map<String, dynamic>,
-            ),
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
 
       await StorageCore().saveToken(
@@ -95,10 +91,9 @@ class NetworkCore {
 
       return BaseResponse<PostLoginModel>.fromJson(
         e.response?.data,
-            (json) =>
-            PostLoginModel.fromJson(
-              json as Map<String, dynamic>,
-            ),
+        (json) => PostLoginModel.fromJson(
+          json as Map<String, dynamic>,
+        ),
       );
     } finally {
       isRefreshing = false;
@@ -203,7 +198,7 @@ class NetworkCore {
             final refreshToken = await const FlutterSecureStorage().read(key: StorageCore.refreshToken);
             // AppLogger.i("refresh token local : $refreshToken");
 
-            if (dioError.response?.statusCode == 401 ) {
+            if (dioError.response?.statusCode == 401) {
               if (refreshToken == null) {
                 AppLogger.w("refresh token local kosong");
                 return handler.reject(dioError);
@@ -213,7 +208,7 @@ class NetworkCore {
 
                 final refreshTokenResponse = await postRefreshToken(dioError, handler);
 
-                AppLogger.i("refresh token response : ${jsonEncode(refreshTokenResponse)}");
+                AppLogger.i("refresh token Success");
 
                 if (refreshTokenResponse.code == 401) {
                   return handler.reject(dioError);

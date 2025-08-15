@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
@@ -37,7 +38,7 @@ class DraftTransaksiController extends BaseController {
       connection.isOnline().then((value) {
         isOnline = value && (result != ConnectivityResult.none);
         update();
-        if (isSync) {
+        if (isSync && isOnline) {
           syncData();
         }
       });
@@ -53,11 +54,11 @@ class DraftTransaksiController extends BaseController {
     draftList = [];
     var data = DraftTransactionModel.fromJson(await storage.readData(StorageCore.draftTransaction));
     draftList.addAll(data.draft);
-    update();
-
     isSync = draftList.where((element) => element.delivery?.freightCharge != 0).isNotEmpty;
 
     update();
+
+
   }
 
   void delete(int index) async {
@@ -90,10 +91,16 @@ class DraftTransaksiController extends BaseController {
   }
 
   Future<void> syncData() async {
+    print('do sync');
+
+    isSync = false;
     isLoading = true;
     update();
-    draftList.where((e) => e.delivery?.freightCharge != 0).forEach((upload) async {
-      update();
+    var drafts = draftList.where((e) => e.delivery?.freightCharge != 0);
+    AppLogger.i(drafts.length.toString());
+
+    drafts.forEachIndexed((index, upload) async {
+      AppLogger.d("upload ke $index");
       try {
         await transaction
             .postTransaction(TransactionModel(
@@ -150,17 +157,20 @@ class DraftTransaksiController extends BaseController {
             .then((value) async {
           if (value.code == 201) {
             draftList.removeWhere((draft) => draft.delivery?.freightCharge != 0);
+            update();
             var data = '{"draft" : ${jsonEncode(draftList)}}';
             draftData = DraftTransactionModel.fromJson(jsonDecode(data));
-
             await storage.saveData(StorageCore.draftTransaction, draftData).then((_) {
               initData();
             });
+            isSync = draftList.where((element) => element.delivery?.freightCharge != 0).isNotEmpty;
+
+            AppSnackBar.success('Draft berhasil di upload'.tr);
+          } else {
+            AppSnackBar.error('Draft gagal di upload'.tr);
           }
 
           update();
-
-          value.code == 201 ? AppSnackBar.success('Draft berhasil di upload'.tr) : AppSnackBar.error('Draft gagal di upload'.tr);
         });
       } catch (e) {
         AppLogger.e('error sync $e');

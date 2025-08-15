@@ -41,7 +41,7 @@ class TransactionController extends BaseController {
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
-        AppLogger.i('isOnline : $value $result');
+        AppLogger.i('isOnline Transaction Screen : $value $result');
         state.isOnline = value && (result != ConnectivityResult.none);
         if (state.isOnline) {
           // AppSnackBar.success('Online Mode'.tr);
