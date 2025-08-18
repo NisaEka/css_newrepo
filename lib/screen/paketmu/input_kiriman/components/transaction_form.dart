@@ -465,7 +465,7 @@ class TransactionForm extends StatelessWidget {
                                 color: c.isValidate() ? primaryColor(context) : greyColor,
                                 suffixIcon: (c.state.isEdit ?? false) ? Icons.edit_note_rounded : Icons.qr_code_rounded,
                                 title: (c.state.isEdit ?? false) ? 'Edit Transaksi'.tr : 'Buat Transaksi'.tr,
-                                onPressed: () => c.onSaved(),
+                                onPressed: () => c.onSubmit(),
                               )
                             : const SizedBox(),
                         c.state.goods == null && !c.state.isOnline || c.state.draft != null

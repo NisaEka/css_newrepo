@@ -686,7 +686,7 @@ class TransactionController extends BaseController {
     if (value.toInt() <= state.getCodAmountMinimum) {}
   }
 
-  Future<void> onSaved() async {
+  Future<void> onSubmit() async {
     if ((state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => DefaultAlertDialog(

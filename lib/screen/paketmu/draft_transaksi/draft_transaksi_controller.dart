@@ -57,8 +57,6 @@ class DraftTransaksiController extends BaseController {
     isSync = draftList.where((element) => element.delivery?.freightCharge != 0).isNotEmpty;
 
     update();
-
-
   }
 
   void delete(int index) async {
@@ -91,7 +89,7 @@ class DraftTransaksiController extends BaseController {
   }
 
   Future<void> syncData() async {
-    print('do sync');
+    AppLogger.d('do sync');
 
     isSync = false;
     isLoading = true;
