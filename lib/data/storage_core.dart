@@ -34,6 +34,7 @@ class StorageCore {
   static const String lastAgg = "last_aggregation_payment_date";
   static const String failedLoginAttempts = "failed_login_attempts";
   static const String loginLockedUntil = "login_locked_until";
+  static const String vehicle = "vehicle";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -125,6 +126,7 @@ class StorageCore {
     await storage.delete(key: ccrfProfile);
     await storage.delete(key: unreadMessage);
     await storage.delete(key: readMessage);
+    await storage.delete(key: vehicle);
     deleteString(StorageCore.favoriteMenu);
   }
 }
