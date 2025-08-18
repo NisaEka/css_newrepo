@@ -359,7 +359,6 @@ class MasterRepositoryImpl extends MasterRepository {
         ),
       );
     } on DioException catch (e) {
-      AppLogger.e("Error get service : ${e.response?.data}");
       return BaseResponse<TransServiceModel>.fromJson(
         e.response?.data,
         (json) => TransServiceModel.fromJson(

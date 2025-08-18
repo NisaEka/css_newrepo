@@ -718,6 +718,7 @@ class LanguageEN {
       'Perkiraan Sampai': "Estimated Arrival",
       "Kata sandi baru": "New Password",
       "Konfirmasi Kata Sandi baru": "Confirm New Password",
+      "Internal server error" : "Failed connect to server, please try again",
     };
   }
 }

@@ -15,6 +15,7 @@ class LanguageID {
       "Online Mode": "Mode Online",
       "check_connection": "Koneksi Gagal",
       "Anda tidak memiliki izin untuk mengupdate data": "You are not authorized to update the data",
+      "Internal server error" : "Gagal terhubung ke server, silakan coba lagi"
     };
   }
 }

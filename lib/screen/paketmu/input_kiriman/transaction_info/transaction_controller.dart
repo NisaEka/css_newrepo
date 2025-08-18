@@ -188,6 +188,11 @@ class TransactionController extends BaseController {
             state.codfee = value.data?.disc?.toDouble() ?? 0;
             update();
           },
+        ).onError(
+          (error, stackTrace) {
+            state.isServiceLoad = false;
+            update();
+          },
         );
         state.isCalculate = false;
 
@@ -291,7 +296,7 @@ class TransactionController extends BaseController {
           if (value.code == 400) {
             AppSnackBar.error("Service tidak tersedia".tr);
           } else {
-            AppSnackBar.error(value.message.toString());
+            AppSnackBar.error(value.message.toString().tr);
             state.isOnline = false;
             update();
           }
