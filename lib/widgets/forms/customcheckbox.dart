@@ -7,6 +7,7 @@ class CustomCheckbox extends StatelessWidget {
   final void Function(bool?) onChanged;
   final double? width;
   final Widget? trailing;
+  final bool readOnly;
 
   const CustomCheckbox({
     super.key,
@@ -15,6 +16,7 @@ class CustomCheckbox extends StatelessWidget {
     required this.onChanged,
     this.width,
     this.trailing,
+    this.readOnly = false,
   });
 
   @override
@@ -30,7 +32,7 @@ class CustomCheckbox extends StatelessWidget {
           width: 24.0,
           child: Checkbox(
             value: value,
-            onChanged: onChanged,
+            onChanged: readOnly ? null : onChanged,
             activeColor: primaryColor(context),
           ),
         ),

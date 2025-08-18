@@ -30,6 +30,7 @@ import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/safety_tips_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends BaseController {
@@ -38,6 +39,8 @@ class DashboardController extends BaseController {
   @override
   void onInit() {
     super.onInit();
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+
     () async {
       try {
         await isFirst();

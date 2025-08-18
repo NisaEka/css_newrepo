@@ -57,7 +57,7 @@ class TransactionFilterButton extends HookWidget {
                             ),
                             OfficerDropdown(
                               label: 'Petugas Entry'.tr,
-                              readOnly: c.state.basic?.userType != "PEMILIK",
+                              readOnly: c.state.basic?.userType != "PEMILIK" && c.state.allow?.semuaTransaksi != "Y",
                               selectedItem: c.state.selectedPetugasEntry?.name,
                               value: c.state.selectedPetugasEntry,
                               onChanged: (value) {

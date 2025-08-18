@@ -15,8 +15,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PetugasModel>>> getOfficers(
-      int page, String keyword, int limit) async {
+  Future<BaseResponse<List<PetugasModel>>> getOfficers(int page, String keyword, int limit) async {
     QueryModel params = QueryModel(
       table: true,
       search: keyword,

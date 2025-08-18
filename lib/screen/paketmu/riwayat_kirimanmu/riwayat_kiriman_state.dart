@@ -15,8 +15,7 @@ class RiwayatKirimanState {
 
   bool? isLastScreen = Get.arguments?['isLastScreen'] ?? false;
   final searchField = TextEditingController();
-  final PagingController<int, TransactionModel> pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, TransactionModel> pagingController = PagingController(firstPageKey: 1);
 
   int selectedKiriman = 0;
   int total = 0;
