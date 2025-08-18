@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/master/vehicle_model.dart';
-import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/repository/master/master_repository.dart';
+import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -53,20 +55,39 @@ class VehicleDropdown extends StatefulHookWidget {
 
 class _OriginDropdownState extends State<VehicleDropdown> {
   final searchTextfield = TextEditingController();
-  PetugasModel? officer;
+  List<VehicleModel> vehicles = [];
+  bool isFilterOnline = true;
+
+  // PetugasModel? officer;
 
   Future<List<VehicleModel>> getVehicleList(String keyword) async {
     final master = Get.find<MasterRepository>();
+    final storage = Get.find<StorageCore>();
+    List<VehicleModel>? models;
 
-
-    var response = await master.getVehicles();
-    var models = response.data
-        ?.where(
-          (element) => element.vehicleStatus == "Y",
-        )
-        .toList();
-
-    return models ?? [];
+    try {
+      var response = await master.getVehicles();
+      models = response.data
+          ?.where(
+            (element) => element.vehicleStatus == "Y",
+          )
+          .toList();
+    } catch (e) {
+      if (e is DioException) {
+        AppLogger.e("error vehicle list : $e");
+        var local = await storage.readData(StorageCore.vehicle);
+        if (local is List) {
+          vehicles = local.map((e) => VehicleModel.fromJson(e)).toList();
+        }
+        setState(() {
+          isFilterOnline = false;
+        });
+      }
+      setState(() {
+        isFilterOnline = false;
+      });
+    }
+    return models ?? vehicles;
   }
 
   @override

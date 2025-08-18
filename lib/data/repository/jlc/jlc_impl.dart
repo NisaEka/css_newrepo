@@ -7,7 +7,6 @@ import 'package:css_mobile/data/model/jlc/post_total_point_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/jlc/jlc_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
-import 'package:css_mobile/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
@@ -26,7 +25,8 @@ class JLCRepositoryImpl extends JLCRepository {
           (json) => json is List<dynamic>
               ? json
                   .map<JLCTotalPointModel>(
-                    (i) => JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
+                    (i) =>
+                        JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
               : List.empty());
@@ -37,7 +37,8 @@ class JLCRepositoryImpl extends JLCRepository {
           (json) => json is List<dynamic>
               ? json
                   .map<JLCTotalPointModel>(
-                    (i) => JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
+                    (i) =>
+                        JLCTotalPointModel.fromJson(i as Map<String, dynamic>),
                   )
                   .toList()
               : List.empty());
@@ -103,7 +104,8 @@ class JLCRepositoryImpl extends JLCRepository {
   @override
   Future<BaseResponse<List<BannerModel>>> postDashboardBanner() async {
     try {
-      Response response = await network.base.get('/accounts/jlc/banner', options: Options(extra: {'skipAuth': true}));
+      Response response = await network.base.get('/accounts/jlc/banner',
+          options: Options(extra: {'skipAuth': true}));
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
