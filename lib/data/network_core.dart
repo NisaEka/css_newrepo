@@ -132,6 +132,7 @@ class NetworkCore {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
         },
+        connectTimeout: const Duration(seconds: 30),
       );
 
       AppLogger.i("Base URL base: ${base.options.baseUrl}");
