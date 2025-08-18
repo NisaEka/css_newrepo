@@ -24,7 +24,7 @@ class DashboardCarousel extends StatelessWidget {
         builder: (controller) {
           return Shimmer(
             // isLoading: controller.state.bannerList.isEmpty,
-            isLoading: controller.state.isLoading,
+            isLoading: controller.state.isLoadingCarousel,
             child: Container(
               margin: EdgeInsets.only(
                 left: 20,

@@ -20,12 +20,11 @@ class DashboardMenu2 extends StatelessWidget {
         init: DashboardController(),
         builder: (controller) {
           return Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: 12, vertical: verticalMargin),
+            margin: EdgeInsets.symmetric(horizontal: 12, vertical: verticalMargin),
             height: screenWidth < 400 ? 100 : 120,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: controller.state.isLoading
+              child: controller.state.isLoadingMenu
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
@@ -49,29 +48,23 @@ class DashboardMenu2 extends StatelessWidget {
                                     menuTitle: e.title?.tr ?? '',
                                     menuImg: e.icon,
                                     data: e,
-                                    isLoading: controller.state.isLoading,
-                                    isActive: (e.isAuth ?? false)
-                                        ? controller.state.isLogin
-                                        : true,
-                                    onTap: () => (e.isAuth == true &&
-                                            !controller.state.isLogin)
+                                    // isLoading: controller.state.isLoading,
+                                    isActive: (e.isAuth ?? false) ? controller.state.isLogin : true,
+                                    onTap: () => (e.isAuth == true && !controller.state.isLogin)
                                         ? showDialog(
                                             context: context,
-                                            builder: (context) =>
-                                                const LoginAlertDialog(),
+                                            builder: (context) => const LoginAlertDialog(),
                                           )
                                         : !controller.state.isLoading
-                                            ? Get.toNamed(e.route.toString(),
-                                                arguments: {})
+                                            ? Get.toNamed(e.route.toString(), arguments: {})
                                             : null,
                                   ))
                               .toList(),
                         ),
                         MenuItem(
                           menuTitle: 'Lainnya'.tr,
-                          isLoading: controller.state.isLoading,
-                          onTap: () =>
-                              Get.to(() => const OtherMenuScreen(), arguments: {
+                          // isLoading: controller.state.isLoading,
+                          onTap: () => Get.to(() => const OtherMenuScreen(), arguments: {
                             'isLogin': controller.state.isLogin,
                             'allowance': controller.state.allow,
                           })?.then(
@@ -83,9 +76,7 @@ class DashboardMenu2 extends StatelessWidget {
                           ),
                           menuIcon: Icon(
                             Icons.more_horiz,
-                            color: AppConst.isLightTheme(context)
-                                ? whiteColor
-                                : warningColor,
+                            color: AppConst.isLightTheme(context) ? whiteColor : warningColor,
                             size: 45,
                           ),
                         ),

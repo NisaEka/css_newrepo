@@ -22,38 +22,24 @@ class JLCPointWidget extends StatelessWidget {
     return GetBuilder<DashboardController>(
         init: DashboardController(),
         builder: (controller) {
-          return controller.state.isLogin &&
-                  (controller.state.allow.keuanganBonus == "Y" ||
-                      controller.state.allow.bonus == "Y")
+          return controller.state.isLogin && (controller.state.allow.keuanganBonus == "Y" || controller.state.allow.bonus == "Y")
               ? GestureDetector(
                   onTap: () => Get.to(() => const BonusKamuScreen()),
                   child: Shimmer(
-                    isLoading: controller.state.isLoading,
+                    isLoading: controller.state.isLoadingJLC,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: controller.state.isLoading
-                            ? greyColor
-                            : Colors.transparent,
-                        borderRadius: controller.state.isLoading
-                            ? BorderRadius.circular(10)
-                            : null,
+                        color: controller.state.isLoading ? greyColor : Colors.transparent,
+                        borderRadius: controller.state.isLoading ? BorderRadius.circular(10) : null,
                       ),
                       child: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
-                                  ? whiteColor
-                                  : whiteColor,
+                          color: Theme.of(context).brightness == Brightness.light ? whiteColor : whiteColor,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
-                              color: controller.state.isLoading
-                                  ? greyColor
-                                  : color ??
-                                      (AppConst.isLightTheme(context)
-                                          ? redJNE
-                                          : warningColor),
+                              color: controller.state.isLoading ? greyColor : color ?? (AppConst.isLightTheme(context) ? redJNE : warningColor),
                               spreadRadius: 1,
                               offset: const Offset(-2, 2),
                             ),
@@ -65,12 +51,8 @@ class JLCPointWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Image.asset(ImageConstant.logoJLC2, height: 12),
-                            Text(
-                                ' ${point != '0' ? point.toDouble().toCurrency() : 0} Point',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: greyDarkColor1)),
+                            Text(' ${point != '0' ? point.toDouble().toCurrency() : 0} Point',
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(color: greyDarkColor1)),
                           ],
                         ),
                       ),

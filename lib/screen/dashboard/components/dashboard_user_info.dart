@@ -47,7 +47,7 @@ class DashboardUserInfo extends StatelessWidget {
                                 title: 'Selamat Datang'.tr,
                                 value: c.state.userName ?? '',
                                 fontColor: whiteColor,
-                                isLoading: c.state.isLoading,
+                                isLoading: c.state.isLoadingProfile,
                               ),
                               JLCPointWidget(point: c.state.jlcPoint ?? '0')
                             ],
