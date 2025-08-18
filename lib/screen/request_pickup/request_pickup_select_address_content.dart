@@ -183,7 +183,7 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: VehicleDropdown(
         isRequired: true,
-        value: selectedVehicleItem,
+        value: selectedVehicleItem, // <-- inilah initial value
         selectedItem: selectedVehicleItem?.vehicleName,
         onChanged: (item) => onSelectVehicle(item),
       ),

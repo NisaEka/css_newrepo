@@ -607,8 +607,6 @@ class DashboardController extends BaseController {
             (await storage.readString(StorageCore.dropshipper)) == 'null');
     bool receiver = ((await storage.readString(StorageCore.receiver)).isEmpty ||
         (await storage.readString(StorageCore.receiver)) == 'null');
-    bool vehicle = ((await storage.readString(StorageCore.vehicle)).isEmpty ||
-        (await storage.readString(StorageCore.vehicle)) == 'null');
     // bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null');
     bool basic = ((await storage.readString(StorageCore.basicProfile))
                 .isEmpty ||
@@ -738,13 +736,6 @@ class DashboardController extends BaseController {
                   StorageCore.receiver,
                   value,
                 ));
-      }
-
-      if (vehicle && state.isLogin) {
-        await master.getVehicles().then((value) async => await storage.saveData(
-              StorageCore.vehicle,
-              value,
-            ));
       }
 
       state.isCcrf =
