@@ -754,6 +754,7 @@ class TransactionController extends BaseController {
     double? iconHeight,
     String? message,
   }) {
+    storage.deleteString(StorageCore.transactionTemp);
     return SuccessScreen(
       lottie: lottie ?? ImageConstant.successLottie,
       iconMargin: iconMargin ?? 100,
