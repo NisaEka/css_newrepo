@@ -299,7 +299,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<PostTransactionOngkirModel>> postCalcOngkir(DataTransactionOngkirModel data) async {
-    data.toJson().printInfo();
+    // data.toJson().printInfo();
     try {
       Response response = await network.base.post(
         "/transaction/fees/ongkir",

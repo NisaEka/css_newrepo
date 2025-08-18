@@ -32,10 +32,7 @@ class TambahPetugasScreen extends StatelessWidget {
               title: controller.isEdit ? 'Edit Petugas' : 'Tambah Petugas'.tr,
             ),
             body: Stack(
-              children: [
-                _bodyContent(controller, context),
-                controller.isLoading ? const LoadingDialog() : const SizedBox()
-              ],
+              children: [_bodyContent(controller, context), controller.isLoading ? const LoadingDialog() : const SizedBox()],
             ),
           );
         });
@@ -56,20 +53,17 @@ class TambahPetugasScreen extends StatelessWidget {
                   hintText: 'Nama Petugas'.tr,
                   isRequired: true,
                   validator: ValidationBuilder().name().build(),
+                  //readOnly: c.basic?.userType != "PEMILIK",
                 ),
                 CustomTextFormField(
                   controller: c.alamatEmail,
                   hintText: 'Alamat Email'.tr,
                   readOnly: c.isEdit,
                   isRequired: true,
-                  validator: ValidationBuilder(localeName: c.locale)
-                      .email()
-                      .minLength(10)
-                      .build(),
+                  validator: ValidationBuilder(localeName: c.locale).email().minLength(10).build(),
                   inputFormatters: [
                     TextInputFormatter.withFunction((oldValue, newValue) {
-                      return newValue.copyWith(
-                          text: newValue.text.toLowerCase());
+                      return newValue.copyWith(text: newValue.text.toLowerCase());
                     })
                   ],
                 ),
@@ -78,6 +72,7 @@ class TambahPetugasScreen extends StatelessWidget {
                   hintText: 'Nomor Telepon'.tr,
                   isRequired: true,
                   inputType: TextInputType.number,
+                  //readOnly: c.basic?.userType != "PEMILIK",
                   validator: ValidationBuilder().phoneNumber().build(),
                 ),
                 c.isEdit
@@ -102,9 +97,7 @@ class TambahPetugasScreen extends StatelessWidget {
                         suffixIcon: IconButton(
                           icon: c.showIcon,
                           onPressed: () {
-                            c.isObscurePassword
-                                ? c.isObscurePassword = false
-                                : c.isObscurePassword = true;
+                            c.isObscurePassword ? c.isObscurePassword = false : c.isObscurePassword = true;
                             c.isObscurePassword != false
                                 ? c.showIcon = const Icon(
                                     Icons.visibility,
@@ -136,9 +129,7 @@ class TambahPetugasScreen extends StatelessWidget {
                         suffixIcon: IconButton(
                           icon: c.showConfirmIcon,
                           onPressed: () {
-                            c.isObscurePasswordConfirm
-                                ? c.isObscurePasswordConfirm = false
-                                : c.isObscurePasswordConfirm = true;
+                            c.isObscurePasswordConfirm ? c.isObscurePasswordConfirm = false : c.isObscurePasswordConfirm = true;
                             c.isObscurePasswordConfirm != false
                                 ? c.showConfirmIcon = const Icon(
                                     Icons.visibility,
@@ -157,6 +148,8 @@ class TambahPetugasScreen extends StatelessWidget {
                     ? CustomDropDownFormField(
                         hintText: 'Status'.tr,
                         value: c.status,
+                        //readOnly: c.basic?.userType != "PEMILIK",
+                        selectedItem: c.status == "Y" ? "Aktif".tr : "Tidak Aktif".tr,
                         items: [
                           DropdownMenuItem(
                             value: "Y",
@@ -179,8 +172,7 @@ class TambahPetugasScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(color: greyColor),
                   ),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                   child: Column(
                     children: [
                       Align(
@@ -188,10 +180,7 @@ class TambahPetugasScreen extends StatelessWidget {
                         child: Text(
                           'Hak Akses'.tr,
                           style: listTitleTextStyle.copyWith(
-                            color:
-                                Theme.of(context).brightness == Brightness.light
-                                    ? blueJNE
-                                    : Colors.white,
+                            color: Theme.of(context).brightness == Brightness.light ? blueJNE : Colors.white,
                           ),
                         ),
                       ),
@@ -206,13 +195,11 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem('Profilku', c.profilku,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Profilku', c.profilku, (value) {
                                 c.profilku = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Ubah Kata Sandi', c.katasandi,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Ubah Kata Sandi', c.katasandi, (value) {
                                 c.katasandi = value!;
                                 c.update();
                               }),
@@ -227,15 +214,14 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem('Beranda', c.beranda, (value) {
+                              _buildCheckboxItem(c, 'Beranda', c.beranda, (value) {
                                 c.beranda = value!;
                                 if (value == false) {
                                   c.semuaTransaksi = false;
                                 }
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Pantau Paketmu', c.pantauPaketmu, (value) {
+                              _buildCheckboxItem(c, 'Pantau Paketmu', c.pantauPaketmu, (value) {
                                 c.pantauPaketmu = value!;
                                 if (value == false) {
                                   c.semuaTransaksi = false;
@@ -252,16 +238,12 @@ class TambahPetugasScreen extends StatelessWidget {
                           ),
                           GridView.builder(
                             shrinkWrap: true,
-                            padding: const EdgeInsets.only(
-                                left: 32, right: 0, top: 0, bottom: 12),
+                            padding: const EdgeInsets.only(left: 32, right: 0, top: 0, bottom: 12),
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1, childAspectRatio: 9),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 9),
                             itemCount: 1,
                             itemBuilder: (context, index) {
-                              return _buildCheckboxItem(
-                                  'Input Kirimanmu', c.buatPesanan, (value) {
+                              return _buildCheckboxItem(c, 'Input Kirimanmu', c.buatPesanan, (value) {
                                 c.buatPesanan = value!;
                                 if (value == false) {
                                   c.selectedBranchList = [];
@@ -285,64 +267,37 @@ class TambahPetugasScreen extends StatelessWidget {
                                           children: [
                                             MultiSelectDialogField(
                                               decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color:
-                                                        AppConst.isLightTheme(
-                                                                context)
-                                                            ? greyDarkColor1
-                                                            : greyLightColor1),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
+                                                border: Border.all(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
+                                                borderRadius: BorderRadius.circular(8),
                                               ),
                                               selectAll: true,
                                               searchable: true,
-                                              buttonIcon: const Icon(
-                                                  Icons.keyboard_arrow_down),
+                                              buttonIcon: const Icon(Icons.keyboard_arrow_down),
                                               buttonText: Text(
                                                 c.selectedAccountList.isNotEmpty
                                                     ? '${c.selectedAccountList.length} ${'Akun'.tr} ${'Dipilih'.tr}'
                                                     : 'Akun'.tr,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .copyWith(
-                                                        color:
-                                                            textColor(context)),
+                                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textColor(context)),
                                               ),
-                                              itemsTextStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge!
-                                                  .copyWith(
-                                                      color:
-                                                          textColor(context)),
+                                              itemsTextStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textColor(context)),
                                               dialogWidth: Get.width,
-                                              initialValue:
-                                                  c.selectedAccountList,
+                                              initialValue: c.selectedAccountList,
                                               items: c.accountList
                                                   .map((e) => MultiSelectItem(
                                                         e,
                                                         '${e.accountNumber}/${e.accountName}/${e.accountType ?? e.accountService}',
                                                       ))
                                                   .toList(),
-                                              listType:
-                                                  MultiSelectListType.CHIP,
-                                              chipDisplay:
-                                                  MultiSelectChipDisplay.none(),
-                                              backgroundColor:
-                                                  AppConst.isLightTheme(context)
-                                                      ? whiteColor
-                                                      : greyColor,
+                                              listType: MultiSelectListType.CHIP,
+                                              chipDisplay: MultiSelectChipDisplay.none(),
+                                              backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
                                               onConfirm: (values) {
-                                                c.selectedAccountList = List<
-                                                        TransAccountModel>.from(
-                                                    values);
+                                                c.selectedAccountList = List<TransAccountModel>.from(values);
                                                 c.getCountSelectedAccountNA();
                                               },
                                               onSelectionChanged: (values) {
-                                                c.selectedAccountList = List<
-                                                        TransAccountModel>.from(
-                                                    values);
+                                                c.selectedAccountList = List<TransAccountModel>.from(values);
                                                 c.getCountSelectedAccountNA();
                                                 c.update();
                                               },
@@ -351,13 +306,9 @@ class TambahPetugasScreen extends StatelessWidget {
                                         ),
                                       )
                                     : const SizedBox(),
-                                (c.buatPesanan &&
-                                            (c.countSelectedAccountNA ?? 0) >
-                                                0) ||
-                                        (c.buatPesanan &&
-                                            (c.countAllAccountNA ?? 0) > 0) ||
-                                        (c.serahTerima &&
-                                            (c.countAllAccountNA ?? 0) > 0)
+                                (c.buatPesanan && (c.countSelectedAccountNA ?? 0) > 0) ||
+                                        (c.buatPesanan && (c.countAllAccountNA ?? 0) > 0) ||
+                                        (c.serahTerima && (c.countAllAccountNA ?? 0) > 0)
                                     ? Container(
                                         padding: const EdgeInsets.only(top: 10),
                                         child: Column(
@@ -365,95 +316,58 @@ class TambahPetugasScreen extends StatelessWidget {
                                             MultiSelectDialogField(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
-                                                  color: AppConst.isLightTheme(
-                                                          context)
-                                                      ? greyDarkColor1
-                                                      : greyLightColor1,
+                                                  color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
+                                                borderRadius: BorderRadius.circular(8),
                                               ),
                                               searchable: true,
                                               selectAll: true,
-                                              buttonIcon: const Icon(
-                                                  Icons.keyboard_arrow_down),
+                                              buttonIcon: const Icon(Icons.keyboard_arrow_down),
                                               buttonText: Text(
                                                 '${c.selectedBranchList.isNotEmpty ? '${c.selectedBranchList.length} ' : ''} ${'Branch'.tr}',
                                                 overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyLarge!
-                                                    .copyWith(
-                                                        color:
-                                                            textColor(context)),
+                                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textColor(context)),
                                               ),
-                                              initialValue:
-                                                  c.selectedBranchList,
+                                              initialValue: c.selectedBranchList,
                                               items: c.branchList
                                                   .map((e) => MultiSelectItem(
                                                         e,
                                                         '${e.branchCode}-${e.branchDesc}',
                                                       ))
                                                   .toList(),
-                                              itemsTextStyle: TextStyle(
-                                                  color: CustomTheme()
-                                                      .textColor(context)),
-                                              listType:
-                                                  MultiSelectListType.CHIP,
-                                              chipDisplay:
-                                                  MultiSelectChipDisplay.none(),
-                                              backgroundColor:
-                                                  AppConst.isLightTheme(context)
-                                                      ? whiteColor
-                                                      : greyColor,
+                                              itemsTextStyle: TextStyle(color: CustomTheme().textColor(context)),
+                                              listType: MultiSelectListType.CHIP,
+                                              chipDisplay: MultiSelectChipDisplay.none(),
+                                              backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
                                               onConfirm: (values) {
-                                                c.selectedBranchList =
-                                                    List<BranchModel>.from(
-                                                        values);
+                                                c.selectedBranchList = List<BranchModel>.from(values);
                                                 c.update();
-                                                c.loadOrigin(
-                                                    c.selectedBranchList);
+                                                c.loadOrigin(c.selectedBranchList);
                                               },
                                               onSelectionChanged: (values) {
-                                                c.selectedBranchList =
-                                                    List<BranchModel>.from(
-                                                        values);
+                                                c.selectedBranchList = List<BranchModel>.from(values);
                                                 c.update();
-                                                c.loadOrigin(
-                                                    c.selectedBranchList);
+                                                c.loadOrigin(c.selectedBranchList);
                                               },
                                             ),
                                             const SizedBox(height: 10),
                                             Obx(
-                                              () => MultiSelectDialogField<
-                                                  OriginModel>(
+                                              () => MultiSelectDialogField<OriginModel>(
                                                 decoration: BoxDecoration(
                                                   border: Border.all(
-                                                    color:
-                                                        AppConst.isLightTheme(
-                                                                context)
-                                                            ? greyDarkColor1
-                                                            : greyLightColor1,
+                                                    color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
+                                                  borderRadius: BorderRadius.circular(8),
                                                 ),
                                                 searchable: true,
                                                 selectAll: true,
-                                                buttonIcon: const Icon(
-                                                    Icons.keyboard_arrow_down),
+                                                buttonIcon: const Icon(Icons.keyboard_arrow_down),
                                                 buttonText: c.isLoadOrigin
                                                     ? const Text('Loading...')
                                                     : Text(
                                                         '${c.selectedOrigin.isNotEmpty ? '${c.selectedOrigin.length} ' : ''} ${'Origin'.tr}',
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: Theme.of(context)
-                                                            .textTheme
-                                                            .bodyLarge!
-                                                            .copyWith(
-                                                                color: textColor(
-                                                                    context)),
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: Theme.of(context).textTheme.bodyLarge!.copyWith(color: textColor(context)),
                                                       ),
                                                 initialValue: c.selectedOrigin,
                                                 items: c.originList
@@ -462,29 +376,17 @@ class TambahPetugasScreen extends StatelessWidget {
                                                           '${e.originCode}-${e.originName}',
                                                         ))
                                                     .toList(),
-                                                listType:
-                                                    MultiSelectListType.CHIP,
-                                                chipDisplay:
-                                                    MultiSelectChipDisplay
-                                                        .none(),
-                                                backgroundColor:
-                                                    AppConst.isLightTheme(
-                                                            context)
-                                                        ? whiteColor
-                                                        : greyColor,
-                                                itemsTextStyle: TextStyle(
-                                                    color: CustomTheme()
-                                                        .textColor(context)),
+                                                listType: MultiSelectListType.CHIP,
+                                                chipDisplay: MultiSelectChipDisplay.none(),
+                                                backgroundColor: AppConst.isLightTheme(context) ? whiteColor : greyColor,
+                                                itemsTextStyle: TextStyle(color: CustomTheme().textColor(context)),
                                                 onConfirm: (values) {
                                                   c.selectedOrigin.clear();
-                                                  c.selectedOrigin
-                                                      .addAll(values);
+                                                  c.selectedOrigin.addAll(values);
                                                   c.update();
                                                 },
                                                 onSelectionChanged: (values) {
-                                                  c.selectedOrigin.value =
-                                                      List<OriginModel>.from(
-                                                          values);
+                                                  c.selectedOrigin.value = List<OriginModel>.from(values);
                                                   c.update();
                                                 },
                                               ),
@@ -493,15 +395,12 @@ class TambahPetugasScreen extends StatelessWidget {
                                         ),
                                       )
                                     : const SizedBox(),
-                                c.buatPesanan &&
-                                        (c.countSelectedAccountNA ?? 0) > 0
+                                c.buatPesanan && (c.countSelectedAccountNA ?? 0) > 0
                                     ? Container(
                                         margin: const EdgeInsets.only(top: 5),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Expanded(
                                               flex: 4,
@@ -509,9 +408,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                                 multiLine: true,
                                                 controller: c.alamat,
                                                 hintText: 'Alamat'.tr,
-                                                validator: ValidationBuilder()
-                                                    .address()
-                                                    .build(),
+                                                validator: ValidationBuilder().address().build(),
                                               ),
                                             ),
                                             const SizedBox(width: 5),
@@ -520,9 +417,7 @@ class TambahPetugasScreen extends StatelessWidget {
                                               child: CustomTextFormField(
                                                 controller: c.zipCode,
                                                 hintText: 'Kode Pos'.tr,
-                                                validator: ValidationBuilder()
-                                                    .zipCode()
-                                                    .build(),
+                                                validator: ValidationBuilder().zipCode().build(),
                                                 inputType: TextInputType.number,
                                               ),
                                             ),
@@ -536,18 +431,12 @@ class TambahPetugasScreen extends StatelessWidget {
                           c.beranda || c.riwayatPesanan || c.pantauPaketmu
                               ? GridView.builder(
                                   shrinkWrap: true,
-                                  padding: const EdgeInsets.only(
-                                      left: 32, right: 0, top: 0, bottom: 12),
+                                  padding: const EdgeInsets.only(left: 32, right: 0, top: 0, bottom: 12),
                                   physics: const NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 1,
-                                          childAspectRatio: 9),
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 9),
                                   itemCount: 1,
                                   itemBuilder: (context, index) {
-                                    return _buildCheckboxItem(
-                                        'Tampilkan Seluruh Transaksi',
-                                        c.semuaTransaksi, (value) {
+                                    return _buildCheckboxItem(c, 'Tampilkan Seluruh Transaksi', c.semuaTransaksi, (value) {
                                       c.semuaTransaksi = value!;
                                       c.update();
                                     });
@@ -557,18 +446,12 @@ class TambahPetugasScreen extends StatelessWidget {
                           c.hapusPesanan
                               ? GridView.builder(
                                   shrinkWrap: true,
-                                  padding: const EdgeInsets.only(
-                                      left: 32, right: 0, top: 0, bottom: 12),
+                                  padding: const EdgeInsets.only(left: 32, right: 0, top: 0, bottom: 12),
                                   physics: const NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 1,
-                                          childAspectRatio: 9),
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 1, childAspectRatio: 9),
                                   itemCount: 1,
                                   itemBuilder: (context, index) {
-                                    return _buildCheckboxItem(
-                                        'Hapus Seluruh Transaksi', c.semuaHapus,
-                                        (value) {
+                                    return _buildCheckboxItem(c, 'Hapus Seluruh Transaksi', c.semuaHapus, (value) {
                                       c.semuaHapus = value!;
                                       c.update();
                                     });
@@ -578,37 +461,30 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem(
-                                  'Riwayat Kirimanmu', c.riwayatPesanan,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Riwayat Kirimanmu', c.riwayatPesanan, (value) {
                                 c.riwayatPesanan = value!;
                                 if (value == false) {
                                   c.semuaTransaksi = false;
                                 }
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Lacak Kirimanmu', c.lacakPesanan, (value) {
+                              _buildCheckboxItem(c, 'Lacak Kirimanmu', c.lacakPesanan, (value) {
                                 c.lacakPesanan = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Minta Dijemput', c.mintaDijemput, (value) {
+                              _buildCheckboxItem(c, 'Minta Dijemput', c.mintaDijemput, (value) {
                                 c.mintaDijemput = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Serah Terima', c.serahTerima,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Serah Terima', c.serahTerima, (value) {
                                 c.serahTerima = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Print Kirimanmu', c.cetakPesanan, (value) {
+                              _buildCheckboxItem(c, 'Print Kirimanmu', c.cetakPesanan, (value) {
                                 c.cetakPesanan = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Hapus Transaksi', c.hapusPesanan, (value) {
+                              _buildCheckboxItem(c, 'Hapus Transaksi', c.hapusPesanan, (value) {
                                 c.hapusPesanan = value!;
                                 if (value == false) {
                                   c.semuaHapus = false;
@@ -627,23 +503,19 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem('Uang COD Kamu', c.uangCod,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Uang COD Kamu', c.uangCod, (value) {
                                 c.uangCod = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Tagihan Kamu', c.tagihan,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Tagihan Kamu', c.tagihan, (value) {
                                 c.tagihan = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Laporan Pembayaran Aggregasi',
-                                  c.monitoringAgg, (value) {
+                              _buildCheckboxItem(c, 'Laporan Pembayaran Aggregasi', c.monitoringAgg, (value) {
                                 c.monitoringAgg = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Bonus Kamu', c.bonus,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Bonus Kamu', c.bonus, (value) {
                                 c.bonus = value!;
                                 c.update();
                               }),
@@ -659,17 +531,15 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem('Laporanku', c.laporan,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Laporanku', c.laporan, (value) {
                                 c.laporan = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('E-Claim', c.eclaim, (value) {
+                              _buildCheckboxItem(c, 'E-Claim', c.eclaim, (value) {
                                 c.eclaim = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Cek Ongkir', c.cekOngkir,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Cek Ongkir', c.cekOngkir, (value) {
                                 c.cekOngkir = value!;
                                 c.update();
                               }),
@@ -685,19 +555,15 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem(
-                                  'Laporan Return', c.laporanReturn, (value) {
+                              _buildCheckboxItem(c, 'Laporan Return', c.laporanReturn, (value) {
                                 c.laporanReturn = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Summary Origin', c.summaryOrigin, (value) {
+                              _buildCheckboxItem(c, 'Summary Origin', c.summaryOrigin, (value) {
                                 c.summaryOrigin = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem(
-                                  'Summary Destination', c.summaryDestination,
-                                  (value) {
+                              _buildCheckboxItem(c, 'Summary Destination', c.summaryDestination, (value) {
                                 c.summaryDestination = value!;
                                 c.update();
                               }),
@@ -713,11 +579,11 @@ class TambahPetugasScreen extends StatelessWidget {
                           _buildCheckboxGroup(
                             context,
                             checkboxes: [
-                              _buildCheckboxItem('Tema', c.tema, (value) {
+                              _buildCheckboxItem(c, 'Tema', c.tema, (value) {
                                 c.tema = value!;
                                 c.update();
                               }),
-                              _buildCheckboxItem('Label', c.label, (value) {
+                              _buildCheckboxItem(c, 'Label', c.label, (value) {
                                 c.label = value!;
                                 c.update();
                               }),
@@ -728,8 +594,10 @@ class TambahPetugasScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+                // c.basic?.userType == "PEMILIK"
+                //     ?
                 CustomFilledButton(
-                  color: primaryColor(context),
+                  color: c.formKey.currentState?.validate() == true ? primaryColor(context) : greyColor,
                   title: c.isEdit ? "Edit Petugas".tr : "Simpan Petugas".tr,
                   suffixIcon: Icons.file_download_outlined,
                   onPressed: () => c.formKey.currentState?.validate() == true
@@ -738,6 +606,7 @@ class TambahPetugasScreen extends StatelessWidget {
                           : c.saveOfficer()
                       : null,
                 )
+                // : const SizedBox(),
               ],
             ),
           ),
@@ -747,25 +616,19 @@ class TambahPetugasScreen extends StatelessWidget {
   }
 
   // Builds section title with icon
-  Widget _buildSectionTitle(BuildContext context,
-      {required String title, required IconData icon}) {
+  Widget _buildSectionTitle(BuildContext context, {required String title, required IconData icon}) {
     return Align(
       alignment: Alignment.centerLeft,
       child: Row(
         children: [
           Icon(
             icon,
-            color: Theme.of(context).brightness == Brightness.light
-                ? blueJNE
-                : Colors.white,
+            color: Theme.of(context).brightness == Brightness.light ? blueJNE : Colors.white,
           ),
           const SizedBox(width: 8),
           Text(
             title,
-            style: listTitleTextStyle.copyWith(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? greyDarkColor1
-                    : whiteColor),
+            style: listTitleTextStyle.copyWith(color: Theme.of(context).brightness == Brightness.light ? greyDarkColor1 : whiteColor),
           ),
         ],
       ),
@@ -773,14 +636,12 @@ class TambahPetugasScreen extends StatelessWidget {
   }
 
   // Builds a group of checkboxes in two columns
-  Widget _buildCheckboxGroup(BuildContext context,
-      {required List<Widget> checkboxes}) {
+  Widget _buildCheckboxGroup(BuildContext context, {required List<Widget> checkboxes}) {
     return GridView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.only(left: 32, right: 0, top: 0, bottom: 12),
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, childAspectRatio: 3),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, childAspectRatio: 2.5),
       itemCount: checkboxes.length,
       itemBuilder: (context, index) {
         return checkboxes[index];
@@ -790,11 +651,16 @@ class TambahPetugasScreen extends StatelessWidget {
 
   // Builds individual checkbox with label
   Widget _buildCheckboxItem(
-      String label, bool value, ValueChanged<bool?> onChanged) {
+    TambahPetugasController c,
+    String label,
+    bool value,
+    ValueChanged<bool?> onChanged,
+  ) {
     return CustomCheckbox(
       label: label.tr,
       value: value,
       onChanged: onChanged,
+      //readOnly: c.basic?.userType != "PEMILIK",
     );
   }
 }

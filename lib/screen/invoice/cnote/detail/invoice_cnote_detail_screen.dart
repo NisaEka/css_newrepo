@@ -66,10 +66,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               Shimmer(
                 isLoading: controller.isLoading,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color:
-                          controller.isLoading ? greyColor : Colors.transparent,
-                      borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
@@ -80,26 +77,17 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                         children: [
                           Text(
                             controller.invoiceCnoteDetailModel?.awbNumber ?? '',
-                            style: appTitleTextStyle.copyWith(
-                                fontWeight: bold, color: primaryColor(context)),
+                            style: appTitleTextStyle.copyWith(fontWeight: bold, color: primaryColor(context)),
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            controller.invoiceCnoteDetailModel?.picuUpOrderId ??
-                                '',
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleSmall
-                                ?.copyWith(
-                                    fontSize: 9, fontStyle: FontStyle.italic),
+                            controller.invoiceCnoteDetailModel?.picuUpOrderId ?? '',
+                            style: Theme.of(context).textTheme.titleSmall?.copyWith(fontSize: 9, fontStyle: FontStyle.italic),
                           ),
                         ],
                       ),
                       IconButton(
-                        onPressed: () => Clipboard.setData(ClipboardData(
-                            text:
-                                controller.invoiceCnoteDetailModel?.awbNumber ??
-                                    '')),
+                        onPressed: () => Clipboard.setData(ClipboardData(text: controller.invoiceCnoteDetailModel?.awbNumber ?? '')),
                         icon: const Icon(Icons.copy_rounded),
                       ),
                     ],
@@ -110,64 +98,44 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               _textRow(
                 context,
                 "AWB Date".tr,
-                controller.invoiceCnoteDetailModel?.awbDate
-                        ?.toLongDateTimeFormat() ??
-                    '',
+                controller.invoiceCnoteDetailModel?.awbDate?.toLongDateTimeFormat() ?? '',
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Shipper Name".tr,
                 controller.invoiceCnoteDetailModel?.shipperName,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Receiver Name".tr,
                 controller.invoiceCnoteDetailModel?.consigneeName,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? Colors.black
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? Colors.black : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Qty".tr,
                 (controller.invoiceCnoteDetailModel?.quantity ?? 0).toString(),
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Weight".tr,
                 (controller.invoiceCnoteDetailModel?.weightKg ?? 0).toString(),
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Service".tr,
                 controller.invoiceCnoteDetailModel?.serviceCode,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               const SizedBox(height: 12),
               const DottedLine(
@@ -185,40 +153,28 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 "Origin Code".tr,
                 controller.invoiceCnoteDetailModel?.originSysCode,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Origin Name".tr,
                 controller.invoiceCnoteDetailModel?.originName,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Destination Code".tr,
                 controller.invoiceCnoteDetailModel?.destinationSysCode,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               _textRow(
                 context,
                 "Destination Name".tr,
                 controller.invoiceCnoteDetailModel?.destinationName,
                 controller.isLoading,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: AppConst.isLightTheme(context)
-                        ? greyDarkColor1
-                        : greyLightColor1),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(color: AppConst.isLightTheme(context) ? greyDarkColor1 : greyLightColor1),
               ),
               const SizedBox(height: 6),
               const Divider(
@@ -236,9 +192,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
           child: Shimmer(
             isLoading: controller.isLoading,
             child: Container(
-              decoration: BoxDecoration(
-                  color: controller.isLoading ? greyColor : Colors.transparent,
-                  borderRadius: BorderRadius.circular(5)),
+              decoration: BoxDecoration(color: controller.isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
               child: Text(
                 "Informasi Tagihan".tr,
                 style: listTitleTextStyle.copyWith(
@@ -274,10 +228,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   color: AppConst.isLightTheme(context) ? blueJNE : whiteColor,
                 ),
               ),
-              _textRow(
-                  context,
-                  "Discount Amount".tr,
-                  "Rp. ${(controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0).toCurrency()}",
+              _textRow(context, "Discount Amount".tr, "Rp. ${(controller.invoiceCnoteDetailModel?.discountAmountAwb ?? 0).toCurrency()}",
                   controller.isLoading),
               _textRow(
                 context,
@@ -289,10 +240,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                   color: AppConst.isLightTheme(context) ? redJNE : warningColor,
                 ),
               ),
-              _textRow(
-                  context,
-                  "Insurance".tr,
-                  "Rp. ${((controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0)).toCurrency()}",
+              _textRow(context, "Insurance".tr, "Rp. ${((controller.invoiceCnoteDetailModel?.totalAdjustedInsAmt ?? 0)).toCurrency()}",
                   controller.isLoading),
               _textRow(
                 context,
@@ -313,31 +261,13 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
                 dashGapLength: 2.0,
               ),
               const SizedBox(height: 16),
+              _textRow(context, "Goods Value".tr, "Rp. ${(controller.invoiceCnoteDetailModel?.goodsValue ?? 0).toCurrency()}", controller.isLoading),
+              _textRow(context, "COD Amount".tr, "Rp. ${(controller.invoiceCnoteDetailModel?.codAmount ?? 0).toCurrency()}", controller.isLoading),
               _textRow(
-                  context,
-                  "Goods Value".tr,
-                  "Rp. ${(controller.invoiceCnoteDetailModel?.goodsValue ?? 0).toCurrency()}",
-                  controller.isLoading),
+                  context, "% COD Fee".tr, "Rp. ${(controller.invoiceCnoteDetailModel?.persentaseCodFee ?? 0).toCurrency()}", controller.isLoading),
               _textRow(
-                  context,
-                  "COD Amount".tr,
-                  "Rp. ${(controller.invoiceCnoteDetailModel?.codAmount ?? 0).toCurrency()}",
-                  controller.isLoading),
-              _textRow(
-                  context,
-                  "% COD Fee".tr,
-                  "Rp. ${(controller.invoiceCnoteDetailModel?.persentaseCodFee ?? 0).toCurrency()}",
-                  controller.isLoading),
-              _textRow(
-                  context,
-                  "COD Fee Amount".tr,
-                  "Rp. ${(controller.invoiceCnoteDetailModel?.codFeeAmount ?? 0).toCurrency()}",
-                  controller.isLoading),
-              _textRow(
-                  context,
-                  "COD Fee Zone".tr,
-                  controller.invoiceCnoteDetailModel?.codFeeZone,
-                  controller.isLoading),
+                  context, "COD Fee Amount".tr, "Rp. ${(controller.invoiceCnoteDetailModel?.codFeeAmount ?? 0).toCurrency()}", controller.isLoading),
+              _textRow(context, "COD Fee Zone".tr, controller.invoiceCnoteDetailModel?.codFeeZone, controller.isLoading),
             ],
           ),
         ),
@@ -346,9 +276,7 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _textRow(
-      BuildContext context, String title, String? value, bool isLoading,
-      {TextStyle? style, FontWeight? titleFontWeight}) {
+  Widget _textRow(BuildContext context, String title, String? value, bool isLoading, {TextStyle? style, FontWeight? titleFontWeight}) {
     if (value == null) {
       return Container();
     }
@@ -364,15 +292,10 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               child: Shimmer(
                 isLoading: isLoading,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: isLoading ? greyColor : Colors.transparent,
-                      borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     title.tr,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(fontWeight: titleFontWeight ?? regular),
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: titleFontWeight ?? regular),
                   ),
                 ),
               ),
@@ -383,16 +306,10 @@ class InvoiceCnoteDetailScreen extends StatelessWidget {
               child: Shimmer(
                 isLoading: isLoading,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: isLoading ? greyColor : Colors.transparent,
-                      borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color: isLoading ? greyColor : Colors.transparent, borderRadius: BorderRadius.circular(5)),
                   child: Text(
                     value,
-                    style: style ??
-                        Theme.of(context)
-                            .textTheme
-                            .titleMedium
-                            ?.copyWith(fontWeight: regular),
+                    style: style ?? Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
                     textAlign: TextAlign.end, // Align the value to the right
                   ),
                 ),

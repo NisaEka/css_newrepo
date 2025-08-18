@@ -134,23 +134,15 @@ class TambahPetugasController extends BaseController {
         update();
         loadOrigin(dataPetugas.branches ?? []);
         dataPetugas.accounts?.forEach((account) {
-          selectedAccountList.add((accountList
-                  .where((e) => e.accountId == account.accountId)
-                  .isNotEmpty
-              ? (accountList
-                  .where((e) => e.accountId == account.accountId)
-                  .first)
+          selectedAccountList.add((accountList.where((e) => e.accountId == account.accountId).isNotEmpty
+              ? (accountList.where((e) => e.accountId == account.accountId).first)
               : TransAccountModel()));
         });
         getCountSelectedAccountNA();
         dataPetugas.branches?.forEach((branch) {
           selectedBranchList.add(
-            branchList
-                    .where((e) => e.branchCode == branch.branchCode)
-                    .isNotEmpty
-                ? branchList
-                    .where((e) => e.branchCode == branch.branchCode)
-                    .first
+            branchList.where((e) => e.branchCode == branch.branchCode).isNotEmpty
+                ? branchList.where((e) => e.branchCode == branch.branchCode).first
                 : BranchModel(),
           );
           update();
@@ -173,43 +165,28 @@ class TambahPetugasController extends BaseController {
         fasilitas = dataPetugas.menu?.fasilitas == "Y";
         katasandi = dataPetugas.menu?.katasandi == "Y";
         beranda = dataPetugas.menu?.beranda == "Y";
-        buatPesanan = dataPetugas.menu?.buatPesanan == "Y" ||
-            dataPetugas.menu?.paketmuInput == "Y";
-        lacakPesanan = dataPetugas.menu?.lacakPesanan == "Y" ||
-            dataPetugas.menu?.paketmuLacak == "Y";
-        mintaDijemput = dataPetugas.menu?.mintaDijemput == "Y" ||
-            dataPetugas.menu?.paketmuMintadijemput == "Y";
-        serahTerima = dataPetugas.menu?.serahTerima == "Y" ||
-            dataPetugas.menu?.paketmuSerahterima == "Y";
-        saldo = dataPetugas.menu?.saldo == "Y" ||
-            dataPetugas.menu?.keuanganJneMoney == "Y";
-        uangCod = dataPetugas.menu?.uangCod == "Y" ||
-            dataPetugas.menu?.keuanganCod == "Y";
-        tagihan = dataPetugas.menu?.tagihan == "Y" ||
-            dataPetugas.menu?.keuanganTagihan == "Y";
-        bonus = dataPetugas.menu?.bonus == "Y" ||
-            dataPetugas.menu?.keuanganBonus == "y";
+        buatPesanan = dataPetugas.menu?.buatPesanan == "Y" || dataPetugas.menu?.paketmuInput == "Y";
+        lacakPesanan = dataPetugas.menu?.lacakPesanan == "Y" || dataPetugas.menu?.paketmuLacak == "Y";
+        mintaDijemput = dataPetugas.menu?.mintaDijemput == "Y" || dataPetugas.menu?.paketmuMintadijemput == "Y";
+        serahTerima = dataPetugas.menu?.serahTerima == "Y" || dataPetugas.menu?.paketmuSerahterima == "Y";
+        saldo = dataPetugas.menu?.saldo == "Y" || dataPetugas.menu?.keuanganJneMoney == "Y";
+        uangCod = dataPetugas.menu?.uangCod == "Y" || dataPetugas.menu?.keuanganCod == "Y";
+        tagihan = dataPetugas.menu?.tagihan == "Y" || dataPetugas.menu?.keuanganTagihan == "Y";
+        bonus = dataPetugas.menu?.bonus == "Y" || dataPetugas.menu?.keuanganBonus == "y";
         pantauPaketmu = dataPetugas.menu?.pantauPaketmu == "Y";
         laporan = dataPetugas.menu?.laporan == "Y";
         eclaim = dataPetugas.menu?.eclaim == "Y";
-        tema = dataPetugas.menu?.tema == "Y" ||
-            dataPetugas.menu?.pengaturanTema == "Y";
-        label = dataPetugas.menu?.label == "Y" ||
-            dataPetugas.menu?.pengaturanLabel == "Y";
-        petugas = dataPetugas.menu?.petugas == "Y" ||
-            dataPetugas.menu?.pengaturanPetugas == "Y";
-        riwayatPesanan = dataPetugas.menu?.riwayatPesanan == "Y" ||
-            dataPetugas.menu?.paketmuRiwayat == "Y";
+        tema = dataPetugas.menu?.tema == "Y" || dataPetugas.menu?.pengaturanTema == "Y";
+        label = dataPetugas.menu?.label == "Y" || dataPetugas.menu?.pengaturanLabel == "Y";
+        petugas = dataPetugas.menu?.petugas == "Y" || dataPetugas.menu?.pengaturanPetugas == "Y";
+        riwayatPesanan = dataPetugas.menu?.riwayatPesanan == "Y" || dataPetugas.menu?.paketmuRiwayat == "Y";
         cekOngkir = dataPetugas.menu?.cekOngkir == "Y";
         semuaTransaksi = dataPetugas.menu?.semuaTransaksi == "Y";
         hapusPesanan = dataPetugas.menu?.hapusPesanan == "Y";
         semuaHapus = dataPetugas.menu?.semuaHapus == "Y";
-        cetakPesanan = dataPetugas.menu?.cetakPesanan == "Y" ||
-            dataPetugas.menu?.paketmuPrint == "Y";
-        monitoringAgg = dataPetugas.menu?.monitoringAgg == "Y" ||
-            dataPetugas.menu?.keuanganAggregasi == "Y";
-        monitoringAggMinus = dataPetugas.menu?.monitoringAggMinus == "Y" ||
-            dataPetugas.menu?.keuanganAggregasiMinus == "Y";
+        cetakPesanan = dataPetugas.menu?.cetakPesanan == "Y" || dataPetugas.menu?.paketmuPrint == "Y";
+        monitoringAgg = dataPetugas.menu?.monitoringAgg == "Y" || dataPetugas.menu?.keuanganAggregasi == "Y";
+        monitoringAggMinus = dataPetugas.menu?.monitoringAggMinus == "Y" || dataPetugas.menu?.keuanganAggregasiMinus == "Y";
         laporanReturn = dataPetugas.menu?.laporanReturn == "Y";
         summaryOrigin = dataPetugas.menu?.summaryOrigin == "Y";
         summaryDestination = dataPetugas.menu?.summaryDestination == "Y";
@@ -244,9 +221,7 @@ class TambahPetugasController extends BaseController {
         ],
         inValues: [
           {
-            "accountNumber": selectedAccountList.isNotEmpty
-                ? selectedAccountList.map((e) => e.accountNumber).toList()
-                : [""]
+            "accountNumber": selectedAccountList.isNotEmpty ? selectedAccountList.map((e) => e.accountNumber).toList() : [""]
           }
         ],
       ))
@@ -315,12 +290,8 @@ class TambahPetugasController extends BaseController {
       }).then((value) {
         if (dataPetugas.origins?.isNotEmpty ?? false) {
           dataPetugas.origins?.forEach((origin) {
-            selectedOrigin.add(originList
-                    .where((e) => e.originCode == origin.originCode)
-                    .isNotEmpty
-                ? originList
-                    .where((e) => e.originCode == origin.originCode)
-                    .first
+            selectedOrigin.add(originList.where((e) => e.originCode == origin.originCode).isNotEmpty
+                ? originList.where((e) => e.originCode == origin.originCode).first
                 : OriginModel());
             update();
           });
@@ -389,10 +360,7 @@ class TambahPetugasController extends BaseController {
       summaryOrigin: summaryOrigin ? "Y" : "N",
       summaryDestination: summaryDestination ? "Y" : "N",
     );
-    if (menu
-        .toJson()
-        .values
-        .every((element) => element == "N" || element == null)) {
+    if (menu.toJson().values.every((element) => element == "N" || element == null)) {
       AppSnackBar.error('Pilih minimal satu hak akses'.tr);
       isLoading = false;
       update();
@@ -424,8 +392,7 @@ class TambahPetugasController extends BaseController {
                   {AppSnackBar.error('Alamat email sudah digunakan'.tr)}
                 else
                   {
-                    AppSnackBar.error(
-                        value.error ?? value.message ?? 'Bad Request'.tr),
+                    AppSnackBar.error(value.error ?? value.message ?? 'Bad Request'.tr),
                   }
               });
     } catch (e, i) {
@@ -488,10 +455,7 @@ class TambahPetugasController extends BaseController {
       summaryOrigin: summaryOrigin ? "Y" : "N",
       summaryDestination: summaryDestination ? "Y" : "N",
     );
-    if (menu
-        .toJson()
-        .values
-        .every((element) => element == "N" || element == null)) {
+    if (menu.toJson().values.every((element) => element == "N" || element == null)) {
       AppSnackBar.error('Pilih minimal satu hak akses'.tr);
       isLoading = false;
       update();
@@ -524,7 +488,7 @@ class TambahPetugasController extends BaseController {
                 else
                   {
                     AppSnackBar.error(
-                        value.error ?? value.message ?? 'Bad Request'.tr),
+                        value.code == 403 ? "Anda tidak memiliki izin untuk mengupdate data".tr : value.error ?? value.message ?? 'Bad Request'.tr),
                   }
               });
     } catch (e, i) {

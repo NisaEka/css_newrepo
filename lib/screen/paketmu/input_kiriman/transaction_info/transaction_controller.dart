@@ -41,7 +41,7 @@ class TransactionController extends BaseController {
 
     (Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       connection.isOnline().then((value) {
-        AppLogger.i('isOnline : $value $result');
+        AppLogger.i('isOnline Transaction Screen : $value $result');
         state.isOnline = value && (result != ConnectivityResult.none);
         if (state.isOnline) {
           // AppSnackBar.success('Online Mode'.tr);
@@ -686,7 +686,7 @@ class TransactionController extends BaseController {
     if (value.toInt() <= state.getCodAmountMinimum) {}
   }
 
-  Future<void> onSaved() async {
+  Future<void> onSubmit() async {
     if ((state.codAmountText.text.digitOnly().toInt() < state.getCodAmountMinimum)) {
       Get.dialog(StatefulBuilder(
         builder: (context, setState) => DefaultAlertDialog(
@@ -754,6 +754,7 @@ class TransactionController extends BaseController {
     double? iconHeight,
     String? message,
   }) {
+    storage.deleteString(StorageCore.transactionTemp);
     return SuccessScreen(
       lottie: lottie ?? ImageConstant.successLottie,
       iconMargin: iconMargin ?? 100,

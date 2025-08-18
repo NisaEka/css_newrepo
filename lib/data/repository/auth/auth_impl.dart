@@ -193,7 +193,6 @@ class AuthRepositoryImpl extends AuthRepository {
         (json) => null,
       );
     } on DioException catch (e) {
-      AppLogger.i('error post fcm token ${e.response?.data.toString()}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => null,

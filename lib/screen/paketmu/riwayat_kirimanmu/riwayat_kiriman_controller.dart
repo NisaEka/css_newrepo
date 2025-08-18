@@ -56,11 +56,11 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void cekAllowance() {
-    if (state.basic?.userType != "PEMILIK") {
+    if (state.basic?.userType != "PEMILIK" && state.allow?.semuaTransaksi != "Y") {
       state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
     }
-    update();
-    state.pagingController.refresh();
+    applyFilter();
+    // state.pagingController.refresh();
     transactionCount();
   }
 

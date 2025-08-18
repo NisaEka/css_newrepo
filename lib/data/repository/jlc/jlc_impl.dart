@@ -59,7 +59,6 @@ class JLCRepositoryImpl extends JLCRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      AppLogger.e('error: ${e.message}');
       return BaseResponse<List<JLCTransactions>>.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
@@ -88,7 +87,6 @@ class JLCRepositoryImpl extends JLCRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      AppLogger.e('error: ${e.message}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>
@@ -117,7 +115,6 @@ class JLCRepositoryImpl extends JLCRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      AppLogger.e('error: ${e.message}');
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>

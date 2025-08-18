@@ -62,28 +62,31 @@ class ListPenerimaScreen extends StatelessWidget {
           c.isLoading
               ? Expanded(
                   child: ListView.builder(
-                  itemBuilder: (context, i) =>
-                      c.receiverItem(ReceiverModel(), i, context),
+                  itemBuilder: (context, i) => c.receiverItem(ReceiverModel(), i, context),
                   itemCount: 10,
                 ))
               : Expanded(
                   child: PagedListView<int, ReceiverModel>(
-                      pagingController: c.pagingController,
-                      builderDelegate: PagedChildBuilderDelegate<ReceiverModel>(
-                        transitionDuration: const Duration(milliseconds: 500),
-                        itemBuilder: (context, item, index) =>
-                            c.pagingController.itemList!.isNotEmpty
-                                ? c.receiverItem(item, index, context)
-                                : const Center(child: DataEmpty()),
-                        noItemsFoundIndicatorBuilder: (context) =>
-                            const DataEmpty(),
-                        newPageProgressIndicatorBuilder: (context) =>
-                            const LoadingDialog(
-                          background: Colors.transparent,
-                          height: 50,
-                          size: 30,
-                        ),
-                      )))
+                    pagingController: c.pagingController,
+                    builderDelegate: PagedChildBuilderDelegate<ReceiverModel>(
+                      transitionDuration: const Duration(milliseconds: 500),
+                      itemBuilder: (context, item, index) =>
+                          c.pagingController.itemList!.isNotEmpty ? c.receiverItem(item, index, context) : const Center(child: DataEmpty()),
+                      noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
+                      newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
+                        background: Colors.transparent,
+                        height: 50,
+                        size: 30,
+                      ),
+                      newPageErrorIndicatorBuilder: (context) => const Divider(
+                        color: redJNE,
+                        thickness: 3,
+                        indent: 50,
+                        endIndent: 50,
+                      ),
+                    ),
+                  ),
+                )
         ],
       ),
     );
