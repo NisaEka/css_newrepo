@@ -164,5 +164,20 @@ class LacakKirimanController extends BaseController {
         ),
       );
     }
+
+    if (value.split('\n').where((element) => element.length > 16).isNotEmpty) {
+      Get.showSnackbar(
+        GetSnackBar(
+          icon: const Icon(
+            Icons.warning,
+            color: whiteColor,
+          ),
+          message: 'Nomor resi maksimal 16 karakter'.tr,
+          isDismissible: true,
+          duration: const Duration(seconds: 3),
+          backgroundColor: errorColor,
+        ),
+      );
+    }
   }
 }

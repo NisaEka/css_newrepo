@@ -48,9 +48,7 @@ class LacakKirimanScreen extends StatelessWidget {
               }),
             ],
             suffixIcon: GestureDetector(
-              onTap: () =>
-                  Get.to(() => const BarcodeScanScreen(), arguments: {})
-                      ?.then((result) {
+              onTap: () => Get.to(() => const BarcodeScanScreen(), arguments: {})?.then((result) {
                 c.searchField.text = result;
                 c.update();
                 if (result == null || result.isEmpty) {
@@ -88,19 +86,19 @@ class LacakKirimanScreen extends StatelessWidget {
                     backgroundColor: errorColor,
                   ),
                 );
-              } else if (value.length > 16) {
-                Get.showSnackbar(
-                  GetSnackBar(
-                    icon: const Icon(
-                      Icons.warning,
-                      color: whiteColor,
-                    ),
-                    message: 'Nomor resi maksimal 16 karakter'.tr,
-                    isDismissible: true,
-                    duration: const Duration(seconds: 3),
-                    backgroundColor: errorColor,
-                  ),
-                );
+              // } else if (value.length > 16) {
+              //   Get.showSnackbar(
+              //     GetSnackBar(
+              //       icon: const Icon(
+              //         Icons.warning,
+              //         color: whiteColor,
+              //       ),
+              //       message: 'Nomor resi maksimal 16 karakter'.tr,
+              //       isDismissible: true,
+              //       duration: const Duration(seconds: 3),
+              //       backgroundColor: errorColor,
+              //     ),
+              //   );
               } else {
                 // if (c.isLogin) {
                 // c.cekResi(value, '');
@@ -135,8 +133,7 @@ class LacakKirimanScreen extends StatelessWidget {
                       style: sublistTitleTextStyle.copyWith(
                         color: e?.cnote?.podStatus == "NOT FOUND"
                             ? errorColor
-                            : (e?.cnote?.podStatus?.contains("INVALID") ??
-                                    false)
+                            : (e?.cnote?.podStatus?.contains("INVALID") ?? false)
                                 ? warningColor
                                 : successColor,
                       ),
@@ -145,9 +142,7 @@ class LacakKirimanScreen extends StatelessWidget {
                     onTap: () {
                       FocusScope.of(Get.context!).unfocus();
                       if (e?.cnote?.podStatus != "NOT FOUND") {
-                        if (e?.cnote?.podStatus == "DETAIL" ||
-                            (e?.cnote?.podStatus?.contains("INVALID") ??
-                                false)) {
+                        if (e?.cnote?.podStatus == "DETAIL" || (e?.cnote?.podStatus?.contains("INVALID") ?? false)) {
                           Get.to(
                             PhoneNumberConfirmationScreen(
                               awb: e?.cnote?.cnoteNo ?? '',
@@ -172,9 +167,7 @@ class LacakKirimanScreen extends StatelessWidget {
                 } else {
                   return Shimmer(
                     isLoading: true,
-                    child: ListTile(
-                        tileColor:
-                            c.isLoading ? greyLightColor2 : Colors.transparent),
+                    child: ListTile(tileColor: c.isLoading ? greyLightColor2 : Colors.transparent),
                   );
                 }
               },

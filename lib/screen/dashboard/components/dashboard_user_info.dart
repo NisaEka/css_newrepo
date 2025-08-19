@@ -55,9 +55,7 @@ class DashboardUserInfo extends StatelessWidget {
                         : const SizedBox(),
                     const SizedBox(height: 10),
                     // c.state.isLogin ? const DashboardInfo() : const SizedBox(),
-                    !c.state.isLogin ||
-                            (c.state.allow.lacakPesanan == "Y" ||
-                                c.state.allow.keuanganBonus == "Y")
+                    !c.state.isLogin || (c.state.allow.lacakPesanan == "Y" || c.state.allow.keuanganBonus == "Y")
                         ? SizedBox(
                             height: 60,
                             child: TextField(
@@ -65,8 +63,7 @@ class DashboardUserInfo extends StatelessWidget {
                               cursorColor: CustomTheme().cursorColor(context),
                               maxLines: null,
                               inputFormatters: [
-                                TextInputFormatter.withFunction(
-                                    (oldValue, newValue) {
+                                TextInputFormatter.withFunction((oldValue, newValue) {
                                   return newValue.copyWith(
                                     text: newValue.text.toUpperCase(),
                                     selection: newValue.selection,
@@ -74,8 +71,7 @@ class DashboardUserInfo extends StatelessWidget {
                                 }),
                               ],
                               decoration: InputDecoration(
-                                hintText:
-                                    'Masukan nomor resi untuk lacak kiriman'.tr,
+                                hintText: 'Masukan nomor resi untuk lacak kiriman'.tr,
                                 hintStyle: hintTextStyle,
                                 suffixIcon: GestureDetector(
                                   onTap: () {
@@ -91,15 +87,11 @@ class DashboardUserInfo extends StatelessWidget {
                                       return;
                                     }
                                     final lines = value.split('\n');
-                                    final tooLong =
-                                        lines.any((l) => l.length > 16);
+                                    final tooLong = lines.any((l) => l.length > 16);
                                     if (tooLong) {
                                       Get.showSnackbar(GetSnackBar(
-                                        icon: const Icon(Icons.warning,
-                                            color: whiteColor),
-                                        message:
-                                            'Nomor resi maksimal 16 karakter'
-                                                .tr,
+                                        icon: const Icon(Icons.warning, color: whiteColor),
+                                        message: 'Nomor resi maksimal 16 karakter'.tr,
                                         isDismissible: true,
                                         duration: const Duration(seconds: 3),
                                         backgroundColor: errorColor,
@@ -109,12 +101,7 @@ class DashboardUserInfo extends StatelessWidget {
                                     c.onLacakKiriman(false, value);
                                   },
                                   child: Icon(
-                                    c.state.nomorResi.text
-                                            .replaceAll('\r', '')
-                                            .split('\n')
-                                            .map((e) => e.trim())
-                                            .where((e) => e.isNotEmpty)
-                                            .isNotEmpty
+                                    c.state.nomorResi.text.replaceAll('\r', '').split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty).isNotEmpty
                                         ? Icons.keyboard_return_rounded
                                         : Icons.qr_code_rounded,
                                     color: color ?? (primaryColor(context)),
@@ -129,10 +116,8 @@ class DashboardUserInfo extends StatelessWidget {
                                 if (value.isEmpty) {
                                   Get.showSnackbar(
                                     GetSnackBar(
-                                      icon: const Icon(Icons.warning,
-                                          color: whiteColor),
-                                      message:
-                                          'Nomor resi tidak boleh kosong'.tr,
+                                      icon: const Icon(Icons.warning, color: whiteColor),
+                                      message: 'Nomor resi tidak boleh kosong'.tr,
                                       isDismissible: true,
                                       duration: const Duration(seconds: 3),
                                       backgroundColor: errorColor,
@@ -141,10 +126,8 @@ class DashboardUserInfo extends StatelessWidget {
                                 } else if (value.length < 16) {
                                   Get.showSnackbar(
                                     GetSnackBar(
-                                      icon: const Icon(Icons.warning,
-                                          color: whiteColor),
-                                      message:
-                                          'Nomor resi maksimal 16 karakter'.tr,
+                                      icon: const Icon(Icons.warning, color: whiteColor),
+                                      message: 'Nomor resi maksimal 16 karakter'.tr,
                                       isDismissible: true,
                                       duration: const Duration(seconds: 3),
                                       backgroundColor: errorColor,

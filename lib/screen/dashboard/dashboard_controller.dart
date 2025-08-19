@@ -784,6 +784,18 @@ class DashboardController extends BaseController {
         ),
       );
     }
+    final lines = value.split('\n');
+    final tooLong = lines.any((l) => l.length > 16);
+    if (tooLong) {
+      Get.showSnackbar(GetSnackBar(
+        icon: const Icon(Icons.warning, color: whiteColor),
+        message: 'Nomor resi maksimal 16 karakter'.tr,
+        isDismissible: true,
+        duration: const Duration(seconds: 3),
+        backgroundColor: errorColor,
+      ));
+      return;
+    }
   }
 
   onLacakKiriman(bool useBarcode, String value) {
