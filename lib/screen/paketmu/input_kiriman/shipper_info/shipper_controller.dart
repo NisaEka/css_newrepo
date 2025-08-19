@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
@@ -110,10 +111,23 @@ class ShipperController extends BaseController {
     update();
     try {
       await master
-          .getAccounts(QueryModel(limit: 0, sort: [
+          .getAccounts(
+        QueryModel(
+          limit: 0,
+          sort: [
             {"accountNumber": "asc"}
-          ]))
-          .then((value) => state.accountList.addAll(value.data ?? []));
+          ],
+        ),
+      )
+          .then((value) async {
+        state.accountList.addAll(value.data ?? []);
+        if (value.code == HttpStatus.ok) {
+          await storage.saveData(
+            StorageCore.accounts,
+            value,
+          );
+        }
+      });
       update();
 
       // var user = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));

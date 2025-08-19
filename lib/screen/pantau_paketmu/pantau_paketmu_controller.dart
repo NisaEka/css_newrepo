@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
@@ -8,6 +9,8 @@ import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/pantau_paketmu/pantau_pakemu_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
@@ -83,17 +86,16 @@ class PantauPaketmuController extends BaseController {
       AppSnackBar.error('Gagal mengambil data'.tr);
       state.isLoading = false;
       update();
-    } finally {
-      // state.selectedStatusKiriman = state.listStatusKiriman.first;
-      state.isLoading = false;
-      update();
+      // } finally {
+      //   // state.selectedStatusKiriman = state.listStatusKiriman.first;
+      //   state.isLoading = false;
+      //   update();
     }
     state.isLoading = false;
     update();
   }
 
   Future<void> getPantauList(int page) async {
-
     try {
       final trans = await pantau.getPantauList(QueryModel(
         search: state.searchField.text,
@@ -144,18 +146,34 @@ class PantauPaketmuController extends BaseController {
     if (state.isLoading) return;
     state.isLoading = true;
     update();
-    state.date.value = "${state.startDate}-${state.endDate}";
-    state.transDate = [
-      {
-        "awbDate": [state.startDate, state.endDate],
-      }
-    ];
-    update();
+    if (state.startDate != null && state.endDate != null) {
+      state.date.value = "${state.startDate}-${state.endDate}";
+      state.transDate = [
+        {
+          "awbDate": [state.startDate, state.endDate],
+        }
+      ];
+      update();
 
-    state.pagingController.refresh();
-
-    update();
-
+      state.pagingController.refresh();
+    } else {
+      update();
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.dialog(
+          DefaultAlertDialog(
+            title: "Peringatan".tr,
+            icon: Icon(
+              Icons.warning,
+              color: warningColor,
+              size: Get.width / 4,
+            ),
+            subtitle: "Tanggal Tidak Boleh Kosong".tr,
+            backButtonTitle: "OK",
+            onBack: () => Get.back(),
+          ),
+        );
+      });
+    }
     state.isLoading = false;
     update();
   }

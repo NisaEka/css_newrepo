@@ -1,7 +1,10 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/invoice/invoice_state.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class InvoiceController extends BaseController {
@@ -30,8 +33,7 @@ class InvoiceController extends BaseController {
 
   Future<void> _getInvoiceCount() async {
     try {
-      final response =
-          await invoiceRepository.getInvoiceCount(_queryParamModel);
+      final response = await invoiceRepository.getInvoiceCount(_queryParamModel);
       _invoiceCount = response.data ?? 0;
       update();
     } catch (error) {
@@ -105,6 +107,22 @@ class InvoiceController extends BaseController {
           "invoiceDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
+    } else {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.dialog(
+          DefaultAlertDialog(
+            title: "Peringatan".tr,
+            icon: Icon(
+              Icons.warning,
+              color: warningColor,
+              size: Get.width / 4,
+            ),
+            subtitle: "Tanggal Tidak Boleh Kosong".tr,
+            backButtonTitle: "OK",
+            onBack: () => Get.back(),
+          ),
+        );
+      });
     }
     if (state.dateFilter == '0') {
       resetFilter();

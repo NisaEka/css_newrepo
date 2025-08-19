@@ -55,7 +55,7 @@ class DashboardMenu2 extends StatelessWidget {
                                             context: context,
                                             builder: (context) => const LoginAlertDialog(),
                                           )
-                                        : !controller.state.isLoading
+                                        : !controller.state.isLoadingMenu
                                             ? Get.toNamed(e.route.toString(), arguments: {})
                                             : null,
                                   ))

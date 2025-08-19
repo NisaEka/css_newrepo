@@ -34,8 +34,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
         });
   }
 
-  CustomTopBar _appBarContent(
-      PembayaranAggergasiController c, BuildContext context) {
+  CustomTopBar _appBarContent(PembayaranAggergasiController c, BuildContext context) {
     return CustomTopBar(
       title: 'Laporan Pembayaran Aggregasi'.tr,
       action: [
@@ -76,10 +75,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
         children: [
           Text(
             "Rp. ${c.aggTotal?.toCurrency() ?? 0}",
-            style: Theme.of(context)
-                .textTheme
-                .headlineLarge!
-                .copyWith(color: primaryColor(context), fontWeight: bold),
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(color: primaryColor(context), fontWeight: bold),
           ),
           Text(
             "Total nilai yang sudah dibayarkan".tr,
@@ -117,8 +113,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  firstPageErrorIndicatorBuilder: (context) =>
-                      const DataEmpty(),
+                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => Column(
                     children: List.generate(
                       3,
@@ -136,8 +131,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                       color: primaryColor(context),
                     ),
                   ),
-                  newPageProgressIndicatorBuilder: (context) =>
-                      const LoadingDialog(
+                  newPageProgressIndicatorBuilder: (context) => const LoadingDialog(
                     background: Colors.transparent,
                     height: 50,
                     size: 30,
@@ -151,8 +145,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
     );
   }
 
-  Widget _filterContent(PembayaranAggergasiController c, BuildContext context,
-      StateSetter setState) {
+  Widget _filterContent(PembayaranAggergasiController c, BuildContext context, StateSetter setState) {
     return Expanded(
       child: CustomScrollView(
         slivers: [
@@ -168,9 +161,7 @@ class PembayaranAggergasiScreen extends StatelessWidget {
                         .map(
                           (e) => AccountListItem(
                             data: e,
-                            isSelected: c.selectedAccount
-                                .where((accounts) => accounts == e)
-                                .isNotEmpty,
+                            isSelected: c.selectedAccount.where((accounts) => accounts == e).isNotEmpty,
                             onTap: () => setState(() => c.onSelectAccount(e)),
                           ),
                         )

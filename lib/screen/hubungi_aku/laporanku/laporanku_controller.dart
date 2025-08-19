@@ -1,8 +1,12 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/laporanku/laporanku_state.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LaporankuController extends BaseController {
   final state = LaporankuState();
@@ -101,25 +105,34 @@ class LaporankuController extends BaseController {
   }
 
   applyFilter() {
-    if (state.startDate != null ||
-        state.endDate != null ||
-        state.status != "") {
+    if (state.startDate != null || state.endDate != null || state.status != "") {
       state.isFiltered = true;
       if (state.startDate != null && state.endDate != null) {
         state.date = [
-          DateTime(state.startDate!.year, state.startDate!.month,
-                  state.startDate!.day)
-              .toIso8601String(),
-          DateTime(state.endDate!.year, state.endDate!.month,
-                  state.endDate!.day, 23, 59, 59, 999)
-              .toIso8601String()
+          DateTime(state.startDate!.year, state.startDate!.month, state.startDate!.day).toIso8601String(),
+          DateTime(state.endDate!.year, state.endDate!.month, state.endDate!.day, 23, 59, 59, 999).toIso8601String()
         ];
       }
       state.pagingController.refresh();
       countReports();
     } else {
       state.isFiltered = false;
-      resetFilter();
+      // resetFilter();
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.dialog(
+          DefaultAlertDialog(
+            title: "Peringatan".tr,
+            icon: Icon(
+              Icons.warning,
+              color: warningColor,
+              size: Get.width / 4,
+            ),
+            subtitle: "Tanggal Tidak Boleh Kosong".tr,
+            backButtonTitle: "OK",
+            onBack: () => Get.back(),
+          ),
+        );
+      });
     }
 
     update();
@@ -128,14 +141,18 @@ class LaporankuController extends BaseController {
   void resetFilter() {
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-    state.startDateField.text =
-        state.startDate.toString().toShortDateTimeFormat();
+    state.startDateField.text = state.startDate.toString().toShortDateTimeFormat();
     state.endDateField.text = state.endDate.toString().toShortDateTimeFormat();
     state.isFiltered = false;
     state.searchField.clear();
-    state.date = [];
+    state.date = [
+      DateTime(state.startDate!.year, state.startDate!.month, state.startDate!.day).toIso8601String(),
+      DateTime(state.endDate!.year, state.endDate!.month, state.endDate!.day, 23, 59, 59, 999).toIso8601String()
+    ];
+    ;
     state.dateFilter = '0';
     state.status = "";
+    update();
 
     state.pagingController.refresh();
     countReports();

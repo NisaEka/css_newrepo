@@ -101,7 +101,7 @@ class PantauPaketmuScreen extends StatelessWidget {
                       );
                     },
                   ),
-                  firstPageErrorIndicatorBuilder: (context) => _loading(),
+                  firstPageErrorIndicatorBuilder: (context) => const DataEmpty(),
                   firstPageProgressIndicatorBuilder: (context) => _loading(),
                   noItemsFoundIndicatorBuilder: (context) => const DataEmpty(),
                   noMoreItemsIndicatorBuilder: (context) => Center(

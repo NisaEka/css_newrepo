@@ -1,7 +1,11 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/screen/hubungi_aku/eclaim/eclaim_state.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EclaimController extends BaseController {
   final state = EclaimState();
@@ -49,15 +53,11 @@ class EclaimController extends BaseController {
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
     try {
-      final trans = await eclaims.getEclaim(QueryModel(
-          search: state.searchField.text,
-          between: state.transDate,
-          sort: [
-            {"createDate": "desc"}
-          ]));
+      final trans = await eclaims.getEclaim(QueryModel(search: state.searchField.text, between: state.transDate, sort: [
+        {"createDate": "desc"}
+      ]));
 
-      final isLastPage =
-          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+      final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
       } else {
@@ -99,6 +99,22 @@ class EclaimController extends BaseController {
           "createDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
+    } else {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.dialog(
+          DefaultAlertDialog(
+            title: "Peringatan".tr,
+            icon: Icon(
+              Icons.warning,
+              color: warningColor,
+              size: Get.width / 4,
+            ),
+            subtitle: "Tanggal Tidak Boleh Kosong".tr,
+            backButtonTitle: "OK",
+            onBack: () => Get.back(),
+          ),
+        );
+      });
     }
     update();
     state.pagingController.refresh();

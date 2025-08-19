@@ -17,6 +17,7 @@ class LabelScreen extends StatelessWidget {
         init: LabelController(),
         builder: (controller) {
           return Scaffold(
+            backgroundColor: Colors.white,
               appBar: AppBar(
                 title: Text("Lihat Resi".tr),
                 leading: const CustomBackButton(),

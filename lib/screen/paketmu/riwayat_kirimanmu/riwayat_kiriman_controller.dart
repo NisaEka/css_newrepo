@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -8,7 +9,10 @@ import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/detail/detail_transa
 import 'package:css_mobile/screen/paketmu/riwayat_kirimanmu/riwayat_kiriman_state.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RiwayatKirimanController extends BaseController {
@@ -222,10 +226,27 @@ class RiwayatKirimanController extends BaseController {
           "createdDate": ["${state.startDate}", "${state.endDate}"]
         }
       ];
+      state.pagingController.refresh();
+      transactionCount();
+      update();
+    } else {
+      // Get.back();
+      Future.delayed(Duration(milliseconds: 300), () {
+        Get.dialog(
+          DefaultAlertDialog(
+            title: "Peringatan".tr,
+            icon: Icon(
+              Icons.warning,
+              color: warningColor,
+              size: Get.width / 4,
+            ),
+            subtitle: "Tanggal Tidak Boleh Kosong".tr,
+            backButtonTitle: "OK",
+            onBack: () => Get.back(),
+          ),
+        );
+      });
     }
-    update();
-    state.pagingController.refresh();
-    transactionCount();
     update();
   }
 

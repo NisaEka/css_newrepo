@@ -8,7 +8,6 @@ import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
 import 'package:css_mobile/widgets/forms/customsearchdropdownfield.dart';
 import 'package:css_mobile/widgets/forms/customsearchfield.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
@@ -111,12 +110,12 @@ class _OriginDropdownState extends State<VehicleDropdown> {
               return Container(
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                 child: Text(
-                  e.vehicleName.toString(),
+                  e.vehicleName?.tr ?? '',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor(context)),
                 ),
               );
             },
-            itemAsString: (VehicleModel e) => e.vehicleName.toString(),
+            itemAsString: (VehicleModel e) => e.vehicleName?.tr ?? '',
             onChanged: widget.onChanged,
             value: widget.value,
             selectedItem: widget.selectedItem,

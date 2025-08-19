@@ -1,4 +1,5 @@
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/pantau/pantau_paketmu_count_model.dart';
 import 'package:css_mobile/data/model/pengaturan/get_petugas_byid_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
@@ -6,6 +7,8 @@ import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'pantau_pakemu_state.dart';
@@ -31,8 +34,7 @@ class PantauCardController extends BaseController {
     state.isLoading = true;
     update();
     try {
-      state.basic =
-          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
       update();
 
       state.listOfficerEntry.add('SEMUA');
@@ -68,9 +70,7 @@ class PantauCardController extends BaseController {
           ]
         }
       ],
-      petugasEntry: (state.selectedPetugasEntry?.name == "SEMUA")
-          ? ""
-          : state.selectedPetugasEntry?.name ?? "",
+      petugasEntry: (state.selectedPetugasEntry?.name == "SEMUA") ? "" : state.selectedPetugasEntry?.name ?? "",
       status: state.selectedStatusKiriman,
     );
 
@@ -86,11 +86,8 @@ class PantauCardController extends BaseController {
       AppSnackBar.error('Gagal mengambil data pantau'.tr);
     }
 
-    if (state.selectedStatusKiriman != null &&
-        state.selectedStatusKiriman != "") {
-      state.filteredCountList = state.countList
-          .where((e) => e.status == state.selectedStatusKiriman)
-          .toList();
+    if (state.selectedStatusKiriman != null && state.selectedStatusKiriman != "") {
+      state.filteredCountList = state.countList.where((e) => e.status == state.selectedStatusKiriman).toList();
       update();
     } else {
       state.filteredCountList = List.from(state.countList);
@@ -105,20 +102,37 @@ class PantauCardController extends BaseController {
     if (state.isLoading) return;
     state.isLoading = true;
     update();
-    state.transDate = [
-      {
-        "awbDate": [state.startDate, state.endDate],
-      }
-    ];
-    state.date.printInfo(info: "state.date filter");
-    state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
-    update();
+    if (state.startDate != null && state.endDate != null) {
+      state.transDate = [
+        {
+          "awbDate": [state.startDate, state.endDate],
+        }
+      ];
+      state.date.printInfo(info: "state.date filter");
+      state.date.printInfo(info: "${state.startDate} - ${state.endDate}");
+      update();
 
-    getCountList();
+      getCountList();
 
-    AppLogger.i("filtered status : ${state.filteredCountList.length}");
-    update();
-
+      AppLogger.i("filtered status : ${state.filteredCountList.length}");
+      update();
+    } else {
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.dialog(
+          DefaultAlertDialog(
+            title: "Peringatan".tr,
+            icon: Icon(
+              Icons.warning,
+              color: warningColor,
+              size: Get.width / 4,
+            ),
+            subtitle: "Tanggal Tidak Boleh Kosong".tr,
+            backButtonTitle: "OK",
+            onBack: () => Get.back(),
+          ),
+        );
+      });
+    }
     state.isLoading = false;
     update();
   }

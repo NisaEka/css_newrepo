@@ -719,6 +719,8 @@ class LanguageEN {
       "Kata sandi baru": "New Password",
       "Konfirmasi Kata Sandi baru": "Confirm New Password",
       "Internal server error" : "Failed connect to server, please try again",
+      "MOBIL" : "CAR",
+      "MOTOR": "MOTORCYCLE"
     };
   }
 }

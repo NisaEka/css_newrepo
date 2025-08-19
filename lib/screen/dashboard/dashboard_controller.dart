@@ -665,16 +665,20 @@ class DashboardController extends BaseController {
 
       if (accounts && state.isLogin) {
         await master
-            .getAccounts(QueryModel(
-              limit: 0,
-              sort: [
-                {"accountNumber": "asc"}
-              ],
-            ))
-            .then((value) async => await storage.saveData(
-                  StorageCore.accounts,
-                  value,
-                ));
+            .getAccounts(
+              QueryModel(
+                limit: 0,
+                sort: [
+                  {"accountNumber": "asc"}
+                ],
+              ),
+            )
+            .then(
+              (value) async => await storage.saveData(
+                StorageCore.accounts,
+                value,
+              ),
+            );
       }
 
       if (state.isLogin) {

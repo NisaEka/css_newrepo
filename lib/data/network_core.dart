@@ -187,7 +187,7 @@ class NetworkCore {
           },
           onResponse: (response, handler) {
             if (kDebugMode) {
-              debugPrint("kDebugMode response : ${response.requestOptions.method} ${response.requestOptions.path} \n$response");
+              debugPrint("kDebugMode response : [${response.statusCode}] ${response.requestOptions.method} ${response.requestOptions.path} \n$response");
             }
             return handler.next(response);
           },

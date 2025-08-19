@@ -37,17 +37,12 @@ class FilterButton extends StatelessWidget {
           Get.bottomSheet(
             enableDrag: true,
             isDismissible: false,
-            StatefulBuilder(
-                builder: (BuildContext context, StateSetter setState) {
+            StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
               return Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? greyLightColor2
-                        : greyDarkColor2,
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(15),
-                        topRight: Radius.circular(15))),
+                    color: Theme.of(context).brightness == Brightness.light ? greyLightColor2 : greyDarkColor2,
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(15))),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

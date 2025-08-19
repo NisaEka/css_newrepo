@@ -1,16 +1,18 @@
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/aggregasi/get_aggregation_report_model.dart';
 import 'package:css_mobile/data/model/master/get_accounts_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/util/logger.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class PembayaranAggergasiController extends BaseController {
   final searchField = TextEditingController();
-  final PagingController<int, AggregationModel> pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, AggregationModel> pagingController = PagingController(firstPageKey: 1);
   static const pageSize = 10;
 
   DateTime? startDate;
@@ -52,10 +54,7 @@ class PembayaranAggergasiController extends BaseController {
       List<Map<String, dynamic>>? between = [];
 
       if (selectedAccount.isNotEmpty) {
-        isIn.add({
-          "mpayWdrGrpPayCode":
-              selectedAccount.map((e) => e.accountNumber).toList()
-        });
+        isIn.add({"mpayWdrGrpPayCode": selectedAccount.map((e) => e.accountNumber).toList()});
       }
 
       if (transDate.isNotEmpty) {
@@ -92,10 +91,7 @@ class PembayaranAggergasiController extends BaseController {
       List<Map<String, dynamic>> between = [];
 
       if (selectedAccount.isNotEmpty) {
-        isIn.add({
-          "mpayWdrGrpPayCode":
-              selectedAccount.map((e) => e.accountNumber).toList()
-        });
+        isIn.add({"mpayWdrGrpPayCode": selectedAccount.map((e) => e.accountNumber).toList()});
       }
 
       if (transDate.isNotEmpty) {
@@ -147,24 +143,40 @@ class PembayaranAggergasiController extends BaseController {
   }
 
   void applyFilter() {
-    if (startDate != null ||
-        endDate != null ||
-        !accountList.equals(selectedAccount)) {
+    if (startDate != null || endDate != null || !accountList.equals(selectedAccount)) {
       isFiltered = true;
       if (startDate != null && endDate != null) {
         transDate = [
-          DateTime(startDate!.year, startDate!.month, startDate!.day)
-              .toIso8601String(),
-          DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999)
-              .toIso8601String()
+          DateTime(startDate!.year, startDate!.month, startDate!.day).toIso8601String(),
+          DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999).toIso8601String()
         ];
       }
     } else {
       transDate = [];
+      if (dateFilter != '0') {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          Get.dialog(
+            DefaultAlertDialog(
+              title: "Peringatan".tr,
+              icon: Icon(
+                Icons.warning,
+                color: warningColor,
+                size: Get.width / 4,
+              ),
+              subtitle: "Tanggal Tidak Boleh Kosong".tr,
+              backButtonTitle: "OK",
+              onBack: () => Get.back(),
+            ),
+          );
+        });
+      }
     }
-    update();
-    pagingController.refresh();
-    fetchAggregationTotal();
+
+    if (dateFilter != '4') {
+      update();
+      pagingController.refresh();
+      fetchAggregationTotal();
+    }
   }
 
   void resetFilter() {
@@ -175,10 +187,8 @@ class PembayaranAggergasiController extends BaseController {
     selectedAccount = [];
     selectedAccount.addAll(accountList);
     transDate = [
-      DateTime(startDate!.year, startDate!.month, startDate!.day)
-          .toIso8601String(),
-      DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999)
-          .toIso8601String()
+      DateTime(startDate!.year, startDate!.month, startDate!.day).toIso8601String(),
+      DateTime(endDate!.year, endDate!.month, endDate!.day, 23, 59, 59, 999).toIso8601String()
     ];
     dateFilter = '3';
 
