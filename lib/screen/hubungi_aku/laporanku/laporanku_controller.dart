@@ -105,12 +105,18 @@ class LaporankuController extends BaseController {
   }
 
   applyFilter() {
-    if (state.startDate != null || state.endDate != null || state.status != "") {
+    if (state.startDate != null ||
+        state.endDate != null ||
+        state.status != "") {
       state.isFiltered = true;
       if (state.startDate != null && state.endDate != null) {
         state.date = [
-          DateTime(state.startDate!.year, state.startDate!.month, state.startDate!.day).toIso8601String(),
-          DateTime(state.endDate!.year, state.endDate!.month, state.endDate!.day, 23, 59, 59, 999).toIso8601String()
+          DateTime(state.startDate!.year, state.startDate!.month,
+                  state.startDate!.day)
+              .toIso8601String(),
+          DateTime(state.endDate!.year, state.endDate!.month,
+                  state.endDate!.day, 23, 59, 59, 999)
+              .toIso8601String()
         ];
       }
       state.pagingController.refresh();
@@ -141,15 +147,19 @@ class LaporankuController extends BaseController {
   void resetFilter() {
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
-    state.startDateField.text = state.startDate.toString().toShortDateTimeFormat();
+    state.startDateField.text =
+        state.startDate.toString().toShortDateTimeFormat();
     state.endDateField.text = state.endDate.toString().toShortDateTimeFormat();
     state.isFiltered = false;
     state.searchField.clear();
     state.date = [
-      DateTime(state.startDate!.year, state.startDate!.month, state.startDate!.day).toIso8601String(),
-      DateTime(state.endDate!.year, state.endDate!.month, state.endDate!.day, 23, 59, 59, 999).toIso8601String()
+      DateTime(state.startDate!.year, state.startDate!.month,
+              state.startDate!.day)
+          .toIso8601String(),
+      DateTime(state.endDate!.year, state.endDate!.month, state.endDate!.day,
+              23, 59, 59, 999)
+          .toIso8601String()
     ];
-    ;
     state.dateFilter = '0';
     state.status = "";
     update();

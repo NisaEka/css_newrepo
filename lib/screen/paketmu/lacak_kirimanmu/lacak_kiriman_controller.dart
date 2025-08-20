@@ -17,7 +17,8 @@ class LacakKirimanController extends BaseController {
 
   String? phoneNumber;
   List<PostLacakKirimanModel?> cnotes = [];
-  final PagingController<int, PostLacakKirimanModel> pagingController = PagingController(firstPageKey: 1);
+  final PagingController<int, PostLacakKirimanModel> pagingController =
+      PagingController(firstPageKey: 1);
 
   bool isLoading = false;
   bool isLogin = false;
@@ -61,14 +62,17 @@ class LacakKirimanController extends BaseController {
 
     value.split('\n').take(101).forEachIndexed((index, cnote) async {
       // var response = await trace.postTracingByCnote(cnote);
-      final response = await cekToken() ? await trace.postTracingByCnote(cnote) : await trace.postTracingByCnotePublic(cnote, phoneNumber ?? '');
+      final response = await cekToken()
+          ? await trace.postTracingByCnote(cnote)
+          : await trace.postTracingByCnotePublic(cnote, phoneNumber ?? '');
 
       if (response.code == 200) {
         cnotes.add(response.data);
       } else {
         if (cnote.isNotEmpty) {
           cnotes.add(PostLacakKirimanModel(
-            cnote: Cnote(cnoteNo: cnote, podStatus: isLogin ? "NOT FOUND" : "DETAIL"),
+            cnote: Cnote(
+                cnoteNo: cnote, podStatus: isLogin ? "NOT FOUND" : "DETAIL"),
           ));
         }
       }
@@ -106,7 +110,8 @@ class LacakKirimanController extends BaseController {
     BaseResponse<PostLacakKirimanModel>? response;
     try {
       // final response = await cekToken() ? await trace.postTracingByCnote(nomorResi) : await trace.postTracingByCnotePublic(nomorResi, phoneNumber);
-      response = await trace.postTracingByCnotePublic(nomorResi?.cnote?.cnoteNo ?? '', phoneNumber);
+      response = await trace.postTracingByCnotePublic(
+          nomorResi?.cnote?.cnoteNo ?? '', phoneNumber);
       trackModel = response.data;
       debugPrint("lacaak response ${response.toJson()}");
     } catch (e, i) {
@@ -129,11 +134,15 @@ class LacakKirimanController extends BaseController {
     } else {
       Get.dialog(
         DefaultAlertDialog(
-          subtitle: response?.message ?? 'Data Tidak Ditemukan'.tr,
+          subtitle:
+              response?.message?.toString().tr ?? 'Data Tidak Ditemukan'.tr,
           confirmButtonTitle: 'Ok'.tr,
           onConfirm: () {
             cnotes[index] = PostLacakKirimanModel(
-              cnote: Cnote(cnoteNo: nomorResi?.cnote?.cnoteNo, podStatus: response?.code == 401 ? "INVALID PHONE" : "NOT FOUND"),
+              cnote: Cnote(
+                  cnoteNo: nomorResi?.cnote?.cnoteNo,
+                  podStatus:
+                      response?.code == 401 ? "INVALID PHONE" : "NOT FOUND"),
             );
             update();
 

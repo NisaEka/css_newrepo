@@ -11,7 +11,6 @@ import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/delete_alert_dialog.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,7 +29,10 @@ class RiwayatKirimanController extends BaseController {
       if (state.statusFilter != "SEMUA") {
         state.selectedStatusKiriman = state.statusFilter;
       }
-      state.startDate = state.startDateFilter ?? DateTime.now().subtract(const Duration(days: 6)).copyWith(hour: 0, minute: 0);
+      state.startDate = state.startDateFilter ??
+          DateTime.now()
+              .subtract(const Duration(days: 6))
+              .copyWith(hour: 0, minute: 0);
       state.endDate = state.endDateFilter ?? DateTime.now();
       state.dateFilter = state.dateF ?? '2';
       if (state.tipeFilter == 'COD ONGKIR') {
@@ -60,7 +62,8 @@ class RiwayatKirimanController extends BaseController {
   }
 
   void cekAllowance() {
-    if (state.basic?.userType != "PEMILIK" && state.allow?.semuaTransaksi != "Y") {
+    if (state.basic?.userType != "PEMILIK" &&
+        state.allow?.semuaTransaksi != "Y") {
       state.selectedPetugasEntry = PetugasModel(name: state.basic?.name);
     }
     applyFilter();
@@ -93,8 +96,10 @@ class RiwayatKirimanController extends BaseController {
   Future<void> initData() async {
     state.selectedTransaction = [];
     state.listStatusKiriman = [];
-    state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
-    state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    state.allow =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    state.basic =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     update();
 
     try {
@@ -125,17 +130,20 @@ class RiwayatKirimanController extends BaseController {
         state.selectedPetugasEntry?.name ?? '',
       );
 
-      final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+      final isLastPage =
+          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
         if (state.isSelectAll) {
-          state.selectedTransaction.addAll(state.pagingController.itemList ?? []);
+          state.selectedTransaction
+              .addAll(state.pagingController.itemList ?? []);
         }
       } else {
         final nextPageKey = page + 1;
         state.pagingController.appendPage(trans.data ?? [], nextPageKey);
         if (state.isSelectAll) {
-          state.selectedTransaction.addAll(state.pagingController.itemList ?? []);
+          state.selectedTransaction
+              .addAll(state.pagingController.itemList ?? []);
         }
       }
     } catch (e) {
@@ -160,7 +168,8 @@ class RiwayatKirimanController extends BaseController {
 
   void selectAll(bool value) {
     state.isSelectAll = value;
-    state.selectedTransaction = value ? state.pagingController.itemList ?? [] : [];
+    state.selectedTransaction =
+        value ? state.pagingController.itemList ?? [] : [];
     update();
     state.selectedTransaction.isEmpty ? state.isSelect = false : null;
     update();
@@ -184,7 +193,10 @@ class RiwayatKirimanController extends BaseController {
         state.selectedTransaction.add(item);
       }
       update();
-      state.selectedTransaction.length == state.pagingController.itemList?.length ? state.isSelectAll = true : state.isSelectAll = false;
+      state.selectedTransaction.length ==
+              state.pagingController.itemList?.length
+          ? state.isSelectAll = true
+          : state.isSelectAll = false;
     } else {
       Get.to(() => const DetailTransactionScreen(), arguments: {
         'awb': item.awb,
@@ -231,7 +243,7 @@ class RiwayatKirimanController extends BaseController {
       update();
     } else {
       // Get.back();
-      Future.delayed(Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 300), () {
         Get.dialog(
           DefaultAlertDialog(
             title: "Peringatan".tr,

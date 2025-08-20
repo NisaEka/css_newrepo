@@ -51,13 +51,16 @@ class RequestPickupController extends BaseController {
     if (state.startDate != null && state.endDate != null) {
       state.queryParam.setBetween([
         {
-          "createdDateSearch": [state.startDate?.toIso8601String() ?? '', state.endDate?.toIso8601String() ?? '']
+          "createdDateSearch": [
+            state.startDate?.toIso8601String() ?? '',
+            state.endDate?.toIso8601String() ?? ''
+          ]
         }
       ]);
       refreshPickups();
     } else {
       state.queryParam.setBetween([]);
-      Future.delayed(Duration(milliseconds: 300), () {
+      Future.delayed(const Duration(milliseconds: 300), () {
         Get.dialog(
           DefaultAlertDialog(
             title: "Peringatan".tr,
@@ -74,8 +77,6 @@ class RequestPickupController extends BaseController {
       });
     }
     update();
-
-
   }
 
   void resetQueryParam() {
@@ -128,7 +129,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getRequestPickupCount() async {
     try {
-      final response = await requestPickupRepository.getRequestPickupCount(QueryModel(
+      final response =
+          await requestPickupRepository.getRequestPickupCount(QueryModel(
         where: state.queryParam.where,
         between: state.queryParam.between,
         search: state.queryParam.search,
@@ -190,7 +192,8 @@ class RequestPickupController extends BaseController {
 
   Future<void> getAddresses(int page) async {
     try {
-      final response = await requestPickupRepository.getRequestPickupAddresses(QueryModel(page: page, sort: [
+      final response = await requestPickupRepository
+          .getRequestPickupAddresses(QueryModel(page: page, sort: [
         {"createdDate": "desc"}
       ]));
       AppLogger.i("addresses: ${response.data?.map((e) => e.toJson())}");
@@ -203,11 +206,14 @@ class RequestPickupController extends BaseController {
       final isLastPage = response.meta!.currentPage == response.meta!.lastPage;
       if (isLastPage) {
         state.pagingControllerPickupDataAddress.appendLastPage(payload);
-        AppLogger.i("pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
+        AppLogger.i(
+            "pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
       } else {
         final nextPageKey = page + 1;
-        state.pagingControllerPickupDataAddress.appendPage(payload, nextPageKey);
-        AppLogger.i("pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
+        state.pagingControllerPickupDataAddress
+            .appendPage(payload, nextPageKey);
+        AppLogger.i(
+            "pagingControllerPickupDataAddress, ${state.pagingControllerPickupDataAddress}");
       }
     } catch (e) {
       AppLogger.e("getAddresses error: $e");
@@ -247,7 +253,7 @@ class RequestPickupController extends BaseController {
     state.selectedVehicle = id;
     state.vehicleItem = item; // penting: simpan untuk initial value dropdown
     update();
-    print(item);
+    // print(item);
   }
 
   void selectItem(String awb) {
@@ -302,13 +308,13 @@ class RequestPickupController extends BaseController {
       getStatuses(),
       getTypes(),
     ]);
-    state.pagingController.addPageRequestListener((pageKey) {
-      getRequestPickups(pageKey);
-    });
-    Future.wait([getRequestPickupCount()]);
-    state.pagingControllerPickupDataAddress.addPageRequestListener((pageKey) {
-      getAddresses(pageKey);
-    });
+    // state.pagingController.addPageRequestListener((pageKey) {
+    //   getRequestPickups(pageKey);
+    // });
+    // Future.wait([getRequestPickupCount()]);
+    // state.pagingControllerPickupDataAddress.addPageRequestListener((pageKey) {
+    //   getAddresses(pageKey);
+    // });
   }
 
   void onSetPickupTime(String newTime) {
@@ -319,14 +325,19 @@ class RequestPickupController extends BaseController {
     state.createDataLoading = true;
     update();
 
-    requestPickupRepository.createRequestPickup(_prepareCreateData()).then((response) {
+    requestPickupRepository
+        .createRequestPickup(_prepareCreateData())
+        .then((response) {
       state.data = response.data;
-      if (response.code == HttpStatus.created && response.data!.errorDetails.isEmpty) {
+      if (response.code == HttpStatus.created &&
+          response.data!.errorDetails.isEmpty) {
         state.createDataSuccess = true;
         if (state.createDataFailed || state.createDataSuccess) {
           Get.dialog(
             DefaultAlertDialog(
-              title: "Success: ${state.data?.successCount}. Error: ${state.data?.errorCount}\n".tr,
+              title:
+                  "Success: ${state.data?.successCount}. Error: ${state.data?.errorCount}\n"
+                      .tr,
               subtitle: 'Error Details:\n'
                   '${state.data?.errorDetails.map((e) => '- ${e.awb} (${e.reason})').join('\n')}',
               backButtonTitle: "Kembali",

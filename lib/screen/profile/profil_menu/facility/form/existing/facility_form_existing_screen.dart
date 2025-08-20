@@ -1,5 +1,6 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/profile/profil_menu/facility/form/existing/facility_form_existing_controller.dart';
+import 'package:css_mobile/util/validator/custom_validation_builder.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
@@ -81,7 +82,7 @@ class FacilityFormExistingScreen extends StatelessWidget {
                         helperText:
                             'Nomor telepon yang terdaftar di akun JNE'.tr,
                         inputType: TextInputType.phone,
-                        validator: ValidationBuilder().phone().build(),
+                        validator: ValidationBuilder().phoneNumber().build(),
                       )
                     ],
                   ),

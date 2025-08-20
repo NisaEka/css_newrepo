@@ -8,6 +8,7 @@ import 'package:css_mobile/util/constant.dart';
 import 'package:css_mobile/util/ext/time_of_day_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/widgets/dialog/data_empty_dialog.dart';
+import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/loading_dialog.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/vehicle_dropdown.dart';
@@ -153,12 +154,28 @@ class RequestPickupSelectAddressContent extends StatelessWidget {
         children: [
           Text("Jam Pickup".tr, style: Theme.of(context).textTheme.bodyMedium),
           OutlinedButton(
-            onPressed: () {
-              _selectedTime(context).then((value) {
-                if (value?.hour != null && value?.minute != null) {
-                  onTimeSet(value!.asPickupTimeFormat());
-                }
-              });
+            onPressed: () async {
+              final picked = await _selectedTime(context);
+              if (picked == null) return;
+
+              final now = DateTime.now();
+              final pickedDT = DateTime(
+                  now.year, now.month, now.day, picked.hour, picked.minute);
+
+              if (pickedDT.isBefore(now)) {
+                Get.dialog(
+                  DefaultAlertDialog(
+                    onBack: () => Get.back(),
+                    backButtonTitle: "Ok",
+                    title: 'Waktu tidak valid'.tr,
+                    subtitle: 'Jam pickup harus setelah waktu saat ini'.tr,
+                  ),
+                );
+                return;
+              }
+
+              onTimeSet(
+                  picked.asPickupTimeFormat()); // atau picked.format(context)
             },
             style:
                 ButtonStyle(padding: WidgetStateProperty.resolveWith((states) {

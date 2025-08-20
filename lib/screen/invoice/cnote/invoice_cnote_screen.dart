@@ -87,7 +87,7 @@ class InvoiceCnoteScreen extends StatelessWidget {
                             const Padding(padding: EdgeInsets.only(top: 16)),
                             FilledButton(
                               onPressed: () => controller.requireRetry(),
-                              child: const Text("Muat ulang"),
+                              child: Text("Muat ulang".tr),
                             )
                           ],
                         ),

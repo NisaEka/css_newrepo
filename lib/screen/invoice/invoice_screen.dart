@@ -144,7 +144,7 @@ class InvoiceScreen extends StatelessWidget {
                     const Padding(padding: EdgeInsets.only(top: 0)),
                     FilledButton(
                       onPressed: () => controller.requireRetry(),
-                      child: const Text("Muat ulang"),
+                      child: Text("Muat ulang".tr),
                     )
                   ],
                 ),
@@ -176,7 +176,7 @@ class InvoiceScreen extends StatelessWidget {
                     const Padding(padding: EdgeInsets.only(top: 0)),
                     FilledButton(
                       onPressed: () => controller.requireRetry(),
-                      child: const Text("Muat ulang"),
+                      child: Text("Muat ulang".tr),
                     )
                   ],
                 ),

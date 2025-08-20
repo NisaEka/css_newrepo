@@ -71,10 +71,12 @@ class CustomSearchDropdownField<T> extends StatefulWidget {
   }
 
   @override
-  State<CustomSearchDropdownField<T>> createState() => _CustomSearchDropdownFieldState<T>();
+  State<CustomSearchDropdownField<T>> createState() =>
+      _CustomSearchDropdownFieldState<T>();
 }
 
-class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField<T>> {
+class _CustomSearchDropdownFieldState<T>
+    extends State<CustomSearchDropdownField<T>> {
   FormFieldValidator<T>? validator;
 
   @override
@@ -84,16 +86,21 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
         children: [
           const SizedBox(height: 10),
           TextField(
-            controller: widget.controller ?? TextEditingController(text: widget.selectedItem.toString()),
+            controller: widget.controller ??
+                TextEditingController(text: widget.selectedItem.toString()),
             enabled: false,
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                   fontSize: 16,
-                  color: AppConst.isLightTheme(context) ? Colors.black : whiteColor,
+                  color: AppConst.isLightTheme(context)
+                      ? Colors.black
+                      : whiteColor,
                 ),
             decoration: InputDecoration(
               label: Text(widget.label ?? widget.hintText ?? ''),
               filled: true,
-              fillColor: Theme.of(context).brightness == Brightness.light ? neutralColor : greyColor,
+              fillColor: Theme.of(context).brightness == Brightness.light
+                  ? neutralColor
+                  : greyColor,
               prefixIcon: widget.prefixIcon,
               suffixIcon: widget.suffixIcon,
               prefixIconColor: Theme.of(context).colorScheme.outline,
@@ -110,7 +117,9 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
         DropdownSearch<T>(
           validator: (value) {
             if (widget.isRequired) {
-              if (value == null || value == widget.hintText || value == widget.label) {
+              if (value == null ||
+                  value == widget.hintText ||
+                  value == widget.label) {
                 return "Masukan tidak boleh kosong".tr;
               }
             }
@@ -119,21 +128,27 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
           items: widget.items ?? [],
           popupProps: widget.showFromBottom
               ? PopupProps.modalBottomSheet(
-                  constraints: BoxConstraints(maxHeight: Get.height * 0.65, minHeight: Get.height * 0.5),
+                  constraints: BoxConstraints(
+                      maxHeight: Get.height * 0.65,
+                      minHeight: Get.height * 0.5),
                   fit: FlexFit.loose,
                   showSelectedItems: false,
-                  modalBottomSheetProps: const ModalBottomSheetProps(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                    useSafeArea: true
+                  modalBottomSheetProps: ModalBottomSheetProps(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    useSafeArea: true,
+                    backgroundColor: dropDownColor(context),
                   ),
                   title: Container(
-                    padding: const EdgeInsets.only(top: 20, left: 20, bottom: 10),
+                    padding:
+                        const EdgeInsets.only(top: 20, left: 20, bottom: 10),
                     child: Text(
                       widget.label ?? widget.hintText ?? '',
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                  errorBuilder: (context, searchEntry, exception) => const DataEmpty(),
+                  errorBuilder: (context, searchEntry, exception) =>
+                      const DataEmpty(),
                   showSearchBox: widget.showSearchBox,
                   searchDelay: const Duration(milliseconds: 500),
                   isFilterOnline: widget.isFilterOnline,
@@ -141,19 +156,24 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                   searchFieldProps: TextFieldProps(
                     cursorColor: CustomTheme().cursorColor(context),
                     autofocus: false,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
                     decoration: InputDecoration(
                       hintText: "Cari",
                       helperText: "Masukan minimal 3 karakter".tr,
                     ),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: regular),
                   ),
                 )
               : PopupProps.menu(
                   constraints: const BoxConstraints(maxHeight: 200),
                   fit: FlexFit.loose,
                   showSelectedItems: false,
-                  errorBuilder: (context, searchEntry, exception) => DataEmpty(text: "Anda sedang offline".tr),
+                  errorBuilder: (context, searchEntry, exception) =>
+                      DataEmpty(text: "Anda sedang offline".tr),
                   menuProps: MenuProps(
                     backgroundColor: dropDownColor(context),
                     borderRadius: BorderRadius.circular(10),
@@ -169,7 +189,10 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                       hintText: widget.searchHintText,
                       helperText: "Masukan minimal 3 karakter".tr,
                     ),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: regular),
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(fontWeight: regular),
                   ),
                 ),
           dropdownButtonProps: DropdownButtonProps(
@@ -184,7 +207,8 @@ class _CustomSearchDropdownFieldState<T> extends State<CustomSearchDropdownField
                 prefixIcon: widget.prefixIcon,
                 suffixIcon: widget.suffixIcon,
                 prefixIconColor: Theme.of(context).colorScheme.outline),
-            baseStyle: widget.textStyle ?? Theme.of(context).textTheme.titleSmall,
+            baseStyle:
+                widget.textStyle ?? Theme.of(context).textTheme.titleSmall,
           ),
           asyncItems: widget.asyncItems,
           itemAsString: widget.itemAsString,

@@ -718,9 +718,15 @@ class LanguageEN {
       'Perkiraan Sampai': "Estimated Arrival",
       "Kata sandi baru": "New Password",
       "Konfirmasi Kata Sandi baru": "Confirm New Password",
-      "Internal server error" : "Failed connect to server, please try again later",
-      "MOBIL" : "CAR",
-      "MOTOR": "MOTORCYCLE"
+      "Internal server error":
+          "Failed connect to server, please try again later",
+      "MOBIL": "CAR",
+      "MOTOR": "MOTORCYCLE",
+      "Waktu tidak valid": "Invalid Time",
+      "Jam pickup harus setelah waktu saat ini":
+          "Pickup time must be later than the current time",
+      "Terjadi kesalahan ketika mengambil data": "Failed to load data",
+      "Muat ulang": "Try again"
     };
   }
 }
