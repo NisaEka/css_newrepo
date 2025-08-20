@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
@@ -658,8 +659,12 @@ class TransactionController extends BaseController {
         if (state.goods != null) {
           deleteDraft(state.draftIndex!);
         }
-        if (v.code == 400 || v.code == 500) {
+        if (v.code == HttpStatus.badRequest || v.code == HttpStatus.internalServerError) {
           AppSnackBar.error(v.error?.first ?? v.message);
+          if (v.code == HttpStatus.internalServerError) {
+            state.showDraftButton = true;
+            update();
+          }
         } else {
           Get.offAll(_successScreen(
             data: v.data ?? TransactionModel(),

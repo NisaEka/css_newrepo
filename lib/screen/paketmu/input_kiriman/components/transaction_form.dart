@@ -468,7 +468,7 @@ class TransactionForm extends StatelessWidget {
                                 onPressed: () => c.onSubmit(),
                               )
                             : const SizedBox(),
-                        c.state.goods == null && !c.state.isOnline || c.state.draft != null
+                        c.state.goods == null && !c.state.isOnline || c.state.draft != null || c.state.showDraftButton
                             ? CustomFilledButton(
                                 color: whiteColor,
                                 borderColor: c.state.formValidate ? primaryColor(context) : greyColor,

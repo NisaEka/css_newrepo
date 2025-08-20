@@ -87,7 +87,7 @@ class PengaturanRepositoryImpl extends PengaturanRepository {
 
   @override
   Future<BaseResponse> putOfficer(DataPetugasModel data) async {
-    data.toJson().printInfo(info: "kiriman data");
+    // data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.base.patch(
         "/officers/${data.id}",

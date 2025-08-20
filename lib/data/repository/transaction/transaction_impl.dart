@@ -21,7 +21,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<BaseResponse<TransactionModel>> postTransaction(TransactionModel data) async {
-    data.toJson().printInfo(info: "kiriman data");
+    // data.toJson().printInfo(info: "kiriman data");
     try {
       Response response = await network.base.post(
         "/transaction/transactions",

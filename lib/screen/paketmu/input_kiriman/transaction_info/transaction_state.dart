@@ -56,6 +56,7 @@ class TransactionState {
   bool isOnline = true;
   bool isShowDialog = false;
   bool isCOD = false;
+  bool showDraftButton = false;
 
   List<String> steps = [
     'Data Pengirim'.tr,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:collection/collection.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -165,7 +166,7 @@ class DraftTransaksiController extends BaseController {
 
             AppSnackBar.success('Draft berhasil di upload'.tr);
           } else {
-            AppSnackBar.error('Draft gagal di upload'.tr);
+            AppSnackBar.error("${'Draft gagal di upload'.tr}${value.code == HttpStatus.internalServerError ? "\n${'${value.message}'.tr}" : ""}");
           }
 
           update();
