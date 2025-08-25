@@ -74,16 +74,12 @@ class LoginController extends BaseController {
                 value.data?.token?.refreshToken,
               )
               .then((_) => Get.delete<DashboardController>())
-              .then((_) => Get.offAll(
-                    () => const DashboardScreen(),
-                    arguments: {'isFromLogin': true},
-                  ));
+              .then((_) => Get.offAll(() => const DashboardScreen(), arguments: {'isFromLogin': true}));
         } else if (value.code == 403) {
           Get.dialog(
             InfoDialog(
               infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
-              nextButton: () =>
-                  Get.off(() => const SignUpOTPScreen(), arguments: {
+              nextButton: () => Get.off(() => const SignUpOTPScreen(), arguments: {
                 'email': state.emailTextField.text,
                 'isActivation': true,
               }),
@@ -93,10 +89,7 @@ class LoginController extends BaseController {
           await handleFailedLogin();
         } else if (value.message == "Email not verified") {
           try {
-            await auth
-                .postRegistPinResend(
-                    InputPinconfirmModel(email: state.emailTextField.text))
-                .then((value) {
+            await auth.postRegistPinResend(InputPinconfirmModel(email: state.emailTextField.text)).then((value) {
               if (value.code == 201) {
                 AppSnackBar.success('Silahkan cek email anda'.tr);
                 Get.to(() => const SignUpOTPScreen(), arguments: {
@@ -163,8 +156,7 @@ class LoginController extends BaseController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
     position = await Geolocator.getCurrentPosition();
@@ -180,8 +172,7 @@ class LoginController extends BaseController {
         update();
 
         _lockCheckTimer?.cancel();
-        _lockCheckTimer =
-            Timer.periodic(const Duration(seconds: 5), (timer) async {
+        _lockCheckTimer = Timer.periodic(const Duration(seconds: 5), (timer) async {
           final current = DateTime.now().millisecondsSinceEpoch;
           if (current >= lockedUntil) {
             state.isLoginLocked = false;
@@ -211,18 +202,14 @@ class LoginController extends BaseController {
     attempts++;
 
     if (attempts >= 5) {
-      final lockUntil =
-          DateTime.now().add(const Duration(minutes: 5)).millisecondsSinceEpoch;
+      final lockUntil = DateTime.now().add(const Duration(minutes: 5)).millisecondsSinceEpoch;
       await storage.writeInt(StorageCore.loginLockedUntil, lockUntil);
       await storage.writeInt(StorageCore.failedLoginAttempts, 0);
       await isLoginLocked();
-      AppSnackBar.error(
-          "Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.".tr,
-          duration: 3);
+      AppSnackBar.error("Terlalu banyak percobaan gagal. Coba lagi dalam 5 menit.".tr, duration: 3);
     } else {
       await storage.writeInt(StorageCore.failedLoginAttempts, attempts);
-      AppSnackBar.error("${'Login gagal'.tr} ($attempts/${'5 percobaan'.tr}).",
-          duration: 3);
+      AppSnackBar.error("${'Login gagal'.tr} ($attempts/${'5 percobaan'.tr}).", duration: 3);
     }
   }
 
@@ -232,9 +219,7 @@ class LoginController extends BaseController {
   }
 
   showPassword() {
-    state.isObscurePasswordLogin
-        ? state.isObscurePasswordLogin = false
-        : state.isObscurePasswordLogin = true;
+    state.isObscurePasswordLogin ? state.isObscurePasswordLogin = false : state.isObscurePasswordLogin = true;
     state.isObscurePasswordLogin != false
         ? showIcon = const Icon(
             Icons.visibility,

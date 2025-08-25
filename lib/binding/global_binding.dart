@@ -41,12 +41,10 @@ class GlobalBinding extends Bindings {
     Get.put<NetworkCore>(NetworkCore(), permanent: true);
     Get.put<StorageCore>(StorageCore(), permanent: true);
     Get.put<AuthRepository>(AuthRepositoryImpl(), permanent: true);
-    Get.put<TransactionRepository>(TransactionRepositoryImpl(),
-        permanent: true);
+    Get.put<TransactionRepository>(TransactionRepositoryImpl(), permanent: true);
     Get.put<ConnectionTest>(ConnectionTest(), permanent: true);
     Get.put<ProfilRepository>(ProfilRepositoryImpl(), permanent: true);
-    Get.put<LacakKirimanRepository>(LacakKirimanRepositoryImpl(),
-        permanent: false);
+    Get.put<LacakKirimanRepository>(LacakKirimanRepositoryImpl(), permanent: false);
     Get.put<JLCRepository>(JLCRepositoryImpl(), permanent: false);
     Get.put<PengaturanRepository>(PengaturanRepositoryImpl(), permanent: true);
     Get.put<FacilityRepository>(FacilityImpl(), permanent: true);
@@ -58,7 +56,6 @@ class GlobalBinding extends Bindings {
     Get.put<InvoiceRepository>(InvoiceImpl(), permanent: true);
     Get.put<MasterRepository>(MasterRepositoryImpl(), permanent: true);
     Get.put<EclaimRepository>(EclaimRepositoryImpl(), permanent: true);
-    Get.put<PantauPaketmuRepository>(PantauPaketmuRepositoryImpl(),
-        permanent: true);
+    Get.put<PantauPaketmuRepository>(PantauPaketmuRepositoryImpl(), permanent: true);
   }
 }

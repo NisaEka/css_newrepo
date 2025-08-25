@@ -9,8 +9,7 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
   final network = Get.find<NetworkCore>();
 
   @override
-  Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnote(
-      String cnote) async {
+  Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnote(String cnote) async {
     try {
       Response response = await network.base.post(
         '/transaction/traces',
@@ -18,34 +17,37 @@ class LacakKirimanRepositoryImpl extends LacakKirimanRepository {
       );
       return BaseResponse.fromJson(
           response.data,
-          (json) => PostLacakKirimanModel.fromJson(
+              (json) =>
+              PostLacakKirimanModel.fromJson(
                 json as Map<String, dynamic>,
               ));
     } on DioException catch (e) {
       return BaseResponse.fromJson(
           e.response?.data,
-          (json) => PostLacakKirimanModel.fromJson(
+              (json) =>
+              PostLacakKirimanModel.fromJson(
                 json as Map<String, dynamic>,
               ));
     }
   }
 
   @override
-  Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnotePublic(
-      String cnote, String phoneNumber) async {
+  Future<BaseResponse<PostLacakKirimanModel>> postTracingByCnotePublic(String cnote, String phoneNumber) async {
     try {
       Response response = await network.base.post('/transaction/traces/public',
           data: {'awb': cnote, 'phoneNumber': phoneNumber},
           options: Options(extra: {'skipAuth': true}));
       return BaseResponse.fromJson(
           response.data,
-          (json) => PostLacakKirimanModel.fromJson(
+              (json) =>
+              PostLacakKirimanModel.fromJson(
                 json as Map<String, dynamic>,
               ));
     } on DioException catch (e) {
       return BaseResponse.fromJson(
           e.response?.data,
-          (json) => PostLacakKirimanModel.fromJson(
+              (json) =>
+              PostLacakKirimanModel.fromJson(
                 json as Map<String, dynamic>,
               ));
     }
