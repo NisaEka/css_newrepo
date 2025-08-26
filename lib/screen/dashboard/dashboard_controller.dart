@@ -593,19 +593,16 @@ class DashboardController extends BaseController {
     }
 
     try {
-      if (basic) {
-        try {
-          await profil.getBasicProfil().then((value) async {
-            // AppLogger.i("get basic : ${value.data?.toJson()}");
+      // if (basic) {
+      try {
+        await profil.getBasicProfil().then((value) async {
+          // AppLogger.i("get basic : ${value.data?.toJson()}");
+          if (basic) {
             await storage.saveData(
               StorageCore.basicProfile,
               value.data?.user,
             );
             state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
-            state.allow = value.data?.menu ?? MenuModel();
-            storage.saveData(StorageCore.userMenu, value.data?.menu);
-            saveFCMToken();
-
             await storage.saveData(
                 StorageCore.shipper,
                 ShipperModel(
@@ -618,41 +615,46 @@ class DashboardController extends BaseController {
                   country: value.data?.user?.language,
                   region: value.data?.user?.origin?.branch?.region,
                 ));
+          }
 
-            if (state.basic?.userType != "PEMILIK" && officer) {
-              await setting.getOfficerByID(state.basic?.id ?? '').then(
-                (value) async {
-                  await storage.saveData(StorageCore.officerProfile, value.data);
-                },
-              );
-            }
+          state.allow = value.data?.menu ?? MenuModel();
+          storage.saveData(StorageCore.userMenu, value.data?.menu);
+          saveFCMToken();
 
-            if (state.basic?.language == "INDONESIA") {
-              await storage.writeString(StorageCore.localeApp, "id");
-              Get.updateLocale(const Locale("id", "ID"));
-              update();
-            } else if (state.basic?.language == "ENGLISH") {
-              await storage.writeString(StorageCore.localeApp, "en");
-              Get.updateLocale(const Locale("en", "ES"));
-              update();
-            }
-          });
-        } catch (e, i) {
-          AppLogger.e('error get basic $e');
-          AppLogger.e('error get basic $i');
-        }
-      } else {
-        update();
-        if (state.basic?.language == "INDONESIA") {
-          await storage.writeString(StorageCore.localeApp, "id");
-          Get.updateLocale(const Locale("id", "ID"));
-          update();
-        } else if (state.basic?.language == "ENGLISH") {
-          await storage.writeString(StorageCore.localeApp, "en");
-          Get.updateLocale(const Locale("en", "ES"));
-          update();
-        }
+          if (state.basic?.userType != "PEMILIK" && officer) {
+            await setting.getOfficerByID(state.basic?.id ?? '').then(
+              (value) async {
+                await storage.saveData(StorageCore.officerProfile, value.data);
+              },
+            );
+          }
+
+          // if (state.basic?.language == "INDONESIA") {
+          //   await storage.writeString(StorageCore.localeApp, "id");
+          //   Get.updateLocale(const Locale("id", "ID"));
+          //   update();
+          // } else if (state.basic?.language == "ENGLISH") {
+          //   await storage.writeString(StorageCore.localeApp, "en");
+          //   Get.updateLocale(const Locale("en", "ES"));
+          //   update();
+          // }
+        });
+      } catch (e, i) {
+        AppLogger.e('error get basic $e');
+        AppLogger.e('error get basic $i');
       }
+      // } else {
+      update();
+      if (state.basic?.language == "INDONESIA") {
+        await storage.writeString(StorageCore.localeApp, "id");
+        Get.updateLocale(const Locale("id", "ID"));
+        update();
+      } else if (state.basic?.language == "ENGLISH") {
+        await storage.writeString(StorageCore.localeApp, "en");
+        Get.updateLocale(const Locale("en", "ES"));
+        update();
+      }
+      // }
 
       if (ccrfP && state.isLogin) {
         await profil.getCcrfProfil().then((value) async {
