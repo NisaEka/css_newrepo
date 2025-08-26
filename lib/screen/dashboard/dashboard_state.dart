@@ -26,6 +26,7 @@ class DashboardState {
 
   bool isLogin = false;
   bool isLoading = false;
+  bool isLoadingNews = false;
   bool isLoadingMenu = false;
   bool isLoadingCarousel = false;
   bool isLoadingJLC = false;

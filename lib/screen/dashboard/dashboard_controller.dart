@@ -163,7 +163,9 @@ class DashboardController extends BaseController {
 
   Future<void> loadNews() async {
     AppLogger.d("cek load news");
+    state.isLoadingNews = true;
     state.newsList.clear();
+    update();
     if (state.isOnline) {
       try {
         jlc.postDashboardNews().then((value) {
@@ -184,6 +186,7 @@ class DashboardController extends BaseController {
       state.newsList.add(NewsModel());
     }
 
+    state.isLoadingNews = false;
     update();
   }
 
