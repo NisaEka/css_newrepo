@@ -26,8 +26,7 @@ class DetailTransactionController extends BaseController {
     state.isLoading = true;
     state.locale = await storage.readString(StorageCore.localeApp);
     update();
-    state.allow =
-        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
 
     state.transStatus.text = state.data?.statusAwb ?? '';
     state.pickupStatus.text = state.data?.pickupStatus ?? '';
@@ -39,7 +38,7 @@ class DetailTransactionController extends BaseController {
           statusAwb: state.data?.statusAwb,
         );
         var data = value.data;
-
+        print("destination ${data?.destination?.toJson()}");
         state.transactionData = DataTransactionModel(
           destination: data?.destination,
           account: data?.account,
@@ -97,9 +96,7 @@ class DetailTransactionController extends BaseController {
           status: data?.statusAwb,
           createdDate: data?.createdDate ?? data?.createdDateSearch,
           awb: data?.awb,
-          type: data?.codOngkir == "YES" || data?.codFlag == "YES"
-              ? "COD"
-              : "NON COD",
+          type: data?.codOngkir == "YES" || data?.codFlag == "YES" ? "COD" : "NON COD",
           awbType: data?.apiType,
           createAt: data?.createdDate,
           delivery: Delivery(
@@ -113,8 +110,7 @@ class DetailTransactionController extends BaseController {
               specialInstruction: data?.specialIns,
               woodPackaging: data?.packingkayuFlag,
               flatRateWithInsurance: data?.insuranceAmount,
-              freightChargeWithInsurance:
-                  (data?.insuranceAmount ?? 0) + (data?.deliveryPrice ?? 0),
+              freightChargeWithInsurance: (data?.insuranceAmount ?? 0) + (data?.deliveryPrice ?? 0),
               insuranceFee: data?.insuranceAmount,
               insuranceAdm: (data?.insuranceAdm ?? 0)),
           goods: Goods(
@@ -140,9 +136,7 @@ class DetailTransactionController extends BaseController {
 
   Future<void> deleteTransaction() async {
     try {
-      await transaction
-          .deleteTransaction(state.transactionModel?.awb?.toString() ?? '')
-          .then((value) {
+      await transaction.deleteTransaction(state.transactionModel?.awb?.toString() ?? '').then((value) {
         if (value.code == 400) {
           AppSnackBar.error(value.message!.tr);
         } else {
@@ -160,8 +154,7 @@ class DetailTransactionController extends BaseController {
 
   bool isEdit() {
     if (state.transactionModel?.statusAwb == "MASIH DI KAMU") {
-      if (state.transactionModel?.apiStatus == 2 ||
-          state.transactionModel?.apiStatus == 7) {
+      if (state.transactionModel?.apiStatus == 2 || state.transactionModel?.apiStatus == 7) {
         return false;
       }
       return true;

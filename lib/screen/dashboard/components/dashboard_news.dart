@@ -22,7 +22,7 @@ class DashboardNews extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: c.state.isLoading || c.state.newsList.isEmpty
+                    children: c.state.isLoadingNews || c.state.newsList.isEmpty
                         ? List.generate(3, (index) => const NewsItem(isLoading: true, lang: ''))
                         : c.state.newsList
                             .map(
@@ -30,7 +30,7 @@ class DashboardNews extends StatelessWidget {
                                   ? NewsItem(
                                       news: e,
                                       lang: c.state.local,
-                                      isLoading: c.state.isLoading,
+                                      isLoading: c.state.isLoadingNews,
                                     )
                                   : const SizedBox(),
                             )

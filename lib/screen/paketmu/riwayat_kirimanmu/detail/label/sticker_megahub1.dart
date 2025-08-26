@@ -148,7 +148,9 @@ class StickerMegahub1 extends StatelessWidget {
                   SizedBox(
                     width: Get.width / 3.6,
                     child: Text(
-                      '${data.destination?.destinationCode?.substring(0, 3) ?? ''}-${data.destination?.facilityCode ?? data.destination?.cityZone ?? /*data.destination?.destinationCode?.substring(0, 3)*/''} \n${data.receiver?.zipCode ?? ''}',
+                      data.destination?.facilityCode?.isEmpty ?? false || data.destination?.facilityCode == null
+                          ? "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.destination?.cityZone ?? ''}\n${data.receiver?.zipCode}"
+                          : "${data.destination?.facilityCode}\n${data.receiver?.zipCode}",
                       textAlign: TextAlign.center,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
