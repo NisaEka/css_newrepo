@@ -188,10 +188,11 @@ class StickerMegahubHybrid1 extends StatelessWidget {
                   Text(
                       "Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? ((data.delivery?.insuranceFee ?? 0) - (data.delivery?.insuranceAdm ?? 0)).toInt().toCurrency() : 0}",
                       style: labelTextStyle),
-                  Text("Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt() ?? 0).toCurrency() : 0}",
+                  Text(
+                      "Biaya Admin Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? (data.delivery?.insuranceAdm?.toInt() ?? 0).toCurrency() : 0}",
                       style: labelTextStyle),
-                  Text("Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee?.toInt().toCurrency() ?? '0' : 0}",
-                      style: labelTextStyle),
+                  // Text("Total Biaya Asuransi : Rp ${data.delivery?.insuranceFlag == "Y" ? data.delivery?.insuranceFee?.toInt().toCurrency() ?? '0' : 0}",
+                  //     style: labelTextStyle),
                   Text.rich(
                     TextSpan(
                       text: 'Total Biaya Asuransi : ',
