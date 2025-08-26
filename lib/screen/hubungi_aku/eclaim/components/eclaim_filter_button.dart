@@ -40,7 +40,7 @@ class EclaimFilterButton extends HookWidget {
                             CustomDropDownField(
                               label: 'Status Claim'.tr,
                               value: c.state.selectedStatusClaim,
-                              hintText: 'Status Claim'.tr,
+                              hintText: 'Pilih Status Claim'.tr,
                               items: [
                                 DropdownMenuItem(
                                   value: 'Total',
@@ -85,8 +85,9 @@ class EclaimFilterButton extends HookWidget {
                                   ),
                                 ),
                               ],
+                              selectedItem: c.state.selectedStatusClaim,
                               onChanged: (value) {
-                                c.state.selectedStatusClaim = value ?? '';
+                                c.state.selectedStatusClaim = value;
                                 c.update();
                               },
                             ),

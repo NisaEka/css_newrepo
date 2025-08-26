@@ -14,14 +14,15 @@ class EclaimController extends BaseController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([eclaimCount(), initData()]);
-    state.pagingController.addPageRequestListener((pageKey) {
-      getEclaim(pageKey);
-    });
     state.startDate = DateTime.now().copyWith(hour: 0, minute: 0);
     state.endDate = DateTime.now().copyWith(hour: 23, minute: 59, second: 59);
 
-    state.selectedStatusClaim = "Total";
+    // state.selectedStatusClaim = 'Total';
+    // Future.wait([eclaimCount()]);
+    state.pagingController.addPageRequestListener((pageKey) {
+      getEclaim(pageKey);
+    });
+    // state.selectedStatusClaim = "Total";
     applyFilter();
   }
 
@@ -46,18 +47,23 @@ class EclaimController extends BaseController {
     }
   }
 
-  Future<void> initData() async {
-    state.selectedStatusClaim = '';
-  }
+  // Future<void> initData() async {
+  //   state.selectedStatusClaim = 'Total';
+  //   eclaimCount();
+  // }
 
   Future<void> getEclaim(int page) async {
     state.isLoading = true;
     try {
-      final trans = await eclaims.getEclaim(QueryModel(search: state.searchField.text, between: state.transDate, sort: [
-        {"createDate": "desc"}
-      ]));
+      final trans = await eclaims.getEclaim(QueryModel(
+          search: state.searchField.text,
+          between: state.transDate,
+          sort: [
+            {"createDate": "desc"}
+          ]));
 
-      final isLastPage = (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
+      final isLastPage =
+          (trans.meta?.currentPage ?? 0) == (trans.meta?.lastPage ?? 0);
       if (isLastPage) {
         state.pagingController.appendLastPage(trans.data ?? []);
       } else {
