@@ -726,7 +726,9 @@ class LanguageEN {
       "Jam pickup harus setelah waktu saat ini":
           "Pickup time must be later than the current time",
       "Terjadi kesalahan ketika mengambil data": "Failed to load data",
-      "Muat ulang": "Try again"
+      "Muat ulang": "Try again",
+      "Harus terdiri dari minimal 8 karakter":
+          "Must be at least 8 characters long"
     };
   }
 }
