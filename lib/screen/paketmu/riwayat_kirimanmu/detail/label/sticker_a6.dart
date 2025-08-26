@@ -4,6 +4,7 @@ import 'package:css_mobile/const/image_const.dart';
 import 'package:css_mobile/const/textstyle.dart';
 import 'package:css_mobile/data/model/transaction/data_transaction_model.dart';
 import 'package:css_mobile/util/ext/int_ext.dart';
+import 'package:css_mobile/util/ext/num_ext.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/forms/customlabel.dart';
 import 'package:flutter/material.dart';
@@ -211,10 +212,7 @@ class StickerA6 extends StatelessWidget {
                       Text(
                         data.delivery?.serviceCode ?? '-',
                         style: TextStyle(
-                          fontSize:
-                              (data.delivery?.serviceCode?.length ?? 0) > 4
-                                  ? 20
-                                  : 30,
+                          fontSize: (data.delivery?.serviceCode?.length ?? 0) > 4 ? 20 : 30,
                           fontWeight: bold,
                         ),
                       ),
@@ -312,17 +310,15 @@ class StickerA6 extends StatelessWidget {
                       ],
                     ),
                   ),
-                  /// TODO : kondisi apa yang pake city zone
-                  // data.destination?.cityZone == null
-                  //     ? \
-                  Column(
+                  data.destination?.facilityCode?.isEmpty ?? false || data.destination?.facilityCode == null
+                      ? Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(data.destination?.destinationCode ?? '', style: TextStyle(fontSize: 15, fontWeight: bold)),
                             Text(data.account?.accountType ?? '', style: TextStyle(fontSize: 12.5, fontWeight: bold)),
                           ],
                         )
-                      // : Text(data.destination?.cityZone ?? '', style: TextStyle(fontSize: 15, fontWeight: bold)),
+                      : Text(data.destination?.facilityCode ?? '', style: TextStyle(fontSize: 15, fontWeight: bold)),
                 ],
               ),
             ),
@@ -366,7 +362,7 @@ class StickerA6 extends StatelessWidget {
                 const SizedBox(width: 5),
                 CustomLabelText(
                   title: 'Goods Value: ',
-                  value: "Rp ${data.goods?.amount?.toInt().toCurrency() ?? '0'}",
+                  value: "Rp ${data.goods?.amount?.toDouble().toCurrency() ?? '0'}",
                   titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                   valueTextStyle: sublistTitleTextStyle.copyWith(),
                   valueMaxline: 5,
@@ -405,7 +401,7 @@ class StickerA6 extends StatelessWidget {
                     ),
                     CustomLabelText(
                       title: 'Insurance Amount : ',
-                      value: "Rp ${data.delivery?.insuranceFee ?? '0'}",
+                      value: "Rp ${data.delivery?.insuranceFee?.toCurrency() ?? '0'}",
                       titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                       valueTextStyle: sublistTitleTextStyle.copyWith(),
                       margin: const EdgeInsets.all(5),
@@ -426,7 +422,7 @@ class StickerA6 extends StatelessWidget {
                 CustomLabelText(
                   title: 'Est.Ongkir: ',
                   value:
-                      "Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toInt().toCurrency() : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
+                      "Rp ${shippingCost ? 0 : data.delivery?.insuranceFlag == "Y" ? data.delivery?.freightChargeWithInsurance?.toDouble().toCurrency() : data.delivery?.freightCharge?.toInt().toCurrency() ?? '0'}",
                   titleTextStyle: sublistTitleTextStyle.copyWith(fontWeight: bold),
                   valueTextStyle: sublistTitleTextStyle.copyWith(),
                   margin: const EdgeInsets.all(5),
