@@ -15,8 +15,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<List<PantauPaketmuCountModel>>> getPantauCount(
-      QueryModel param) async {
+  Future<BaseResponse<List<PantauPaketmuCountModel>>> getPantauCount(QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count',
@@ -27,8 +26,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
         (json) => json is List<dynamic>
             ? json
                 .map<PantauPaketmuCountModel>(
-                  (i) => PantauPaketmuCountModel.fromJson(
-                      i as Map<String, dynamic>),
+                  (i) => PantauPaketmuCountModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -40,8 +38,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
         (json) => json is List<dynamic>
             ? json
                 .map<PantauPaketmuCountModel>(
-                  (i) => PantauPaketmuCountModel.fromJson(
-                      i as Map<String, dynamic>),
+                  (i) => PantauPaketmuCountModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -50,8 +47,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
   }
 
   @override
-  Future<BaseResponse<List<PantauPaketmuListModel>>> getPantauList(
-      QueryModel param) async {
+  Future<BaseResponse<List<PantauPaketmuListModel>>> getPantauList(QueryModel param) async {
     try {
       Response response = await network.base.get(
         '/transaction/tracks/count/details',
@@ -63,8 +59,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
         (json) => json is List<dynamic>
             ? json
                 .map<PantauPaketmuListModel>(
-                  (i) => PantauPaketmuListModel.fromJson(
-                      i as Map<String, dynamic>),
+                  (i) => PantauPaketmuListModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -76,8 +71,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
         (json) => json is List<dynamic>
             ? json
                 .map<PantauPaketmuListModel>(
-                  (i) => PantauPaketmuListModel.fromJson(
-                      i as Map<String, dynamic>),
+                  (i) => PantauPaketmuListModel.fromJson(i as Map<String, dynamic>),
                 )
                 .toList()
             : List.empty(),
@@ -86,8 +80,7 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
   }
 
   @override
-  Future<BaseResponse<PantauPaketmuDetailModel>> getPantauDetail(
-      String awb) async {
+  Future<BaseResponse<PantauPaketmuDetailModel>> getPantauDetail(String awb) async {
     try {
       var response = await network.base.get(
         '/transaction/tracks/count/details/$awb',
@@ -115,7 +108,6 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
       Response response = await network.base.get(
         "/transaction/tracks/status",
       );
-      AppLogger.d("status pantau : ${response.data}");
       return BaseResponse.fromJson(
         response.data,
         (json) => json is List<dynamic>
@@ -127,7 +119,6 @@ class PantauPaketmuRepositoryImpl extends PantauPaketmuRepository {
             : List.empty(),
       );
     } on DioException catch (e) {
-      AppLogger.e("status pantau : ${e.response?.data}");
       return BaseResponse.fromJson(
         e.response?.data,
         (json) => json is List<dynamic>

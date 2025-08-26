@@ -145,6 +145,7 @@ class PantauPaketmuController extends BaseController {
   applyFilter({bool? isDetail = false}) async {
     if (state.isLoading) return;
     state.isLoading = true;
+    state.statusFilter = null;
     update();
     if (state.startDate != null && state.endDate != null) {
       state.date.value = "${state.startDate}-${state.endDate}";

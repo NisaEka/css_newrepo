@@ -20,8 +20,7 @@ class PantauPaketmuState {
   final endDateField = TextEditingController();
   final searchField = TextEditingController();
 
-  final PagingController<int, PantauPaketmuListModel> pagingController =
-      PagingController(firstPageKey: 1);
+  final PagingController<int, PantauPaketmuListModel> pagingController = PagingController(firstPageKey: 1);
 
   DateTime? startDate;
   DateTime? endDate;
@@ -45,8 +44,7 @@ class PantauPaketmuState {
 
   final listOfficerEntry = RxList<String>([]);
   final listTipeKiriman = RxList<String>(["cod", "cod ongkir", "non cod"]);
-  final listStatusPrint =
-      RxList<String>(["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"]);
+  final listStatusPrint = RxList<String>(["SEMUA", "SUDAH DIPRINT", "BELUM DIPRINT"]);
 
   int selectedKiriman = 0;
   String transType = '';
