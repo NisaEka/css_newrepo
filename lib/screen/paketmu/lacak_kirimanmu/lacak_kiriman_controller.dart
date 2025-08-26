@@ -90,7 +90,6 @@ class LacakKirimanController extends BaseController {
 
   Future<bool> cekToken() async {
     String? token = await storage.readAccessToken();
-    AppLogger.d('token : $token');
     isLogin = token != null;
     update();
 
