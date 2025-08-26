@@ -29,7 +29,7 @@ class EclaimItems extends StatelessWidget {
               height: Get.height * 0.5,
               child: RefreshIndicator(
                 onRefresh: () => Future.sync(() {
-                  c.state.pagingController.refresh();
+                  c.applyFilter();
                 }),
                 child: PagedListView<int, EclaimModel>(
                   pagingController: c.state.pagingController,

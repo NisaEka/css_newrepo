@@ -69,7 +69,7 @@ class EclaimStatusButton extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 4, top: 2),
                         child: Text(
-                          'Rp. ${c.state.countModel?.totalAmount?.toCurrency().toString() ?? '0'}',
+                          'Rp. ${c.state.countModel?.totalAmount?.toCurrency() ?? '0'}',
                           style: const TextStyle(
                             fontSize: 10,
                             color: whiteColor,
@@ -151,7 +151,7 @@ class EclaimStatusButton extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 4, top: 2),
                         child: Text(
-                          'Rp. ${c.state.countModel?.acceptedAmount?.toCurrency().toString() ?? '0'}',
+                          'Rp. ${c.state.countModel?.acceptedAmount?.toCurrency() ?? '0'}',
                           style: const TextStyle(
                             fontSize: 10,
                             color: whiteColor,
@@ -230,7 +230,7 @@ class EclaimStatusButton extends StatelessWidget {
                         padding:
                             const EdgeInsets.only(left: 8, bottom: 4, top: 2),
                         child: Text(
-                          'Rp. ${c.state.countModel?.rejectedAmount?.toCurrency().toString() ?? '0'}',
+                          'Rp. ${c.state.countModel?.rejectedAmount?.toCurrency() ?? '0'}',
                           style: const TextStyle(
                             fontSize: 10,
                             color: whiteColor,

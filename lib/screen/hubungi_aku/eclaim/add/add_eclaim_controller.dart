@@ -4,6 +4,7 @@ import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/data/model/eclaim/eclaim_model.dart';
 import 'package:css_mobile/screen/dialog/success_screen.dart';
+import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:file_picker/file_picker.dart';
@@ -69,7 +70,7 @@ class AddEclaimController extends BaseController {
             awb: awb,
             kategori: category.text,
             isipesan: description.text,
-            valueclaim: nominalPengajuan.text,
+            valueclaim: nominalPengajuan.text.digitOnly(),
             fileClaim: response.data?.first.fileUrl,
           ))
               .then((value) {
