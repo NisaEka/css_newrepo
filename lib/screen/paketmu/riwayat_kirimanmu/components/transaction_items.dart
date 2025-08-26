@@ -54,7 +54,7 @@ class TransactionItems extends StatelessWidget {
                           index: index,
                           isSelected: c.state.selectedTransaction.where((e) => e == item).isNotEmpty,
                           onLongPress: () {
-                            if (item.statusAwb == "MASIH DI KAMU" && c.state.allow?.hapusPesanan == 'Y') {
+                            if (item.statusAwb == "MASIH DI KAMU" && c.state.allow?.hapusPesanan == 'Y' && c.state.allow?.semuaHapus == 'Y') {
                               c.select(item);
                             }
                           },
