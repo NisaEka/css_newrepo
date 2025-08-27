@@ -47,7 +47,7 @@ class EclaimItems extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start),
                     firstPageProgressIndicatorBuilder: (context) => Column(
                       children: List.generate(
-                        3,
+                        10,
                         (index) => const EclaimListItem(isLoading: true),
                       ),
                     ),
