@@ -3,6 +3,8 @@ import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
+import 'package:css_mobile/util/biometric/biometric_service.dart';
+import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -15,6 +17,7 @@ class PengaturanController extends BaseController {
   String? mode;
   MenuModel allow = MenuModel();
   UserModel? basicProfil;
+  bool biometricEnabled = false;
 
   @override
   void onInit() {
@@ -36,6 +39,9 @@ class PengaturanController extends BaseController {
 
     basicProfil =
         UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+
+    final bioRaw = await storage.readString(StorageCore.biometricLock);
+    biometricEnabled = (bioRaw == '1');
 
     update();
   }
@@ -95,5 +101,43 @@ class PengaturanController extends BaseController {
 
     initData();
     update();
+  }
+
+  Future<void> toggleBiometric(bool value) async {
+    if (value) {
+      final supported = await BiometricService.instance.isSupported();
+      if (!supported) {
+        AppSnackBar.error(
+            'Biometrik tidak tersedia. Device tidak mendukung atau belum mendaftarkan biometrik.'
+                .tr,
+            duration: 3);
+        biometricEnabled = false;
+        update();
+        await storage.writeString(StorageCore.biometricLock, '0');
+        return;
+      }
+      final ok = await BiometricService.instance.authenticate(
+        reason: 'Aktifkan kunci biometrik'.tr,
+      );
+      if (!ok) {
+        AppSnackBar.error('Gagal Autentikasi. Biometrik dibatalkan/gagal.'.tr,
+            duration: 3);
+        biometricEnabled = false;
+        update();
+        await storage.writeString(StorageCore.biometricLock, '0');
+        return;
+      }
+      biometricEnabled = true;
+      update();
+      await storage.writeString(StorageCore.biometricLock, '1');
+      AppSnackBar.success(
+          'Kunci biometrik aktif. Akan diminta saat aplikasi dibuka.'.tr,
+          duration: 3);
+    } else {
+      biometricEnabled = false;
+      update();
+      await storage.writeString(StorageCore.biometricLock, '0');
+      AppSnackBar.success('Kunci biometrik berhasil dimatikan.', duration: 3);
+    }
   }
 }

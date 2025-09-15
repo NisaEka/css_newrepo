@@ -119,6 +119,16 @@ class PengaturanScreen extends StatelessWidget {
                   ],
                 ),
               )),
+          if (c.isLogin)
+            SettingListItem(
+              title: 'Kunci Biometrik'.tr,
+              leading: Icons.fingerprint_rounded,
+              trailing: Switch(
+                value: c.biometricEnabled,
+                onChanged: (val) => c.toggleBiometric(val),
+                activeColor: primaryColor(context),
+              ),
+            ),
           SettingListItem(
               title: 'Tentang'.tr,
               leading: Icons.info_rounded,

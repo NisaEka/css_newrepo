@@ -728,7 +728,24 @@ class LanguageEN {
       "Terjadi kesalahan ketika mengambil data": "Failed to load data",
       "Muat ulang": "Try again",
       "Harus terdiri dari minimal 8 karakter":
-          "Must be at least 8 characters long"
+          "Must be at least 8 characters long",
+      "Verifikasi biometrik untuk membuka CSS":
+          "Biometric verification to unlock CSS",
+      "Autentikasi dibatalkan/gagal. Coba lagi.":
+          "Authentication canceled/failed. Please try again.",
+      "CSS Terkunci": "CSS Locked",
+      "Verifikasi biometrik untuk melanjutkan":
+          "Biometric verification required to continue",
+      "Biometrik tidak tersedia. Device tidak mendukung atau belum mendaftarkan biometrik.":
+          "Biometrics not available. Device does not support or no biometrics registered.",
+      "Aktifkan kunci biometrik": "Enable biometric lock",
+      "Gagal Autentikasi. Biometrik dibatalkan/gagal.":
+          "Authentication failed. Biometrics canceled/failed.",
+      "Kunci biometrik aktif. Akan diminta saat aplikasi dibuka.":
+          "Biometric lock enabled. It will be required when the app is opened.",
+      "Kunci biometrik berhasil dimatikan.":
+          "Biometric lock successfully disabled.",
+      "Kunci Biometrik": "Biometric Lock"
     };
   }
 }
