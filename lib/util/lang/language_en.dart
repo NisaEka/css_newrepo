@@ -745,7 +745,7 @@ class LanguageEN {
           "Biometric lock enabled. It will be required when the app is opened.",
       "Kunci biometrik berhasil dimatikan.":
           "Biometric lock successfully disabled.",
-      "Kunci Biometrik": "Biometric Lock"
+      "Kunci Biometrik": "Biometric Lock",
     };
   }
 }

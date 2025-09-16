@@ -1,6 +1,9 @@
+import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/biometric/app_session.dart';
 import 'package:css_mobile/util/biometric/biometric_service.dart';
+import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,13 +15,18 @@ class CssLockedScreen extends StatefulWidget {
 }
 
 class _CssLockedScreenState extends State<CssLockedScreen> {
+  final storage = Get.find<StorageCore>();
   bool _authInProgress = false;
   String? _error;
+  String local = '';
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _startAuth());
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await cekLocalLanguage();
+      _startAuth();
+    });
   }
 
   Future<void> _startAuth() async {
@@ -53,6 +61,37 @@ class _CssLockedScreenState extends State<CssLockedScreen> {
     }
   }
 
+  Future<void> cekLocalLanguage() async {
+    final stored = await storage.readString(StorageCore.localeApp);
+    final device = Get.deviceLocale ?? const Locale('id', 'ID');
+
+    String targetCode;
+    Locale targetLocale;
+
+    if (stored.isEmpty || stored == 'id_ID' || stored == 'en_US') {
+      if (device.languageCode == 'id') {
+        targetCode = 'id';
+        targetLocale = const Locale('id', 'ID');
+      } else {
+        targetCode = 'en';
+        targetLocale = const Locale('en', 'US');
+      }
+    } else if (stored == 'id') {
+      targetCode = 'id';
+      targetLocale = const Locale('id', 'ID');
+    } else {
+      targetCode = 'en';
+      targetLocale = const Locale('en', 'US');
+    }
+
+    await storage.writeString(StorageCore.localeApp, targetCode);
+    Get.updateLocale(targetLocale);
+
+    if (mounted) {
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // ignore: deprecated_member_use
@@ -75,16 +114,20 @@ class _CssLockedScreenState extends State<CssLockedScreen> {
                   Text('Verifikasi biometrik untuk melanjutkan'.tr,
                       textAlign: TextAlign.center),
                   const SizedBox(height: 20),
-                  if (_authInProgress) const CircularProgressIndicator(),
+                  if (_authInProgress)
+                    CircularProgressIndicator(color: primaryColor(context)),
                   if (_error != null) ...[
                     const SizedBox(height: 12),
                     Text(_error!, style: const TextStyle(color: Colors.red)),
                   ],
                   const SizedBox(height: 20),
-                  ElevatedButton.icon(
+                  CustomFilledButton(
+                    color: primaryColor(context),
+                    title: 'Coba lagi'.tr,
                     onPressed: _authInProgress ? null : _startAuth,
-                    icon: const Icon(Icons.fingerprint_rounded),
-                    label: Text('Coba Lagi'.tr),
+                    prefixIcon: Icons.fingerprint_rounded,
+                    width: Get.width * 0.3,
+                    padding: const EdgeInsets.only(right: 5),
                   ),
                 ],
               ),
