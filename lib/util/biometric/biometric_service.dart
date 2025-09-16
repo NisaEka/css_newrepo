@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:flutter/services.dart';
 
 class BiometricService {
   BiometricService._();
@@ -8,30 +7,28 @@ class BiometricService {
   final _auth = LocalAuthentication();
 
   Future<bool> isSupported() async {
-    final supported = await _auth.isDeviceSupported();
-    final canCheck = await _auth.canCheckBiometrics;
-    return supported && canCheck;
+    try {
+      return await _auth.isDeviceSupported() && await _auth.canCheckBiometrics;
+    } catch (_) {
+      return false;
+    }
   }
 
   Future<bool> authenticate(
       {String reason = 'Verifikasi biometrik diperlukan'}) async {
     try {
-      final result = await _auth.authenticate(
+      return await _auth.authenticate(
         localizedReason: reason,
         options: const AuthenticationOptions(
-          stickyAuth: true,
+          stickyAuth: false,
           biometricOnly: true,
           useErrorDialogs: true,
+          sensitiveTransaction: true,
         ),
       );
-      debugPrint("Biometric result: $result");
-      return result;
-    } on PlatformException catch (e) {
-      debugPrint(
-          "Biometric PlatformException: code=${e.code}, message=${e.message}");
+    } on PlatformException {
       return false;
-    } catch (e) {
-      debugPrint("Biometric unknown error: $e");
+    } catch (_) {
       return false;
     }
   }

@@ -2,7 +2,7 @@
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/biometric/app_session.dart';
-import 'package:css_mobile/util/biometric/css_locked_screen.dart';
+import 'package:css_mobile/util/biometric/locked_screen.dart';
 import 'package:flutter/material.dart';
 
 class LaunchRouter extends StatefulWidget {
@@ -32,7 +32,7 @@ class _LaunchRouterState extends State<LaunchRouter> {
 
     setState(() {
       if (isLogin && biometricOn && !alreadyChecked) {
-        _target = const CssLockedScreen();
+        _target = const LockedScreen();
       } else {
         _target = const DashboardScreen();
       }

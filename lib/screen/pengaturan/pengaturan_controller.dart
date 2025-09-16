@@ -4,6 +4,8 @@ import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/profile/user_profile_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/util/biometric/biometric_service.dart';
+import 'package:css_mobile/util/pin/pin_screen.dart';
+import 'package:css_mobile/util/pin/pin_service.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,7 @@ class PengaturanController extends BaseController {
   MenuModel allow = MenuModel();
   UserModel? basicProfil;
   bool biometricEnabled = false;
+  bool hasPin = false;
 
   @override
   void onInit() {
@@ -42,6 +45,7 @@ class PengaturanController extends BaseController {
 
     final bioRaw = await storage.readString(StorageCore.biometricLock);
     biometricEnabled = (bioRaw == '1');
+    hasPin = await PinService.instance.hasPin();
 
     update();
   }
@@ -103,10 +107,38 @@ class PengaturanController extends BaseController {
     update();
   }
 
+  // Future<void> toggleBiometric(bool value) async {
+  //   if (value) {
+  //     if (!await BiometricService.instance.isSupported()) {
+  //       AppSnackBar.error(
+  //           'Biometrik tidak tersedia. Device tidak mendukung atau belum mendaftarkan biometrik.'
+  //               .tr,
+  //           duration: 3);        await storage.writeString(StorageCore.biometricLock, '0');
+  //       biometricEnabled = false; update();
+  //       return;
+  //     }
+  //
+  //     if (!await PinService.instance.hasPin()) {
+  //       final ok = await Get.to<bool>(() => const PinScreen());
+  //       if (ok != true) { biometricEnabled = false; update(); return; }
+  //     } else {
+  //       final ok = await Get.dialog<bool>(const VerifyPinDialog(), barrierDismissible: false);
+  //       if (ok != true) { biometricEnabled = false; update(); return; }
+  //     }
+  //
+  //     await storage.writeString(StorageCore.biometricLock, '1');
+  //     biometricEnabled = true; update();
+  //     AppSnackBar.success('Kunci biometrik aktif. Berlaku saat app dibuka.', duration: 3);
+  //   } else {
+  //     await storage.writeString(StorageCore.biometricLock, '0');
+  //     biometricEnabled = false; update();
+  //     AppSnackBar.success('Kunci biometrik dimatikan.', duration: 3);
+  //   }
+  // }
+
   Future<void> toggleBiometric(bool value) async {
     if (value) {
-      final supported = await BiometricService.instance.isSupported();
-      if (!supported) {
+      if (!await BiometricService.instance.isSupported()) {
         AppSnackBar.error(
             'Biometrik tidak tersedia. Device tidak mendukung atau belum mendaftarkan biometrik.'
                 .tr,
@@ -116,13 +148,31 @@ class PengaturanController extends BaseController {
         await storage.writeString(StorageCore.biometricLock, '0');
         return;
       }
+
+      if (!await PinService.instance.hasPin()) {
+        final setupPin = await Get.to<bool>(() => const PinScreen());
+        if (setupPin != true) {
+          biometricEnabled = false;
+          update();
+          return;
+        }
+      }
+
       final ok = await BiometricService.instance.authenticate(
         reason: 'Aktifkan kunci biometrik'.tr,
       );
-      if (!ok) {
+      if (!hasPin && !ok) {
+        AppSnackBar.success('PIN berhasil disimpan'.tr, duration: 3);
+        biometricEnabled = false;
+        refreshPinStatus();
+        update();
+        await storage.writeString(StorageCore.biometricLock, '0');
+        return;
+      } else if (hasPin && !ok) {
         AppSnackBar.error('Gagal Autentikasi. Biometrik dibatalkan/gagal.'.tr,
             duration: 3);
         biometricEnabled = false;
+        refreshPinStatus();
         update();
         await storage.writeString(StorageCore.biometricLock, '0');
         return;
@@ -139,5 +189,10 @@ class PengaturanController extends BaseController {
       await storage.writeString(StorageCore.biometricLock, '0');
       AppSnackBar.success('Kunci biometrik berhasil dimatikan.', duration: 3);
     }
+  }
+
+  Future<void> refreshPinStatus() async {
+    hasPin = await PinService.instance.hasPin();
+    update();
   }
 }

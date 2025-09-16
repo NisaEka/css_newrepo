@@ -36,6 +36,8 @@ class StorageCore {
   static const String loginLockedUntil = "login_locked_until";
   static const String vehicle = "vehicle";
   static const String biometricLock = "biometric_lock";
+  static const String pinHash = "pin_hash";
+  static const String pinSalt = "pin_salt";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);

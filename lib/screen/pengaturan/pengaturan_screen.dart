@@ -2,6 +2,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/screen/pengaturan/pengaturan_controller.dart';
 import 'package:css_mobile/screen/pengaturan/tentang/tentang_screen.dart';
+import 'package:css_mobile/util/pin/change_pin_screen.dart';
 import 'package:css_mobile/widgets/bar/custombackbutton.dart';
 import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/bar/logout_button.dart';
@@ -128,6 +129,15 @@ class PengaturanScreen extends StatelessWidget {
                 onChanged: (val) => c.toggleBiometric(val),
                 activeColor: primaryColor(context),
               ),
+            ),
+          if (c.isLogin && c.hasPin)
+            SettingListItem(
+              title: 'Ubah PIN'.tr,
+              leading: Icons.password_rounded,
+              onTap: () async {
+                final ok = await Get.to(() => const ChangePinScreen());
+                if (ok == true) c.refreshPinStatus();
+              },
             ),
           SettingListItem(
               title: 'Tentang'.tr,
