@@ -746,6 +746,11 @@ class LanguageEN {
       "Kunci biometrik berhasil dimatikan.":
           "Biometric lock successfully disabled.",
       "Kunci Biometrik": "Biometric Lock",
+      "Setel PIN": "Set PIN",
+      "Ulangi PIN": "Confirm PIN",
+      "PIN tidak sama": "PIN do not match",
+      "PIN tidak boleh kosong": "PIN cannot be empty",
+      "PIN harus 4–8 digit angka": "PIN must be 4–8 digits",
     };
   }
 }

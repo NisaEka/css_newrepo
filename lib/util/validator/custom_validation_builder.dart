@@ -53,6 +53,17 @@ extension CustomValidationBuilder on ValidationBuilder {
         return null;
       });
 
+  pin() => add((value) {
+        final v = (value ?? '').trim();
+
+        if (v.isEmpty) return 'PIN tidak boleh kosong'.tr;
+        if (!RegExp(r'^\d{4,8}$').hasMatch(v)) {
+          return 'PIN harus 4–8 digit angka'.tr;
+        }
+
+        return null;
+      });
+
   ValidationBuilder min(int minValue) => add((value) {
         if (int.parse(value!.digitOnly()) < minValue) {
           return "${'Isian Harus lebih besar atau sama dengan'.tr} ${minValue.toString()}";

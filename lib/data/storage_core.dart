@@ -130,6 +130,11 @@ class StorageCore {
     await storage.delete(key: unreadMessage);
     await storage.delete(key: readMessage);
     await storage.delete(key: vehicle);
+    await storage.delete(key: biometricLock);
+    await storage.delete(key: pinHash);
+    await storage.delete(key: pinSalt);
+    await storage.delete(key: failedLoginAttempts);
+    await storage.delete(key: loginLockedUntil);
     deleteString(StorageCore.favoriteMenu);
   }
 }

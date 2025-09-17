@@ -107,35 +107,6 @@ class PengaturanController extends BaseController {
     update();
   }
 
-  // Future<void> toggleBiometric(bool value) async {
-  //   if (value) {
-  //     if (!await BiometricService.instance.isSupported()) {
-  //       AppSnackBar.error(
-  //           'Biometrik tidak tersedia. Device tidak mendukung atau belum mendaftarkan biometrik.'
-  //               .tr,
-  //           duration: 3);        await storage.writeString(StorageCore.biometricLock, '0');
-  //       biometricEnabled = false; update();
-  //       return;
-  //     }
-  //
-  //     if (!await PinService.instance.hasPin()) {
-  //       final ok = await Get.to<bool>(() => const PinScreen());
-  //       if (ok != true) { biometricEnabled = false; update(); return; }
-  //     } else {
-  //       final ok = await Get.dialog<bool>(const VerifyPinDialog(), barrierDismissible: false);
-  //       if (ok != true) { biometricEnabled = false; update(); return; }
-  //     }
-  //
-  //     await storage.writeString(StorageCore.biometricLock, '1');
-  //     biometricEnabled = true; update();
-  //     AppSnackBar.success('Kunci biometrik aktif. Berlaku saat app dibuka.', duration: 3);
-  //   } else {
-  //     await storage.writeString(StorageCore.biometricLock, '0');
-  //     biometricEnabled = false; update();
-  //     AppSnackBar.success('Kunci biometrik dimatikan.', duration: 3);
-  //   }
-  // }
-
   Future<void> toggleBiometric(bool value) async {
     if (value) {
       if (!await BiometricService.instance.isSupported()) {

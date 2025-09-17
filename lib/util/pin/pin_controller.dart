@@ -5,53 +5,56 @@ import 'package:get/get.dart';
 
 class PinController extends BaseController {
   final formKey = GlobalKey<FormState>();
-  final a = TextEditingController();
-  final b = TextEditingController();
-
-  String? err;
+  final pin = TextEditingController();
+  final confirmPIN = TextEditingController();
   bool busy = false;
-
-  @override
-  void onInit() {
-    super.onInit();
-    save();
-  }
-
-  Future<void> save() async {
-    final p = a.text.trim(), q = b.text.trim();
-
-    if (p.length < 4 || p.length > 8) {
-      err = 'PIN 4–8 digit';
-      update();
-      return;
-    }
-    if (p != q) {
-      err = 'PIN tidak cocok';
-      update();
-      return;
-    }
-
-    busy = true;
-    err = null;
-    update();
-    await PinService.instance.setPin(p);
-    busy = false;
-    update();
-
-    Get.back(result: true);
-    // AppSnackBar.success(
-    //     'PIN berhasil disimpan'.tr,
-    //     duration: 3);
-  }
+  bool isObscurePin = true;
+  bool isObscurePinConfirm = true;
 
   Widget showIcon = const Icon(
     Icons.remove_red_eye,
   );
+  Widget showConfirmIcon = const Icon(
+    Icons.remove_red_eye,
+  );
+
+  Future<void> savePin() async {
+    await PinService.instance.setPin(pin.text.trim());
+    update();
+
+    Get.back(result: true);
+  }
 
   @override
   void onClose() {
-    a.dispose();
-    b.dispose();
+    pin.dispose();
+    confirmPIN.dispose();
     super.onClose();
+  }
+
+  showPin() {
+    isObscurePin ? isObscurePin = false : isObscurePin = true;
+    isObscurePin != false
+        ? showIcon = const Icon(
+            Icons.visibility,
+          )
+        : showIcon = const Icon(
+            Icons.visibility_off,
+          );
+    update();
+  }
+
+  showConfirmPin() {
+    isObscurePinConfirm
+        ? isObscurePinConfirm = false
+        : isObscurePinConfirm = true;
+    isObscurePinConfirm != false
+        ? showConfirmIcon = const Icon(
+            Icons.visibility,
+          )
+        : showConfirmIcon = const Icon(
+            Icons.visibility_off,
+          );
+    update();
   }
 }
