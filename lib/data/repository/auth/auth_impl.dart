@@ -6,6 +6,7 @@ import 'package:css_mobile/data/model/auth/input_register_model.dart';
 import 'package:css_mobile/data/model/auth/pin_confirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
+import 'package:css_mobile/data/model/master/apps_info_model.dart';
 import 'package:css_mobile/data/model/query_model.dart';
 import 'package:css_mobile/data/network_core.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
@@ -21,8 +22,7 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<PostLoginModel>> postLogin(
-      InputLoginModel loginData) async {
+  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData) async {
     try {
       Response response = await network.base.post(
         '/authentications/login',
@@ -143,19 +143,16 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(
-      InputPinconfirmModel data) async {
+  Future<BaseResponse<PinConfirmModel>> postPasswordPinConfirm(InputPinconfirmModel data) async {
     try {
       Response response = await network.base.post(
         '/authentications/forgot-password/confirm',
         data: data,
         options: Options(extra: {'skipAuth': true}),
       );
-      return BaseResponse.fromJson(response.data,
-          (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
+      return BaseResponse.fromJson(response.data, (json) => PinConfirmModel.fromJson(json as Map<String, dynamic>));
     } on DioException catch (e) {
-      return BaseResponse.fromJson(
-          e.response?.data, (json) => PinConfirmModel());
+      return BaseResponse.fromJson(e.response?.data, (json) => PinConfirmModel());
     }
   }
 
@@ -326,6 +323,42 @@ class AuthRepositoryImpl extends AuthRepository {
         (json) => PostLoginModel.fromJson(
           json as Map<String, dynamic>,
         ),
+      );
+    }
+  }
+
+  @override
+  Future<BaseResponse<List<AppsInfoModel>>> getAppsInfos(QueryModel? param) async {
+    try {
+      Response response = await network.base.get(
+        '/auth/apps-infos',
+        options: Options(extra: {'skipAuth': true}),
+        queryParameters: param?.toJson(),
+      );
+
+      var trans = BaseResponse<List<AppsInfoModel>>.fromJson(
+        response.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AppsInfoModel>(
+                  (i) => AppsInfoModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
+      );
+
+      return trans;
+    } on DioException catch (e) {
+      AppLogger.e("error get pantau count : $e");
+      return BaseResponse<List<AppsInfoModel>>.fromJson(
+        e.response?.data,
+        (json) => json is List<dynamic>
+            ? json
+                .map<AppsInfoModel>(
+                  (i) => AppsInfoModel.fromJson(i as Map<String, dynamic>),
+                )
+                .toList()
+            : List.empty(),
       );
     }
   }
