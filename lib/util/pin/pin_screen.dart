@@ -17,9 +17,9 @@ class PinScreen extends StatelessWidget {
       builder: (c) => Scaffold(
         appBar: AppBar(title: Text('Setel PIN'.tr)),
         body: Form(
-          key: c.formKey,
+          key: c.state.formKey,
           onChanged: () {
-            c.formKey.currentState?.validate();
+            c.state.formKey.currentState?.validate();
             c.update();
           },
           autovalidateMode: AutovalidateMode.always,
@@ -28,39 +28,39 @@ class PinScreen extends StatelessWidget {
             child: Column(
               children: [
                 CustomTextFormField(
-                  controller: c.pin,
+                  controller: c.state.pin,
                   prefixIcon: const Icon(Icons.pin),
                   hintText: 'PIN'.tr,
                   validator: ValidationBuilder().pin().build(),
-                  isObscure: c.isObscurePin,
+                  isObscure: c.state.isObscurePin,
                   multiLine: false,
                   inputFormatters: const [],
                   inputType: TextInputType.number,
                   suffixIcon: IconButton(
-                    icon: c.showIcon,
+                    icon: c.state.showIcon,
                     onPressed: () => c.showPin(),
                   ),
                 ),
                 CustomTextFormField(
-                  controller: c.confirmPIN,
+                  controller: c.state.confirmPIN,
                   prefixIcon: const Icon(Icons.pin),
                   hintText: 'Ulangi PIN'.tr,
                   inputFormatters: const [],
                   inputType: TextInputType.number,
                   validator: (value) {
-                    if (value != c.pin.text) {
+                    if (value != c.state.pin.text) {
                       return "PIN tidak sama".tr;
                     }
                     return null;
                   },
                   onChanged: (value) {
-                    c.formKey.currentState?.validate().printInfo();
+                    c.state.formKey.currentState?.validate().printInfo();
                     c.update();
                   },
-                  isObscure: c.isObscurePinConfirm,
+                  isObscure: c.state.isObscurePinConfirm,
                   multiLine: false,
                   suffixIcon: IconButton(
-                    icon: c.showConfirmIcon,
+                    icon: c.state.showConfirmIcon,
                     onPressed: () => c.showConfirmPin(),
                   ),
                 ),
@@ -68,7 +68,7 @@ class PinScreen extends StatelessWidget {
                   color: primaryColor(context),
                   title: 'Simpan'.tr,
                   onPressed: () {
-                    if (c.formKey.currentState?.validate() == true) {
+                    if (c.state.formKey.currentState?.validate() == true) {
                       c.savePin();
                     }
                   },

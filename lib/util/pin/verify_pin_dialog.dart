@@ -23,7 +23,7 @@ class _VerifyPinDialogState extends State<VerifyPinDialog> {
 
   @override
   Widget build(BuildContext c) => AlertDialog(
-        title: const Text('Masukkan PIN'),
+        title: Text('Masukkan PIN'.tr),
         content: TextField(
             controller: t,
             obscureText: true,
@@ -32,15 +32,15 @@ class _VerifyPinDialogState extends State<VerifyPinDialog> {
         actions: [
           TextButton(
               onPressed: () => Get.back(result: false),
-              child: const Text(
-                'Batal',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Text(
+                'Batal'.tr,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               )),
           TextButton(
               onPressed: busy ? null : ok,
-              child: const Text(
-                'Verifikasi',
-                style: TextStyle(fontWeight: FontWeight.bold),
+              child: Text(
+                'Verifikasi'.tr,
+                style: const TextStyle(fontWeight: FontWeight.bold),
               )),
         ],
       );

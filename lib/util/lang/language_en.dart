@@ -751,6 +751,15 @@ class LanguageEN {
       "PIN tidak sama": "PIN do not match",
       "PIN tidak boleh kosong": "PIN cannot be empty",
       "PIN harus 4–8 digit angka": "PIN must be 4–8 digits",
+      "PIN berhasil disimpan": "PIN saved successfully",
+      "PIN berhasil diubah": "PIN changed successfully",
+      "Ubah PIN": "Change PIN",
+      "PIN lama": "Old PIN",
+      "PIN baru": "New PIN",
+      "Gunakan PIN": "Use PIN",
+      "Masukkan PIN": "Enter PIN",
+      "Verifikasi": "Verify",
+      "PIN lama salah": "Incorrect old PIN"
     };
   }
 }

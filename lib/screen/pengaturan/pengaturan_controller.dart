@@ -135,7 +135,6 @@ class PengaturanController extends BaseController {
       if (!hasPin && !ok) {
         AppSnackBar.success('PIN berhasil disimpan'.tr, duration: 3);
         biometricEnabled = false;
-        refreshPinStatus();
         update();
         await storage.writeString(StorageCore.biometricLock, '0');
         return;
@@ -143,12 +142,12 @@ class PengaturanController extends BaseController {
         AppSnackBar.error('Gagal Autentikasi. Biometrik dibatalkan/gagal.'.tr,
             duration: 3);
         biometricEnabled = false;
-        refreshPinStatus();
         update();
         await storage.writeString(StorageCore.biometricLock, '0');
         return;
       }
       biometricEnabled = true;
+      refreshPinStatus();
       update();
       await storage.writeString(StorageCore.biometricLock, '1');
       AppSnackBar.success(

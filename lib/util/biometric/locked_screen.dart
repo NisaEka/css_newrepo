@@ -54,7 +54,7 @@ class LockedScreen extends StatelessWidget {
                           title: 'Gunakan PIN'.tr,
                           onPressed: c.authInProgress ? null : c.onUsePin,
                           prefixIcon: Icons.password_rounded,
-                          width: Get.width * 0.4,
+                          width: Get.width * 0.35,
                           padding: const EdgeInsets.only(right: 5),
                         ),
                       ],

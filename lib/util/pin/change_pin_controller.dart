@@ -1,62 +1,24 @@
 // lib/controllers/change_pin_controller.dart
 import 'package:css_mobile/base/base_controller.dart';
+import 'package:css_mobile/util/pin/change_pin_state.dart';
 import 'package:css_mobile/util/pin/pin_service.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChangePinController extends BaseController {
-  final oldC = TextEditingController();
-  final newC = TextEditingController();
-  final confC = TextEditingController();
-
-  String? err;
-  bool busy = false;
+  final state = ChangePinState();
 
   Future<void> submit() async {
-    final oldPin = oldC.text.trim();
-    final newPin = newC.text.trim();
-    final conf = confC.text.trim();
+    final oldPin = state.oldPin.text.trim();
+    final newPin = state.newPin.text.trim();
 
-    // validasi ringkas
-    if (newPin.length < 4 || newPin.length > 8) {
-      err = 'PIN baru harus 4–8 digit';
-      update();
-      return;
-    }
-    if (newPin != conf) {
-      err = 'Konfirmasi PIN baru tidak sama';
-      update();
-      return;
-    }
-    if (newPin == oldPin) {
-      err = 'PIN baru tidak boleh sama dengan PIN lama';
-      update();
-      return;
-    }
-
-    busy = true;
-    err = null;
-    update();
-
-    // pastikan sudah ada PIN lama
-    final hasPin = await PinService.instance.hasPin();
-    if (!hasPin) {
-      busy = false;
-      update();
-      Get.snackbar('Belum ada PIN',
-          'Silakan set PIN terlebih dahulu di menu pengaturan.');
-      return;
-    }
-
-    // verifikasi lama + set baru
     final ok =
         await PinService.instance.changePin(oldPin: oldPin, newPin: newPin);
-    busy = false;
     update();
 
     if (!ok) {
-      err = 'PIN lama salah';
+      AppSnackBar.error('PIN lama salah'.tr, duration: 3);
       update();
       return;
     }
@@ -68,9 +30,51 @@ class ChangePinController extends BaseController {
 
   @override
   void onClose() {
-    oldC.dispose();
-    newC.dispose();
-    confC.dispose();
+    state.oldPin.dispose();
+    state.newPin.dispose();
+    state.confPin.dispose();
     super.onClose();
+  }
+
+  showPin() {
+    state.isObscureOldPin
+        ? state.isObscureOldPin = false
+        : state.isObscureOldPin = true;
+    state.isObscureOldPin != false
+        ? state.showIcon = const Icon(
+            Icons.visibility,
+          )
+        : state.showIcon = const Icon(
+            Icons.visibility_off,
+          );
+    update();
+  }
+
+  showNewPin() {
+    state.isObscureNewPin
+        ? state.isObscureNewPin = false
+        : state.isObscureNewPin = true;
+    state.isObscureNewPin != false
+        ? state.showNewIcon = const Icon(
+            Icons.visibility,
+          )
+        : state.showNewIcon = const Icon(
+            Icons.visibility_off,
+          );
+    update();
+  }
+
+  showConfirmPin() {
+    state.isObscurePinConfirm
+        ? state.isObscurePinConfirm = false
+        : state.isObscurePinConfirm = true;
+    state.isObscurePinConfirm != false
+        ? state.showConfirmIcon = const Icon(
+            Icons.visibility,
+          )
+        : state.showConfirmIcon = const Icon(
+            Icons.visibility_off,
+          );
+    update();
   }
 }
