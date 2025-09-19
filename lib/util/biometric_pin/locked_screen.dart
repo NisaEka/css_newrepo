@@ -1,5 +1,5 @@
 import 'package:css_mobile/const/color_const.dart';
-import 'package:css_mobile/util/biometric/locked_controller.dart';
+import 'package:css_mobile/util/biometric_pin/locked_controller.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

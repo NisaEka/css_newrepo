@@ -1,7 +1,7 @@
 // lib/controllers/change_pin_controller.dart
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/util/pin/change_pin_state.dart';
-import 'package:css_mobile/util/pin/pin_service.dart';
+import 'package:css_mobile/screen/pengaturan/pin/change_pin_state.dart';
+import 'package:css_mobile/util/biometric_pin/pin_service.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

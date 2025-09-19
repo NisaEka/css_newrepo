@@ -1,9 +1,9 @@
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/data/storage_core.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
-import 'package:css_mobile/util/biometric/app_session.dart';
-import 'package:css_mobile/util/biometric/biometric_service.dart';
-import 'package:css_mobile/util/pin/verify_pin_dialog.dart';
+import 'package:css_mobile/util/biometric_pin/app_session.dart';
+import 'package:css_mobile/util/biometric_pin/biometric_service.dart';
+import 'package:css_mobile/widgets/dialog/verify_pin_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +56,7 @@ class LockedController extends BaseController {
     if (pass == true) {
       goToDashboard();
     } else {
-      error = 'PIN salah/dibatalkan.'.tr;
+      error = 'PIN salah/dibatalkan. Coba lagi.'.tr;
       update();
     }
   }

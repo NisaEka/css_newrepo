@@ -4,6 +4,7 @@ class PinState {
   final formKey = GlobalKey<FormState>();
   final pin = TextEditingController();
   final confirmPIN = TextEditingController();
+  final inputPin = TextEditingController();
 
   bool isObscurePin = true;
   bool isObscurePinConfirm = true;
