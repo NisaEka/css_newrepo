@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
@@ -28,10 +29,14 @@ import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/safety_tips_dialog.dart';
+import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
+import 'package:css_mobile/widgets/items/show_image_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class DashboardController extends BaseController {
   final state = DashboardState();
@@ -836,13 +841,7 @@ class DashboardController extends BaseController {
     super.onReady();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
-      if ((state.isFromLogin == true)) {
-        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
-        // await Get.dialog(const SafetyTipsDialog());
-        await Get.dialog(AlertDialog(
-          title: Text(state.sTips ?? ''),
-        ));
-      }
+      cekSTips();
     });
   }
 
@@ -908,9 +907,59 @@ class DashboardController extends BaseController {
         {"infoCategory": "INFORMASI KEAMANAN - CSS CUSTOMER MOBILE"}
       ],
     ))
-        .then((value) {
+        .then((value) async {
       state.isShowTips = value.data?.first.status == "on";
       state.sTips = value.data?.first.img;
+      if ((state.isFromLogin == true)) {
+        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
+        // await Get.dialog(const SafetyTipsDialog());
+        if (state.isShowTips) {
+          // showImagePreview(Get.context!, state.sTips ?? '', background: Colors.transparent);
+          await Get.dialog(
+            barrierDismissible: false,
+            PopScope(
+              canPop: false,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: PhotoViewGallery.builder(
+                        itemCount: 1,
+                        builder: (context, index) {
+                          return PhotoViewGalleryPageOptions(
+                            imageProvider: CachedNetworkImageProvider(state.sTips ?? ''),
+                            minScale: PhotoViewComputedScale.contained,
+                            maxScale: PhotoViewComputedScale.covered * 3.0,
+                            initialScale: PhotoViewComputedScale.contained,
+                          );
+                        },
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        backgroundDecoration: const BoxDecoration(color: Colors.transparent),
+                        pageController: PageController(),
+                      ),
+                    ),
+                  ),
+                  // Positioned(
+                  /* right: 0,
+                  top: Get.height * 0.3,
+                  child:*/
+                  IconButton(
+                    onPressed: () => Get.close(2),
+                    icon: const Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
+                  // ),
+                  SizedBox(height: Get.height * 0.2),
+                ],
+              ),
+            ),
+          );
+        }
+      }
     });
 
     update();
