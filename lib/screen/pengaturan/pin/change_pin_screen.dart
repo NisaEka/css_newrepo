@@ -86,7 +86,7 @@ class ChangePinScreen extends StatelessWidget {
                     title: 'Simpan'.tr,
                     onPressed: () {
                       if (c.state.formKey.currentState?.validate() == true) {
-                        c.submit();
+                        c.save();
                       }
                     },
                     width: Get.width * 0.3,

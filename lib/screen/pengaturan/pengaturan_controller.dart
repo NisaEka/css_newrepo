@@ -129,16 +129,16 @@ class PengaturanController extends BaseController {
         }
       }
 
-      final ok = await BiometricService.instance.authenticate(
+      final authenticate = await BiometricService.instance.authenticate(
         reason: 'Aktifkan kunci biometrik'.tr,
       );
-      if (!hasPin && !ok) {
+      if (!hasPin && !authenticate) {
         AppSnackBar.success('PIN berhasil disimpan'.tr, duration: 3);
         biometricEnabled = false;
         update();
         await storage.writeString(StorageCore.biometricLock, '0');
         return;
-      } else if (hasPin && !ok) {
+      } else if (hasPin && !authenticate) {
         AppSnackBar.error('Gagal Autentikasi. Biometrik dibatalkan/gagal.'.tr,
             duration: 3);
         biometricEnabled = false;

@@ -1,4 +1,3 @@
-// lib/controllers/change_pin_controller.dart
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/screen/pengaturan/pin/change_pin_state.dart';
 import 'package:css_mobile/util/biometric_pin/pin_service.dart';
@@ -9,15 +8,15 @@ import 'package:get/get.dart';
 class ChangePinController extends BaseController {
   final state = ChangePinState();
 
-  Future<void> submit() async {
+  Future<void> save() async {
     final oldPin = state.oldPin.text.trim();
     final newPin = state.newPin.text.trim();
 
-    final ok =
+    final changePin =
         await PinService.instance.changePin(oldPin: oldPin, newPin: newPin);
     update();
 
-    if (!ok) {
+    if (!changePin) {
       AppSnackBar.error('PIN lama salah'.tr, duration: 3);
       update();
       return;
