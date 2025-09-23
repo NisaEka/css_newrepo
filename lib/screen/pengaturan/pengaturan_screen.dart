@@ -126,7 +126,7 @@ class PengaturanScreen extends StatelessWidget {
               leading: Icons.fingerprint_rounded,
               trailing: Switch(
                 value: c.biometricEnabled,
-                onChanged: (val) => c.toggleBiometric(val),
+                onChanged: (value) => c.toggleBiometric(value),
                 activeColor: primaryColor(context),
               ),
             ),
