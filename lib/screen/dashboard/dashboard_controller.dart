@@ -43,6 +43,7 @@ class DashboardController extends BaseController {
 
     () async {
       try {
+        await cekSTips();
         await isFirst();
         await cekToken();
         await initData();
@@ -837,7 +838,10 @@ class DashboardController extends BaseController {
       // AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
       if ((state.isFromLogin == true)) {
         // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
-        await Get.dialog(const SafetyTipsDialog());
+        // await Get.dialog(const SafetyTipsDialog());
+        await Get.dialog(AlertDialog(
+          title: Text(state.sTips ?? ''),
+        ));
       }
     });
   }
@@ -892,6 +896,22 @@ class DashboardController extends BaseController {
     } catch (e, i) {
       AppLogger.e("error get aggregation minus : $e $i");
     }
+
+    update();
+  }
+
+  Future<void> cekSTips() async {
+    await auth
+        .getAppsInfos(QueryModel(
+      table: true,
+      where: [
+        {"infoCategory": "INFORMASI KEAMANAN - CSS CUSTOMER MOBILE"}
+      ],
+    ))
+        .then((value) {
+      state.isShowTips = value.data?.first.status == "on";
+      state.sTips = value.data?.first.img;
+    });
 
     update();
   }

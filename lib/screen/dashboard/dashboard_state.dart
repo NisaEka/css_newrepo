@@ -35,6 +35,7 @@ class DashboardState {
   bool isCcrf = true;
   bool isFirstInstall = false;
   bool isFirstLogin = false;
+  bool isShowTips = false;
 
   CcrfProfileModel? ccrf;
 
@@ -44,6 +45,9 @@ class DashboardState {
   String? fcmToken;
   String local = '';
   String themeMode = '';
+  String? sTips;
+
+
   UserModel? basic;
   TransactionSummaryModel? transSummary;
 
