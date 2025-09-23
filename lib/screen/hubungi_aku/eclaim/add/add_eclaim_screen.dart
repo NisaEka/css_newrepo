@@ -23,7 +23,7 @@ class AddEclaimScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<AddEclaimController>(
       init: AddEclaimController(),
-      builder: (controller) {
+      builder: (c) {
         return Scaffold(
           appBar: CustomTopBar(
             title: "E-Claim".tr,
@@ -31,8 +31,8 @@ class AddEclaimScreen extends StatelessWidget {
           ),
           body: Stack(
             children: [
-              _bodyContent(controller, context),
-              controller.isLoading ? const LoadingDialog() : const SizedBox(),
+              _bodyContent(c, context),
+              c.isLoading ? const LoadingDialog() : const SizedBox(),
             ],
           ),
           bottomNavigationBar: Container(
@@ -57,12 +57,13 @@ class AddEclaimScreen extends StatelessWidget {
                   child: CustomFilledButton(
                     margin: const EdgeInsets.symmetric(
                         horizontal: 15, vertical: 15),
-                    color: primaryColor(context),
+                    color: c.formKey.currentState?.validate() == true
+                        ? primaryColor(context)
+                        : greyColor,
                     title: 'Ajukan'.tr,
-                    onPressed: () =>
-                        controller.formKey.currentState?.validate() == true
-                            ? controller.sendReport()
-                            : null,
+                    onPressed: () => c.formKey.currentState?.validate() == true
+                        ? c.sendReport()
+                        : null,
                   ),
                 ),
               ],

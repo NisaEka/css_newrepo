@@ -761,7 +761,8 @@ class LanguageEN {
       "Verifikasi": "Verify",
       "PIN lama salah": "Incorrect old PIN",
       "PIN salah/dibatalkan. Coba lagi.":
-          "PIN incorrect/cancelled. Please try again."
+          "PIN incorrect/cancelled. Please try again.",
+      "Upload Gambar": "Upload Image"
     };
   }
 }

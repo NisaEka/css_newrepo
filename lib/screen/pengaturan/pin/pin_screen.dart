@@ -66,7 +66,9 @@ class PinScreen extends StatelessWidget {
                     ),
                   ),
                   CustomFilledButton(
-                    color: primaryColor(context),
+                    color: c.state.formKey.currentState?.validate() == true
+                        ? primaryColor(context)
+                        : greyColor,
                     title: 'Simpan'.tr,
                     onPressed: () {
                       if (c.state.formKey.currentState?.validate() == true) {

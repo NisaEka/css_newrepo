@@ -139,7 +139,7 @@ class AddEclaimController extends BaseController {
                         style: TextStyle(color: textColor(context)),
                       ),
                       onTap: () {
-                        category.text = manualCategories[index];
+                        category.text = manualCategories[index].tr;
                         update();
                         Get.back();
                       },

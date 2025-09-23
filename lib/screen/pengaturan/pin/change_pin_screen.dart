@@ -81,7 +81,9 @@ class ChangePinScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   CustomFilledButton(
-                    color: primaryColor(context),
+                    color: c.state.formKey.currentState?.validate() == true
+                        ? primaryColor(context)
+                        : greyColor,
                     title: 'Simpan'.tr,
                     onPressed: () {
                       if (c.state.formKey.currentState?.validate() == true) {
