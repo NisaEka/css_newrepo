@@ -59,7 +59,7 @@ class _AggregationMinusDocItemState extends State<AggregationMinusDocItem> {
             padding: const EdgeInsets.symmetric(horizontal: 30),
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              margin: const EdgeInsets.only(bottom: 16),
+              margin: const EdgeInsets.only(bottom: 10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
                 border: Border.all(
