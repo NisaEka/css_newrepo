@@ -1,6 +1,7 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/pengaturan/pin/change_pin_controller.dart';
 import 'package:css_mobile/util/validator/custom_validation_builder.dart';
+import 'package:css_mobile/widgets/bar/customtopbar.dart';
 import 'package:css_mobile/widgets/forms/customfilledbutton.dart';
 import 'package:css_mobile/widgets/forms/customtextformfield.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,9 @@ class ChangePinScreen extends StatelessWidget {
       init: ChangePinController(),
       builder: (c) {
         return Scaffold(
-          appBar: AppBar(title: Text('Ubah PIN'.tr)),
+          appBar: CustomTopBar(
+            title: 'Ubah PIN'.tr,
+          ),
           body: Form(
             key: c.state.formKey,
             onChanged: () {
