@@ -17,6 +17,7 @@ class AkunBankController extends BaseController {
 
   Future<void> initData() async {
     isLoading = true;
+    update();
     try {
       await profil.getCcrfProfil().then(
             (value) => ccrfProfil = value.data,
