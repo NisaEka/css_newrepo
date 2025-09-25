@@ -657,11 +657,13 @@ class LanguageEN {
       "Transaksi": "Transaction",
       "Berhasil menambahkan kode referral": "Successfully added referral code",
       "Ubah Profile": "Change profile",
+      "Pengajuan pengubahan data CCRF ": "Request for modification CCRF data",
       "Pengajuan pengubahan data CCRF": "Request for modification CCRF data",
       "Formulir belum disetujui oleh": "The form has not been approved by",
       "Berhasil melakukan sinkronisasi data": "Successfully synchronize data",
       "Berhasil Mengubah formulir Flat Rate":
           "Successfully change Flat Rate form",
+      "Pengubahan ccrf disetujui oleh ": "CCRF modification approved by",
       "Pengubahan ccrf disetujui oleh": "CCRF modification approved by",
       "Berhasil Menambahkan formulir Flat Rate":
           "Successfully added Flat Rate form",
@@ -728,7 +730,7 @@ class LanguageEN {
       "Terjadi kesalahan ketika mengambil data": "Failed to load data",
       "Muat ulang": "Try again",
       "Harus terdiri dari minimal 8 karakter":
-          "Must be at least 8 characters long"
+          "Must be at least 8 characters long",
     };
   }
 }
