@@ -72,7 +72,7 @@ class AggregationMinusDocScreen extends StatelessWidget {
   Widget _searchBox(
       BuildContext context, AggregationMinusDocController controller) {
     return Padding(
-      padding: const EdgeInsets.only(top: 16, left: 30, right: 30),
+      padding: const EdgeInsets.only(top: 16, left: 30, right: 30, bottom: 10),
       child: CustomSearchField(
         margin: const EdgeInsets.symmetric(vertical: 0),
         controller: controller.searchField,

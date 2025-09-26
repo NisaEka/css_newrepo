@@ -60,7 +60,12 @@ class DashboardCarousel extends StatelessWidget {
                         ),
                         alignment: Alignment.topCenter,
                         imageUrl: e.img ?? '',
-                        errorWidget: (context, url, error) => Container(),
+                        errorWidget: (context, url, error) => Center(
+                          child: Text(
+                            "Data Kosong".tr,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ),
                       ),
                     )
                     .toList(),
