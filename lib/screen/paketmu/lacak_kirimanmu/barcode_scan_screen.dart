@@ -1,9 +1,8 @@
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 class BarcodeScanScreen extends StatefulWidget {
   const BarcodeScanScreen({super.key});
@@ -16,48 +15,31 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   String _scanBarcode = 'Unknown';
   late final bool cekResi;
 
+  final MobileScannerController _controller = MobileScannerController(
+    detectionSpeed: DetectionSpeed.noDuplicates,
+    facing: CameraFacing.back,
+  );
+
+  bool _handled = false;
+
   @override
   void initState() {
     super.initState();
-    // Safely get the 'cek_resi' argument or default to false if it's not provided
-    cekResi = Get.arguments['cek_resi'] ?? false;
+    cekResi = Get.arguments?['cek_resi'] ?? false;
     scanBarcodeNormal();
   }
 
   Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes;
-
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        true,
-        ScanMode.BARCODE,
-      );
-    } on PlatformException {
-      barcodeScanRes = 'Failed to scan barcode.';
-    }
-
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
-    });
-
-    if (barcodeScanRes == "-1") {
-      // Handle scan cancellation
-      _handleScanCancelled();
-    } else {
-      // Handle valid barcode scan
-      _handleScanResult(barcodeScanRes);
-    }
+      await _controller.start();
+    } catch (_) {}
   }
 
-  void _handleScanCancelled() {
+  void _handleScanCancelled() async {
     setState(() {
       _scanBarcode = "Scan canceled";
     });
-
+    await _controller.stop();
     if (cekResi) {
       Get.off(() => const LacakKirimanScreen(), arguments: {});
     } else {
@@ -65,10 +47,16 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
     }
   }
 
-  void _handleScanResult(String barcode) {
+  void _handleScanResult(String barcode) async {
     final upperBarcode = barcode.toUpperCase();
 
+    if (!mounted) return;
+    setState(() {
+      _scanBarcode = upperBarcode;
+    });
+
     if (upperBarcode.trim().isEmpty) {
+      await _controller.stop();
       Get.back();
       Get.showSnackbar(
         GetSnackBar(
@@ -79,7 +67,11 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
           backgroundColor: errorColor,
         ),
       );
-    } else if (upperBarcode.length > 16) {
+      return;
+    }
+
+    if (upperBarcode.length > 16) {
+      await _controller.stop();
       Get.back();
       Get.showSnackbar(
         GetSnackBar(
@@ -90,7 +82,12 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
           backgroundColor: errorColor,
         ),
       );
-    } else if (cekResi) {
+      return;
+    }
+
+    await _controller.stop();
+
+    if (cekResi) {
       Get.off(() => const LacakKirimanScreen(),
           arguments: {'nomor_resi': upperBarcode});
     } else {
@@ -99,15 +96,73 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.black,
-        body: Center(
-          child: Text(
-            'Scan result: $_scanBarcode',
-            style: const TextStyle(fontSize: 20, color: Colors.black),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.close, color: Colors.white),
+            onPressed: _handleScanCancelled,
           ),
+          actions: [
+            IconButton(
+              tooltip: 'Toggle Flash',
+              icon: const Icon(Icons.flash_on, color: Colors.white),
+              onPressed: () => _controller.toggleTorch(),
+            ),
+            IconButton(
+              tooltip: 'Switch Camera',
+              icon: const Icon(Icons.cameraswitch, color: Colors.white),
+              onPressed: () => _controller.switchCamera(),
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            MobileScanner(
+              controller: _controller,
+              onDetect: (BarcodeCapture capture) {
+                if (_handled) return;
+                final barcodes = capture.barcodes;
+                if (barcodes.isEmpty) return;
+
+                final raw = barcodes.first.rawValue;
+                if (raw == null || raw.isEmpty) return;
+
+                _handled = true;
+                _handleScanResult(raw);
+              },
+            ),
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 24,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Colors.black..withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  'Scan result: $_scanBarcode',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
