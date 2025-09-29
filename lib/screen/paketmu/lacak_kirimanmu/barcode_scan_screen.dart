@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ class BarcodeScanScreen extends StatefulWidget {
   State<BarcodeScanScreen> createState() => _BarcodeScanScreenState();
 }
 
-class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
+class _BarcodeScanScreenState extends State<BarcodeScanScreen>
+    with SingleTickerProviderStateMixin {
   String _scanBarcode = 'Unknown';
   late final bool cekResi;
 
@@ -21,6 +23,10 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
   );
 
   bool _handled = false;
+
+  late final AnimationController _anim = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1100))
+    ..repeat(reverse: true);
 
   @override
   void initState() {
@@ -97,6 +103,7 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
 
   @override
   void dispose() {
+    _anim.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -126,43 +133,82 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
             ),
           ],
         ),
-        body: Stack(
-          children: [
-            MobileScanner(
-              controller: _controller,
-              onDetect: (BarcodeCapture capture) {
-                if (_handled) return;
-                final barcodes = capture.barcodes;
-                if (barcodes.isEmpty) return;
+        body: LayoutBuilder(
+          builder: (context, constraints) {
+            final w = constraints.maxWidth;
+            final h = constraints.maxHeight;
 
-                final raw = barcodes.first.rawValue;
-                if (raw == null || raw.isEmpty) return;
+            final boxSize = math.min(w * 0.75, 260.0);
+            final left = (w - boxSize) / 2;
+            final top = (h - boxSize) / 2.6;
+            final scanRect = Rect.fromLTWH(left, top, boxSize, boxSize);
 
-                _handled = true;
-                _handleScanResult(raw);
-              },
-            ),
-            Positioned(
-              left: 16,
-              right: 16,
-              bottom: 24,
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: Colors.black..withValues(alpha: 0.5),
-                  borderRadius: BorderRadius.circular(8),
+            const lineThickness = 3.0;
+
+            return Stack(
+              children: [
+                MobileScanner(
+                  controller: _controller,
+                  scanWindow: scanRect,
+                  onDetect: (BarcodeCapture capture) {
+                    if (_handled) return;
+                    final barcodes = capture.barcodes;
+                    if (barcodes.isEmpty) return;
+
+                    final raw = barcodes.first.rawValue;
+                    if (raw == null || raw.isEmpty) return;
+
+                    _handled = true;
+                    _handleScanResult(raw);
+                  },
                 ),
-                child: Text(
-                  'Scan result: $_scanBarcode',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16, color: Colors.white),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                Positioned.fromRect(
+                  rect: scanRect,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.green, width: 4),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+                AnimatedBuilder(
+                  animation: _anim,
+                  builder: (_, __) {
+                    final y = top + _anim.value * (boxSize - lineThickness);
+                    return Positioned(
+                      left: left + 10,
+                      right: left + 10,
+                      top: y,
+                      child: Container(
+                        height: lineThickness,
+                        color: Colors.red,
+                      ),
+                    );
+                  },
+                ),
+                Positioned(
+                  left: 16,
+                  right: 16,
+                  bottom: 24,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.5), // 🔹 perbaiki
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Text(
+                      'Scan result: $_scanBarcode',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
