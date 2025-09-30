@@ -2,8 +2,10 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/screen/paketmu/lacak_kirimanmu/lacak_kiriman_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:simple_barcode_scanner/simple_barcode_scanner.dart';
 
 class BarcodeScanScreen extends StatefulWidget {
   const BarcodeScanScreen({super.key});
@@ -28,12 +30,25 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
     String barcodeScanRes;
 
     try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
-        true,
-        ScanMode.BARCODE,
-      );
+      // barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+      //   '#ff6666',
+      //   'Cancel',
+      //   true,
+      //   ScanMode.BARCODE,
+      // );
+      barcodeScanRes = await SimpleBarcodeScanner.scanBarcode(
+            Get.context!,
+            barcodeAppBar: const BarcodeAppBar(
+              appBarTitle: 'Test',
+              centerTitle: false,
+              enableBackButton: true,
+              backButtonIcon: Icon(Icons.arrow_back_ios),
+            ),
+            isShowFlashIcon: true,
+            delayMillis: 2000,
+            cameraFace: CameraFace.front,
+          ) ??
+          '';
     } on PlatformException {
       barcodeScanRes = 'Failed to scan barcode.';
     }
@@ -91,8 +106,7 @@ class _BarcodeScanScreenState extends State<BarcodeScanScreen> {
         ),
       );
     } else if (cekResi) {
-      Get.off(() => const LacakKirimanScreen(),
-          arguments: {'nomor_resi': upperBarcode});
+      Get.off(() => const LacakKirimanScreen(), arguments: {'nomor_resi': upperBarcode});
     } else {
       Get.back(result: upperBarcode);
     }
