@@ -657,11 +657,13 @@ class LanguageEN {
       "Transaksi": "Transaction",
       "Berhasil menambahkan kode referral": "Successfully added referral code",
       "Ubah Profile": "Change profile",
+      "Pengajuan pengubahan data CCRF ": "Request for modification CCRF data",
       "Pengajuan pengubahan data CCRF": "Request for modification CCRF data",
       "Formulir belum disetujui oleh": "The form has not been approved by",
       "Berhasil melakukan sinkronisasi data": "Successfully synchronize data",
       "Berhasil Mengubah formulir Flat Rate":
           "Successfully change Flat Rate form",
+      "Pengubahan ccrf disetujui oleh ": "CCRF modification approved by",
       "Pengubahan ccrf disetujui oleh": "CCRF modification approved by",
       "Berhasil Menambahkan formulir Flat Rate":
           "Successfully added Flat Rate form",
@@ -728,7 +730,41 @@ class LanguageEN {
       "Terjadi kesalahan ketika mengambil data": "Failed to load data",
       "Muat ulang": "Try again",
       "Harus terdiri dari minimal 8 karakter":
-          "Must be at least 8 characters long"
+          "Must be at least 8 characters long",
+      "Verifikasi biometrik untuk membuka CSS":
+          "Biometric verification to unlock CSS",
+      "Autentikasi dibatalkan/gagal. Coba lagi.":
+          "Authentication canceled/failed. Please try again.",
+      "CSS Terkunci": "CSS Locked",
+      "Verifikasi biometrik untuk melanjutkan":
+          "Biometric verification required to continue",
+      "Biometrik tidak tersedia. Device tidak mendukung atau belum mendaftarkan biometrik.":
+          "Biometrics not available. Device does not support or no biometrics registered.",
+      "Aktifkan kunci biometrik": "Enable biometric lock",
+      "Gagal Autentikasi. Biometrik dibatalkan/gagal.":
+          "Authentication failed. Biometrics canceled/failed.",
+      "Kunci biometrik aktif. Akan diminta saat aplikasi dibuka.":
+          "Biometric lock enabled. It will be required when the app is opened.",
+      "Kunci biometrik berhasil dimatikan.":
+          "Biometric lock successfully disabled.",
+      "Kunci Biometrik": "Biometric Lock",
+      "Setel PIN": "Set PIN",
+      "Ulangi PIN": "Confirm PIN",
+      "PIN tidak sama": "PIN do not match",
+      "PIN tidak boleh kosong": "PIN cannot be empty",
+      "PIN harus 4–8 digit angka": "PIN must be 4–8 digits",
+      "PIN berhasil disimpan": "PIN saved successfully",
+      "PIN berhasil diubah": "PIN changed successfully",
+      "Ubah PIN": "Change PIN",
+      "PIN lama": "Old PIN",
+      "PIN baru": "New PIN",
+      "Gunakan PIN": "Use PIN",
+      "Masukkan PIN": "Enter PIN",
+      "Verifikasi": "Verify",
+      "PIN lama salah": "Incorrect old PIN",
+      "PIN salah/dibatalkan. Coba lagi.":
+          "PIN incorrect/cancelled. Please try again.",
+      "Upload Gambar": "Upload Image"
     };
   }
 }

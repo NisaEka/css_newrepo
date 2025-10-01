@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:css_mobile/base/base_controller.dart';
 import 'package:css_mobile/base/theme_controller.dart';
@@ -27,11 +28,12 @@ import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/default_alert_dialog.dart';
 import 'package:css_mobile/widgets/dialog/login_alert_dialog.dart';
-import 'package:css_mobile/widgets/dialog/safety_tips_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
 class DashboardController extends BaseController {
   final state = DashboardState();
@@ -84,7 +86,8 @@ class DashboardController extends BaseController {
   Future<void> cekMessages() async {
     state.unreadNotifList = [];
 
-    var unread = GetNotificationModel.fromJson(await storage.readData(StorageCore.unreadMessage));
+    var unread = GetNotificationModel.fromJson(
+        await storage.readData(StorageCore.unreadMessage));
     state.unreadNotifList.addAll(unread.payload ?? []);
     update();
   }
@@ -109,9 +112,13 @@ class DashboardController extends BaseController {
         state.bannerList.addAll(banners.data ?? []);
         state.bannerList.forEachIndexed(
           (index, banner) {
-            if ((banner.region != "ALL" && banner.region != state.basic?.origin?.branch?.regionalCode) ||
-                (banner.branch != "ALL" && banner.region != state.basic?.origin?.branch?.branchCode) ||
-                (banner.origin != "ALL" && banner.region != state.basic?.origin?.originCode)) {
+            if ((banner.region != "ALL" &&
+                    banner.region !=
+                        state.basic?.origin?.branch?.regionalCode) ||
+                (banner.branch != "ALL" &&
+                    banner.region != state.basic?.origin?.branch?.branchCode) ||
+                (banner.origin != "ALL" &&
+                    banner.region != state.basic?.origin?.originCode)) {
               state.bannerList.removeAt(index);
             }
           },
@@ -249,23 +256,35 @@ class DashboardController extends BaseController {
 
   void cekAllowance() {
     // AppLogger.w("allowance : ${state.allow.toJson()}");
-    if (state.isLogin && state.allow.paketmuInput != "Y" && state.allow.buatPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuInput != "Y" &&
+        state.allow.buatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Input Kirimanmu");
     }
-    if (state.isLogin && state.allow.paketmuRiwayat != "Y" && state.allow.riwayatPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuRiwayat != "Y" &&
+        state.allow.riwayatPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Riwayat Kiriman");
       state.menuItems.removeWhere((e) => e.title == "Draft Transaksi");
     }
-    if (state.isLogin && state.allow.paketmuLacak != "Y" && state.allow.lacakPesanan != "Y") {
+    if (state.isLogin &&
+        state.allow.paketmuLacak != "Y" &&
+        state.allow.lacakPesanan != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Lacak Kiriman");
     }
-    if (state.isLogin && state.allow.keuanganCod != "Y" && state.allow.uangCod != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganCod != "Y" &&
+        state.allow.uangCod != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Uang_COD Kamu");
     }
-    if (state.isLogin && state.allow.keuanganAggregasi != "Y" && state.allow.monitoringAgg != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganAggregasi != "Y" &&
+        state.allow.monitoringAgg != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Pembayaran Aggregasi");
     }
-    if (state.isLogin && state.allow.keuanganAggregasiMinus != "Y" && state.allow.monitoringAggMinus != "Y") {
+    if (state.isLogin &&
+        state.allow.keuanganAggregasiMinus != "Y" &&
+        state.allow.monitoringAggMinus != "Y") {
       state.menuItems.removeWhere((e) => e.title == "Aggregasi Minus");
     }
     if (state.isLogin && state.allow.cekOngkir != "Y") {
@@ -278,7 +297,8 @@ class DashboardController extends BaseController {
 
   Future<void> cekTheme() async {
     state.themeMode = await storage.readString(StorageCore.themeMode);
-    var brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    var brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
 
     if (state.themeMode.isEmpty) {
       if (brightness == Brightness.dark) {
@@ -314,7 +334,9 @@ class DashboardController extends BaseController {
   Future<void> cekLocalLanguage() async {
     state.local = await storage.readString(StorageCore.localeApp);
 
-    if (state.local.isEmpty || state.local == 'id_ID' || state.local == 'en_US') {
+    if (state.local.isEmpty ||
+        state.local == 'id_ID' ||
+        state.local == 'en_US') {
       if (Get.deviceLocale == const Locale("id", "ID")) {
         await storage.writeString(StorageCore.localeApp, "id");
         Get.updateLocale(const Locale("id", "ID"));
@@ -343,22 +365,29 @@ class DashboardController extends BaseController {
 
       await auth
           .postFcmToken(
-        await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceInfoModel(),
+        await LoginController().getDeviceinfo(state.fcmToken ?? '') ??
+            DeviceInfoModel(),
       )
           .then((value) async {
         // AppLogger.i('userID : ${state.basic?.id}');
         value.code == 409
             ? await auth.updateDeviceInfo(
-                (await LoginController().getDeviceinfo(state.fcmToken ?? ''))?.copyWith(registrationId: state.basic?.id) ?? DeviceInfoModel(),
+                (await LoginController().getDeviceinfo(state.fcmToken ?? ''))
+                        ?.copyWith(registrationId: state.basic?.id) ??
+                    DeviceInfoModel(),
               )
             : value.code == 401
                 ? await auth
                     .postFcmTokenNonAuth(
-                      await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceInfoModel(),
+                      await LoginController()
+                              .getDeviceinfo(state.fcmToken ?? '') ??
+                          DeviceInfoModel(),
                     )
                     .then((v) async => v.code == 409
                         ? await auth.updateDeviceInfo(
-                            await LoginController().getDeviceinfo(state.fcmToken ?? '') ?? DeviceInfoModel(),
+                            await LoginController()
+                                    .getDeviceinfo(state.fcmToken ?? '') ??
+                                DeviceInfoModel(),
                           )
                         : null)
                 : null;
@@ -379,7 +408,9 @@ class DashboardController extends BaseController {
           between: [
             {
               "awbDate": [
-                DateTime.now().subtract(const Duration(days: 6)).copyWith(hour: 0, minute: 0, second: 0),
+                DateTime.now()
+                    .subtract(const Duration(days: 6))
+                    .copyWith(hour: 0, minute: 0, second: 0),
                 DateTime.now(),
               ]
             }
@@ -389,7 +420,8 @@ class DashboardController extends BaseController {
         pantau.data?.forEach((item) {
           // debugPrint("item kiriman kamu ${state.kirimanKamu.onProcess}\n ${item.toJson()}");
           if (item.status == 'Total Kiriman') {
-            state.kirimanKamu.totalKiriman = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+            state.kirimanKamu.totalKiriman =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
             for (var chart in item.chart) {
               state.kirimanKamu.lineChart.add(chart.y);
             }
@@ -405,15 +437,18 @@ class DashboardController extends BaseController {
               item.status == 'Sudah Dijemput' ||
               item.status == "Sudah Di Gudang JNE" ||
               item.status == "Sudah Di Kota Tujuan") {
-            state.kirimanKamu.onProcess += item.totalCod + item.totalCodOngkir + item.totalNonCod;
+            state.kirimanKamu.onProcess +=
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
           }
 
           if (item.status == 'Sukses Diterima') {
-            state.kirimanKamu.suksesDiterima = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+            state.kirimanKamu.suksesDiterima =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
           }
 
           if (item.status == 'Dibatalkan Oleh Kamu') {
-            state.kirimanKamu.totalCancel = item.totalCod + item.totalCodOngkir + item.totalNonCod;
+            state.kirimanKamu.totalCancel =
+                item.totalCod + item.totalCodOngkir + item.totalNonCod;
           }
         });
         state.kirimanKamu.calculatePercentages();
@@ -445,11 +480,15 @@ class DashboardController extends BaseController {
             value.data?.summary?.forEach((item) {
               if (item.status == 'Jumlah Transaksi') {
                 state.kirimanKamuCOD.totalKiriman =
-                    (value.data?.totalKirimanCod?.codAmount?.toInt() ?? 0) + (value.data?.totalKirimanCod?.codOngkirAmount?.toInt() ?? 0);
+                    (value.data?.totalKirimanCod?.codAmount?.toInt() ?? 0) +
+                        (value.data?.totalKirimanCod?.codOngkirAmount
+                                ?.toInt() ??
+                            0);
               }
 
               if (item.status == 'Belum Terkumpul') {
-                state.kirimanKamuCOD.onProcess = ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.onProcess =
+                    ((item.totalCod?.toInt() ?? 0));
                 item.chart?.forEachIndexed(
                   (index, element) {
                     charts[index] += element.y;
@@ -458,7 +497,8 @@ class DashboardController extends BaseController {
               }
 
               if (item.status == 'Sukses Diterima') {
-                state.kirimanKamuCOD.suksesDiterima = ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.suksesDiterima =
+                    ((item.totalCod?.toInt() ?? 0));
                 item.chart?.forEachIndexed(
                   (index, element) {
                     charts[index] += element.y;
@@ -475,9 +515,12 @@ class DashboardController extends BaseController {
               }
 
               if (item.status == 'Dibatalkan') {
-                state.kirimanKamuCOD.totalCancel = ((item.totalCod?.toInt() ?? 0));
-                state.kirimanKamuCOD.totalNonCod = ((item.totalCod?.toInt() ?? 0));
-                state.kirimanKamuCOD.nonCodAmount = item.codAmount?.toInt() ?? 0;
+                state.kirimanKamuCOD.totalCancel =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.totalNonCod =
+                    ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.nonCodAmount =
+                    item.codAmount?.toInt() ?? 0;
                 item.chart?.forEachIndexed(
                   (index, element) {
                     charts[index] += element.y;
@@ -496,7 +539,8 @@ class DashboardController extends BaseController {
               }
 
               if (item.status == 'Dalam Peninjauan') {
-                state.kirimanKamuCOD.totalCodOngkir = ((item.totalCod?.toInt() ?? 0));
+                state.kirimanKamuCOD.totalCodOngkir =
+                    ((item.totalCod?.toInt() ?? 0));
                 state.kirimanKamuCOD.codAmount = item.codAmount?.toInt() ?? 0;
                 item.chart?.forEachIndexed(
                   (index, element) {
@@ -533,7 +577,9 @@ class DashboardController extends BaseController {
   Future<void> isFirst() async {
     try {
       var firstInstall = await storage.readString(StorageCore.isFirstInstall);
-      state.isFirstInstall = firstInstall.isEmpty || firstInstall == 'null' || firstInstall == 'false';
+      state.isFirstInstall = firstInstall.isEmpty ||
+          firstInstall == 'null' ||
+          firstInstall == 'false';
 
       if (state.isFirstInstall) {
         // await storage.deleteAll();
@@ -568,22 +614,28 @@ class DashboardController extends BaseController {
 
     update();
 
-    bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty || ((await storage.readString(StorageCore.accounts)) == 'null'));
+    bool accounts = ((await storage.readString(StorageCore.accounts)).isEmpty ||
+        ((await storage.readString(StorageCore.accounts)) == 'null'));
     // bool dropshipper = ((await storage.readString(StorageCore.dropshipper)).isEmpty || (await storage.readString(StorageCore.dropshipper)) == 'null');
     // bool receiver = ((await storage.readString(StorageCore.receiver)).isEmpty || (await storage.readString(StorageCore.receiver)) == 'null');
-    bool vehicle = ((await storage.readString(StorageCore.vehicle)).isEmpty || (await storage.readString(StorageCore.vehicle)) == 'null');
+    bool vehicle = ((await storage.readString(StorageCore.vehicle)).isEmpty ||
+        (await storage.readString(StorageCore.vehicle)) == 'null');
     // bool sender = ((await storage.readString(StorageCore.shipper)).isEmpty || (await storage.readString(StorageCore.shipper)) == 'null');
-    bool basic = ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') &&
+    bool basic = ((await storage.readString(StorageCore.basicProfile))
+                .isEmpty ||
+            (await storage.readString(StorageCore.basicProfile)) == 'null') &&
         state.isLogin;
     bool officer =
-        ((await storage.readString(StorageCore.officerProfile)).isEmpty || (await storage.readString(StorageCore.officerProfile)) == 'null');
+        ((await storage.readString(StorageCore.officerProfile)).isEmpty ||
+            (await storage.readString(StorageCore.officerProfile)) == 'null');
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
         (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
         (await storage.readString(StorageCore.ccrfProfile)) == '{}');
     update();
     var basicProfile = await storage.readString(StorageCore.basicProfile);
     if (basicProfile != 'null' && basicProfile.isNotEmpty) {
-      state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+      state.basic =
+          UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     }
     saveFCMToken();
 
@@ -606,7 +658,8 @@ class DashboardController extends BaseController {
               StorageCore.basicProfile,
               value.data?.user,
             );
-            state.basic = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+            state.basic = UserModel.fromJson(
+                await storage.readData(StorageCore.basicProfile));
             await storage.saveData(
                 StorageCore.shipper,
                 ShipperModel(
@@ -666,7 +719,8 @@ class DashboardController extends BaseController {
           await storage.saveData(StorageCore.ccrfProfile, value.data);
         });
       } else {
-        state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
+        state.ccrf = CcrfProfileModel.fromJson(
+            await storage.readData(StorageCore.ccrfProfile));
       }
 
       if (accounts && state.isLogin) {
@@ -688,17 +742,21 @@ class DashboardController extends BaseController {
       }
 
       if (state.isLogin) {
-        await master.getDropshippers(QueryModel(limit: 0)).then((value) async => await storage.saveData(
-              StorageCore.dropshipper,
-              value,
-            ));
+        await master
+            .getDropshippers(QueryModel(limit: 0))
+            .then((value) async => await storage.saveData(
+                  StorageCore.dropshipper,
+                  value,
+                ));
       }
 
       if (state.isLogin) {
-        await master.getReceivers(QueryModel(limit: 0)).then((value) async => await storage.saveData(
-              StorageCore.receiver,
-              value,
-            ));
+        await master
+            .getReceivers(QueryModel(limit: 0))
+            .then((value) async => await storage.saveData(
+                  StorageCore.receiver,
+                  value,
+                ));
       }
 
       if (vehicle && state.isLogin) {
@@ -708,7 +766,8 @@ class DashboardController extends BaseController {
             ));
       }
 
-      state.isCcrf = (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
+      state.isCcrf =
+          (state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y");
 
       storage.saveData(StorageCore.ccrfProfile, state.ccrf);
 
@@ -730,9 +789,11 @@ class DashboardController extends BaseController {
       AppLogger.e("error dashboard init : $e");
       AppLogger.e("error dashboard init : $i");
     }
-    UserModel shipper = UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
+    UserModel shipper =
+        UserModel.fromJson(await storage.readData(StorageCore.basicProfile));
     state.userName = shipper.name ?? '';
-    state.allow = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    state.allow =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
     update();
     cekAllowance();
     state.isLoadingProfile = false;
@@ -746,7 +807,9 @@ class DashboardController extends BaseController {
 
   bool onPop() {
     DateTime now = DateTime.now();
-    if (state.currentBackPressTime == null || now.difference(state.currentBackPressTime!) > const Duration(seconds: 2)) {
+    if (state.currentBackPressTime == null ||
+        now.difference(state.currentBackPressTime!) >
+            const Duration(seconds: 2)) {
       state.currentBackPressTime = now;
       Get.showSnackbar(
         GetSnackBar(
@@ -805,7 +868,12 @@ class DashboardController extends BaseController {
   }
 
   onLacakKiriman(bool useBarcode, String value) {
-    final nomorResi = state.nomorResi.text.replaceAll('\r', '').split('\n').map((e) => e.trim()).where((e) => e.isNotEmpty).join('\n');
+    final nomorResi = state.nomorResi.text
+        .replaceAll('\r', '')
+        .split('\n')
+        .map((e) => e.trim())
+        .where((e) => e.isNotEmpty)
+        .join('\n');
 
     if (nomorResi.isNotEmpty) {
       Get.to(const LacakKirimanScreen(), arguments: {
@@ -818,7 +886,9 @@ class DashboardController extends BaseController {
       });
     } else {
       Get.to(
-        useBarcode ? () => const BarcodeScanScreen() : () => const LacakKirimanScreen(),
+        useBarcode
+            ? () => const BarcodeScanScreen()
+            : () => const LacakKirimanScreen(),
         arguments: {
           'nomor_resi': value,
           'cek_resi': true,
@@ -836,13 +906,7 @@ class DashboardController extends BaseController {
     super.onReady();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // AppLogger.i('shipper info : ${state.shipper?.zipCode?.isEmpty}');
-      if ((state.isFromLogin == true)) {
-        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
-        // await Get.dialog(const SafetyTipsDialog());
-        await Get.dialog(AlertDialog(
-          title: Text(state.sTips ?? ''),
-        ));
-      }
+      cekSTips();
     });
   }
 
@@ -860,7 +924,10 @@ class DashboardController extends BaseController {
             {
               "mpayWdrGrpPayDatePaid": [
                 // "2024-12-16 00:00:00", "2024-12-16 23:59:59",
-                date.toDate(originFormat: "yyyy-MM-dd hh:mm:ss")?.subtract(const Duration(hours: 24)).toIso8601String(),
+                date
+                    .toDate(originFormat: "yyyy-MM-dd hh:mm:ss")
+                    ?.subtract(const Duration(hours: 24))
+                    .toIso8601String(),
                 date,
               ]
             }
@@ -870,7 +937,8 @@ class DashboardController extends BaseController {
           ],
         ));
 
-        state.aggregationModel = AggregationModel(mpayWdrGrpPayNetAmt: agg.data?.total);
+        state.aggregationModel =
+            AggregationModel(mpayWdrGrpPayNetAmt: agg.data?.total);
       } catch (e, i) {
         AppLogger.e("error get aggregation dashboard : $e");
         AppLogger.e("error get aggregation dashboard : $i");
@@ -908,9 +976,61 @@ class DashboardController extends BaseController {
         {"infoCategory": "INFORMASI KEAMANAN - CSS CUSTOMER MOBILE"}
       ],
     ))
-        .then((value) {
+        .then((value) async {
       state.isShowTips = value.data?.first.status == "on";
       state.sTips = value.data?.first.img;
+      if ((state.isFromLogin == true)) {
+        // if (state.shipperZipCode.text.isEmpty || state.shipperAddress.text.isEmpty) {
+        // await Get.dialog(const SafetyTipsDialog());
+        if (state.isShowTips) {
+          // showImagePreview(Get.context!, state.sTips ?? '', background: Colors.transparent);
+          await Get.dialog(
+            barrierDismissible: false,
+            PopScope(
+              canPop: false,
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      child: PhotoViewGallery.builder(
+                        itemCount: 1,
+                        builder: (context, index) {
+                          return PhotoViewGalleryPageOptions(
+                            imageProvider:
+                                CachedNetworkImageProvider(state.sTips ?? ''),
+                            minScale: PhotoViewComputedScale.contained,
+                            maxScale: PhotoViewComputedScale.covered * 3.0,
+                            initialScale: PhotoViewComputedScale.contained,
+                          );
+                        },
+                        scrollPhysics: const BouncingScrollPhysics(),
+                        backgroundDecoration:
+                            const BoxDecoration(color: Colors.transparent),
+                        pageController: PageController(),
+                      ),
+                    ),
+                  ),
+                  // Positioned(
+                  /* right: 0,
+                  top: Get.height * 0.3,
+                  child:*/
+                  IconButton(
+                    onPressed: () => Get.close(2),
+                    icon: const Icon(
+                      Icons.cancel_outlined,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
+                  // ),
+                  SizedBox(height: Get.height * 0.2),
+                ],
+              ),
+            ),
+          );
+        }
+      }
     });
 
     update();

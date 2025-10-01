@@ -3,14 +3,14 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-void showImagePreview(BuildContext context, String imageUrl) {
+void showImagePreview(BuildContext context, String imageUrl, {Color? background}) {
   if (imageUrl.isNotEmpty) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: background ?? Colors.black,
           appBar: AppBar(
-            backgroundColor: Colors.black,
+            backgroundColor: background ?? Colors.black,
             elevation: 0,
             automaticallyImplyLeading: false,
             actions: [
@@ -32,7 +32,7 @@ void showImagePreview(BuildContext context, String imageUrl) {
                 );
               },
               scrollPhysics: const BouncingScrollPhysics(),
-              backgroundDecoration: const BoxDecoration(color: Colors.black),
+              backgroundDecoration: BoxDecoration(color: background ?? Colors.black),
               pageController: PageController(),
             ),
           ),

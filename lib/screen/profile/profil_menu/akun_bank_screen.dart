@@ -43,14 +43,16 @@ class AkunBankScreen extends StatelessWidget {
                         ? redJNE
                         : warningColor,
                   ),
-                  title: controller.ccrfProfil?.bankAccount?.ccrfBankaccount ??
+                  title: controller.ccrfProfil?.bankAccount?.ccrfBankaccount
+                          .toString() ??
                       '-',
-                  subtitle:
-                      controller.ccrfProfil?.bankAccount?.ccrfAccountnumber ??
-                          '-',
-                  subtitle2:
-                      controller.ccrfProfil?.bankAccount?.ccrfAccountname ??
-                          '-',
+                  subtitle: controller
+                          .ccrfProfil?.bankAccount?.ccrfAccountnumber
+                          .toString() ??
+                      '-',
+                  subtitle2: controller.ccrfProfil?.bankAccount?.ccrfAccountname
+                          .toString() ??
+                      '-',
                 ),
                 const SizedBox(height: 30),
               ],

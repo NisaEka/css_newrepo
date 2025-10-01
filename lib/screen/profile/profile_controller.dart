@@ -36,23 +36,26 @@ class ProfileController extends BaseController {
 
   Future<void> sendEmail() async {
     try {
-      await auth.postEmailForgotPassword(state.basicProfile?.email ?? '').then((value) => value.code == 201
-          ? Get.to(
-              () => const ForgotPasswordOTPScreen(),
-              arguments: {
-                'email': state.basicProfile?.email ?? '',
-                'isChange': true,
-              },
-            )
-          : value.code == 404
-              ? AppSnackBar.error('User Not Found'.tr)
-              : AppSnackBar.error('Bad Request'.tr));
+      await auth
+          .postEmailForgotPassword(state.basicProfile?.email ?? '')
+          .then((value) => value.code == 201
+              ? Get.to(
+                  () => const ForgotPasswordOTPScreen(),
+                  arguments: {
+                    'email': state.basicProfile?.email ?? '',
+                    'isChange': true,
+                  },
+                )
+              : value.code == 404
+                  ? AppSnackBar.error('User Not Found'.tr)
+                  : AppSnackBar.error('Bad Request'.tr));
     } catch (e) {
       AppLogger.e('error sendEmail $e');
     }
   }
 
   Future<void> initData() async {
+    AppLogger.w("init data profile");
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     state.version = packageInfo.version;
     state.isLoading = true;
@@ -61,7 +64,9 @@ class ProfileController extends BaseController {
     String? token = await storage.readAccessToken();
     // AppLogger.i('token : $token');
     state.isLogin = token != null;
-    bool basic = ((await storage.readString(StorageCore.basicProfile)).isEmpty || (await storage.readString(StorageCore.basicProfile)) == 'null') &&
+    bool basic = ((await storage.readString(StorageCore.basicProfile))
+                .isEmpty ||
+            (await storage.readString(StorageCore.basicProfile)) == 'null') &&
         state.isLogin;
 
     if (basic) {
@@ -75,7 +80,8 @@ class ProfileController extends BaseController {
       );
     }
 
-    state.menuModel = MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
+    state.menuModel =
+        MenuModel.fromJson(await storage.readData(StorageCore.userMenu));
     update();
 
     state.isLoading = false;
@@ -83,6 +89,7 @@ class ProfileController extends BaseController {
   }
 
   Future<void> getCcrf() async {
+    AppLogger.w("get ccrf profile");
     bool ccrfP = ((await storage.readString(StorageCore.ccrfProfile)).isEmpty ||
             (await storage.readString(StorageCore.ccrfProfile)) == 'null' ||
             (await storage.readString(StorageCore.ccrfProfile)) == '{}') &&
@@ -94,11 +101,16 @@ class ProfileController extends BaseController {
         update();
       });
     } else {
-      state.ccrf = CcrfProfileModel.fromJson(await storage.readData(StorageCore.ccrfProfile));
+      state.ccrf = CcrfProfileModel.fromJson(
+          await storage.readData(StorageCore.ccrfProfile));
     }
 
-    state.isCcrf = state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y";
+    state.isCcrf =
+        state.ccrf != null && state.ccrf?.generalInfo?.apiStatus == "Y";
     update();
+    // print('isCCrf : ${(state.ccrf != null).toString()}');
+    // print('isCCrf : ${(state.ccrf?.generalInfo?.apiStatus == "Y").toString()}');
+    // print('isCCrf : ${state.isCcrf.toString()}');
   }
 
   void isCcrfAction(dynamic screen, BuildContext context) {
@@ -107,7 +119,9 @@ class ProfileController extends BaseController {
         : showDialog(
             context: context,
             builder: (context) => InfoDialog(
-              infoText: "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas".tr,
+              infoText:
+                  "Untuk mengakses menu ini silahkan aktifkan terlebih dahulu di menu fasilitas"
+                      .tr,
               nextButton: () => Get.off(() => const FacilityScreen()),
             ),
           );

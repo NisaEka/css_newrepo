@@ -3,6 +3,7 @@ import 'package:css_mobile/const/color_const.dart';
 import 'package:css_mobile/util/ext/string_ext.dart';
 import 'package:css_mobile/widgets/dialog/shimer_loading_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class EclaimListItem extends StatelessWidget {
@@ -50,9 +51,10 @@ class EclaimListItem extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                   decoration: BoxDecoration(
-                    color: primaryColor(context),
+                    color: isLoading ? greyLightColor3 : primaryColor(context),
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  width: isLoading ? Get.width / 3 : null,
                   child: Text(
                     claimType ?? '',
                     style: screenWidth < 400
@@ -63,39 +65,60 @@ class EclaimListItem extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Text(
-                  date?.toLongDateTimeFormat() ?? '',
-                  style: TextStyle(
-                      fontSize: 12, color: Theme.of(context).primaryColor),
+                Container(
+                  decoration: BoxDecoration(
+                    color: isLoading ? greyLightColor3 : Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  width: isLoading ? Get.width / 3 : null,
+                  child: Text(
+                    date?.toLongDateTimeFormat() ?? '',
+                    style: TextStyle(
+                        fontSize: 12, color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             Row(
               children: [
-                Text(
-                  awb ?? '',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(),
+                Container(
+                  decoration: BoxDecoration(
+                    color: isLoading ? greyLightColor3 : Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  width: isLoading ? Get.width / 3 : null,
+                  child: Text(
+                    awb ?? '',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(),
+                  ),
                 ),
                 const Spacer(),
-                Row(
-                  children: [
-                    Icon(
-                      isSuccess
-                          ? Icons.check_circle_outline
-                          : Icons.cancel_outlined,
-                      color: isSuccess ? successColor : errorColor,
-                      size: 18,
-                    ),
-                    Text(
-                      'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!.replaceAll('.', ''))) : '0'}',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                Container(
+                  decoration: BoxDecoration(
+                    color: isLoading ? greyLightColor3 : Colors.transparent,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  width: isLoading ? Get.width / 3 : null,
+                  child: Row(
+                    children: [
+                      Icon(
+                        isSuccess
+                            ? Icons.check_circle_outline
+                            : Icons.cancel_outlined,
                         color: isSuccess ? successColor : errorColor,
+                        size: 18,
                       ),
-                    ),
-                  ],
+                      Text(
+                        'Rp. ${amount != null ? NumberFormat('#,##0', 'id').format(int.parse(amount!.replaceAll('.', ''))) : '0'}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: isSuccess ? successColor : errorColor,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

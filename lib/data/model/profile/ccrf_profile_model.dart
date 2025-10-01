@@ -71,9 +71,9 @@ class CcrfProfileModel {
 
 class BankAccount {
   BankAccount({
-    String? ccrfBankaccount,
-    String? ccrfAccountname,
-    String? ccrfAccountnumber,
+    dynamic ccrfBankaccount,
+    dynamic ccrfAccountname,
+    dynamic ccrfAccountnumber,
   }) {
     _ccrfBankaccount = ccrfBankaccount;
     _ccrfAccountname = ccrfAccountname;
@@ -86,14 +86,14 @@ class BankAccount {
     _ccrfAccountnumber = json['ccrfAccountnumber'];
   }
 
-  String? _ccrfBankaccount;
-  String? _ccrfAccountname;
-  String? _ccrfAccountnumber;
+  dynamic _ccrfBankaccount;
+  dynamic _ccrfAccountname;
+  dynamic _ccrfAccountnumber;
 
   BankAccount copyWith({
-    String? ccrfBankaccount,
-    String? ccrfAccountname,
-    String? ccrfAccountnumber,
+    dynamic ccrfBankaccount,
+    dynamic ccrfAccountname,
+    dynamic ccrfAccountnumber,
   }) =>
       BankAccount(
         ccrfBankaccount: ccrfBankaccount ?? _ccrfBankaccount,
@@ -101,11 +101,11 @@ class BankAccount {
         ccrfAccountnumber: ccrfAccountnumber ?? _ccrfAccountnumber,
       );
 
-  String? get ccrfBankaccount => _ccrfBankaccount;
+  dynamic get ccrfBankaccount => _ccrfBankaccount;
 
-  String? get ccrfAccountname => _ccrfAccountname;
+  dynamic get ccrfAccountname => _ccrfAccountname;
 
-  String? get ccrfAccountnumber => _ccrfAccountnumber;
+  dynamic get ccrfAccountnumber => _ccrfAccountnumber;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

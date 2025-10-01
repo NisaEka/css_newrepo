@@ -44,15 +44,15 @@ class EclaimItems extends StatelessWidget {
                     ),
                     firstPageErrorIndicatorBuilder: (context) =>
                         const DataEmpty(
-                            mainAxisAlignment: MainAxisAlignment.start),
+                            mainAxisAlignment: MainAxisAlignment.center),
                     firstPageProgressIndicatorBuilder: (context) => Column(
                       children: List.generate(
-                        3,
+                        10,
                         (index) => const EclaimListItem(isLoading: true),
                       ),
                     ),
                     noItemsFoundIndicatorBuilder: (context) => const DataEmpty(
-                        mainAxisAlignment: MainAxisAlignment.start),
+                        mainAxisAlignment: MainAxisAlignment.center),
                     noMoreItemsIndicatorBuilder: (context) => Padding(
                       padding: const EdgeInsets.only(bottom: 30),
                       child: Center(

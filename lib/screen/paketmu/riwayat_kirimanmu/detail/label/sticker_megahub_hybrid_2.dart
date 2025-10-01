@@ -27,7 +27,7 @@ class StickerMegahubHybrid2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("mgh2 destination ${data.destination?.toJson()}");
+    // print("mgh2 destination ${data.destination?.toJson()}");
     return Column(
       children: [
         sticker(context),
@@ -65,7 +65,8 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     "Nomor Connote: ${data.awb ?? ''}",
-                    style: listTitleTextStyle.copyWith(color: Colors.black, fontSize: fontSize),
+                    style: listTitleTextStyle.copyWith(
+                        color: Colors.black, fontSize: fontSize),
                   ),
                 )
               ],
@@ -153,9 +154,13 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Deskripsi: \n${data.goods?.desc ?? '-'}\n\n', style: labelTextStyle),
+                              Text(
+                                  'Deskripsi: \n${data.goods?.desc ?? '-'}\n\n',
+                                  style: labelTextStyle),
                               const SolidBorder(),
-                              Text('Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n', style: labelTextStyle),
+                              Text(
+                                  'Intruksi Khusus: \n${data.delivery?.specialInstruction ?? '-'}\n\n',
+                                  style: labelTextStyle),
                             ],
                           ),
                           Container(
@@ -163,14 +168,28 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? '-'}', style: labelTextStyle),
-                                Text('No. Pelanggan: ${data.account?.accountNumber ?? '-'}', style: labelTextStyle),
-                                Text('Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}', style: labelTextStyle),
-                                Text('Berat: ${data.goods?.weight ?? '0'} Kg', style: labelTextStyle),
-                                Text('Jumlah Kiriman: ${data.goods?.quantity ?? '0'}', style: labelTextStyle),
-                                Text('Jenis Kiriman: ${data.goods?.type ?? '0'}', style: labelTextStyle),
-                                Text('Pembayaran: ${data.type ?? '-'}', style: labelTextStyle),
-                                if (showOrderId) Text('Order ID: ${data.orderId ?? '-'}', style: labelTextStyle)
+                                Text(
+                                    'Tanggal: ${data.createdDate?.toLongDateTimeFormat() ?? '-'}',
+                                    style: labelTextStyle),
+                                Text(
+                                    'No. Pelanggan: ${data.account?.accountNumber ?? '-'}',
+                                    style: labelTextStyle),
+                                Text(
+                                    'Kota Asal: ${data.shipper?.city ?? data.shipper?.origin?.originName ?? '-'}',
+                                    style: labelTextStyle),
+                                Text('Berat: ${data.goods?.weight ?? '0'} Kg',
+                                    style: labelTextStyle),
+                                Text(
+                                    'Jumlah Kiriman: ${data.goods?.quantity ?? '0'}',
+                                    style: labelTextStyle),
+                                Text(
+                                    'Jenis Kiriman: ${data.goods?.type ?? '0'}',
+                                    style: labelTextStyle),
+                                Text('Pembayaran: ${data.type ?? '-'}',
+                                    style: labelTextStyle),
+                                if (showOrderId)
+                                  Text('Order ID: ${data.orderId ?? '-'}',
+                                      style: labelTextStyle)
                               ],
                             ),
                           ),
@@ -183,7 +202,8 @@ class StickerMegahubHybrid2 extends StatelessWidget {
                   width: (Get.width - 51) / 3.2,
                   alignment: Alignment.center,
                   child: Text(
-                    data.destination?.facilityCode?.isEmpty ?? false || data.destination?.facilityCode == null
+                    data.destination?.facilityCode?.isEmpty ??
+                            false || data.destination?.facilityCode == null
                         ? "${data.destination?.destinationCode?.substring(0, 3) ?? '-'}-${data.destination?.cityZone ?? ''}\n${data.receiver?.zipCode}"
                         : "${data.destination?.facilityCode}\n${data.receiver?.zipCode}",
                     style: TextStyle(fontSize: 15, fontWeight: bold),

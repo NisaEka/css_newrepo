@@ -35,6 +35,9 @@ class StorageCore {
   static const String failedLoginAttempts = "failed_login_attempts";
   static const String loginLockedUntil = "login_locked_until";
   static const String vehicle = "vehicle";
+  static const String biometricLock = "biometric_lock";
+  static const String pinHash = "pin_hash";
+  static const String pinSalt = "pin_salt";
 
   Future<void> writeString(String key, dynamic value) async {
     return await storage.write(key: key, value: value);
@@ -127,6 +130,11 @@ class StorageCore {
     await storage.delete(key: unreadMessage);
     await storage.delete(key: readMessage);
     await storage.delete(key: vehicle);
+    await storage.delete(key: biometricLock);
+    await storage.delete(key: pinHash);
+    await storage.delete(key: pinSalt);
+    await storage.delete(key: failedLoginAttempts);
+    await storage.delete(key: loginLockedUntil);
     deleteString(StorageCore.favoriteMenu);
   }
 }
