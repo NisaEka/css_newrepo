@@ -18,9 +18,13 @@ class InputLoginModel {
     _password = json['password'];
     _device = json['device'] != null
         ? DeviceInfoModel.fromJson(json['device'])
+        : json['deviceInfo'] != null
+        ? DeviceInfoModel.fromJson(json['deviceInfo'])
         : null;
     _coordinate = json['coordinate'] != null
         ? Coordinate.fromJson(json['coordinate'])
+        : json['longlat'] != null
+        ? Coordinate.fromString(json['longlat'])
         : null;
   }
 
@@ -56,9 +60,11 @@ class InputLoginModel {
     map['password'] = _password;
     if (_device != null) {
       map['device'] = _device?.toJson();
+      map['deviceInfo'] =_device?.toJson();
     }
     if (_coordinate != null) {
       map['coordinate'] = _coordinate?.toJson();
+      map['longlat'] = _coordinate?.toLongLatString();
     }
     return map;
   }
@@ -71,6 +77,19 @@ class Coordinate {
   }) {
     _lat = lat;
     _lng = lng;
+  }
+
+  factory Coordinate.fromString(String value) {
+    final parts = value.split(",");
+    return Coordinate(
+      lat: double.parse(parts[0].trim()),
+      lng: double.parse(parts[1].trim()),
+    );
+  }
+
+  /// convert dari model ke string "lat,long"
+  String toLongLatString() {
+    return "$_lat,$_lng";
   }
 
   Coordinate.fromJson(dynamic json) {

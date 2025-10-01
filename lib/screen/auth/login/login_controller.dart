@@ -61,11 +61,11 @@ class LoginController extends BaseController {
           device: await getDeviceinfo(state.fcmToken ?? ''),
           // this location service sometimes cause error in emulator
           // NOTE: uncomment this line if you want to use location service
-          // coordinate: await getCurrentLocation(),
+          coordinate: await getCurrentLocation(),
         ),
       )
           .then((value) async {
-        if (value.code == 201) {
+        if (value.code == HttpStatus.created) {
           await resetLoginAttempts();
           await storage
               .saveToken(
@@ -75,7 +75,7 @@ class LoginController extends BaseController {
               )
               .then((_) => Get.delete<DashboardController>())
               .then((_) => Get.offAll(() => const DashboardScreen(), arguments: {'isFromLogin': true}));
-        } else if (value.code == 403) {
+        } else if (value.code == HttpStatus.forbidden) {
           Get.dialog(
             InfoDialog(
               infoText: "Silahkan aktivasi akun terlebih dahulu".tr,
@@ -85,12 +85,12 @@ class LoginController extends BaseController {
               }),
             ),
           );
-        } else if (value.code == 401) {
+        } else if (value.code == HttpStatus.unauthorized) {
           await handleFailedLogin();
         } else if (value.message == "Email not verified") {
           try {
             await auth.postRegistPinResend(InputPinconfirmModel(email: state.emailTextField.text)).then((value) {
-              if (value.code == 201) {
+              if (value.code == HttpStatus.created) {
                 AppSnackBar.success('Silahkan cek email anda'.tr);
                 Get.to(() => const SignUpOTPScreen(), arguments: {
                   'email': state.emailTextField.text,
@@ -123,15 +123,22 @@ class LoginController extends BaseController {
       return DeviceInfoModel(
         fcmToken: token,
         deviceId: iosDeviceInfo.identifierForVendor,
-        versionOs: '$systemName $version',
+        deviceOS: '$systemName $version',
+        deviceName: iosDeviceInfo.name,
+        deviceBrand: systemName,
+        deviceModel: iosDeviceInfo.model,
       );
     } else if (Platform.isAndroid) {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       var release = androidDeviceInfo.version.release;
+      print("device info = ${androidDeviceInfo.model}");
       return DeviceInfoModel(
         fcmToken: token,
         deviceId: androidDeviceInfo.id,
-        versionOs: 'Android $release',
+        deviceOS: 'Android $release',
+        deviceName: '${androidDeviceInfo.brand.capitalizeFirst} ${androidDeviceInfo.product}',
+        deviceBrand: androidDeviceInfo.brand,
+        deviceModel: androidDeviceInfo.model,
       );
     }
     return null;
