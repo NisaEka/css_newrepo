@@ -293,14 +293,14 @@ class ObrolanLaporankuScreen extends StatelessWidget {
                                           (msg.image!.startsWith('https') ||
                                               msg.image!.startsWith('http'))
                                       ? msg.image!
-                                      : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                      : "https://cssmobile.jne.co.id/uploads/img/${msg.image ?? ''}",
                                 ),
                                 child: Image.network(
                                   msg.image != null &&
                                           (msg.image!.startsWith('https') ||
                                               msg.image!.startsWith('http'))
                                       ? msg.image!
-                                      : "https://css.jne.co.id/uploads/img/${msg.image ?? ''}",
+                                      : "https://cssmobile.jne.co.id/uploads/img/${msg.image ?? ''}",
                                   errorBuilder: (context, error, stackTrace) =>
                                       const SizedBox(),
                                 ),

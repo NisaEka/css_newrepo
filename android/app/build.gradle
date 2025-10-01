@@ -147,7 +147,7 @@ android {
             variant.outputs.all {
                 def flavor = variant.name
                 def versionName = variant.versionName
-                outputFileName = "css${flavor}_${versionName}.apk"
+                outputFileName = "cssmobile${flavor}_${versionName}.apk"
             }
         }
     }

@@ -77,7 +77,7 @@ class TransactionScreen extends StatelessWidget {
     // return Container(
     //   height: Get.height,
     //   width: Get.width,
-    //   color: greyDarkColor2.withOpacity(0.5),
+    //   color: greyDarkColor2.withValues(alpha:0.5),
     //   child: Center(
     //     child: Container(
     //       padding: const EdgeInsets.all(20),

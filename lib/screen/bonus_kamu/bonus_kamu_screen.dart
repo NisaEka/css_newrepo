@@ -74,7 +74,7 @@ class BonusKamuScreen extends StatelessWidget {
           children: [
             CustomFilledButton(
               color: c.tabIndex != 0
-                  ? primaryColor(context).withValues(alpha: 0.5)
+                  ? primaryColor(context).withValues(alpha:0.5)
                   : primaryColor(context),
               title: "Total Transaksi".tr,
               radius: 0,

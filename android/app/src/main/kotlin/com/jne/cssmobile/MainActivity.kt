@@ -1,4 +1,4 @@
-package com.jne.css.css_mobile
+package com.jne.cssmobile
 
 import io.flutter.embedding.android.FlutterActivity
 

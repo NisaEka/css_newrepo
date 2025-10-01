@@ -577,8 +577,8 @@ class LanguageEN {
       "Pilih minimal satu hak akses": "Select at least one authority",
       "Saya telah membaca & memahami": "I have read & understood",
       "TIPS AMAN MENGGUNAKAN CSS": "SAFETY TIPS CSS",
-      "Pastikan Anda hanya mengakses tautan CSS: http://css.jne.co.id.":
-          "Please ensure that you access only the CSS link: http://css.jne.co.id.",
+      "Pastikan Anda hanya mengakses tautan CSS: http://cssmobile.jne.co.id.":
+          "Please ensure that you access only the CSS link: http://cssmobile.jne.co.id.",
       "Menjaga kerahasiaan informasi data Log In ID Pengguna, Kata Sandi, Kata Sandi Email, dan data kredensial lainnya.":
           "Please ensure the confidentiality of your Company ID, User ID, Password, Email Password, and other credential data.",
       "Hindari klik tautan mencurigakan dari Website, WhatsApp dengan alamat nomor yang tidak dikenal.":

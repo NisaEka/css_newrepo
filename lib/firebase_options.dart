@@ -64,7 +64,7 @@ class CssFirebaseOptions {
     messagingSenderId: '852897989152',
     projectId: 'cssmobile-jne',
     storageBucket: 'cssmobile-jne.firebasestorage.app',
-    iosBundleId: 'com.jne.css.cssMobile',
+    iosBundleId: 'com.jne.cssmobile.cssMobile',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -73,7 +73,7 @@ class CssFirebaseOptions {
     messagingSenderId: '852897989152',
     projectId: 'cssmobile-jne',
     storageBucket: 'cssmobile-jne.firebasestorage.app',
-    iosBundleId: 'com.jne.css.cssMobile',
+    iosBundleId: 'com.jne.cssmobile.cssMobile',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
