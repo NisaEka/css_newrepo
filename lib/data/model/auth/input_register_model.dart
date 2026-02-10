@@ -1,3 +1,6 @@
+import 'auth_body_model.dart';
+import 'get_device_info_model.dart';
+
 class InputRegisterModel {
   InputRegisterModel({
     String? fullName,
@@ -8,6 +11,8 @@ class InputRegisterModel {
     String? originCode,
     String? alreadyUseJne,
     String? salesCounter,
+    DeviceInfoModel? device,
+    Coordinate? coordinate,
   }) {
     _fullName = fullName;
     _brandName = brandName;
@@ -17,6 +22,8 @@ class InputRegisterModel {
     _originCode = originCode;
     _alreadyUseJne = alreadyUseJne;
     _salesCounter = salesCounter;
+    _device = device;
+    _coordinate = coordinate;
   }
 
   InputRegisterModel.fromJson(dynamic json) {
@@ -28,6 +35,16 @@ class InputRegisterModel {
     _originCode = json['originCode'];
     _alreadyUseJne = json['alreadyUseJne'];
     _salesCounter = json['counter'];
+    _device = json['device'] != null
+        ? DeviceInfoModel.fromJson(json['device'])
+        : json['deviceInfo'] != null
+            ? DeviceInfoModel.fromJson(json['deviceInfo'])
+            : null;
+    _coordinate = json['coordinate'] != null
+        ? Coordinate.fromJson(json['coordinate'])
+        : json['longlat'] != null
+            ? Coordinate.fromString(json['longlat'])
+            : null;
   }
 
   String? _fullName;
@@ -38,6 +55,8 @@ class InputRegisterModel {
   String? _originCode;
   String? _alreadyUseJne;
   String? _salesCounter;
+  DeviceInfoModel? _device;
+  Coordinate? _coordinate;
 
   InputRegisterModel copyWith({
     String? fullName,
@@ -48,6 +67,8 @@ class InputRegisterModel {
     String? originCode,
     String? alreadyUseJne,
     String? salesCounter,
+    DeviceInfoModel? device,
+    Coordinate? coordinate,
   }) =>
       InputRegisterModel(
         fullName: fullName ?? _fullName,
@@ -58,6 +79,8 @@ class InputRegisterModel {
         originCode: originCode ?? _originCode,
         alreadyUseJne: alreadyUseJne ?? _alreadyUseJne,
         salesCounter: salesCounter ?? _salesCounter,
+        device: device ?? _device,
+        coordinate: coordinate ?? _coordinate,
       );
 
   String? get fullName => _fullName;
@@ -76,6 +99,10 @@ class InputRegisterModel {
 
   String? get salesCounter => _salesCounter;
 
+  DeviceInfoModel? get device => _device;
+
+  Coordinate? get coordinate => _coordinate;
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['name'] = _fullName;
@@ -86,6 +113,14 @@ class InputRegisterModel {
     map['originCode'] = _originCode;
     map['alreadyUseJne'] = _alreadyUseJne;
     map['counter'] = _salesCounter;
+    if (_device != null) {
+      map['device'] = _device?.toJson();
+      map['deviceInfo'] = _device?.toJson();
+    }
+    if (_coordinate != null) {
+      map['coordinate'] = _coordinate?.toJson();
+      map['longlat'] = _coordinate?.toLongLatString();
+    }
     return map;
   }
 }

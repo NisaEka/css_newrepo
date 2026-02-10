@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/const/app_const.dart';
+import 'package:css_mobile/data/model/auth/auth_body_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/model/base_response_model.dart';
 import 'package:css_mobile/screen/dashboard/dashboard_controller.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' hide Response;
+import 'repository/auth/auth_repository.dart';
 import 'storage_core.dart';
 
 class NetworkCore {
@@ -58,12 +60,20 @@ class NetworkCore {
     AppLogger.d("running refresh token");
     final refreshToken = await StorageCore().readRefreshToken();
     AppLogger.i("get refresh token from local : $refreshToken");
+    final auth = Get.find<AuthRepository>();
 
     try {
-      Response response = await base.post(
-        '/authentications/refresh',
-        data: {"refreshToken": refreshToken},
-      );
+      Response response = await base.post('/authentications/refresh',
+          data: AuthBodyModel(
+            refreshToken: refreshToken,
+            device: await auth.getDeviceinfo(/*state.fcmToken ?? ''*/),
+            coordinate: await auth.getCurrentLocation(),
+          )
+          // data: {
+          //   "refreshToken": refreshToken,
+
+          // },
+          );
 
       final refreshTokenResponse = BaseResponse<PostLoginModel>.fromJson(
         response.data,
@@ -196,6 +206,39 @@ class NetworkCore {
             if (dioError.requestOptions.path != "/auth/device-infos ") {
               AppLogger.e("dio error : ${dioError.requestOptions.method} ${dioError.requestOptions.path} ${dioError.response ?? dioError} ");
             }
+
+            // ===== FAILOVER BASE URL =====
+            // final isConnectionError = dioError.type == DioExceptionType.connectionError && dioError.error.toString().contains("Failed host lookup");
+            //
+            // final alreadyRetried = dioError.requestOptions.extra['retried'] == true;
+            //
+            // if (isConnectionError && !alreadyRetried) {
+            //   AppLogger.w("Primary base down, retry with fallback");
+            //
+            //   final options = dioError.requestOptions;
+            //   options.extra['retried'] = true;
+            //
+            //   final fallbackBase = AppConst.baseFallback;
+            //   final fallbackUri = Uri.parse(fallbackBase);
+            //
+            //   final newUri = options.uri.replace(
+            //     scheme: fallbackUri.scheme,
+            //     host: fallbackUri.host,
+            //     port: fallbackUri.port,
+            //   );
+            //
+            //   options.baseUrl = fallbackBase;
+            //   options.path = newUri.path;
+            //
+            //   try {
+            //     final response = await base.fetch(options);
+            //     return handler.resolve(response);
+            //   } catch (e) {
+            //     return handler.reject(e as DioException);
+            //   }
+            // }
+
+            // ===== REFRESH TOKEN  =====
 
             final refreshToken = await const FlutterSecureStorage().read(key: StorageCore.refreshToken);
             // AppLogger.i("refresh token local : $refreshToken");

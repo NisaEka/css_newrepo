@@ -238,7 +238,7 @@ class CustomTheme {
       checkColor: WidgetStateColor.resolveWith((states) => whiteColor),
     ),
     dialogBackgroundColor: greyColor,
-    dialogTheme: const DialogTheme(
+    dialogTheme: const DialogThemeData(
       titleTextStyle: TextStyle(
         color: whiteColor,
         fontSize: 24,

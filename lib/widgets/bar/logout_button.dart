@@ -1,6 +1,7 @@
 import 'package:css_mobile/base/theme_controller.dart';
 import 'package:css_mobile/const/app_const.dart';
 import 'package:css_mobile/const/color_const.dart';
+import 'package:css_mobile/data/model/auth/auth_body_model.dart';
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
 import 'package:css_mobile/data/repository/auth/auth_repository.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -30,10 +31,7 @@ class LogoutButton extends StatelessWidget {
           ? BoxDecoration(
               color: AppConst.isLightTheme(context) ? whiteColor : bgDarkColor,
               border: Border(
-                bottom: BorderSide(
-                    color: AppConst.isLightTheme(context)
-                        ? greyColor
-                        : Colors.white),
+                bottom: BorderSide(color: AppConst.isLightTheme(context) ? greyColor : Colors.white),
               ),
             )
           : null,
@@ -45,9 +43,7 @@ class LogoutButton extends StatelessWidget {
                     context: context,
                     builder: (context) => DefaultAlertDialog(
                       title: "Anda akan keluar".tr,
-                      subtitle:
-                          "Pastikan semua aktivitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile"
-                              .tr,
+                      subtitle: "Pastikan semua aktivitas sudah selesai. Terima kasih sudah menggunakan CSS Mobile".tr,
                       backButtonTitle: "Tidak".tr,
                       confirmButtonTitle: "Keluar".tr,
                       onBack: Get.back,
@@ -87,7 +83,11 @@ class LogoutButton extends StatelessWidget {
     Get.offAll(() => const LoginScreen());
 
     try {
-      await auth.logout(refreshToken);
+      await auth.logout(AuthBodyModel(
+        refreshToken: refreshToken,
+        device: await auth.getDeviceinfo(/*state.fcmToken ?? ''*/),
+        coordinate: await auth.getCurrentLocation(),
+      ));
       await auth.updateDeviceInfo(
         DeviceInfoModel(
           fcmToken: await storage.readString(StorageCore.fcmToken),

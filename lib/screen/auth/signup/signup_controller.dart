@@ -42,9 +42,7 @@ class SignUpController extends BaseController {
     state.isLoadAgent = true;
     update();
     try {
-      await master
-          .getAgents(state.selectedOrigin?.branchCode ?? '')
-          .then((value) {
+      await master.getAgents(state.selectedOrigin?.branchCode ?? '').then((value) {
         state.agentList.addAll(value.data ?? []);
         update();
       });
@@ -70,8 +68,9 @@ class SignUpController extends BaseController {
         referralCode: state.referralCode.text,
         originCode: state.selectedOrigin?.originCode ?? '',
         alreadyUseJne: state.useJNE ? "YES" : null,
-        salesCounter:
-            state.selectedAgent?.custNo ?? state.selectedAgent?.custName,
+        salesCounter: state.selectedAgent?.custNo ?? state.selectedAgent?.custName,
+        device: await auth.getDeviceinfo(/*state.fcmToken ?? ''*/),
+        coordinate: await auth.getCurrentLocation(),
       ),
     )
         .then((value) {
@@ -88,9 +87,7 @@ class SignUpController extends BaseController {
       } else if (value.code == 409 || value.message == "Conflict") {
         AppSnackBar.error('email atau nomor telepon sudah terdaftar'.tr);
       } else {
-        AppSnackBar.error(value.error != null
-            ? value.error?.first
-            : value.message.toString().tr);
+        AppSnackBar.error(value.error != null ? value.error?.first : value.message.toString().tr);
       }
     }).catchError((error) {
       AppLogger.e('error signup $error');
@@ -101,8 +98,7 @@ class SignUpController extends BaseController {
   }
 
   Future<OriginModel> getOrigin(String keyword) async {
-    var response =
-        await master.getOrigins(QueryModel(search: keyword.toUpperCase()));
+    var response = await master.getOrigins(QueryModel(search: keyword.toUpperCase()));
     var models = response.data?.toList();
     AppLogger.d(models as String);
     return models?.first ?? OriginModel();
@@ -112,8 +108,7 @@ class SignUpController extends BaseController {
     state.referralCode.text = value.groupownerName ?? '';
     state.selectedReferral = value;
     state.selectedOrigin = await getOrigin(value.groupownerOrigin ?? '');
-    state.isDefaultOrigin =
-        value.groupownerDefaultorigin == "FIXED" ? true : false;
+    state.isDefaultOrigin = value.groupownerDefaultorigin == "FIXED" ? true : false;
     state.isSelectCounter = value.groupownerCounter == null ? true : false;
     update();
     state.origin.text = state.selectedOrigin?.originName ?? '';
@@ -122,9 +117,7 @@ class SignUpController extends BaseController {
     update();
     getAgentList();
     if (value.groupownerCounter != null) {
-      state.selectedAgent = state.agentList
-          .where((e) => e.custName == value.groupownerCounter)
-          .first;
+      state.selectedAgent = state.agentList.where((e) => e.custName == value.groupownerCounter).first;
       update();
       state.selectedAgent?.custName.printInfo(info: "selectedAgent");
     } else {
@@ -144,8 +137,7 @@ class SignUpController extends BaseController {
 
   bool isValidate() {
     state.formKey.currentState?.validate();
-    if (state.formKey.currentState?.validate() == true &&
-        state.selectedOrigin != null) {
+    if (state.formKey.currentState?.validate() == true && state.selectedOrigin != null) {
       if (state.useJNE) {
         if (state.selectedAgent == null) {
           state.isValidate = false;

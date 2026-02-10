@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:css_mobile/base/base_controller.dart';
-import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/auth_body_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/post_login_model.dart';
 import 'package:css_mobile/data/storage_core.dart';
@@ -15,10 +14,8 @@ import 'package:css_mobile/screen/dashboard/dashboard_screen.dart';
 import 'package:css_mobile/util/logger.dart';
 import 'package:css_mobile/util/snackbar.dart';
 import 'package:css_mobile/widgets/dialog/info_dialog.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
 class LoginController extends BaseController {
@@ -55,13 +52,13 @@ class LoginController extends BaseController {
     try {
       await auth
           .postLogin(
-        InputLoginModel(
+        AuthBodyModel(
           email: state.emailTextField.text,
           password: state.passwordTextField.text,
-          device: await getDeviceinfo(state.fcmToken ?? ''),
+          device: await auth.getDeviceinfo(/*state.fcmToken ?? ''*/),
           // this location service sometimes cause error in emulator
           // NOTE: uncomment this line if you want to use location service
-          coordinate: await getCurrentLocation(),
+          coordinate: await auth.getCurrentLocation(),
         ),
       )
           .then((value) async {
@@ -113,62 +110,7 @@ class LoginController extends BaseController {
     update();
   }
 
-  Future<DeviceInfoModel?> getDeviceinfo(String token) async {
-    var deviceInfo = DeviceInfoPlugin();
-    if (Platform.isIOS) {
-      var iosDeviceInfo = await deviceInfo.iosInfo;
-      var systemName = iosDeviceInfo.systemName;
-      var version = iosDeviceInfo.systemVersion;
 
-      return DeviceInfoModel(
-        fcmToken: token,
-        deviceId: iosDeviceInfo.identifierForVendor,
-        deviceOS: '$systemName $version',
-        deviceName: iosDeviceInfo.name,
-        deviceBrand: systemName,
-        deviceModel: iosDeviceInfo.model,
-      );
-    } else if (Platform.isAndroid) {
-      var androidDeviceInfo = await deviceInfo.androidInfo;
-      var release = androidDeviceInfo.version.release;
-      print("device info = ${androidDeviceInfo.model}");
-      return DeviceInfoModel(
-        fcmToken: token,
-        deviceId: androidDeviceInfo.id,
-        deviceOS: 'Android $release',
-        deviceName: '${androidDeviceInfo.brand.capitalizeFirst} ${androidDeviceInfo.product}',
-        deviceBrand: androidDeviceInfo.brand,
-        deviceModel: androidDeviceInfo.model,
-      );
-    }
-    return null;
-  }
-
-  Future<Coordinate> getCurrentLocation() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-    Position position;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    position = await Geolocator.getCurrentPosition();
-    return Coordinate(lat: position.latitude, lng: position.longitude);
-  }
 
   Future<bool> isLoginLocked() async {
     final lockedUntil = await storage.readInt(StorageCore.loginLockedUntil);

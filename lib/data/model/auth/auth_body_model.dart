@@ -1,47 +1,53 @@
 import 'get_device_info_model.dart';
 
-class InputLoginModel {
-  InputLoginModel({
+class AuthBodyModel {
+  AuthBodyModel({
     String? email,
     String? password,
+    String? refreshToken,
     DeviceInfoModel? device,
     Coordinate? coordinate,
   }) {
     _email = email;
     _password = password;
+    _refreshToken = refreshToken;
     _device = device;
     _coordinate = coordinate;
   }
 
-  InputLoginModel.fromJson(dynamic json) {
+  AuthBodyModel.fromJson(dynamic json) {
     _email = json['email'];
     _password = json['password'];
+    _refreshToken = json['refreshToken'];
     _device = json['device'] != null
         ? DeviceInfoModel.fromJson(json['device'])
         : json['deviceInfo'] != null
-        ? DeviceInfoModel.fromJson(json['deviceInfo'])
-        : null;
+            ? DeviceInfoModel.fromJson(json['deviceInfo'])
+            : null;
     _coordinate = json['coordinate'] != null
         ? Coordinate.fromJson(json['coordinate'])
         : json['longlat'] != null
-        ? Coordinate.fromString(json['longlat'])
-        : null;
+            ? Coordinate.fromString(json['longlat'])
+            : null;
   }
 
   String? _email;
   String? _password;
+  String? _refreshToken;
   DeviceInfoModel? _device;
   Coordinate? _coordinate;
 
-  InputLoginModel copyWith({
+  AuthBodyModel copyWith({
     String? email,
     String? password,
+    String? refreshToken,
     DeviceInfoModel? device,
     Coordinate? coordinate,
   }) =>
-      InputLoginModel(
+      AuthBodyModel(
         email: email ?? _email,
         password: password ?? _password,
+        refreshToken: refreshToken ?? _refreshToken,
         device: device ?? _device,
         coordinate: coordinate ?? _coordinate,
       );
@@ -50,17 +56,26 @@ class InputLoginModel {
 
   String? get password => _password;
 
+  String? get refreshToken => _refreshToken;
+
   DeviceInfoModel? get device => _device;
 
   Coordinate? get coordinate => _coordinate;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['email'] = _email;
-    map['password'] = _password;
+    if (_email != null) {
+      map['email'] = _email;
+    }
+    if (_password != null) {
+      map['password'] = _password;
+    }
+    if (_refreshToken != null) {
+      map['refreshToken'] = _refreshToken;
+    }
     if (_device != null) {
       map['device'] = _device?.toJson();
-      map['deviceInfo'] =_device?.toJson();
+      map['deviceInfo'] = _device?.toJson();
     }
     if (_coordinate != null) {
       map['coordinate'] = _coordinate?.toJson();

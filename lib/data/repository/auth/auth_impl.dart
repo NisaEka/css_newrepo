@@ -1,5 +1,5 @@
 import 'package:css_mobile/data/model/auth/get_device_info_model.dart';
-import 'package:css_mobile/data/model/auth/input_login_model.dart';
+import 'package:css_mobile/data/model/auth/auth_body_model.dart';
 import 'package:css_mobile/data/model/auth/input_new_password_model.dart';
 import 'package:css_mobile/data/model/auth/input_pinconfirm_model.dart';
 import 'package:css_mobile/data/model/auth/input_register_model.dart';
@@ -22,7 +22,7 @@ class AuthRepositoryImpl extends AuthRepository {
   final storageSecure = const FlutterSecureStorage();
 
   @override
-  Future<BaseResponse<PostLoginModel>> postLogin(InputLoginModel loginData) async {
+  Future<BaseResponse<PostLoginModel>> postLogin(AuthBodyModel loginData) async {
     try {
       Response response = await network.base.post(
         '/authentications/login',
@@ -198,7 +198,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<BaseResponse> logout(String refreshToken) async {
+  Future<BaseResponse> logout(AuthBodyModel refreshToken) async {
     // var refreshToken = await StorageCore().readRefreshToken();
 
     // var deviceInfo = await LoginController().getDeviceinfo(fcmToken);
@@ -206,9 +206,10 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       Response response = await network.base.post(
         '/authentications/logout',
-        data: {
-          "refreshToken": refreshToken,
-        },
+        // data: {
+        //   "refreshToken": refreshToken,
+        // },
+        data: refreshToken,
         options: Options(extra: {'skipAuth': true}),
       );
       // .then((value) async => await network.base.patch(
