@@ -647,6 +647,7 @@ class DashboardController extends BaseController {
       } catch (e, i) {
         AppLogger.e('error get basic $e');
         AppLogger.e('error get basic $i');
+        return;
       }
       // } else {
       update();
